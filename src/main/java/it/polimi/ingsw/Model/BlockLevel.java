@@ -3,9 +3,10 @@ package it.polimi.ingsw.Model;
 /**
  * 
  */
-public enum BlockLevel {
+public enum BLOCKLEVEL {
     GROUND,
     ONE,
     TWO,
-    TREE
+    TREE,
+    DOME
 }

@@ -16,7 +16,7 @@ public class Worker {
     /**
      * 
      */
-    private Color color;
+    private COLOR color;
 
     /**
      * 
@@ -35,14 +35,14 @@ public class Worker {
     /**
      * @param color
      */
-    public void setColor(Color color) {
+    public void setColor(COLOR color) {
         // TODO implement here
     }
 
     /**
      * @return
      */
-    public Color getColor() {
+    public COLOR getColor() {
         // TODO implement here
         return null;
     }

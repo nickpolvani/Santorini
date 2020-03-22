@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model;
 /**
  * 
  */
-public enum Color {
+public enum COLOR {
     RED,
     BLUE,
     GREEN
