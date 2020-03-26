@@ -1,11 +1,26 @@
 package it.polimi.ingsw.Model;
 
-import java.util.*;
-
 /**
  * @author Polvani-Puoti-Sacchetta
  */
 public class Turn {
+
+    /**
+     *
+     */
+    private Boolean canMoveUp;
+    /**
+     *
+     */
+    private Boolean hasToMove;
+    /**
+     *
+     */
+    private Boolean hasToBuild;
+    /**
+     *
+     */
+    private Player currentPlayer;
 
     /**
      * Default constructor
@@ -14,29 +29,7 @@ public class Turn {
     }
 
     /**
-     * 
-     */
-    private Boolean canMoveUp;
-
-    /**
-     * 
-     */
-    private Boolean hasToMove;
-
-    /**
-     * 
-     */
-    private Boolean hasToBuild;
-
-    /**
-     * 
-     */
-    private Player currentPlayer;
-
-
-
-    /**
-     * 
+     *
      */
     public void switchTurn() {
         // TODO implement here
