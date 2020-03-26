@@ -1,11 +1,22 @@
 package it.polimi.ingsw.Model;
 
-import java.util.*;
-
 /**
  * @author Polvani-Puoti-Sacchetta
  */
 public class Worker {
+
+    /**
+     *
+     */
+    private Color color;
+    /**
+     *
+     */
+    private Tile positionTile;
+    /**
+     *
+     */
+    private Player player;
 
     /**
      * Default constructor
@@ -14,43 +25,17 @@ public class Worker {
     }
 
     /**
-     * 
-     */
-    private COLOR color;
-
-    /**
-     * 
-     */
-    private Tile positionTile;
-
-    /**
-     * 
-     */
-    private Player player;
-
-
-
-
-
-    /**
-     * @param color
-     */
-    public void setColor(COLOR color) {
-        // TODO implement here
-    }
-
-    /**
      * @return
      */
-    public COLOR getColor() {
+    public Color getColor() {
         // TODO implement here
         return null;
     }
 
     /**
-     * @param t
+     * @param color
      */
-    public void setTile(Tile t) {
+    public void setColor(Color color) {
         // TODO implement here
     }
 
@@ -58,6 +43,20 @@ public class Worker {
      * @return
      */
     public Tile getTile() {
+        return positionTile;
+    }
+
+    /**
+     * @param t
+     */
+    public void setTile(Tile t) {
+        positionTile = t;
+    }
+
+    /**
+     * @return
+     */
+    public Player getPlayer() {
         // TODO implement here
         return null;
     }
@@ -67,14 +66,6 @@ public class Worker {
      */
     public void setPlayer(Player p) {
         // TODO implement here
-    }
-
-    /**
-     * @return
-     */
-    public Player getPlayer() {
-        // TODO implement here
-        return null;
     }
 
 }

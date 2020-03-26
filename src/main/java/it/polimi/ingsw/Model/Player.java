@@ -2,47 +2,32 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Controller.God.God;
 
-import java.util.*;
-
 /**
  * @author Polvani-Puoti-Sacchetta
  */
 public class Player {
 
     /**
-     * Default constructor
-     */
-    public Player() {
-    }
-
-    /**
-     * 
+     *
      */
     private String nickname;
-
     /**
-     * 
+     *
      */
     private Worker[] worker;
-
     /**
-     * 
+     *
      */
-    private NameGods god;
-
+    private NameGod god;
     /**
-     * 
+     *
      */
     private Boolean hasLost;
 
-
-
-
     /**
-     * @param s
+     * Default constructor
      */
-    public void setNickname(String s) {
-        // TODO implement here
+    public Player() {
     }
 
     /**
@@ -54,9 +39,9 @@ public class Player {
     }
 
     /**
-     * @param w
+     * @param s
      */
-    public void setWorker(Worker w) {
+    public void setNickname(String s) {
         // TODO implement here
     }
 
@@ -69,9 +54,9 @@ public class Player {
     }
 
     /**
-     * @param g
+     * @param w
      */
-    public void setGod(God g) {
+    public void setWorker(Worker w) {
         // TODO implement here
     }
 
@@ -81,6 +66,13 @@ public class Player {
     public God getGod() {
         // TODO implement here
         return null;
+    }
+
+    /**
+     * @param g
+     */
+    public void setGod(God g) {
+        // TODO implement here
     }
 
 }

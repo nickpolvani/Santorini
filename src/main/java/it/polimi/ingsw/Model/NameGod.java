@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Model;
 
 /**
- * 
+ *
  */
-public enum NameGods {
+public enum NameGod {
     APOLLO,
     ARTEMIS,
     ATLAS,
