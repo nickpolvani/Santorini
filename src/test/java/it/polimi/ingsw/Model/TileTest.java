@@ -20,8 +20,8 @@ public class TileTest {
         if (tile == null) tile = new Tile(0, 0);
         else {
             tile.setCurrentWorker(null);
-            tile.getBuild().setLevel(BlockLevel.GROUND);
-            tile.getBuild().setDome(false);
+            tile.getBuilding().setLevel(BlockLevel.GROUND);
+            tile.getBuilding().setDome(false);
         }
     }
 
@@ -30,8 +30,8 @@ public class TileTest {
         assertNull("Worker not null after constructor", tile.getCurrentWorker());
         assertEquals("Error setup of tile's rowIndex", rowIndex, tile.getIndex().getRow());
         assertEquals("Error setup of tile's colIndex", columnIndex, tile.getIndex().getCol());
-        assertEquals("blockLevel not GROUND after constructor", BlockLevel.GROUND, tile.getBuild().getLevel());
-        assertFalse("Dome's flag not null after constructor", tile.getBuild().getDome());
+        assertEquals("blockLevel not GROUND after constructor", BlockLevel.GROUND, tile.getBuilding().getLevel());
+        assertFalse("Dome's flag not null after constructor", tile.getBuilding().getDome());
     }
 
     @Test
@@ -44,10 +44,10 @@ public class TileTest {
         tile.setCurrentWorker(null);
         assertFalse(tile.isOccupied());
 
-        tile.getBuild().setDome(true);
+        tile.getBuilding().setDome(true);
         assertTrue(tile.isOccupied());
 
-        tile.getBuild().setDome(false);
+        tile.getBuilding().setDome(false);
         assertFalse(tile.isOccupied());
     }
 

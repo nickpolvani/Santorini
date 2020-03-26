@@ -18,7 +18,7 @@ public class Tile {
     /**
      * Enum used to define the height of the tower
      */
-    private final Building build;
+    private final Building building;
     /**
      * Worker instance present on the tile
      */
@@ -30,7 +30,7 @@ public class Tile {
      */
     public Tile(int row, int col) {
         currentWorker = null;
-        build = new Building();
+        building = new Building();
         index = new IndexPair(row, col);
     }
 
@@ -60,8 +60,8 @@ public class Tile {
     /**
      * @return Returns the building's instance on the tile.
      */
-    public Building getBuild() {
-        return build;
+    public Building getBuilding() {
+        return building;
     }
 
     /**
@@ -70,7 +70,7 @@ public class Tile {
      * @return Returns true if there is worker or dome on the tile.
      */
     public Boolean isOccupied() {
-        return this.currentWorker != null || build.getDome();
+        return this.currentWorker != null || building.getDome();
     }
 
     /**
