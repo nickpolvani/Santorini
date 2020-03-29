@@ -19,7 +19,7 @@ public class Atlas extends God {
     /**
      * @param w
      */
-    public void build(Worker w) {
+    public void build(Worker w, Tile t) {
         // TODO implement here
     }
 

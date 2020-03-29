@@ -19,7 +19,7 @@ public class Hephaestus extends God {
     /**
      * @param w
      */
-    public void build(Worker w) {
+    public void build(Worker w, Tile t) {
         // TODO implement here
     }
 

@@ -19,7 +19,7 @@ public class Artemis extends God {
     /**
      * @param w
      */
-    public void move(Worker w) {
+    public void move(Worker w, Tile t) {
         // TODO implement here
     }
 

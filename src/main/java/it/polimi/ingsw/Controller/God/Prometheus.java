@@ -19,14 +19,14 @@ public class Prometheus extends God {
     /**
      * @param w
      */
-    public void move(Worker w) {
+    public void move(Worker w, Tile t) {
         // TODO implement here
     }
 
     /**
      * @param w
      */
-    public void build(Worker w) {
+    public void build(Worker w, Tile t) {
         // TODO implement here
     }
 

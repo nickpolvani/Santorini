@@ -19,14 +19,14 @@ public class Minotaur extends God {
     /**
      * @param w
      */
-    public void move(Worker w) {
+    public void move(Worker w, Tile t) {
         // TODO implement here
     }
 
     /**
      * @param w
      */
-    private void force(Worker w) {
+    private void force(Worker w, Tile t) {
         // TODO implement here
     }
 
