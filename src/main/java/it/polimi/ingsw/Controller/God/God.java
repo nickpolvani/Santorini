@@ -1,5 +1,10 @@
 package it.polimi.ingsw.Controller.God;
 
+import it.polimi.ingsw.Bean.Choice.ChoiceType;
+import it.polimi.ingsw.Bean.Choice.ConfirmChoice;
+import it.polimi.ingsw.Bean.Choice.TileChoice;
+import it.polimi.ingsw.Bean.Options.ConfirmOptions;
+import it.polimi.ingsw.Bean.Options.TileOptions;
 import it.polimi.ingsw.Model.NameGod;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.Tile;
@@ -20,11 +25,14 @@ public abstract class God {
      *
      */
     private NameGod name;
+    private Worker worker;
+    private ChoiceType[] turnChoices;
+    private int choiceNumber;
 
     /**
-     * Default constructor
+     * Default constructor, can be called only by GodsFactory
      */
-    public God() {
+    protected God() {
     }
 
     /**
@@ -87,6 +95,24 @@ public abstract class God {
      */
     public void build(Worker w, Tile t) {
         // TODO implement here
+    }
+
+    public Boolean isTurnOver() {
+        return null;
+    }
+
+    public void applyPlayerChoice(TileChoice tileChoice) {
+    }
+
+    public void applyPlayerChoice(ConfirmChoice c) {
+    }
+
+    public TileOptions createTileOptions() {
+        return null;
+    }
+
+    public ConfirmOptions createConfirmOptions() {
+        return null;
     }
 
 }

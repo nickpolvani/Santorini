@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Controller.God;
 
+import it.polimi.ingsw.Bean.Choice.ConfirmChoice;
+import it.polimi.ingsw.Bean.Choice.TileChoice;
+import it.polimi.ingsw.Bean.Options.ConfirmOptions;
+import it.polimi.ingsw.Bean.Options.TileOptions;
 import it.polimi.ingsw.Model.Tile;
 import it.polimi.ingsw.Model.Worker;
 
@@ -13,7 +17,22 @@ public class Atlas extends God {
     /**
      * Default constructor
      */
-    public Atlas() {
+    protected Atlas() {
+    }
+
+    @Override
+    public ConfirmOptions createConfirmOptions() {
+        return super.createConfirmOptions();
+    }
+
+    @Override
+    public TileOptions createTileOptions() {
+        return super.createTileOptions();
+    }
+
+    @Override
+    public void applyPlayerChoice(ConfirmChoice c) {
+        super.applyPlayerChoice(c);
     }
 
     /**
@@ -21,6 +40,11 @@ public class Atlas extends God {
      */
     public void build(Worker w, Tile t) {
         // TODO implement here
+    }
+
+    @Override
+    public void applyPlayerChoice(TileChoice tileChoice) {
+        super.applyPlayerChoice(tileChoice);
     }
 
     /**

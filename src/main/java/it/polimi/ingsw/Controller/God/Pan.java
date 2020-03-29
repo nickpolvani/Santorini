@@ -13,7 +13,7 @@ public class Pan extends God {
     /**
      * Default constructor
      */
-    public Pan() {
+    protected Pan() {
     }
 
     /**

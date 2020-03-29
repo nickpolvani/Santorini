@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author Polvani-Puoti-Sacchetta
  */
-public class godsFactory {
+public class GodsFactory {
 
     /**
      *
@@ -17,7 +17,7 @@ public class godsFactory {
     /**
      * Default constructor
      */
-    public godsFactory() {
+    public GodsFactory() {
     }
 
     /**

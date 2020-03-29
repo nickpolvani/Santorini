@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Controller.God;
 
+import it.polimi.ingsw.Bean.Choice.ConfirmChoice;
+import it.polimi.ingsw.Bean.Choice.TileChoice;
+import it.polimi.ingsw.Bean.Options.ConfirmOptions;
+import it.polimi.ingsw.Bean.Options.TileOptions;
 import it.polimi.ingsw.Model.Tile;
 import it.polimi.ingsw.Model.Worker;
 
@@ -13,7 +17,7 @@ public class Artemis extends God {
     /**
      * Default constructor
      */
-    public Artemis() {
+    protected Artemis() {
     }
 
     /**
@@ -21,6 +25,26 @@ public class Artemis extends God {
      */
     public void move(Worker w, Tile t) {
         // TODO implement here
+    }
+
+    @Override
+    public void applyPlayerChoice(TileChoice tileChoice) {
+        super.applyPlayerChoice(tileChoice);
+    }
+
+    @Override
+    public ConfirmOptions createConfirmOptions() {
+        return super.createConfirmOptions();
+    }
+
+    @Override
+    public TileOptions createTileOptions() {
+        return super.createTileOptions();
+    }
+
+    @Override
+    public void applyPlayerChoice(ConfirmChoice c) {
+        super.applyPlayerChoice(c);
     }
 
     /**

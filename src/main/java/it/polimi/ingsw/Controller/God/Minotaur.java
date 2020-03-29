@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Controller.God;
 
+import it.polimi.ingsw.Bean.Choice.TileChoice;
+import it.polimi.ingsw.Bean.Options.TileOptions;
 import it.polimi.ingsw.Model.Tile;
 import it.polimi.ingsw.Model.Worker;
 
@@ -10,10 +12,20 @@ import java.util.Collection;
  */
 public class Minotaur extends God {
 
+    @Override
+    public TileOptions createTileOptions() {
+        return super.createTileOptions();
+    }
+
+    @Override
+    public void applyPlayerChoice(TileChoice tileChoice) {
+        super.applyPlayerChoice(tileChoice);
+    }
+
     /**
      * Default constructor
      */
-    public Minotaur() {
+    protected Minotaur() {
     }
 
     /**

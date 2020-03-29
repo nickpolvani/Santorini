@@ -13,7 +13,7 @@ public class Athena extends God {
     /**
      * Default constructor
      */
-    public Athena() {
+    protected Athena() {
     }
 
     /**

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Controller.God;
 
+import it.polimi.ingsw.Bean.Choice.TileChoice;
+import it.polimi.ingsw.Bean.Options.TileOptions;
 import it.polimi.ingsw.Model.Tile;
 import it.polimi.ingsw.Model.Worker;
 
@@ -13,7 +15,7 @@ public class Apollo extends God {
     /**
      * Default constructor
      */
-    public Apollo() {
+    protected Apollo() {
     }
 
     /**
@@ -21,6 +23,16 @@ public class Apollo extends God {
      */
     public void move(Worker w, Tile t) {
         // TODO implement here
+    }
+
+    @Override
+    public void applyPlayerChoice(TileChoice tileChoice) {
+        super.applyPlayerChoice(tileChoice);
+    }
+
+    @Override
+    public TileOptions createTileOptions() {
+        return super.createTileOptions();
     }
 
     /**
