@@ -7,4 +7,30 @@ public class TileOptions {
     Tile[] tilesToChoose;
     IslandBoard board;
     String message;
+
+    public TileOptions(Player player, Tile[] tilesToChoose, IslandBoard board, String message) {
+        this.player = player;
+        this.tilesToChoose = tilesToChoose;
+        this.board = board;
+        this.message = message;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Tile[] getTilesToChoose() {
+        return tilesToChoose;
+    }
+
+    public IslandBoard getBoard() {
+        return board;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+
+
 }
