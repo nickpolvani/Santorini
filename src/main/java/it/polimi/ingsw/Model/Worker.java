@@ -1,20 +1,24 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Exception.AlreadySetException;
+
 /**
  * @author Polvani-Puoti-Sacchetta
  */
 public class Worker {
 
     /**
-     *
+     * The color of worker's team, which is chosen by the client, at the game's start, and it will be the same for the whole game.
      */
     private Color color;
+
     /**
-     *
+     * every worker has a position on the island board, more specifically on a tile.
+     * positionTile represents the current position of the worker
      */
     private Tile positionTile;
     /**
-     *
+     * the reference of the player who handles the worker's moves
      */
     private Player player;
 
@@ -25,47 +29,47 @@ public class Worker {
     }
 
     /**
-     * @return
+     * @return this.color
      */
     public Color getColor() {
-        // TODO implement here
-        return null;
+        return this.color;
     }
 
     /**
-     * @param color
+     * @param color is the color chosen by the player for his workers' team. I decided to let it trows exception if player tries
+     *              to change it after the first set.
      */
-    public void setColor(Color color) {
-        // TODO implement here
+    public void setColor(Color color) throws AlreadySetException {
+        if (this.color != null) throw new AlreadySetException("Color alreay set!");
+        this.color = color;
     }
 
     /**
-     * @return
+     * @return this.positionTile
      */
     public Tile getTile() {
-        return positionTile;
+        return this.positionTile;
     }
 
     /**
-     * @param t
+     * @param positionTile :the reference of the new tile where a player decides to move his worker
      */
-    public void setTile(Tile t) {
-        positionTile = t;
+    public void setTile(Tile positionTile) {
+        this.positionTile = positionTile;
     }
 
     /**
-     * @return
+     * @return this.player
      */
     public Player getPlayer() {
-        // TODO implement here
-        return null;
+        return this.player;
     }
 
     /**
-     * @param p
+     * @param player: reference to the player who use this specific worker in his actions
      */
-    public void setPlayer(Player p) {
-        // TODO implement here
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
 }

@@ -1,78 +1,94 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Controller.God.God;
+import it.polimi.ingsw.Exception.AlreadySetException;
 
 /**
- * @author Polvani-Puoti-Sacchetta
+ * @author Francesco Puoti
  */
 public class Player {
 
     /**
-     *
+     * Name Inserted by the player during the game's initialization
      */
-    private String nickname;
+    private final String nickname;
     /**
-     *
+     * The reference to the player's workers
      */
     private Worker[] worker;
     /**
-     *
+     * it's provides the name of the god selected by the player, who will use it for all the game
      */
     private NameGod god;
     /**
-     *
+     * if player loses the game, this boolean will be set true
      */
     private Boolean hasLost;
 
     /**
      * Default constructor
+     * When the game is initialized, every client has to provide his nickname. In this way, when we create the player's instance,
+     * we set also his nickname. Therefore, the setter of nickname is unnecessary and useless.
      */
-    public Player() {
+    public Player(String nickname) {
+
+        this.nickname = nickname;
+        setHasLost(false);
     }
 
     /**
-     * @return
+     * @return player's nickname
      */
     public String getNickname() {
-        // TODO implement here
-        return "";
+        return this.nickname;
     }
 
     /**
-     * @param s
+     * @return this.worker
      */
-    public void setNickname(String s) {
-        // TODO implement here
+    public Worker[] getWorker() {
+        return this.worker;
     }
 
     /**
-     * @return
+     * @param color : when I set players's workers' team, I need to set the color of the team
      */
-    public Worker getWorker() {
-        // TODO implement here
-        return null;
+    public void setWorker(Color color) throws AlreadySetException {
+
+        if (this.worker != null) throw new AlreadySetException("Team already set");
+        this.worker = new Worker[2];
+        for (int i = 0; i < worker.length; i++) {
+            worker[i] = new Worker();
+            worker[i].setPlayer(this);
+            worker[i].setColor(color);
+        }
     }
 
     /**
-     * @param w
+     * @return this.god
      */
-    public void setWorker(Worker w) {
-        // TODO implement here
+    public NameGod getGod() {
+        return this.god;
     }
 
     /**
-     * @return
+     * @param selectedGod : this parameter comes form the controller, that claims the player's choice of the god
      */
-    public God getGod() {
-        // TODO implement here
-        return null;
+    public void setGod(NameGod selectedGod) {
+        this.god = selectedGod;
     }
 
     /**
-     * @param g
+     * @return hasLost
      */
-    public void setGod(God g) {
-        // TODO implement here
+    public Boolean getHasLost() {
+        return this.hasLost;
+    }
+
+    /**
+     * @param hasLost : this setter will be called if player will lose the game
+     */
+    public void setHasLost(Boolean hasLost) {
+        this.hasLost = hasLost;
     }
 
 }

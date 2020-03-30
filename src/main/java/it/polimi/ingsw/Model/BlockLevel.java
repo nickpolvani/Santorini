@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model;
 
 /**
- *
+ * @author Polvani-Puoti-Sacchetta
  */
 public enum BlockLevel {
     GROUND, ONE, TWO, THREE;
