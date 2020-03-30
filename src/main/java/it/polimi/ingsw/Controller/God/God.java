@@ -115,4 +115,8 @@ public abstract class God {
         return null;
     }
 
+    public ChoiceType getCurrentChoiceType(){
+        return turnChoices[choiceNumber];
+    }
+
 }

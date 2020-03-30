@@ -55,11 +55,11 @@ public class PlayerWorkerTest {
 
     @Test
     public void checkGodChoice() {
-        assertNull("God should be null after constructor", this.player.getGod());
+        assertNull("God should be null after constructor", this.player.getNameGod());
 
-        this.player.setGod(NameGod.HEPHAESTUS);
+        this.player.setNameGod(NameGod.HEPHAESTUS);
 
-        assertTrue("Player.god should be equals to Hephaestus", this.player.getGod().equals(NameGod.HEPHAESTUS));
+        assertTrue("Player.god should be equals to Hephaestus", this.player.getNameGod().equals(NameGod.HEPHAESTUS));
 
     }
 

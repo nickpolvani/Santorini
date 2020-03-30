@@ -1,9 +1,14 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Bean.Choice.ChoiceType;
+import it.polimi.ingsw.Controller.God.God;
+import it.polimi.ingsw.Observer.ObservableOptions;
+
+
 /**
  * @author Francesco Puoti
  */
-public class Turn {
+public class Turn extends ObservableOptions {
     /**
      * Reference to the handler of the whole game: this is necessary to switch turn
      */
@@ -86,4 +91,31 @@ public class Turn {
     public void setHasToBuild(Boolean hasToBuild) {
         this.hasToBuild = hasToBuild;
     }
+
+
+    public God getCurrentPlayerGod(){
+        return myGame.getGodsFactory().getGod(currentPlayer.getNameGod());
+    }
+
+    public Boolean isTurnOver(){
+        return getCurrentPlayerGod().isTurnOver();
+    }
+
+
+
+    /**
+     * sends message to View containing updates of the GameState and the Options
+     * available for the currentPlayer. Options can be an array of Tiles to choose from,
+     * or a confirm choice (Yes/No)
+     */
+    public void askPlayerChoice(){
+        God currentGod = getCurrentPlayerGod();
+        if (currentGod.getCurrentChoiceType() == ChoiceType.CHOOSETILE){
+            notify(currentGod.createTileOptions());
+        }
+        else if (currentGod.getCurrentChoiceType() == ChoiceType.CONFIRM){
+            notify(currentGod.createConfirmOptions());
+        }
+    }
+
 }

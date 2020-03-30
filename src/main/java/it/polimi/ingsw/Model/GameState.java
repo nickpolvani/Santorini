@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Controller.God.GodsFactory;
+
 import java.util.ArrayList;
 
 
@@ -23,6 +25,9 @@ public class GameState {
      *
      */
     private Turn turn;
+
+
+    private GodsFactory godsFactory;
 
     /**
      * Default constructor: the most important thing is that island board can be instanced one time per game. Therefore,
@@ -56,7 +61,6 @@ public class GameState {
 
     /**
      * @return the player who has to play his turn
-     * <p>
      * indexOf return '-1' in case of parameter does not belong to players. Therefore, at the first initialization of Turn
      * currentPlayer would be null so indexOF returns '-1', so the first player would be players.get(0)
      */
@@ -94,4 +98,13 @@ public class GameState {
     public Turn getTurn() {
         return this.turn;
     }
+
+    public GodsFactory getGodsFactory() {
+        return godsFactory;
+    }
+
+    public void setGodsFactory(GodsFactory godsFactory) {
+        this.godsFactory = godsFactory;
+    }
+
 }

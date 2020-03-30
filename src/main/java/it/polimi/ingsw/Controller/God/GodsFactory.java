@@ -2,6 +2,7 @@ package it.polimi.ingsw.Controller.God;
 
 import it.polimi.ingsw.Model.NameGod;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class GodsFactory {
     /**
      *
      */
-    private List<God> createdGods;
+    private List<God> createdGods = new ArrayList<>();
 
     /**
      * Default constructor

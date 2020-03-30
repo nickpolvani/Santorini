@@ -18,7 +18,7 @@ public class Player {
     /**
      * it's provides the name of the god selected by the player, who will use it for all the game
      */
-    private NameGod god;
+    private NameGod nameGod;
     /**
      * if player loses the game, this boolean will be set true
      */
@@ -66,15 +66,15 @@ public class Player {
     /**
      * @return this.god
      */
-    public NameGod getGod() {
-        return this.god;
+    public NameGod getNameGod() {
+        return this.nameGod;
     }
 
     /**
      * @param selectedGod : this parameter comes form the controller, that claims the player's choice of the god
      */
-    public void setGod(NameGod selectedGod) {
-        this.god = selectedGod;
+    public void setNameGod(NameGod selectedGod) {
+        this.nameGod = selectedGod;
     }
 
     /**
