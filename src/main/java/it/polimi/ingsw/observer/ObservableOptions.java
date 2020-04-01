@@ -12,7 +12,7 @@ public class ObservableOptions {
 
     public void addObserver(ObserverOptions observer){
         synchronized (observers){
-            observers.add(observer);
+            observers.remove(observer);
         }
     }
 

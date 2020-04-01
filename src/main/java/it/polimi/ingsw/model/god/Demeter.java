@@ -7,7 +7,7 @@ import java.util.Collection;
 /**
  * @author Polvani-Puoti-Sacchetta
  */
-public class Demeter extends God {
+public class  Demeter extends God {
 
     /**
      * Default constructor
