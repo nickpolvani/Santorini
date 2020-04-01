@@ -1,102 +1,66 @@
-package it.polimi.ingsw.Controller;
+package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.Bean.Choice.ConfirmChoice;
-import it.polimi.ingsw.Bean.Choice.GodChoice;
-import it.polimi.ingsw.Bean.Choice.TileChoice;
-import it.polimi.ingsw.Controller.God.GodsFactory;
-import it.polimi.ingsw.Model.GameState;
-import it.polimi.ingsw.Observer.ObserverPlayerChoice;
+import it.polimi.ingsw.bean.action.Action;
+import it.polimi.ingsw.bean.action.ActionHandler;
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.observer.Observer;
 
 /**
  * @author Polvani-Puoti-Sacchetta
  */
-public class GameController implements ObserverPlayerChoice {
 
-    private GodsFactory godsFactory;
+public class GameController implements Observer<Action> {
+    private final GameState model;
 
-    private GameState gameState;
+    private final ActionHandler actionHandler = new ActionHandler();
 
     /**
      * Default constructor
      */
-    public GameController() {
-        gameState = new GameState();
-        godsFactory = new GodsFactory();
-        gameState.setGodsFactory(godsFactory);
+    public GameController(GameState model) {
+        this.model = model;
     }
 
-    public GodsFactory getGodsFactory() {
-        return godsFactory;
-    }
-
-    /**
-     *
-     */
     public void init() {
         // TODO implement here
     }
 
-    /**
-     *
-     */
     public void playGame() {
         // TODO implement here
     }
 
-    /**
-     *
-     */
     public void playTurn() {
         // TODO implement here
     }
 
-    /**
-     *
-     */
     public void endGame() {
         // TODO implement here
     }
 
-    /**
-     *
-     */
     public void selectChallenger() {
         // TODO implement here
     }
 
-    /**
-     *
-     */
     public void selectGods() {
         // TODO implement here
     }
 
-    /**
-     *
-     */
     public void hasWon() {
         // TODO implement here
     }
 
-    /**
-     *
-     */
     public void hasLost() {
         // TODO implement here
     }
 
+    synchronized
     @Override
-    public void update(TileChoice t) {
-
-    }
-
-    @Override
-    public void update(ConfirmChoice c) {
-
-    }
-
-    @Override
-    public void update(GodChoice g) {
-
+    public void update(Action a) {
+        /*TODO se non è il giocatore corrente viene scartata, qua non so se c'è bisogno del synchronized anche se credo di no*/
+        if (a.getPlayer().equals(model.getTurn().getCurrentPlayer())) {
+            actionHandler.start(a);
+        }/* else { TODO ipotesi di risposta
+            a.getPlayer().getView().send(new AnotherTurnException);
+        }*/
     }
 }

@@ -1,6 +1,7 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.Exception.AlreadySetException;
+import it.polimi.ingsw.exception.AlreadySetException;
+import it.polimi.ingsw.model.god.God;
 
 /**
  * @author Francesco Puoti
@@ -16,9 +17,9 @@ public class Player {
      */
     private Worker[] worker;
     /**
-     * it's provides the name of the god selected by the player, who will use it for all the game
+     * it's provides the reference of the god selected by the player, who will use it for all the game
      */
-    private NameGod nameGod;
+    private God god;
     /**
      * if player loses the game, this boolean will be set true
      */
@@ -66,15 +67,15 @@ public class Player {
     /**
      * @return this.god
      */
-    public NameGod getNameGod() {
-        return this.nameGod;
+    public God getGod() {
+        return this.god;
     }
 
     /**
      * @param selectedGod : this parameter comes form the controller, that claims the player's choice of the god
      */
-    public void setNameGod(NameGod selectedGod) {
-        this.nameGod = selectedGod;
+    public void setGod(God selectedGod) {
+        this.god = selectedGod;
     }
 
     /**

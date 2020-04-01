@@ -1,18 +1,14 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.Controller.God.GodsFactory;
+import it.polimi.ingsw.model.god.GodsFactory;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  * @author Francesco Puoti
  */
 public class GameState {
-    /**
-     *
-     */
-    private Player challenger;
     /**
      * The board where the game is about to be played
      */
@@ -20,14 +16,16 @@ public class GameState {
     /**
      *
      */
-    private ArrayList<Player> players;
+    private final List<Player> players;
+    private final GodsFactory godsFactory;
     /**
      *
      */
+    private Player challenger;
+    /**
+     * TODO qua ricordiamoci di settare in maniera dinamica il turn
+     */
     private Turn turn;
-
-
-    private GodsFactory godsFactory;
 
     /**
      * Default constructor: the most important thing is that island board can be instanced one time per game. Therefore,
@@ -36,13 +34,14 @@ public class GameState {
     public GameState() {
         this.board = new IslandBoard();
         this.players = new ArrayList<>();
+        this.godsFactory = new GodsFactory();
     }
 
     /**
      * @return islandBoard: the real instance, not a clone of it.
      */
-    public IslandBoard getBoard() {
-        return this.board;
+    public IslandBoard getIslandBoard() {
+        return board;
     }
 
     /**
@@ -57,6 +56,26 @@ public class GameState {
      */
     public void setChallenger(Player player) {
         this.challenger = player;
+    }
+
+    /**
+     * getter of ArrayList players is useless beacuase we have methods like  nextPlayer and getCurrrentPlayer in Turn objcet
+     * but we use it for testing.
+     */
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setTurn() {
+        this.turn = new Turn(this);
+    }
+
+    public Turn getTurn() {
+        return this.turn;
+    }
+
+    public GodsFactory getGodsFactory() {
+        return godsFactory;
     }
 
     /**
@@ -79,32 +98,8 @@ public class GameState {
      * @throws IndexOutOfBoundsException : more then three palyers are not accepted
      */
     public void addPlayer(Player player) throws IndexOutOfBoundsException {
+        //TODO questo controllo va fatto ma da qualche parte dobbiamo settare quanti player ci sono nella lobby. Poi si fa il controllo con quello.
         if (this.players.size() == 3) throw new IndexOutOfBoundsException("Maximum number of players already reached");
         this.players.add(player);
     }
-
-    /**
-     * getter of ArrayList players is useless beacuase we have methods like  nextPlayer and getCurrrentPlayer in Turn objcet
-     * but we use it for testing.
-     */
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
-    public void setTurn() {
-        this.turn = new Turn(this);
-    }
-
-    public Turn getTurn() {
-        return this.turn;
-    }
-
-    public GodsFactory getGodsFactory() {
-        return godsFactory;
-    }
-
-    public void setGodsFactory(GodsFactory godsFactory) {
-        this.godsFactory = godsFactory;
-    }
-
 }
