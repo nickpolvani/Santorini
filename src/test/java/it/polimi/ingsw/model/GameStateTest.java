@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exception.AlreadySetException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,8 +42,13 @@ public class GameStateTest {
         }
 
         assertNull(this.testGame.getTurn());
-        this.testGame.setTurn();
-        assertEquals(this.testGame, this.testGame.getTurn().getMyGame());
+        try {
+            this.testGame.setTurn(new Turn(this.testGame));
+        } catch (AlreadySetException e) {
+            System.out.println("Turn already set");
+        }
+
+        assertEquals(this.testGame, this.testGame.getTurn().getGameState());
 
 
         Player currentTestPlayer = this.testGame.getPlayers().get(0);

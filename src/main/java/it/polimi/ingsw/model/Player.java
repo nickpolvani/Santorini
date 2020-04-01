@@ -33,7 +33,7 @@ public class Player {
     public Player(String nickname) {
 
         this.nickname = nickname;
-        setHasLost(false);
+        this.hasLost = false;
     }
 
     /**

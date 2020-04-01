@@ -18,7 +18,7 @@ public class ObservableOptions {
 
     public void removeObserver(ObserverOptions observer){
         synchronized (observers){
-            observers.add(observer);
+            observers.remove(observer);
         }
     }
 

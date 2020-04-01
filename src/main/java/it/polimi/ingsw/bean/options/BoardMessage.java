@@ -2,7 +2,7 @@ package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.model.Tile;
 
-/*Questa classe è il bean che avevo pensato prima di sentire l'idea di nick... La comunicazione Model-> View va ancora definita correttamente*/
+/*Questa classe è il bean che avevo pensato prima di sentire l'idea di nick... La comunicazione model-> View va ancora definita correttamente*/
 public class BoardMessage {
 
     private final Tile[][] board;

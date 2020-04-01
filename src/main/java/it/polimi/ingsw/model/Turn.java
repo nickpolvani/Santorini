@@ -7,16 +7,12 @@ import it.polimi.ingsw.observer.ObservableOptions;
 /**
  * @author Francesco Puoti
  */
-//TODO va rivista la comunicazione Model->View in questa classe
+//TODO va rivista la comunicazione model->View in questa classe
 public class Turn extends ObservableOptions {
     /**
      * Reference to the handler of the whole game: this is necessary to switch turn
      */
-    private final GameState myGame;
-    /**
-     * A flag useful when one of the players has Athens a god
-     */
-    private Boolean canMoveUp;
+    private final GameState gameState;
     /**
      * A flag that check if player has still to move
      */
@@ -35,48 +31,34 @@ public class Turn extends ObservableOptions {
      * To set a new turn use switchTurn!
      */
     public Turn(GameState game) {
-        this.myGame = game;
-        switchTurn();
+        this.gameState = game;
     }
 
-    public GameState getMyGame() {
-        return this.myGame;
+    public GameState getGameState() {
+        return this.gameState;
     }
 
     /**
      * Initializer of a new turn
      */
     public void switchTurn() {
-        setCurrentPlayer(myGame.getNextPlayer(this.currentPlayer));
-        setCanMoveUp(Boolean.TRUE);
+        setCurrentPlayer(gameState.getNextPlayer(this.currentPlayer));
         setHasToMove(Boolean.TRUE);
         setHasToBuild(Boolean.TRUE);
     }
 
-    /**
-     * @return currentPlayer
-     */
     public Player getCurrentPlayer() {
         return this.currentPlayer;
     }
 
     /**
-     * @param player: set the player who has to play in this turn.
-     *                This method is used also to switch the turn.
+     * @param player: set the player who has to play in this turn. This method is used also to switch the turn.
      */
     public void setCurrentPlayer(Player player) {
         this.currentPlayer = player;
     }
 
-    public Boolean getCanMoveUp() {
-        return canMoveUp;
-    }
-
-    public void setCanMoveUp(Boolean canMoveUp) {
-        this.canMoveUp = canMoveUp;
-    }
-
-    public Boolean getHasToMove() {
+    public boolean getHasToMove() {
         return hasToMove;
     }
 
@@ -84,7 +66,8 @@ public class Turn extends ObservableOptions {
         this.hasToMove = hasToMove;
     }
 
-    public Boolean getHasToBuild() {
+
+    public boolean getHasToBuild() {
         return hasToBuild;
     }
 
@@ -94,20 +77,21 @@ public class Turn extends ObservableOptions {
 
 
     public God getCurrentPlayerGod() throws IllegalAccessException {
-        return myGame.getGodsFactory().getGod(currentPlayer.getGod().getNameAndDescription());
+        return gameState.getGodsFactory().getGod(currentPlayer.getGod().getNameAndDescription());
     }
 
-    public Boolean isTurnOver() throws IllegalAccessException {
+    public boolean isTurnOver() throws IllegalAccessException {
         return getCurrentPlayerGod().isTurnOver();
     }
 
 
-    /* TODO Qua c'è da guardare
-     *//**
+    //TODO Qua c'è da guardare
+    /**
      * sends message to View containing updates of the GameState and the Options
      * available for the currentPlayer. Options can be an array of Tiles to choose from,
      * or a confirm choice (Yes/No)
-     *//*
+     */
+     /*
     public void askPlayerChoice(){
         God currentGod = getCurrentPlayerGod();
         if (currentGod.getCurrentChoiceType() == ChoiceType.CHOOSETILE){

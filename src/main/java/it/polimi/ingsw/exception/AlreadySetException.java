@@ -7,6 +7,10 @@ package it.polimi.ingsw.exception;
  */
 public class AlreadySetException extends Exception {
 
+    public AlreadySetException() {
+        super();
+    }
+
     public AlreadySetException(String message) {
         super(message);
     }

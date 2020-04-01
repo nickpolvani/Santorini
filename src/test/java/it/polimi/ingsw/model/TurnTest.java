@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exception.AlreadySetException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,15 +33,15 @@ public class TurnTest {
      * GameState is tested in GameStateTest.java.
      */
     @Test
-    public void checkConstructor() {
+    public void checkConstructor() throws AlreadySetException {
 
-        this.testGame.setTurn();
+        this.testGame.setTurn(new Turn(this.testGame));
         this.testTurn = testGame.getTurn();
+        this.testTurn.switchTurn();
 
-        assertEquals("testTurn.myGame should be equals to testGame", testTurn.getMyGame(), testGame);
+        assertEquals("testTurn.myGame should be equals to testGame", testTurn.getGameState(), testGame);
         assertEquals("CurrentPlayer should be equals to 'Francesco' ", testTurn.getCurrentPlayer().getNickname(), "Francesco");
 
-        assertTrue("CanMoveUp should be true after setter", testTurn.getCanMoveUp());
         assertTrue("HasToMove should be true after setter", testTurn.getHasToMove());
         assertTrue("HasToBuild should be true after setter", testTurn.getHasToBuild());
 
