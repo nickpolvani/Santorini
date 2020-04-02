@@ -1,21 +1,32 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
 
-public class ConfirmOptions {
-    private final Player player;
-    private final String message;
 
-    public ConfirmOptions(Player player, String message) {
-        this.player = player;
+/**
+ * ConfirmOptions are instantiated when the player has to make a decision during the turn,
+ * due to the power of his chosen God.
+ */
+public class ConfirmOptions extends Options {
+
+    private final String message; // message that the user will see from the View
+
+
+    private final IslandBoard boardClone; // holds the new state of the game.
+
+    public ConfirmOptions(Player player, String message, IslandBoard boardClone) {
+        super(player);
         this.message = message;
-    }
-
-    public Player getPlayer() {
-        return player;
+        this.boardClone = boardClone;
     }
 
     public String getMessage() {
         return message;
+    }
+
+
+    public IslandBoard getBoardClone() {
+        return boardClone;
     }
 }

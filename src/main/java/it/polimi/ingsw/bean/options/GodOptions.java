@@ -1,22 +1,24 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.GodNameAndDescription;
 
-public class GodOptions {
-    private final Player player;
+/**
+ * These type of Options are sent to the user in setup, when they have to choose between a set of
+ * Gods. Since the game has not started yet, There is no need to have a board in these type of options
+ */
+public class GodOptions extends Options {
+
     private final GodNameAndDescription[] godsToChoose;
     private final String message;
 
-    public GodOptions(Player player, GodNameAndDescription[] godsToChoose, String message) {
-        this.player = player;
+    public GodOptions(IslandBoard board, Player player, GodNameAndDescription[] godsToChoose, String message) {
+        super(player);
         this.godsToChoose = godsToChoose;
         this.message = message;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
 
     public GodNameAndDescription[] getGodsToChoose() {
         return godsToChoose;

@@ -1,8 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.bean.options.BoardMessage;
-import it.polimi.ingsw.observer.Observable;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,7 +8,7 @@ import java.util.Collection;
  *
  * @author Juri Sacchetta
  */
-public class IslandBoard extends Observable<BoardMessage> implements Cloneable {
+public class IslandBoard implements Cloneable {
 
     /**
      * This constant define the rows numbers of the board

@@ -1,14 +1,15 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.model.god.God;
-import it.polimi.ingsw.observer.ObservableOptions;
+import it.polimi.ingsw.observer.Observable;
 
 
 /**
  * @author Francesco Puoti
  */
 //TODO va rivista la comunicazione model->View in questa classe
-public class Turn extends ObservableOptions {
+public class Turn extends Observable<Options> {
     /**
      * Reference to the handler of the whole game: this is necessary to switch turn
      */
