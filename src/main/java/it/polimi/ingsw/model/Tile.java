@@ -175,7 +175,7 @@ public class Tile {
         /**
          * Default constructor
          */
-        private IndexTile(int r, int c) {
+        IndexTile(int r, int c) {
             row = r;
             col = c;
         }

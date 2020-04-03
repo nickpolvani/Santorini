@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.bean.options.ConfirmOptions;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.bean.options.TileOptions;
+import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
@@ -16,7 +17,7 @@ import java.util.Queue;
 
 /**
  * @author Polvani-Puoti-Sacchetta
- * Dobbiamo pensare ad un modo per controllare la logica del turno a seconda del God
+ * TODO Dobbiamo pensare ad un modo per controllare la logica del turno a seconda del God
  */
 
 
@@ -60,21 +61,13 @@ public abstract class God extends Observable<Options> {
      */
 
     protected Collection<IndexTile> tileToMove(IndexTile indexTile) {
-
         Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
-
         Collection<IndexTile> tileToMove = new ArrayList<>();
-
-        for (Tile otherTile : gameState.getIslandBoard().neighbouringTiles(positionTile)) {
-            if (!otherTile.isOccupied()) {
-
-                if (otherTile.getBuilding().getLevel().getLevelInt() - positionTile.getBuilding().getLevel().getLevelInt() < 2) {
-                    tileToMove.add(otherTile.getIndex());
-                }
+        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
+            if (!(gameState.getIslandBoard().getTile(otherTile).isOccupied()) && gameState.getIslandBoard().getTile(otherTile).getBuilding().getLevel().getLevelInt() - positionTile.getBuilding().getLevel().getLevelInt() < 2) {
+                tileToMove.add(otherTile);
             }
         }
-
-
         return tileToMove;
     }
 
@@ -84,12 +77,10 @@ public abstract class God extends Observable<Options> {
      * @return default collection of tiles where the worker can build
      */
     protected Collection<IndexTile> tileToBuild(IndexTile indexTile) {
-        Tile currentTile = gameState.getIslandBoard().getTile(indexTile);
         Collection<IndexTile> tileToBuild = new ArrayList<>();
-
-        for (Tile otherTile : gameState.getIslandBoard().neighbouringTiles(currentTile)) {
-            if (!otherTile.isOccupied()) {
-                tileToBuild.add(otherTile.getIndex());
+        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
+            if (!gameState.getIslandBoard().getTile(otherTile).isOccupied()) {
+                tileToBuild.add(otherTile);
             }
         }
         return tileToBuild;
@@ -140,7 +131,7 @@ public abstract class God extends Observable<Options> {
      *                  of the turn.
      * @throws IllegalArgumentException
      */
-    public void move(IndexTile indexTile) throws IllegalArgumentException {
+    public void move(IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException {
         if (!tileToMove(worker.getTile().getIndex()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
@@ -173,7 +164,6 @@ public abstract class God extends Observable<Options> {
         throw new RuntimeException("cannot call applyChoice method of abstract class God!!!");
     }
 
-
     /**
      * @param tilesToChoose
      * @param message
@@ -195,7 +185,6 @@ public abstract class God extends Observable<Options> {
 
     }
 
-
     @Override
     public String toString() {
         return "Your god is " + this.nameAndDescription.getName() + "his power is:\n" + nameAndDescription.getDescriptionOfPower();
@@ -204,7 +193,6 @@ public abstract class God extends Observable<Options> {
     protected Worker getWorker() {
         return worker;
     }
-
 
     /**
      * @return operations that the player can make during his turn, due to his God power

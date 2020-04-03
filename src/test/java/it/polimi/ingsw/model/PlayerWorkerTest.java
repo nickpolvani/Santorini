@@ -8,6 +8,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.Assert.*;
 
 
@@ -43,9 +46,11 @@ public class PlayerWorkerTest {
 
         }
 
-
+        Set<String> players = new HashSet<>();
+        players.add("francesco");
+        players.add("juri");
         //Testing setter and getter of positionTile.
-        GameState testGame = new GameState();
+        GameState testGame = new GameState(players);
         Tile testTile = testGame.getIslandBoard().getBoard()[0][1];
 
         for (int i = 0; i < this.player.getWorker().length; i++) {

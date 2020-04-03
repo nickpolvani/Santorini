@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.god;
 
+import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.model.Tile;
 
 import java.util.Collection;
@@ -23,7 +24,7 @@ public class Pan extends God {
     }
 
     @Override
-    public void move(Tile.IndexTile indexTile) {
+    public void move(Tile.IndexTile indexTile) throws AlreadyOccupiedException {
         super.move(indexTile);
     }
 

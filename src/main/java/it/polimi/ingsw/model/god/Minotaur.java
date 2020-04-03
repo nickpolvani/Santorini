@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.god;
 
+import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.Collection;
@@ -29,7 +30,7 @@ public class Minotaur extends God {
     }
 
     @Override
-    public void move(IndexTile indexTile) {
+    public void move(IndexTile indexTile) throws AlreadyOccupiedException {
         super.move(indexTile);
     }
 

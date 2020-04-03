@@ -4,7 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 
 public class IslandBoardTest {
@@ -29,22 +30,14 @@ public class IslandBoardTest {
 
     @Test
     public void neighbouringTiles() {
-
-        try {
-            instance.neighbouringTiles(null);
-            fail("It is possible to pass null");
-        } catch (NullPointerException e) {
-            assertTrue(true);
-        }
-
         /*The four corners of the board*/
-        assertEquals("The method returns an incorrect number of elements - 1", 3, instance.neighbouringTiles(instance.getBoard()[0][0]).size());
-        assertEquals("The method returns an incorrect number of elements - 2", 3, instance.neighbouringTiles(instance.getBoard()[0][IslandBoard.N_COLS - 1]).size());
-        assertEquals("The method returns an incorrect number of elements - 3", 3, instance.neighbouringTiles(instance.getBoard()[IslandBoard.N_ROWS - 1][0]).size());
-        assertEquals("The method returns an incorrect number of elements - 4", 3, instance.neighbouringTiles(instance.getBoard()[IslandBoard.N_ROWS - 1][IslandBoard.N_COLS - 1]).size());
+        assertEquals("The method returns an incorrect number of elements - 1", 3, instance.indexOfNeighbouringTiles((instance.getBoard()[0][0]).getIndex()).size());
+        assertEquals("The method returns an incorrect number of elements - 2", 3, instance.indexOfNeighbouringTiles((instance.getBoard()[0][IslandBoard.N_COLS - 1]).getIndex()).size());
+        assertEquals("The method returns an incorrect number of elements - 3", 3, instance.indexOfNeighbouringTiles((instance.getBoard()[IslandBoard.N_ROWS - 1][0]).getIndex()).size());
+        assertEquals("The method returns an incorrect number of elements - 4", 3, instance.indexOfNeighbouringTiles((instance.getBoard()[IslandBoard.N_ROWS - 1][IslandBoard.N_COLS - 1]).getIndex()).size());
 
         if (IslandBoard.N_ROWS >= 3 && IslandBoard.N_COLS >= 3) {
-            assertEquals("The method returns an incorrect number of elements", 8, instance.neighbouringTiles(instance.getBoard()[1][1]).size());
+            assertEquals("The method returns an incorrect number of elements", 8, instance.indexOfNeighbouringTiles((instance.getBoard()[1][1]).getIndex()).size());
         }
     }
 }

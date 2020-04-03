@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.action.ActionHandler;
+import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.observer.Observer;
 
@@ -61,7 +62,11 @@ public class GameController implements Observer<Action> {
     public void update(Action a) {
         /*TODO se non è il giocatore corrente viene scartata, qua non so se c'è bisogno del synchronized anche se credo di no*/
         if (a.getPlayer().equals(gameState.getTurn().getCurrentPlayer())) {
-            actionHandler.start(a);
+            try {
+                actionHandler.start(a);
+            } catch (AlreadyOccupiedException e) {
+                e.printStackTrace();
+            }
         }/* else { TODO ipotesi di risposta
             a.getPlayer().getView().send(new AnotherTurnException);
         }*/

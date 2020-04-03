@@ -5,6 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Francesco Puoti
  */
@@ -13,15 +16,15 @@ public class TurnTest {
 
     Turn testTurn;
     GameState testGame;
-
+    Set<String> players = new HashSet<>();
 
     @Before
     @After
     public void prepareTest() {
-        this.testGame = new GameState();
-        this.testGame.addPlayer(new Player("Francesco"));
-        this.testGame.addPlayer(new Player("Niccolo"));
-        this.testGame.addPlayer(new Player("Juri"));
+        players.add("Francesco");
+        players.add("Juri");
+        players.add("Nick");
+        this.testGame = new GameState(players);
     }
 
     /**

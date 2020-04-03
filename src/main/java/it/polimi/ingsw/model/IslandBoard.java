@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exception.AlreadyOccupiedException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -44,25 +46,39 @@ public class IslandBoard implements Cloneable {
     }
 
     /**
-     * @param tile instance of the tile from which to look for nearby ones
-     * @return The return contains the references of the tiles close to the input tile.
+     * @param index index of the tile from which to look for nearby ones
+     * @return The return a Collection of tile's index close to the input index.
      */
-    public Collection<Tile> neighbouringTiles(Tile tile) {
-        if (tile == null) throw new NullPointerException("The tile parameter is null");
-        Collection<Tile> tiles = new ArrayList<>();
-        for (int c = tile.getIndex().getCol() - 1; c <= tile.getIndex().getCol() + 1; c++) {
-            for (int r = tile.getIndex().getRow() - 1; r <= tile.getIndex().getRow() + 1; r++) {
-                if (c >= 0 && c < IslandBoard.N_COLS && r >= 0 && r < IslandBoard.N_ROWS && getBoard()[r][c] != tile)
-                    tiles.add(getBoard()[c][r]);
+    public Collection<Tile.IndexTile> indexOfNeighbouringTiles(Tile.IndexTile index) {
+        Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
+        for (int c = index.getCol() - 1; c <= index.getCol() + 1; c++) {
+            for (int r = index.getRow() - 1; r <= index.getRow() + 1; r++) {
+                if (c >= 0 && c < IslandBoard.N_COLS && r >= 0 && r < IslandBoard.N_ROWS && getBoard()[r][c] != getBoard()[index.getRow()][index.getCol()])
+                    indexTiles.add(new Tile.IndexTile(r, c));
             }
         }
-        return tiles;
+        return indexTiles;
     }
 
+    /**
+     * @param t
+     * @return
+     */
     public Tile getTile(Tile.IndexTile t) {
         return board[t.getRow()][t.getCol()];
     }
 
+    /**
+     * @param worker
+     * @param indexNewPosition
+     * @throws AlreadyOccupiedException
+     */
+    public void changePosition(Worker worker, Tile.IndexTile indexNewPosition) throws AlreadyOccupiedException {
+        if (worker == null || indexNewPosition == null) throw new NullPointerException();
+        worker.getTile().setCurrentWorker(null);
+        getTile(indexNewPosition).setCurrentWorker(worker);
+        worker.setTile(getTile(indexNewPosition));
+    }
 
     @Override
     public Tile[][] clone() {
@@ -75,10 +91,5 @@ public class IslandBoard implements Cloneable {
         }
 
         return clone;
-    }
-
-    //TODO Reinserire la changePosition
-    public void changePosition(Worker worker, Tile.IndexTile indexTile) {
-
     }
 }

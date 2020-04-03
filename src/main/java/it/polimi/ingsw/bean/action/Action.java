@@ -1,10 +1,14 @@
 package it.polimi.ingsw.bean.action;
 
 
+import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.model.Player;
 
-public abstract class Action {
+import java.io.Serializable;
+
+public abstract class Action implements Serializable {
     private Player player;
+
     public Player getPlayer() {
         return player;
     }
@@ -14,5 +18,5 @@ public abstract class Action {
     }
 
 
-    abstract void run();
+    abstract void run() throws AlreadyOccupiedException;
 }

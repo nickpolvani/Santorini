@@ -1,5 +1,6 @@
 package it.polimi.ingsw.bean.action;
 
+import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
@@ -17,7 +18,7 @@ public class MoveAction extends Action {
     }
 
     @Override
-    void run() {
+    void run() throws AlreadyOccupiedException {
         this.getPlayer().getGod().move(indexTile);
     }
 }
