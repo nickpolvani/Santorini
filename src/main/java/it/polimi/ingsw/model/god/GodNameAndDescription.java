@@ -17,6 +17,7 @@ public enum GodNameAndDescription {
     private final String name;
     private final String descriptionOfPower;
 
+
     GodNameAndDescription(String name, String description) {
         this.name = name;
         this.descriptionOfPower = description;

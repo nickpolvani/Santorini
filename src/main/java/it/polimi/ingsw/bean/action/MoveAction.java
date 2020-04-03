@@ -1,5 +1,6 @@
 package it.polimi.ingsw.bean.action;
 
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 public class MoveAction extends Action {
@@ -10,7 +11,8 @@ public class MoveAction extends Action {
         return indexTile;
     }
 
-    public void setIndexTile(IndexTile indexTile) {
+    public MoveAction(Player player, IndexTile indexTile) {
+        super(player);
         this.indexTile = indexTile;
     }
 

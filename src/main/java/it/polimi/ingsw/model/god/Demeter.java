@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.model.Tile;
 
 import java.util.Collection;
+import java.util.Queue;
 
 /**
  * @author Polvani-Puoti-Sacchetta
@@ -24,5 +25,10 @@ public class  Demeter extends God {
     @Override
     public void build(Tile.IndexTile indexTile) {
         super.build(indexTile);
+    }
+
+    @Override
+    public Queue<Operation> getTurnOperations() {
+        return null;
     }
 }

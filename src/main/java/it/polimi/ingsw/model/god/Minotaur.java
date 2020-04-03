@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.god;
 
-import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.Collection;
+import java.util.Queue;
 
 /**
  * @author Polvani-Puoti-Sacchetta
@@ -17,9 +17,10 @@ public class Minotaur extends God {
         super(GodNameAndDescription.MINOTAUR);
     }
 
+
     @Override
-    public TileOptions createTileOptions() {
-        return super.createTileOptions();
+    public Queue<Operation> getTurnOperations() {
+        return null;
     }
 
     @Override

@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model.god;
 
-import it.polimi.ingsw.bean.options.ConfirmOptions;
 import it.polimi.ingsw.model.Tile.IndexTile;
+
+import java.util.Queue;
 
 /**
  * @author Polvani-Puoti-Sacchetta
@@ -16,9 +17,10 @@ public class Prometheus extends God {
         super(GodNameAndDescription.PROMETHEUS);
     }
 
+
     @Override
-    public ConfirmOptions createConfirmOptions() {
-        return super.createConfirmOptions();
+    public Queue<Operation> getTurnOperations() {
+        return null;
     }
 
     /*Non ho fatto l'override dei metodi tileTO... perché lui cambia il comportamento del worker quando builda non cambia dove può farlo*/

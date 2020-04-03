@@ -1,8 +1,10 @@
 package it.polimi.ingsw.bean.options;
 
-import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
+import it.polimi.ingsw.model.Tile.IndexTile;
+
+import java.util.Collection;
 
 /**
  * class used when the player has to choose between a set of tiles, for example to select a Tile to build, move
@@ -11,11 +13,11 @@ import it.polimi.ingsw.model.Tile;
  */
 public class TileOptions extends Options {
 
-    private final Tile[] tilesToChoose;
-    private final IslandBoard boardClone;
+    private final Collection<IndexTile> tilesToChoose;
+    private final Tile[][] boardClone;
     private final String message;
 
-    public TileOptions(Player player, Tile[] tilesToChoose, IslandBoard boardClone, String message) {
+    public TileOptions(Player player, Collection<IndexTile> tilesToChoose, Tile[][] boardClone, String message) {
         super(player);
         this.tilesToChoose = tilesToChoose;
         this.boardClone = boardClone;
@@ -23,11 +25,11 @@ public class TileOptions extends Options {
     }
 
 
-    public Tile[] getTilesToChoose() {
+    public Collection<IndexTile> getTilesToChoose() {
         return tilesToChoose;
     }
 
-    public IslandBoard getBoardClone() {
+    public Tile[][] getBoardClone() {
         return boardClone;
     }
 

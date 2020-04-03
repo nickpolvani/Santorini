@@ -1,26 +1,21 @@
 package it.polimi.ingsw.bean.action;
 
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 
 public class BuildAction extends Action {
     private Tile.IndexTile indexTile;
-    private boolean dome;
+
+    public BuildAction(Tile.IndexTile indexTile, Player player) {
+        super(player);
+        this.indexTile = indexTile;
+    }
+
 
     public Tile.IndexTile getIndexTile() {
         return indexTile;
     }
 
-    public void setIndexTile(Tile.IndexTile indexTile) {
-        this.indexTile = indexTile;
-    }
-
-    public boolean isDome() {
-        return dome;
-    }
-
-    public void setDome(boolean dome) {
-        this.dome = dome;
-    }
 
     @Override
     void run() {

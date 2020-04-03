@@ -40,7 +40,7 @@ public class PlayerWorkerTest {
 
         for (int i = 0; i < player.getWorker().length; i++) {
             assertEquals("Worker's color is different from the one set whit method", player.getWorker()[i].getColor(), Color.RED);
-            assertEquals("Worker's player is different from the one set whit method", player.getWorker()[i].getPlayer(), this.player);
+
         }
 
 

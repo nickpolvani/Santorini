@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.AthenaTurn;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.Collection;
+import java.util.Queue;
 
 /**
  * @author Polvani-Puoti-Sacchetta
@@ -30,7 +31,12 @@ public class Athena extends God {
     }
 
     @Override
-    protected Collection<IndexTile> tileToMove(IndexTile t) {
+    public Queue<Operation> getTurnOperations() {
+        return null;
+    }
+
+    @Override
+    protected Collection<IndexTile> tileToMove(IndexTile indexTile) {
         // TODO implement here
         return null;
     }

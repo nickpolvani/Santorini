@@ -5,9 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 /**
  * @author Francesco Puoti
  */
@@ -37,13 +34,7 @@ public class TurnTest {
 
         this.testGame.setTurn(new Turn(this.testGame));
         this.testTurn = testGame.getTurn();
-        this.testTurn.switchTurn();
-
-        assertEquals("testTurn.myGame should be equals to testGame", testTurn.getGameState(), testGame);
-        assertEquals("CurrentPlayer should be equals to 'Francesco' ", testTurn.getCurrentPlayer().getNickname(), "Francesco");
-
-        assertTrue("HasToMove should be true after setter", testTurn.getHasToMove());
-        assertTrue("HasToBuild should be true after setter", testTurn.getHasToBuild());
+     //TODO
 
 
     }
