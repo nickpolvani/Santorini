@@ -4,12 +4,18 @@ package it.polimi.ingsw.model;
  * @author Polvani-Puoti-Sacchetta
  */
 public enum BlockLevel {
-    GROUND("Ground"), ONE("First level"), TWO("Second level"), THREE("Third level");
+    GROUND("Ground", 0), ONE("First level", 1), TWO("Second level", 2), THREE("Third level", 3);
 
     private final String message;
+    private final int levelInt;
 
-    BlockLevel(String message) {
+    BlockLevel(String message, int i) {
         this.message = message;
+        this.levelInt = i;
+    }
+
+    public int getLevelInt() {
+        return levelInt;
     }
 
     public BlockLevel nextLevel() {
