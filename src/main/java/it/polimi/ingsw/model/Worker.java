@@ -5,7 +5,7 @@ import it.polimi.ingsw.exception.AlreadySetException;
 /**
  * @author Polvani-Puoti-Sacchetta
  */
-public class Worker {
+public class Worker implements Cloneable {
 
     /**
      * The color of worker's team, which is chosen by the client, at the game's start, and it will be the same for the whole game.
@@ -17,10 +17,6 @@ public class Worker {
      * positionTile represents the current position of the worker
      */
     private Tile positionTile;
-    /**
-     * the reference of the player who handles the worker's moves
-     */
-    private Player player;
 
     /**
      * Default constructor
@@ -58,18 +54,12 @@ public class Worker {
         this.positionTile = positionTile;
     }
 
-    /**
-     * @return this.player
-     */
-    public Player getPlayer() {
-        return this.player;
-    }
 
-    /**
-     * @param player: reference to the player who use this specific worker in his actions
-     */
-    public void setPlayer(Player player) {
-        this.player = player;
+    @Override
+    protected Worker clone() {
+        Worker clone = new Worker();
+        clone.color = this.color;
+        clone.positionTile = this.positionTile;
+        return clone;
     }
-
 }

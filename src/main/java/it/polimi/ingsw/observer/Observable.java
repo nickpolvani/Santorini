@@ -6,7 +6,7 @@ import java.util.List;
 public class Observable<T> {
     private final List<Observer<T>> observers = new ArrayList<>();
 
-    public void addObservers(Observer<T> observer) {
+    public void addObserver(Observer<T> observer) {
         observers.add(observer);
     }
 

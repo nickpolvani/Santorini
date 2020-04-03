@@ -59,7 +59,6 @@ public class Player {
         this.worker = new Worker[2];
         for (int i = 0; i < worker.length; i++) {
             worker[i] = new Worker();
-            worker[i].setPlayer(this);
             worker[i].setColor(color);
         }
     }

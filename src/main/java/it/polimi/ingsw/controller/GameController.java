@@ -9,10 +9,10 @@ import it.polimi.ingsw.observer.Observer;
  * @author Polvani-Puoti-Sacchetta
  */
 
-
 public class GameController implements Observer<Action> {
 
     private final GameState gameState;
+
     private final ActionHandler actionHandler = new ActionHandler();
 
     /**

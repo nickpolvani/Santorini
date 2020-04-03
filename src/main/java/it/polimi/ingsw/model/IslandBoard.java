@@ -24,7 +24,6 @@ public class IslandBoard implements Cloneable {
      */
     private final Tile[][] board;
 
-
     /**
      * Default constructor
      */
@@ -58,5 +57,20 @@ public class IslandBoard implements Cloneable {
             }
         }
         return tiles;
+    }
+
+    Tile getTile(Tile.IndexTile t) {
+        return board[t.getRow()][t.getCol()];
+    }
+
+    @Override
+    protected Tile[][] clone() {
+        Tile[][] clone = new Tile[N_ROWS][N_COLS];
+        for (int i = 0; i < N_ROWS; i++) {
+            for (int j = 0; j < N_COLS; j++) {
+                clone[i][j] = board[i][j].clone();
+            }
+        }
+        return clone;
     }
 }

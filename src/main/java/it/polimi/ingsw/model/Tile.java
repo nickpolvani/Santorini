@@ -78,15 +78,18 @@ public class Tile {
 
     @Override
     public Tile clone() {
-        Tile clone = new Tile(this.getIndex().getRow(), this.getIndex().getCol());
+        Worker cloneWorker;
+        Tile cloneTile = new Tile(this.getIndex().getRow(), this.getIndex().getCol());
         try {
-            clone.setCurrentWorker(this.currentWorker);
+            cloneWorker = this.currentWorker.clone();
+            cloneWorker.setTile(cloneTile);
+            cloneTile.setCurrentWorker(cloneWorker);
         } catch (AlreadyOccupiedException e) {
             e.printStackTrace();
         }
-        clone.getBuilding().setLevel(this.getBuilding().getLevel());
-        clone.getBuilding().setDome(this.getBuilding().getDome());
-        return clone;
+        cloneTile.getBuilding().setLevel(this.getBuilding().getLevel());
+        cloneTile.getBuilding().setDome(this.getBuilding().getDome());
+        return cloneTile;
     }
 
     /**
@@ -133,7 +136,7 @@ public class Tile {
 
         /**
          * Questo va usato per costruire
-         * TODO
+         * TODO traduci
          */
         public void addBlock() {
             if (this.level != BlockLevel.THREE) {

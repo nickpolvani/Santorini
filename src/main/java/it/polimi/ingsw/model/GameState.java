@@ -24,7 +24,7 @@ public class GameState {
      */
     private Player challenger;
     /**
-     * TODO qua ricordiamoci di settare in maniera dinamica il turn
+     *
      */
     private Turn turn;
 
