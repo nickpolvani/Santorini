@@ -18,7 +18,6 @@ public class Turn extends Observable<Options> {
 
     private Player currentPlayer;
 
-
     private Queue<Operation> turnOperations;
 
     /**

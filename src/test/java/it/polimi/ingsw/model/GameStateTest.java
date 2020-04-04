@@ -5,8 +5,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +20,7 @@ public class GameStateTest {
     @Before
     @After
     public void prepareTest() {
-        Set<String> players = new TreeSet<>();
+        Set<String> players = new LinkedHashSet<>();
         players.add("juri");
         players.add("francesco");
         players.add("Nick");

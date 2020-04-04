@@ -5,7 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -16,7 +16,7 @@ public class TurnTest {
 
     Turn testTurn;
     GameState testGame;
-    Set<String> players = new HashSet<>();
+    Set<String> players = new LinkedHashSet<>();
 
     @Before
     @After

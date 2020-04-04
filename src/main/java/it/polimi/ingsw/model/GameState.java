@@ -48,7 +48,7 @@ public class GameState {
         this.players = new ArrayList<>();
         this.godsFactory = new GodsFactory(this);
         for (String n : nicknames) {
-            players.add(new Player(n));
+            players.add(new Player(n, this));
         }
     }
 

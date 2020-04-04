@@ -34,7 +34,7 @@ public class TileTest {
     public void isOccupied() throws AlreadyOccupiedException {
         assertFalse(tile.isOccupied());
 
-        tile.setCurrentWorker(new Worker(tile.getIndex()));
+        tile.setCurrentWorker(new Worker(tile.getIndex(), Color.RED));
         assertTrue(tile.isOccupied());
 
         tile.setCurrentWorker(null);

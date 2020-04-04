@@ -31,7 +31,8 @@ public class GodsFactory {
                 return g;
             }
         }
-        if (createdGods.size() > gameState.getPlayers().size())
+
+        if (createdGods.size() == gameState.getPlayers().size())
             throw new IllegalAccessException();
         God g = null;
         switch (name) {

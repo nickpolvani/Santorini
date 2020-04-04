@@ -10,9 +10,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * @author Polvani-Puoti-Sacchetta
- *
- *          PAN: YOU ALLSO WIN IF YOUR WORKER MOVES DOWN TWO OR MORE LEVELS
+ * @author Polvani-Puoti
+ * <p>
+ * PAN: YOU ALLSO WIN IF YOUR WORKER MOVES DOWN TWO OR MORE LEVELS
  */
 public class Pan extends God {
 
@@ -49,4 +49,6 @@ public class Pan extends God {
         return new LinkedList<>(Arrays.asList(operationsArray));
 
     }
+
+
 }

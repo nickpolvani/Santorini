@@ -179,7 +179,7 @@ public class Tile {
         /**
          * Default constructor
          */
-        IndexTile(int r, int c) {
+        public IndexTile(int r, int c) {
             row = r;
             col = c;
         }
@@ -196,6 +196,24 @@ public class Tile {
          */
         public int getCol() {
             return col;
+        }
+
+        /**
+         * I've had to override this method because, otherwise, we could not check if two different instances
+         * oh IndexTile with the same column and row are equals. In fact, default method of class object checks if
+         * references are equal each other, not the properties of the instances.
+         *
+         * @param o
+         * @return boolean
+         */
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof IndexTile)) return false;
+
+            IndexTile otherIndex = (IndexTile) o;
+            if (this.col != otherIndex.getCol() || this.row != otherIndex.getRow()) return false;
+
+            return true;
         }
     }
 
