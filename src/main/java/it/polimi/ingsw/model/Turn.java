@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.model.god.Operation;
+import it.polimi.ingsw.observer.Observable;
 
 import java.util.Queue;
 
@@ -9,7 +11,7 @@ import java.util.Queue;
  * @author Francesco Puoti
  */
 //TODO va rivista la comunicazione model->View in questa classe
-public class Turn {
+public class Turn extends Observable<Options> {
     /**
      * Reference to the handler of the whole game: this is necessary to switch turn
      */
@@ -53,6 +55,14 @@ public class Turn {
      */
     public void endCurrentOperation() {
         turnOperations.poll();
+        if (turnOperations.isEmpty()) {
+            switchTurn();
+        }
+        try {
+            notify(currentPlayer.getGod().getOptions());
+        } catch (IllegalStateException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
 }

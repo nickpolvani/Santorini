@@ -9,7 +9,6 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Tile.IndexTile;
 import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.observer.Observable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +20,7 @@ import java.util.Queue;
  */
 
 
-public abstract class God extends Observable<Options> {
+public abstract class God {
 
     //TODO bisogna aggiungere ad ogni God le remoteView come observer, quando vengono instanziati.
 
@@ -48,10 +47,6 @@ public abstract class God extends Observable<Options> {
 
     public GameState getGameState() {
         return gameState;
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
     }
 
 
@@ -90,28 +85,25 @@ public abstract class God extends Observable<Options> {
      * Notifies the View of the Options available for current operation in the turn
      */
 
-    protected final void notifyOptions() {
+    public final Options getOptions() throws IllegalStateException {
         switch (gameState.getTurn().getCurrentOperation()) {
 
             case MOVE:
-                notify(createTileOptions(tileToMove(worker.getTile().getIndex()), "These are the Tiles where you can move"));
-                break;
+                return createTileOptions(tileToMove(worker.getTile().getIndex()), "These are the Tiles where you can move");
             case BUILD:
-                notify(createTileOptions(tileToBuild(worker.getTile().getIndex()), "These are the Tiles where you can build"));
-                break;
+                return createTileOptions(tileToBuild(worker.getTile().getIndex()), "These are the Tiles where you can build");
             case CHOOSE:
-                notify(createConfirmOptions());
-                break;
+                return createConfirmOptions();
             case SELECT_WORKER:
                 Collection<IndexTile> indexTiles = new ArrayList<>();
                 Worker[] workers = gameState.getTurn().getCurrentPlayer().getWorker();
                 for (int i = 0; i < workers.length; ++i) {
                     indexTiles.add(workers[i].getTile().getIndex());
                 }
-                notify(createTileOptions(indexTiles, "choose one of your workers"));
-                break;
+                return createTileOptions(indexTiles, "choose one of your workers");
+            default:
+                throw new IllegalStateException("Invalid current operation in Turn" + gameState.getTurn().getCurrentPlayer());
         }
-
     }
 
     /**
@@ -123,7 +115,6 @@ public abstract class God extends Observable<Options> {
     public final void selectWorker(Worker worker) {
         this.worker = worker;
         gameState.getTurn().endCurrentOperation();
-        notifyOptions();
     }
 
     /**
@@ -137,7 +128,6 @@ public abstract class God extends Observable<Options> {
         }
         gameState.getIslandBoard().changePosition(worker, indexTile);
         gameState.getTurn().endCurrentOperation();
-        notifyOptions();
     }
 
     /**
@@ -150,7 +140,6 @@ public abstract class God extends Observable<Options> {
         }
         gameState.getIslandBoard().getTile(indexTile).getBuilding().addBlock();
         gameState.getTurn().endCurrentOperation();
-        notifyOptions();
     }
 
     /**
@@ -171,6 +160,11 @@ public abstract class God extends Observable<Options> {
      */
     protected final TileOptions createTileOptions(Collection<IndexTile> tilesToChoose, String message) {
         Player player = gameState.getTurn().getCurrentPlayer();
+        //TODO used in debug
+        if (player.getGod() != this) {
+            System.err.println("CRITICAL WARNING:  calling method of wrong God, current player is " + player + "God is: " + this.getNameAndDescription().getName());
+            throw new RuntimeException();
+        }
         Tile[][] boardClone = gameState.getIslandBoard().clone();
         return new TileOptions(player, tilesToChoose, boardClone, message);
     }
@@ -180,6 +174,11 @@ public abstract class God extends Observable<Options> {
      */
     public final ConfirmOptions createConfirmOptions() {
         Player player = gameState.getTurn().getCurrentPlayer();
+        //TODO used in debug
+        if (player.getGod() != this) {
+            System.err.println("CRITICAL WARNING:  calling method of wrong God, current player is " + player + "God is: " + this.getNameAndDescription().getName());
+            throw new RuntimeException();
+        }
         Tile[][] boardClone = gameState.getIslandBoard().clone();
         return new ConfirmOptions(player, this.confirmMessage, boardClone);
 
