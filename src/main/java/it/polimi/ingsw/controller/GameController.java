@@ -3,7 +3,9 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.action.ActionHandler;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observer.Observer;
 
 /**
@@ -20,8 +22,12 @@ public class GameController implements Observer<Action> {
      * Default constructor
      */
     public GameController(GameState gameState) {
-
         this.gameState = gameState;
+        try {
+            gameState.setGameController(this);
+        } catch (AlreadySetException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     public void init() {
@@ -37,7 +43,11 @@ public class GameController implements Observer<Action> {
         // TODO implement here
     }
 
-    public void endGame() {
+    public void endGame(Player winner) {
+        // TODO implement here
+    }
+
+    public void hasLost(Player looser) {
         // TODO implement here
     }
 
@@ -49,13 +59,6 @@ public class GameController implements Observer<Action> {
         // TODO implement here
     }
 
-    public void hasWon() {
-        // TODO implement here
-    }
-
-    public void hasLost() {
-        // TODO implement here
-    }
 
     synchronized
     @Override

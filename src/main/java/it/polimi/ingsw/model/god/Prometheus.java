@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.Queue;
@@ -14,8 +16,8 @@ public class Prometheus extends God {
     /**
      * Default constructor
      */
-    protected Prometheus() {
-        super(GodNameAndDescription.PROMETHEUS);
+    protected Prometheus(GameState gameState) {
+        super(GodNameAndDescription.PROMETHEUS, gameState);
     }
 
 

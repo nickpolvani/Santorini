@@ -52,13 +52,13 @@ public class Player {
 
     /**
      * @param color : when I set players's workers' team, I need to set the color of the team
+     *              indexes: is the TileIndexes' array selected by the player during the setup of the game
      */
-    public void setWorker(Color color) throws AlreadySetException {
-
+    public void setWorker(Color color, Tile.IndexTile[] indexes) throws AlreadySetException {
         if (this.worker != null) throw new AlreadySetException("Team already set");
         this.worker = new Worker[2];
         for (int i = 0; i < worker.length; i++) {
-            worker[i] = new Worker();
+            worker[i] = new Worker(indexes[i]);
             worker[i].setColor(color);
         }
     }

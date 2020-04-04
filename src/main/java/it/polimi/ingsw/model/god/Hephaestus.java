@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.god;
 
 
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Tile;
 
 import java.util.Collection;
@@ -14,8 +16,8 @@ public class Hephaestus extends God {
     /**
      * Default constructor
      */
-    protected Hephaestus() {
-        super(GodNameAndDescription.HEPHAESTUS);
+    protected Hephaestus(GameState gameState) {
+        super(GodNameAndDescription.HEPHAESTUS, gameState);
     }
 
     @Override

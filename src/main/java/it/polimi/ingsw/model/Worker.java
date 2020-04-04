@@ -16,12 +16,13 @@ public class Worker implements Cloneable {
      * every worker has a position on the island board, more specifically on a tile.
      * positionTile represents the current position of the worker
      */
-    private Tile positionTile;
+    private Tile.IndexTile positionTile;
 
     /**
      * Default constructor
      */
-    public Worker() {
+    public Worker(Tile.IndexTile positionTile) {
+        this.positionTile = positionTile;
     }
 
     /**
@@ -43,23 +44,22 @@ public class Worker implements Cloneable {
     /**
      * @return this.positionTile
      */
-    public Tile getTile() {
+    public Tile.IndexTile getIndexTile() {
         return this.positionTile;
     }
 
     /**
      * @param positionTile :the reference of the new tile where a player decides to move his worker
      */
-    public void setTile(Tile positionTile) {
+    public void setIndexTile(Tile.IndexTile positionTile) {
         this.positionTile = positionTile;
     }
 
 
     @Override
     protected Worker clone() {
-        Worker clone = new Worker();
+        Worker clone = new Worker(this.positionTile);
         clone.color = this.color;
-        clone.positionTile = this.positionTile;
         return clone;
     }
 }

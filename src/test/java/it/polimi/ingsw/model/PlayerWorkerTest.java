@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.exception.AlreadySetException;
-import it.polimi.ingsw.model.god.God;
-import it.polimi.ingsw.model.god.GodNameAndDescription;
-import it.polimi.ingsw.model.god.GodsFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +18,8 @@ import static org.junit.Assert.*;
  */
 public class PlayerWorkerTest {
     Player player;
+    GameState gameState;
+    GameController gameController;
 
     /*
      * @Before and @After together as annotation of the same method mean that resources instanced in it, before every test,
@@ -29,14 +29,15 @@ public class PlayerWorkerTest {
     @After
     public void setPlayerInstance() {
         this.player = new Player("Francesco");
+
     }
 
     @Test
     public void checkWorkersBound() {
         assertNull("After constructor, worker is not null", player.getWorker());
-
+        Tile.IndexTile[] indexes = {new Tile.IndexTile(0, 0), new Tile.IndexTile(3, 4)};
         try {
-            this.player.setWorker(Color.RED);
+            this.player.setWorker(Color.RED, indexes);
         } catch (AlreadySetException e) {
             System.out.println(e.getMessage());
         }
@@ -51,16 +52,17 @@ public class PlayerWorkerTest {
         players.add("juri");
         //Testing setter and getter of positionTile.
         GameState testGame = new GameState(players);
-        Tile testTile = testGame.getIslandBoard().getBoard()[0][1];
+        Tile.IndexTile testTile = testGame.getIslandBoard().getBoard()[0][1].getIndex();
 
         for (int i = 0; i < this.player.getWorker().length; i++) {
-            player.getWorker()[i].setTile(testGame.getIslandBoard().getBoard()[0][1]);
+            player.getWorker()[i].setIndexTile(testTile);
         }
 
-        assertEquals(player.getWorker()[0].getTile(), testTile);
-        assertEquals(player.getWorker()[1].getTile(), testTile);
+        assertEquals(player.getWorker()[0].getIndexTile(), testTile);
+        assertEquals(player.getWorker()[1].getIndexTile(), testTile);
     }
 
+    /*
     @Test
     public void checkGodChoice() throws IllegalAccessException {
         assertNull("God should be null after constructor", this.player.getGod());
@@ -71,6 +73,7 @@ public class PlayerWorkerTest {
         assertTrue("Player.god should be equals to Hephaestus", this.player.getGod().equals(gf.getGod(GodNameAndDescription.HEPHAESTUS)));
 
     }
+    */
 
     @Test
     public void checkLost() {

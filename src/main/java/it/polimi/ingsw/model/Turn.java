@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.model.god.Operation;
 import it.polimi.ingsw.observer.Observable;
 
 import java.util.Queue;
@@ -28,6 +27,8 @@ public class Turn extends Observable<Options> {
      */
     public Turn(GameState game) {
         this.gameState = game;
+        this.currentPlayer = gameState.getNextPlayer(this.currentPlayer);
+        this.turnOperations = currentPlayer.getGod().getTurnOperations();
     }
 
     public GameState getGameState() {
@@ -39,7 +40,8 @@ public class Turn extends Observable<Options> {
      */
     public void switchTurn() {
         this.currentPlayer = gameState.getNextPlayer(this.currentPlayer);
-        this.turnOperations = currentPlayer.getGod().getTurnOperations();
+        if (this.currentPlayer.getGod().checkHasLost() == true) this.gameState.setLooser(this.currentPlayer);
+        else this.turnOperations = currentPlayer.getGod().getTurnOperations();
     }
 
     public Player getCurrentPlayer() {

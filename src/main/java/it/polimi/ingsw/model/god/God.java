@@ -4,11 +4,8 @@ import it.polimi.ingsw.bean.options.ConfirmOptions;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
-import it.polimi.ingsw.model.GameState;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Tile;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Tile.IndexTile;
-import it.polimi.ingsw.model.Worker;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,18 +22,20 @@ public abstract class God {
     //TODO bisogna aggiungere ad ogni God le remoteView come observer, quando vengono instanziati.
 
     private final GodNameAndDescription nameAndDescription;
-    private GameState gameState;
 
+    protected GameState gameState;
 
     protected String confirmMessage;
-    private Worker worker; // worker selected for the current Turn
+
+    protected Worker worker; // worker selected for the current Turn
 
     /**
      * Default constructor, can be called only by GodsFactory
      */
 
-    protected God(GodNameAndDescription nameAndDescription) {
+    protected God(GodNameAndDescription nameAndDescription, GameState gameState) {
         this.nameAndDescription = nameAndDescription;
+        this.gameState = gameState;
     }
 
 
@@ -49,38 +48,6 @@ public abstract class God {
         return gameState;
     }
 
-
-    /**
-     * @param indexTile is the current position for the worker
-     * @return default collection of tiles where the worker can go
-     */
-
-    protected Collection<IndexTile> tileToMove(IndexTile indexTile) {
-        Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
-        Collection<IndexTile> tileToMove = new ArrayList<>();
-        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
-            if (!(gameState.getIslandBoard().getTile(otherTile).isOccupied()) && gameState.getIslandBoard().getTile(otherTile).getBuilding().getLevel().getLevelInt() - positionTile.getBuilding().getLevel().getLevelInt() < 2) {
-                tileToMove.add(otherTile);
-            }
-        }
-        return tileToMove;
-    }
-
-
-    /**
-     * @param indexTile index of tile where the worker stands
-     * @return default collection of tiles where the worker can build
-     */
-    protected Collection<IndexTile> tileToBuild(IndexTile indexTile) {
-        Collection<IndexTile> tileToBuild = new ArrayList<>();
-        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
-            if (!gameState.getIslandBoard().getTile(otherTile).isOccupied()) {
-                tileToBuild.add(otherTile);
-            }
-        }
-        return tileToBuild;
-    }
-
     /**
      * Notifies the View of the Options available for current operation in the turn
      */
@@ -89,16 +56,16 @@ public abstract class God {
         switch (gameState.getTurn().getCurrentOperation()) {
 
             case MOVE:
-                return createTileOptions(tileToMove(worker.getTile().getIndex()), "These are the Tiles where you can move");
+                return createTileOptions(tileToMove(worker.getIndexTile()), "These are the Tiles where you can move");
             case BUILD:
-                return createTileOptions(tileToBuild(worker.getTile().getIndex()), "These are the Tiles where you can build");
+                return createTileOptions(tileToBuild(worker.getIndexTile()), "These are the Tiles where you can build");
             case CHOOSE:
                 return createConfirmOptions();
             case SELECT_WORKER:
                 Collection<IndexTile> indexTiles = new ArrayList<>();
                 Worker[] workers = gameState.getTurn().getCurrentPlayer().getWorker();
                 for (int i = 0; i < workers.length; ++i) {
-                    indexTiles.add(workers[i].getTile().getIndex());
+                    if (tileToMove(workers[i].getIndexTile()).size() > 0) indexTiles.add(workers[i].getIndexTile());
                 }
                 return createTileOptions(indexTiles, "choose one of your workers");
             default:
@@ -118,16 +85,52 @@ public abstract class God {
     }
 
     /**
+     * @param indexTile is the current position for the worker
+     * @return default collection of tiles where the worker can go
+     */
+
+    protected Collection<IndexTile> tileToMove(IndexTile indexTile) {
+        Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
+        Collection<IndexTile> tileToMove = new ArrayList<>();
+        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
+            if (!(gameState.getIslandBoard().getTile(otherTile).isOccupied()) && gameState.getIslandBoard().getTile(otherTile).getBuilding().getLevel().getLevelInt() - positionTile.getBuilding().getLevel().getLevelInt() < 2) {
+                tileToMove.add(otherTile);
+            }
+        }
+        return tileToMove;
+    }
+
+
+    /**
      * @param indexTile is the tile chosen by the player to move the worker selected at the beginning
      *                  of the turn.
      * @throws IllegalArgumentException
      */
     public void move(IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException {
-        if (!tileToMove(worker.getTile().getIndex()).contains(indexTile)) {
+        if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
         gameState.getIslandBoard().changePosition(worker, indexTile);
-        gameState.getTurn().endCurrentOperation();
+
+        if (gameState.getIslandBoard().getTile(worker.getIndexTile()).getBuildingLevel() == 3) {
+
+            this.gameState.setWinner(this.gameState.getTurn().getCurrentPlayer());
+        } else gameState.getTurn().endCurrentOperation();
+    }
+
+    /**
+     * @param indexTile index of tile where the worker stands
+     * @return default collection of tiles where the worker can build
+     */
+    protected Collection<IndexTile> tileToBuild(IndexTile indexTile) {
+        Collection<IndexTile> tileToBuild = new ArrayList<>();
+        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
+            if (!gameState.getIslandBoard().getTile(otherTile).isOccupied()) {
+                tileToBuild.add(otherTile);
+            }
+        }
+        if (tileToBuild.size() == 0) this.gameState.setLooser(this.gameState.getTurn().getCurrentPlayer());
+        return tileToBuild;
     }
 
     /**
@@ -135,11 +138,25 @@ public abstract class God {
      * @throws IllegalArgumentException
      */
     public void build(IndexTile indexTile) {
-        if (!tileToBuild(worker.getTile().getIndex()).contains(indexTile)) {
+        if (!tileToBuild(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to build is not allowed!");
         }
         gameState.getIslandBoard().getTile(indexTile).getBuilding().addBlock();
         gameState.getTurn().endCurrentOperation();
+    }
+
+    /**
+     * it checks if both workers of the current player cannot move, so the player is declared looser
+     *
+     * @return
+     */
+    public boolean checkHasLost() {
+        Worker[] workers = this.gameState.getTurn().getCurrentPlayer().getWorker();
+        if (tileToMove(workers[0].getIndexTile()).size() == 0 &&
+                tileToMove(workers[1].getIndexTile()).size() == 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -160,7 +177,6 @@ public abstract class God {
      */
     protected final TileOptions createTileOptions(Collection<IndexTile> tilesToChoose, String message) {
         Player player = gameState.getTurn().getCurrentPlayer();
-        //TODO used in debug
         if (player.getGod() != this) {
             System.err.println("CRITICAL WARNING:  calling method of wrong God, current player is " + player + "God is: " + this.getNameAndDescription().getName());
             throw new RuntimeException();
@@ -174,7 +190,6 @@ public abstract class God {
      */
     public final ConfirmOptions createConfirmOptions() {
         Player player = gameState.getTurn().getCurrentPlayer();
-        //TODO used in debug
         if (player.getGod() != this) {
             System.err.println("CRITICAL WARNING:  calling method of wrong God, current player is " + player + "God is: " + this.getNameAndDescription().getName());
             throw new RuntimeException();

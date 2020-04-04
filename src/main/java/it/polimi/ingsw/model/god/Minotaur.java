@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.Collection;
@@ -14,8 +16,8 @@ public class Minotaur extends God {
     /**
      * Default constructor
      */
-    protected Minotaur() {
-        super(GodNameAndDescription.MINOTAUR);
+    protected Minotaur(GameState gameState) {
+        super(GodNameAndDescription.MINOTAUR, gameState);
     }
 
 

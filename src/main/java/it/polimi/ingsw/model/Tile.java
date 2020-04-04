@@ -67,6 +67,10 @@ public class Tile {
         return building;
     }
 
+    public int getBuildingLevel() {
+        return this.building.getLevel().getLevelInt();
+    }
+
     /**
      * To know if the tile is free or occupied. A tile is occupied if it's present a worker or a dome on it.
      *
@@ -82,7 +86,7 @@ public class Tile {
         Tile cloneTile = new Tile(this.getIndex().getRow(), this.getIndex().getCol());
         try {
             cloneWorker = this.currentWorker.clone();
-            cloneWorker.setTile(cloneTile);
+            cloneWorker.setIndexTile(cloneTile.getIndex());
             cloneTile.setCurrentWorker(cloneWorker);
         } catch (AlreadyOccupiedException e) {
             e.printStackTrace();
@@ -194,4 +198,6 @@ public class Tile {
             return col;
         }
     }
+
+
 }

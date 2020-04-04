@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.god;
 
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Tile;
 
 import java.util.Collection;
@@ -13,8 +15,8 @@ public class Demeter extends God {
     /**
      * Default constructor
      */
-    protected Demeter() {
-        super(GodNameAndDescription.DEMETER);
+    protected Demeter(GameState gameState) {
+        super(GodNameAndDescription.DEMETER, gameState);
     }
 
     @Override

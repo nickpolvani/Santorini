@@ -17,6 +17,10 @@ public class GodsFactory {
 
     private GameState gameState;
 
+    public GodsFactory(GameState gameState) {
+        this.gameState = gameState;
+    }
+
     /**
      * @param name
      * @return
@@ -27,36 +31,36 @@ public class GodsFactory {
                 return g;
             }
         }
-        if (createdGods.size() >= 3)
-            throw new IllegalAccessException(); //TODO qua ovviamente va aggiunto il numero di giocatori della lobby non per forza tre
+        if (createdGods.size() > gameState.getPlayers().size())
+            throw new IllegalAccessException();
         God g = null;
         switch (name) {
             case APOLLO:
-                g = new Apollo();
+                g = new Apollo(gameState);
                 break;
             case ARTEMIS:
-                g = new Artemis();
+                g = new Artemis(gameState);
                 break;
             case ATHENA:
-                g = new Athena();
+                g = new Athena(gameState);
                 break;
             case ATLAS:
-                g = new Atlas();
+                g = new Atlas(gameState);
                 break;
             case DEMETER:
-                g = new Demeter();
+                g = new Demeter(gameState);
                 break;
             case HEPHAESTUS:
-                g = new Hephaestus();
+                g = new Hephaestus(gameState);
                 break;
             case MINOTAUR:
-                g = new Minotaur();
+                g = new Minotaur(gameState);
                 break;
             case PAN:
-                g = new Pan();
+                g = new Pan(gameState);
                 break;
             case PROMETHEUS:
-                g = new Prometheus();
+                g = new Prometheus(gameState);
                 break;
         }
         if (g == null) throw new IllegalArgumentException();

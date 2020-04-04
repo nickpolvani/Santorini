@@ -61,7 +61,7 @@ public class IslandBoard implements Cloneable {
     }
 
     /**
-     * @param t
+     * @param
      * @return
      */
     public Tile getTile(Tile.IndexTile t) {
@@ -75,9 +75,9 @@ public class IslandBoard implements Cloneable {
      */
     public void changePosition(Worker worker, Tile.IndexTile indexNewPosition) throws AlreadyOccupiedException {
         if (worker == null || indexNewPosition == null) throw new NullPointerException();
-        worker.getTile().setCurrentWorker(null);
+        this.getTile(worker.getIndexTile()).setCurrentWorker(null);
         getTile(indexNewPosition).setCurrentWorker(worker);
-        worker.setTile(getTile(indexNewPosition));
+        worker.setIndexTile(indexNewPosition);
     }
 
     @Override

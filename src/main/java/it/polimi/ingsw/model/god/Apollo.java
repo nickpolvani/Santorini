@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.god;
 
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.Arrays;
@@ -16,9 +18,8 @@ public class Apollo extends God {
     /**
      * Default constructor
      */
-    Apollo() {
-        super(GodNameAndDescription.APOLLO);
-
+    Apollo(GameState gameState) {
+        super(GodNameAndDescription.APOLLO, gameState);
     }
 
     @Override
