@@ -81,7 +81,7 @@ public abstract class God {
      */
     public final void selectWorker(Worker worker) {
         this.worker = worker;
-        //gameState.getTurn().endCurrentOperation();
+        gameState.getTurn().endCurrentOperation();
     }
 
     /**

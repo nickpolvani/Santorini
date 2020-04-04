@@ -36,8 +36,8 @@ public class PanTest {
         indexes[1] = new Tile.IndexTile(1, 2);
         testPlayer.setWorker(Color.RED, indexes);
 
-        testPlayer.getGod().selectWorker(testPlayer.getWorker()[0]);
         gameState.setTurn(new GameTurn(gameState, testPlayer));
+        testPlayer.getGod().selectWorker(testPlayer.getWorker()[0]);
 
     }
 
@@ -50,7 +50,8 @@ public class PanTest {
 
     @Test
     public void move() {
-        assertEquals(testPlayer.getWorker()[0].getIndexTile(), indexes[0]);
+        assertEquals(testPlayer.getGod().worker.getIndexTile(), indexes[0]);
+
         newIndex = gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 2)).getIndex();
         try {
             testPlayer.getGod().move(newIndex);

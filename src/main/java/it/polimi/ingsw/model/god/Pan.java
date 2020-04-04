@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Tile;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -32,10 +31,7 @@ public class Pan extends God {
      */
     @Override
     public void move(Tile.IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException {
-        Collection<Tile.IndexTile> tileToMove = tileToMove(worker.getIndexTile());
-
-
-        if (!tileToMove.contains(indexTile)) {
+        if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
         int levelDifference = (gameState.getIslandBoard().getTile(this.worker.getIndexTile()).getBuildingLevel() - gameState.getIslandBoard().getTile(indexTile).getBuildingLevel());
