@@ -85,9 +85,11 @@ public class Tile {
         Worker cloneWorker;
         Tile cloneTile = new Tile(this.getIndex().getRow(), this.getIndex().getCol());
         try {
-            cloneWorker = this.currentWorker.clone();
-            cloneWorker.setIndexTile(cloneTile.getIndex());
-            cloneTile.setCurrentWorker(cloneWorker);
+            if (this.currentWorker != null) {
+                cloneWorker = this.currentWorker.clone();
+                cloneWorker.setIndexTile(cloneTile.getIndex());
+                cloneTile.setCurrentWorker(cloneWorker);
+            }
         } catch (AlreadyOccupiedException e) {
             e.printStackTrace();
         }

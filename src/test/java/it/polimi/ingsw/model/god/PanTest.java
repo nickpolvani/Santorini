@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.GameState;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Tile;
+import it.polimi.ingsw.model.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,6 +37,7 @@ public class PanTest {
         testPlayer.setWorker(Color.RED, indexes);
 
         testPlayer.getGod().selectWorker(testPlayer.getWorker()[0]);
+        gameState.setTurn(new GameTurn(gameState, testPlayer));
 
     }
 
@@ -68,6 +66,9 @@ public class PanTest {
             testPlayer.getGod().move(newIndex);
         } catch (AlreadyOccupiedException e) {
             System.out.println("tile is already occupied");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Test passato, la mossa non era valida");
         }
 
 

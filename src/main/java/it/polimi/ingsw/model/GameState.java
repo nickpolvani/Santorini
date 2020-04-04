@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @author Francesco Puoti
- */
+
 public class GameState {
     /**
      * The board where the game is about to be played
@@ -50,6 +48,7 @@ public class GameState {
         for (String n : nicknames) {
             players.add(new Player(n, this));
         }
+        //TODO inizializzare il Turno, siamo in fase di setup dunque dovrebbe essere SetupTurn
     }
 
     public void setGameController(GameController gameController) throws AlreadySetException {
@@ -80,7 +79,7 @@ public class GameState {
     }
 
     /**
-     * getter of ArrayList players is useless beacuase we have methods like  nextPlayer and getCurrrentPlayer in Turn objcet
+     * getter of ArrayList players is useless because we have methods like  nextPlayer and getCurrentPlayer in GameTurn object
      * but we use it for testing.
      */
     public List<Player> getPlayers() {
@@ -91,12 +90,13 @@ public class GameState {
         return this.turn;
     }
 
-    /**
-     * if any player has chosen Athena, there's already an instance of AthenaTurn built.
-     * so we can't create an instance of "normal" turn, otherwise we loose useful boolean for Athena.
-     */
-    public void setTurn(Turn turn) throws AlreadySetException {
-        if (this.turn != null) throw new AlreadySetException();
+
+    public void setTurn(Turn turn) throws IllegalArgumentException {
+        if (this.turn != null) {
+            if (this.turn instanceof GameTurn && turn instanceof SetupTurn) {
+                throw new IllegalArgumentException("cannot switch from game to setup turn");
+            }
+        }
         this.turn = turn;
     }
 
@@ -105,9 +105,7 @@ public class GameState {
     }
 
     /**
-     * @return the player who has to play his turn
-     * indexOf return '-1' in case of parameter does not belong to players. Therefore, at the first initialization of Turn
-     * currentPlayer would be null so indexOF returns '-1', so the first player would be players.get(0)
+     * @return the player who has to play his gameTurn
      */
     public Player getNextPlayer(Player currentPlayer) {
         int numOfCurrentPlayer = this.players.indexOf(currentPlayer);

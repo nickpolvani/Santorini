@@ -1,10 +1,14 @@
 package it.polimi.ingsw.model;
 
-public class AthenaTurn extends Turn {
+/**
+ * Type of Turn used when one of the players uses Athena
+ */
+public class AthenaGameTurn extends GameTurn {
     private boolean canMoveUp;
 
-    public AthenaTurn(GameState myGame) {
-        super(myGame);
+
+    public AthenaGameTurn(GameState gameState, Player currentPlayer) {
+        super(gameState, currentPlayer);
         this.canMoveUp = true;
     }
 

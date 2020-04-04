@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.god;
 
-import it.polimi.ingsw.exception.AlreadySetException;
-import it.polimi.ingsw.model.AthenaTurn;
+import it.polimi.ingsw.model.AthenaGameTurn;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Tile.IndexTile;
@@ -20,8 +19,8 @@ public class Athena extends God {
     protected Athena(GameState gameState) {
         super(GodNameAndDescription.ATHENA, gameState);
         try {
-            getGameState().setTurn(new AthenaTurn(getGameState()));
-        } catch (AlreadySetException e) {
+            getGameState().setTurn(new AthenaGameTurn(getGameState(), gameState.getTurn().getCurrentPlayer()));
+        } catch (IllegalArgumentException e) {
             System.err.println("Prendilo al culo (__o__) (o) (o)"); //TODO togli sta roba
         }
 

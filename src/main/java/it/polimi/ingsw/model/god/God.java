@@ -27,7 +27,7 @@ public abstract class God {
 
     protected String confirmMessage;
 
-    protected Worker worker; // worker selected for the current Turn
+    protected Worker worker; // worker selected for the current GameTurn
 
     /**
      * Default constructor, can be called only by GodsFactory
@@ -69,7 +69,7 @@ public abstract class God {
                 }
                 return createTileOptions(indexTiles, "choose one of your workers");
             default:
-                throw new IllegalStateException("Invalid current operation in Turn" + gameState.getTurn().getCurrentPlayer());
+                throw new IllegalStateException("Invalid current operation in GameTurn" + gameState.getTurn().getCurrentPlayer());
         }
     }
 
@@ -93,7 +93,8 @@ public abstract class God {
         Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
         for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
-            if (!(gameState.getIslandBoard().getTile(otherTile).isOccupied()) && gameState.getIslandBoard().getTile(otherTile).getBuilding().getLevel().getLevelInt() - positionTile.getBuilding().getLevel().getLevelInt() < 2) {
+            if (!(gameState.getIslandBoard().getTile(otherTile).isOccupied()) &&
+                    gameState.getIslandBoard().getTile(otherTile).getBuilding().getLevel().getLevelInt() - positionTile.getBuilding().getLevel().getLevelInt() < 2) {
                 tileToMove.add(otherTile);
             }
         }

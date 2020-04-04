@@ -109,7 +109,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFwyoiVFsau3cQ="
 									},
-									"name": "turn",
+									"name": "gameTurn",
 									"visibility": "private",
 									"type": {
 										"$ref": "AAAAAAFxAf+TYlDnDFU="
@@ -261,7 +261,7 @@
 											"_parent": {
 												"$ref": "AAAAAAFxQFIoJdLfX30="
 											},
-											"name": "turn",
+											"name": "gameTurn",
 											"type": {
 												"$ref": "AAAAAAFxAf+TYlDnDFU="
 											}
@@ -1587,7 +1587,7 @@
 													"top": 122,
 													"width": 278.33203125,
 													"height": 13,
-													"text": "-turn: Turn",
+													"text": "-gameTurn: Turn",
 													"horizontalAlignment": 0
 												}
 											],
@@ -1724,7 +1724,7 @@
 													"top": 220,
 													"width": 278.33203125,
 													"height": 13,
-													"text": "+setTurn(turn: Turn): void",
+													"text": "+setTurn(gameTurn: Turn): void",
 													"horizontalAlignment": 0
 												},
 												{
