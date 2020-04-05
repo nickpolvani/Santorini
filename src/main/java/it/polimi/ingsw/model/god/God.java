@@ -65,8 +65,8 @@ public abstract class God {
             case SELECT_WORKER:
                 Collection<IndexTile> indexTiles = new ArrayList<>();
                 Worker[] workers = gameState.getTurn().getCurrentPlayer().getWorker();
-                for (int i = 0; i < workers.length; ++i) {
-                    if (tileToMove(workers[i].getIndexTile()).size() > 0) indexTiles.add(workers[i].getIndexTile());
+                for (Worker w : workers) {
+                    if (tileToMove(w.getIndexTile()).size() > 0) indexTiles.add(w.getIndexTile());
                 }
                 return createTileOptions(indexTiles, "choose one of your workers");
             default:
@@ -102,11 +102,11 @@ public abstract class God {
         return tileToMove;
     }
 
-
     /**
      * @param indexTile is the tile chosen by the player to move the worker selected at the beginning
      *                  of the turn.
      * @throws IllegalArgumentException
+     * @throws AlreadyOccupiedException
      */
     public void move(IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException {
         if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
@@ -138,8 +138,9 @@ public abstract class God {
     /**
      * @param indexTile is the tile chosen by the player to let his worker build
      * @throws IllegalArgumentException
+     * @throws DomeAlreadyPresentException
      */
-    public void build(IndexTile indexTile) throws DomeAlreadyPresentException {
+    public void build(IndexTile indexTile) throws IllegalArgumentException, DomeAlreadyPresentException {
         if (!tileToBuild(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to build is not allowed!");
         }
@@ -154,11 +155,8 @@ public abstract class God {
      */
     public boolean checkHasLost() {
         Worker[] workers = this.gameState.getTurn().getCurrentPlayer().getWorker();
-        if (tileToMove(workers[0].getIndexTile()).size() == 0 &&
-                tileToMove(workers[1].getIndexTile()).size() == 0) {
-            return true;
-        }
-        return false;
+        return tileToMove(workers[0].getIndexTile()).size() == 0 &&
+                tileToMove(workers[1].getIndexTile()).size() == 0;
     }
 
     /**

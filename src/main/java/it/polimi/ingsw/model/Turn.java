@@ -1,11 +1,16 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.observer.Observer;
+
 public interface Turn {
-    public Player getCurrentPlayer();
+    Player getCurrentPlayer();
 
-    public void switchTurn();
+    void switchTurn();
 
-    public Operation getCurrentOperation();
+    Operation getCurrentOperation();
 
-    public void endCurrentOperation();
+    void endCurrentOperation();
+
+    void addObserver(Observer<Options> message);
 }

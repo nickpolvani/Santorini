@@ -15,10 +15,13 @@ public class GameTurn extends Observable<Options> implements Turn {
      * Reference to the handler of the whole game: this is necessary to switch turn
      */
     private final GameState gameState;
-
+    /**
+     *
+     */
     private Player currentPlayer;
-
-
+    /**
+     *
+     */
     private Queue<Operation> turnOperations;
 
     /**
@@ -39,7 +42,7 @@ public class GameTurn extends Observable<Options> implements Turn {
      */
     public void switchTurn() {
         this.currentPlayer = gameState.getNextPlayer(this.currentPlayer);
-        if (this.currentPlayer.getGod().checkHasLost() == true) this.gameState.setLooser(this.currentPlayer);
+        if (this.currentPlayer.getGod().checkHasLost()) this.gameState.setLooser(this.currentPlayer);
         else this.turnOperations = currentPlayer.getGod().getTurnOperations();
     }
 
@@ -63,7 +66,7 @@ public class GameTurn extends Observable<Options> implements Turn {
             notify(currentPlayer.getGod().getOptions());
         } catch (IllegalStateException e) {
             System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     }
-
 }

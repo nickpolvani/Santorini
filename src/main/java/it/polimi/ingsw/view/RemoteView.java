@@ -25,9 +25,9 @@ public class RemoteView extends View {
     private class ActionReceiver implements Observer<Action> {
         //TODO la remoteView è un observer della ClientConnection. Quando arriva un messaggio la RemoteView viene notificata
         @Override
-        public void update(Action ac) {
-            System.out.println("Received: " + ac);
-            handleMove(ac);
+        public void update(Action action) {
+            System.out.println("Received: " + action);
+            handleMove(action);
         }
     }
 }

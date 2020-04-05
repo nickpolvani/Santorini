@@ -30,8 +30,4 @@ public abstract class View extends Observable<Action> implements Observer<Option
         notify(a);
     }
 
-    public void reportError(String message) {
-        showMessage(message);
-    }
-
 }
