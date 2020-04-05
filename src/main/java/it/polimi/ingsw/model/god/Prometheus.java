@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Tile.IndexTile;
@@ -33,7 +34,7 @@ public class Prometheus extends God {
     }
 
     @Override
-    public void build(IndexTile indexTile) {
+    public void build(IndexTile indexTile) throws DomeAlreadyPresentException {
         super.build(indexTile);
     }
 }

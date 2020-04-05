@@ -4,6 +4,7 @@ import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.action.ActionHandler;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.AlreadySetException;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observer.Observer;
@@ -67,7 +68,7 @@ public class GameController implements Observer<Action> {
         if (a.getPlayer().equals(gameState.getTurn().getCurrentPlayer())) {
             try {
                 actionHandler.start(a);
-            } catch (AlreadyOccupiedException e) {
+            } catch (AlreadyOccupiedException | DomeAlreadyPresentException e) {
                 e.printStackTrace();
             }
         }/* else { TODO ipotesi di risposta

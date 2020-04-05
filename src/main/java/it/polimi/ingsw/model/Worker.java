@@ -46,10 +46,8 @@ public class Worker implements Cloneable {
         this.positionTile = positionTile;
     }
 
-
     @Override
-    protected Worker clone() {
-        Worker clone = new Worker(this.positionTile, this.color);
-        return clone;
+    protected Worker clone() throws CloneNotSupportedException {
+        return (Worker) super.clone();
     }
 }

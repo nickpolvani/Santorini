@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Tile;
@@ -26,7 +27,7 @@ public class Hephaestus extends God {
     }
 
     @Override
-    public void build(Tile.IndexTile indexTile) {
+    public void build(Tile.IndexTile indexTile) throws DomeAlreadyPresentException {
         super.build(indexTile);
     }
 

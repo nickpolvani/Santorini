@@ -4,6 +4,7 @@ import it.polimi.ingsw.bean.options.ConfirmOptions;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
@@ -138,7 +139,7 @@ public abstract class God {
      * @param indexTile is the tile chosen by the player to let his worker build
      * @throws IllegalArgumentException
      */
-    public void build(IndexTile indexTile) {
+    public void build(IndexTile indexTile) throws DomeAlreadyPresentException {
         if (!tileToBuild(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to build is not allowed!");
         }

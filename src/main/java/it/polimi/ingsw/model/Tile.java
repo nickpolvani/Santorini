@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 
 /**
  * The tile is the fundamental component of the IslandBoard.
@@ -11,7 +12,7 @@ import it.polimi.ingsw.exception.AlreadyOccupiedException;
  *
  * @author Juri Sacchetta
  */
-public class Tile {
+public class Tile implements Cloneable {
 
     /**
      * The tile's index pair in the board
@@ -81,21 +82,8 @@ public class Tile {
     }
 
     @Override
-    public Tile clone() {
-        Worker cloneWorker;
-        Tile cloneTile = new Tile(this.getIndex().getRow(), this.getIndex().getCol());
-        try {
-            if (this.currentWorker != null) {
-                cloneWorker = this.currentWorker.clone();
-                cloneWorker.setIndexTile(cloneTile.getIndex());
-                cloneTile.setCurrentWorker(cloneWorker);
-            }
-        } catch (AlreadyOccupiedException e) {
-            e.printStackTrace();
-        }
-        cloneTile.getBuilding().setLevel(this.getBuilding().getLevel());
-        cloneTile.getBuilding().setDome(this.getBuilding().getDome());
-        return cloneTile;
+    public Tile clone() throws CloneNotSupportedException {
+        return (Tile) super.clone();
     }
 
     /**
@@ -132,23 +120,14 @@ public class Tile {
         }
 
         /**
-         * Set the new height of the tower. If you want you can calculate the next BlockLevel with nextLevel() in the BlockLevel enum.
-         *
-         * @param level The parameter is set as the new tower height.
-         *///TODO va utilizzato solo per i test.
-        void setLevel(BlockLevel level) {
-            this.level = level;
-        }
-
-        /**
          * Questo va usato per costruire
          * TODO traduci
          */
-        public void addBlock() {
+        public void addBlock() throws DomeAlreadyPresentException {
             if (this.level != BlockLevel.THREE) {
                 this.level = this.level.nextLevel();
             } else {
-                setDome(true);
+                buildDome();
             }
         }
 
@@ -163,12 +142,12 @@ public class Tile {
 
         /**
          * Used to set if the dome is present, true if is present false otherwise.
-         *
-         * @param dome Boolean true if you want set that there is a dome on the tile otherwise false
          */
-        public void setDome(Boolean dome) {
-            this.dome = dome;
+        public void buildDome() throws DomeAlreadyPresentException {
+            if (this.dome) throw new DomeAlreadyPresentException();
+            this.dome = true;
         }
+
     }
 
     /**
@@ -211,11 +190,8 @@ public class Tile {
         @Override
         public boolean equals(Object o) {
             if (!(o instanceof IndexTile)) return false;
-
             IndexTile otherIndex = (IndexTile) o;
-            if (this.col != otherIndex.getCol() || this.row != otherIndex.getRow()) return false;
-
-            return true;
+            return this.col == otherIndex.getCol() && this.row == otherIndex.getRow();
         }
     }
 

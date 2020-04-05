@@ -82,14 +82,6 @@ public class IslandBoard implements Cloneable {
 
     @Override
     public Tile[][] clone() {
-
-        Tile[][] clone = new Tile[N_ROWS][N_COLS];
-        for (int i = 0; i < N_ROWS; i++) {
-            for (int j = 0; j < N_COLS; j++) {
-                clone[i][j] = board[i][j].clone();
-            }
-        }
-
-        return clone;
+        return board.clone();
     }
 }

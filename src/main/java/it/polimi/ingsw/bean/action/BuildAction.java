@@ -1,5 +1,6 @@
 package it.polimi.ingsw.bean.action;
 
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
@@ -25,7 +26,7 @@ public class BuildAction extends Action {
     }
 
     @Override
-    void run() {
+    void run() throws DomeAlreadyPresentException {
         this.getPlayer().getGod().build(this.indexTile);
     }
 

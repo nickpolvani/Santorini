@@ -2,6 +2,7 @@ package it.polimi.ingsw.bean.action;
 
 
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.Player;
 
 import java.io.Serializable;
@@ -18,5 +19,5 @@ public abstract class Action implements Serializable {
     }
 
 
-    abstract void run() throws AlreadyOccupiedException;
+    abstract void run() throws AlreadyOccupiedException, DomeAlreadyPresentException;
 }
