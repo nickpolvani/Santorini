@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.*;
 import org.junit.After;
 import org.junit.Before;
@@ -64,12 +65,12 @@ public class PanTest {
         newIndex = gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 2)).getIndex();
 
         try {
-            testPlayer.getGod().move(newIndex);
-        } catch (AlreadyOccupiedException e) {
-            System.out.println("tile is already occupied");
+            testPlayer.getGod().build(newIndex);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             System.out.println("Test passato, la mossa non era valida");
+        } catch (DomeAlreadyPresentException e) {
+            System.err.println(e.getMessage());
         }
 
 

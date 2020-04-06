@@ -79,8 +79,13 @@ public abstract class God {
      *               View of the next Options that the client has
      *               IMPORTANT: notifyOptions() has to be AFTER turn.endCurrentOperation()
      *               otherwise you will notify twice the same options as before
+     * @throws IllegalStateException thrown if current operation in turn is not SELECT_WORKER
      */
-    public final void selectWorker(Worker worker) {
+    public final void selectWorker(Worker worker) throws IllegalStateException {
+        if (gameState.getTurn().getCurrentOperation() != Operation.SELECT_WORKER) {
+            throw new IllegalStateException("Trying to select worker while current operation in Turn is: " +
+                    gameState.getTurn().getCurrentOperation());
+        }
         this.worker = worker;
         gameState.getTurn().endCurrentOperation();
     }
@@ -107,8 +112,13 @@ public abstract class God {
      *                  of the turn.
      * @throws IllegalArgumentException
      * @throws AlreadyOccupiedException
+     * @throws IllegalStateException    thrown if current operation in turn is not MOVE
      */
-    public void move(IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException {
+    public void move(IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException, IllegalStateException {
+        if (gameState.getTurn().getCurrentOperation() != Operation.MOVE) {
+            throw new IllegalStateException("Trying to execute Move when current operation in Turn is: " +
+                    gameState.getTurn().getCurrentOperation());
+        }
         if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
@@ -139,8 +149,13 @@ public abstract class God {
      * @param indexTile is the tile chosen by the player to let his worker build
      * @throws IllegalArgumentException
      * @throws DomeAlreadyPresentException
+     * @throws IllegalStateException       thrown if current operation in turn is not BUILD
      */
-    public void build(IndexTile indexTile) throws IllegalArgumentException, DomeAlreadyPresentException {
+    public void build(IndexTile indexTile) throws IllegalArgumentException, DomeAlreadyPresentException, IllegalStateException {
+        if (gameState.getTurn().getCurrentOperation() != Operation.BUILD) {
+            throw new IllegalStateException("Trying to execute Build when current operation in Turn is: " +
+                    gameState.getTurn().getCurrentOperation());
+        }
         if (!tileToBuild(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to build is not allowed!");
         }
