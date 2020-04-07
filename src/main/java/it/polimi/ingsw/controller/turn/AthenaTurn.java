@@ -1,13 +1,16 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.controller.turn;
+
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Player;
 
 /**
  * Type of Turn used when one of the players uses Athena
  */
-public class AthenaGameTurn extends GameTurn {
+public class AthenaTurn extends BasicTurn {
     private boolean canMoveUp;
 
 
-    public AthenaGameTurn(GameState gameState, Player currentPlayer) {
+    public AthenaTurn(GameState gameState, Player currentPlayer) {
         super(gameState, currentPlayer);
         this.canMoveUp = true;
     }

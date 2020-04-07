@@ -15,7 +15,7 @@ public class GodsFactory {
      */
     private final List<God> createdGods = new ArrayList<>();
 
-    private GameState gameState;
+    private final GameState gameState;
 
     public GodsFactory(GameState gameState) {
         this.gameState = gameState;
@@ -63,8 +63,9 @@ public class GodsFactory {
             case PROMETHEUS:
                 g = new Prometheus(gameState);
                 break;
+            default:
+                throw new IllegalArgumentException();
         }
-        if (g == null) throw new IllegalArgumentException();
         createdGods.add(g);
         return g;
     }

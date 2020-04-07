@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.model.god.GodNameAndDescription;
 import it.polimi.ingsw.model.god.GodsFactory;
 import org.junit.After;
@@ -12,9 +13,9 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
-public class GameTurnTest {
+public class BasicTurnTest {
 
-    private GameTurn gameTurn;
+    private BasicTurn basicTurn;
     private GameState gameState;
     private Set<String> players;
     private GameController gameController;
@@ -47,15 +48,15 @@ public class GameTurnTest {
         Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
         gameState.getPlayers().get(2).setWorker(Color.RED, workerPositions2);
 
-        gameTurn = new GameTurn(gameState, gameState.getPlayers().get(0));
-        gameState.setTurn(gameTurn);
+        basicTurn = new BasicTurn(gameState, gameState.getPlayers().get(0));
+        gameState.setTurn(basicTurn);
 
 
     }
 
     @After
     public void tearDown() throws Exception {
-        gameTurn = null;
+        basicTurn = null;
         gameState = null;
         players = null;
         gameController = null;
@@ -64,28 +65,28 @@ public class GameTurnTest {
 
     @Test
     public void switchTurnTest() {
-        assertEquals(gameTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
-        gameTurn.switchTurn();
-        assertEquals(gameTurn.getCurrentPlayer(), gameState.getPlayers().get(1));
-        gameTurn.switchTurn();
-        assertEquals(gameTurn.getCurrentPlayer(), gameState.getPlayers().get(2));
-        gameTurn.switchTurn();
-        assertEquals(gameTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
+        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
+        basicTurn.switchTurn();
+        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(1));
+        basicTurn.switchTurn();
+        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(2));
+        basicTurn.switchTurn();
+        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
     }
 
     @Test
     public void endCurrentOperationTest() {
-        assertEquals(gameTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
-        assertEquals(gameTurn.getCurrentOperation(), Operation.SELECT_WORKER);
+        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
+        assertEquals(basicTurn.getCurrentOperation(), Operation.SELECT_WORKER);
         gameState.getPlayers().get(0).getGod().selectWorker(gameState.getPlayers().get(0).getWorker()[0]); // calls endCurrentOperation
-        assertEquals(gameTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
-        assertEquals(gameTurn.getCurrentOperation(), Operation.MOVE);
-        gameTurn.endCurrentOperation();
-        assertEquals(gameTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
-        assertEquals(gameTurn.getCurrentOperation(), Operation.BUILD);
-        gameTurn.endCurrentOperation();
-        assertEquals(gameTurn.getCurrentPlayer(), gameState.getPlayers().get(1));
-        assertEquals(gameTurn.getCurrentOperation(), Operation.SELECT_WORKER);
+        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
+        assertEquals(basicTurn.getCurrentOperation(), Operation.MOVE);
+        basicTurn.endCurrentOperation();
+        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
+        assertEquals(basicTurn.getCurrentOperation(), Operation.BUILD);
+        basicTurn.endCurrentOperation();
+        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(1));
+        assertEquals(basicTurn.getCurrentOperation(), Operation.SELECT_WORKER);
 
     }
 }

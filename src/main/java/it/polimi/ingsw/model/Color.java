@@ -6,9 +6,13 @@ package it.polimi.ingsw.model;
 public enum Color {
     RED("red"), BLUE("blue"), GREEN("green");
 
-    private String message;
+    private final String message;
 
     Color(String message) {
         this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

@@ -1,6 +1,9 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.controller.turn;
 
 import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Operation;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observer.Observable;
 
 import java.util.Queue;
@@ -10,7 +13,7 @@ import java.util.Queue;
  * Type of Turn to be used after setup is finished
  */
 
-public class GameTurn extends Observable<Options> implements Turn {
+public class BasicTurn extends Observable<Options> implements Turn {
     /**
      * Reference to the handler of the whole game: this is necessary to switch turn
      */
@@ -27,7 +30,7 @@ public class GameTurn extends Observable<Options> implements Turn {
     /**
      * Default constructor that set only which game the turn belongs to.
      */
-    public GameTurn(GameState game, Player firstPlayer) {
+    public BasicTurn(GameState game, Player firstPlayer) {
         this.gameState = game;
         this.currentPlayer = firstPlayer;
         this.turnOperations = currentPlayer.getGod().getTurnOperations();

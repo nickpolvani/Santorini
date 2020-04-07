@@ -1,8 +1,12 @@
 package it.polimi.ingsw.model.god;
 
+import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Color;
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Tile;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +41,7 @@ public class PanTest {
         indexes[1] = new Tile.IndexTile(1, 2);
         testPlayer.setWorker(Color.RED, indexes);
 
-        gameState.setTurn(new GameTurn(gameState, testPlayer));
+        gameState.setTurn(new BasicTurn(gameState, testPlayer));
         testPlayer.getGod().selectWorker(testPlayer.getWorker()[0]);
 
     }

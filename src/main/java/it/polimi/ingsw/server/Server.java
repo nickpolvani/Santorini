@@ -26,20 +26,29 @@ public class Server {
         return tmpLobby;
     }
 
-    synchronized void creteNewLobby(String name, ClientConnection clientConnection, int dimLobby) throws IllegalArgumentException {
-        if (dimLobby != 2 && dimLobby != 3)
-            throw new IllegalArgumentException("il massimo numero di giocatori e 3!!");
-        tmpLobby = new Lobby(dimLobby, this);
-        tmpLobby.addClient(name, clientConnection);
-        addRegisteredUsers(name, clientConnection);
+    boolean thereIsAOpenLobby() {
+        return tmpLobby != null && !tmpLobby.isFull();
     }
 
-    synchronized void inserterLobby(String name, ClientConnection clientConnection) {
+    synchronized void createNewLobby(String name, ClientConnection clientConnection, int dimLobby) throws IllegalArgumentException {
+        if (!thereIsAOpenLobby()) {
+            if (dimLobby != 2 && dimLobby != 3)
+                throw new IllegalArgumentException("il massimo numero di giocatori e 3!!");
+            tmpLobby = new Lobby(dimLobby, this);
+            tmpLobby.addClient(name, clientConnection);
+            addRegisteredUsers(name, clientConnection);
+        } else {
+            throw new IllegalStateException();
+        }
+    }
+
+    synchronized void insertIntoLobby(String name, ClientConnection clientConnection) {
         if (tmpLobby.isFull())
             throw new IllegalStateException("Non è possibile chiamare questo mettodo se tmp è piena"); //TODO traduci
         tmpLobby.addClient(name, clientConnection);
         addRegisteredUsers(name, clientConnection);
         if (tmpLobby.isFull()) {
+            lobbies.add(tmpLobby);
             //questa varibile temporanena è stata inserita per poter settare tmpLobby a null prima di chiamre init
             new Thread(new Runnable() {
                 @Override

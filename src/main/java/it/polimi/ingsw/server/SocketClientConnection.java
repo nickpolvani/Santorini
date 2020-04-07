@@ -85,7 +85,7 @@ public class SocketClientConnection extends Observable<Action> implements Client
             } while (b);
             name = (String) read;
             send("Ok, your username is: " + name);
-            if (server.getTmpLobby() == null) {
+            if (!server.thereIsAOpenLobby()) {
                 send("Con quante persone vuoi giocare?"); //TODO traduci
                 do {
                     read = in.readObject();
@@ -96,9 +96,9 @@ public class SocketClientConnection extends Observable<Action> implements Client
                         send("Numero inserito non corretto!\n Riprovaci"); //TODO traduci
                     }
                 } while (b);
-                server.creteNewLobby(name, this, numberPlayers);
+                server.createNewLobby(name, this, numberPlayers);
             } else {
-                server.inserterLobby(name, this);
+                server.insertIntoLobby(name, this);
             }
             while (isActive()) {
                 Object o = in.readObject();

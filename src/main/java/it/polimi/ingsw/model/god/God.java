@@ -28,7 +28,7 @@ public abstract class God {
 
     protected String confirmMessage;
 
-    protected Worker worker; // worker selected for the current GameTurn
+    protected Worker worker; // worker selected for the current BasicTurn
 
     /**
      * Default constructor, can be called only by GodsFactory
@@ -70,7 +70,7 @@ public abstract class God {
                 }
                 return createTileOptions(indexTiles, "choose one of your workers");
             default:
-                throw new IllegalStateException("Invalid current operation in GameTurn" + gameState.getTurn().getCurrentPlayer());
+                throw new IllegalStateException("Invalid current operation in BasicTurn" + gameState.getTurn().getCurrentPlayer());
         }
     }
 

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.turn.BasicTurn;
+import it.polimi.ingsw.controller.turn.SetupTurn;
+import it.polimi.ingsw.controller.turn.Turn;
 import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.model.god.GodsFactory;
 
@@ -79,7 +82,7 @@ public class GameState {
     }
 
     /**
-     * getter of ArrayList players is useless because we have methods like  nextPlayer and getCurrentPlayer in GameTurn object
+     * getter of ArrayList players is useless because we have methods like  nextPlayer and getCurrentPlayer in BasicTurn object
      * but we use it for testing.
      */
     public List<Player> getPlayers() {
@@ -93,7 +96,7 @@ public class GameState {
 
     public void setTurn(Turn turn) throws IllegalArgumentException {
         if (this.turn != null) {
-            if (this.turn instanceof GameTurn && turn instanceof SetupTurn) {
+            if (this.turn instanceof BasicTurn && turn instanceof SetupTurn) {
                 throw new IllegalArgumentException("cannot switch from game to setup turn");
             }
         }

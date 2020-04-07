@@ -1,6 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.controller.turn;
 
 import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.model.Operation;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observer.Observable;
 
 public class SetupTurn extends Observable<Options> implements Turn {
