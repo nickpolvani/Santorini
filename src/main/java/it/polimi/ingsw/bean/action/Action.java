@@ -8,7 +8,7 @@ import it.polimi.ingsw.model.Player;
 import java.io.Serializable;
 
 public abstract class Action implements Serializable {
-    private Player player;
+    private final Player player;
 
     public Player getPlayer() {
         return player;
@@ -17,7 +17,6 @@ public abstract class Action implements Serializable {
     public Action(Player player) {
         this.player = player;
     }
-
 
     abstract void run() throws AlreadyOccupiedException, DomeAlreadyPresentException;
 }

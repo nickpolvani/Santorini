@@ -79,6 +79,4 @@ public class Player {
     public God getGod() {
         return this.god;
     }
-
-
 }

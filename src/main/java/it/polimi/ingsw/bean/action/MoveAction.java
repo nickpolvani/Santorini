@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.Tile.IndexTile;
 
 public class MoveAction extends Action {
 
-    private IndexTile indexTile;
+    private final IndexTile indexTile;
 
     public IndexTile getIndexTile() {
         return indexTile;

@@ -12,10 +12,10 @@ import java.util.concurrent.Executors;
 
 public class Server {
     private static final int PORT = 12345;
-    private ServerSocket serverSocket;
-    private ExecutorService executor = Executors.newFixedThreadPool(128);
-    private Map<String, ClientConnection> registeredUsers = new LinkedHashMap<>(); //TODO questa forse non va bene map quando riceve una nuova coppia se ha gia in memoria la key soprascrive l'oggetto. Nooi vogliamo un avviso
-    private Collection<Lobby> lobbies = new ArrayList<>();
+    private final ServerSocket serverSocket;
+    private final ExecutorService executor = Executors.newFixedThreadPool(128);
+    private final Map<String, ClientConnection> registeredUsers = new LinkedHashMap<>(); //TODO questa forse non va bene map quando riceve una nuova coppia se ha gia in memoria la key soprascrive l'oggetto. Nooi vogliamo un avviso
+    private final Collection<Lobby> lobbies = new ArrayList<>();
     private Lobby tmpLobby;
 
     public Server() throws IOException {
@@ -26,8 +26,8 @@ public class Server {
         return tmpLobby;
     }
 
-    synchronized void creteNewLobby(String name, ClientConnection clientConnection, Integer dimLobby) throws IllegalArgumentException {
-        if (dimLobby != null && dimLobby != 2 && dimLobby != 3)
+    synchronized void creteNewLobby(String name, ClientConnection clientConnection, int dimLobby) throws IllegalArgumentException {
+        if (dimLobby != 2 && dimLobby != 3)
             throw new IllegalArgumentException("il massimo numero di giocatori e 3!!");
         tmpLobby = new Lobby(dimLobby, this);
         tmpLobby.addClient(name, clientConnection);

@@ -4,7 +4,11 @@ package it.polimi.ingsw.model;
  * @author Polvani-Puoti-Sacchetta
  */
 public enum Color {
-    RED,
-    BLUE,
-    GREEN
+    RED("red"), BLUE("blue"), GREEN("green");
+
+    private String message;
+
+    Color(String message) {
+        this.message = message;
+    }
 }

@@ -122,6 +122,5 @@ public class GameState {
 
     public void setLooser(Player looser) {
         this.gameController.hasLost(looser);
-
     }
 }

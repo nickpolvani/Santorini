@@ -5,12 +5,13 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 public class BuildAction extends Action {
-    private IndexTile indexTile;
-    private boolean dome;
+    private final IndexTile indexTile;
+    private final boolean dome;
 
-    public BuildAction(IndexTile indexTile, Player player) {
+    public BuildAction(IndexTile indexTile, Player player, boolean dome) {
         super(player);
         this.indexTile = indexTile;
+        this.dome = dome;
     }
 
     public IndexTile getIndexTile() {
@@ -19,10 +20,6 @@ public class BuildAction extends Action {
 
     public boolean isDome() {
         return dome;
-    }
-
-    public void setDome(boolean dome) {
-        this.dome = dome;
     }
 
     @Override

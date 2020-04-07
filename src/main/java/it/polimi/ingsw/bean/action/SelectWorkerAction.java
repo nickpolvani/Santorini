@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
 public class SelectWorkerAction extends Action {
-    private Worker worker;
+    private final Worker worker;
 
     public SelectWorkerAction(Player player, Worker worker) throws IllegalArgumentException {
         super(player);
@@ -12,6 +12,7 @@ public class SelectWorkerAction extends Action {
         if (!(worker.equals(workers[0]) || worker.equals(workers[1]))) {
             throw new IllegalArgumentException();
         }
+        this.worker = worker;
     }
 
     @Override

@@ -11,10 +11,10 @@ import java.net.Socket;
 public class SocketClientConnection extends Observable<Action> implements ClientConnection, Runnable {
 
     // Questa è la socket per comunicare al client
-    private Socket socket;
+    private final Socket socket;
+    private final Server server;
     private ObjectInputStream in;
     private ObjectOutputStream out;
-    private Server server;
 
     private boolean active = true;
 
@@ -69,7 +69,7 @@ public class SocketClientConnection extends Observable<Action> implements Client
     public void run() {
         String name;
         Object read;
-        Integer numberPlayers;
+        int numberPlayers;
         boolean b = false;
         try {
             in = new ObjectInputStream(socket.getInputStream());

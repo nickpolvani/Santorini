@@ -4,6 +4,8 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 
+import java.util.Objects;
+
 /**
  * The tile is the fundamental component of the IslandBoard.
  * It's these objects that keep the state of IslandBoard in memory.
@@ -86,6 +88,26 @@ public class Tile implements Cloneable {
         return (Tile) super.clone();
     }
 
+/*    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Tile && ((Tile) obj).building.equals(this.building) && ((Tile) obj).index.equals(this.index);
+    }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tile tile = (Tile) o;
+        return index.equals(tile.index) &&
+                building.equals(tile.building) &&
+                Objects.equals(currentWorker, tile.currentWorker);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(index, building, currentWorker);
+    }
+
     /**
      * Class used to model the tower.
      * There are two internal variables one to keep
@@ -148,6 +170,19 @@ public class Tile implements Cloneable {
             this.dome = true;
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Building building = (Building) o;
+            return level == building.level &&
+                    dome.equals(building.dome);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(level, dome);
+        }
     }
 
     /**

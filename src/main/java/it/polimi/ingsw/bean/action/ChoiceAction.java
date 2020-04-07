@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.Player;
  * the logic of the player's turn
  */
 public class ChoiceAction extends Action {
-    boolean confirm;
+    private final boolean confirm;
 
     ChoiceAction(boolean confirm, Player player) {
         super(player);

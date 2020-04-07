@@ -24,11 +24,11 @@ public class Lobby {
         this.server = server;
     }
 
-    public Map<String, ClientConnection> getConnectionMap() {
+    Map<String, ClientConnection> getConnectionMap() {
         return connectionMap;
     }
 
-    public boolean isFull() {
+    boolean isFull() {
         return full;
     }
 

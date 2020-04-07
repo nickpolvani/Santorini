@@ -24,7 +24,7 @@ public abstract class God {
 
     private final GodNameAndDescription nameAndDescription;
 
-    protected GameState gameState;
+    protected final GameState gameState;
 
     protected String confirmMessage;
 
