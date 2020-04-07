@@ -1,8 +1,9 @@
 package it.polimi.ingsw.bean.options;
 
-import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.GodNameAndDescription;
+
+import java.util.List;
 
 /**
  * These type of Options are sent to the user in setup, when they have to choose between a set of
@@ -10,17 +11,17 @@ import it.polimi.ingsw.model.god.GodNameAndDescription;
  */
 public class GodOptions extends Options {
 
-    private final GodNameAndDescription[] godsToChoose;
+    private final List<GodNameAndDescription> godsToChoose;
     private final String message;
 
-    public GodOptions(IslandBoard board, Player player, GodNameAndDescription[] godsToChoose, String message) {
+    public GodOptions(Player player, List<GodNameAndDescription> godsToChoose, String message) {
         super(player);
         this.godsToChoose = godsToChoose;
         this.message = message;
     }
 
 
-    public GodNameAndDescription[] getGodsToChoose() {
+    public List<GodNameAndDescription> getGodsToChoose() {
         return godsToChoose;
     }
 

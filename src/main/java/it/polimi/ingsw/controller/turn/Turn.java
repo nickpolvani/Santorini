@@ -15,4 +15,5 @@ public interface Turn {
     void endCurrentOperation();
 
     void addObserver(Observer<Options> message);
+
 }

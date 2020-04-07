@@ -4,8 +4,6 @@ import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.action.ActionHandler;
 import it.polimi.ingsw.controller.turn.SetupTurn;
 import it.polimi.ingsw.controller.turn.Turn;
-import it.polimi.ingsw.exception.AlreadyOccupiedException;
-import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observer.Observer;
@@ -20,7 +18,7 @@ public class GameController implements Observer<Action> {
 
     private final GameState gameState;
 
-    private final ActionHandler actionHandler = new ActionHandler();
+    private final ActionHandler actionHandler;
 
     /**
      * Default constructor
@@ -29,10 +27,11 @@ public class GameController implements Observer<Action> {
         this.gameState = gameState;
 
         //TODO implement random choice of challenger
-        this.turn = new SetupTurn(gameState.getPlayers().get(0));
+        this.turn = new SetupTurn(gameState.getPlayers().get(0), this);
+        actionHandler = new ActionHandler((SetupTurn) turn);
     }
 
-    private Turn getTurn() {
+    public Turn getTurn() {
         return turn;
     }
 
@@ -87,7 +86,7 @@ public class GameController implements Observer<Action> {
                 try {
                     actionHandler.start(a);
                     turn.endCurrentOperation();
-                } catch (AlreadyOccupiedException | DomeAlreadyPresentException e) {
+                } catch (Exception e) {
                     //TODO: it has to be implemented (mann l'error strunz! )
                 }
 
@@ -100,5 +99,8 @@ public class GameController implements Observer<Action> {
         }*/
     }
 
+    public GameState getGameState() {
+        return gameState;
+    }
 
 }

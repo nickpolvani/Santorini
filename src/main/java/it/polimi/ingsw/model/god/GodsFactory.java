@@ -26,7 +26,7 @@ public class GodsFactory {
      * @param name
      * @return
      */
-    public God getGod(GodNameAndDescription name, Player player) throws IllegalAccessException {
+    public God getGod(GodNameAndDescription name, Player player) {
         for (God g : createdGods) {
             if (g.getNameAndDescription().equals(name)) {
                 return g;
@@ -34,7 +34,7 @@ public class GodsFactory {
         }
 
         if (createdGods.size() == gameState.getPlayers().size())
-            throw new IllegalAccessException();
+            throw new RuntimeException();
         God g = null;
         switch (name) {
             case APOLLO:
