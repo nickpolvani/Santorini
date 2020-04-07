@@ -54,7 +54,6 @@ public class Lobby {
         }
         for (View v : remoteViews) {
             v.addObserver(gameController);
-            gameState.getTurn().addObserver(v);
         }
         gameController.init(); //TODO questo avvia la vera è propria partita.
     }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.model.god.GodNameAndDescription;
 import it.polimi.ingsw.model.god.GodsFactory;

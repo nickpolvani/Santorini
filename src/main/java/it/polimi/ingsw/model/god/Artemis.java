@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model.god;
 
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.GameState;
-import it.polimi.ingsw.model.Operation;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.Collection;
@@ -12,12 +13,14 @@ import java.util.Queue;
  */
 public class Artemis extends God {
 
+    public Artemis(GameState gameState, Player player) {
+        super(GodNameAndDescription.ARTEMIS, player, gameState);
+    }
+
     /**
      * Default constructor
      */
-    protected Artemis(GameState gameState) {
-        super(GodNameAndDescription.ARTEMIS, gameState);
-    }
+
 
     @Override
     public void move(IndexTile indexTile) {

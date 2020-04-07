@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.god;
 
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.model.GameState;
-import it.polimi.ingsw.model.Operation;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 
 import java.util.Arrays;
@@ -11,41 +12,32 @@ import java.util.Queue;
 
 /**
  * @author Polvani-Puoti
- * <p>
- * PAN: YOU ALLSO WIN IF YOUR WORKER MOVES DOWN TWO OR MORE LEVELS
+ * PAN: YOU ALSO WIN IF YOUR WORKER MOVES DOWN TWO OR MORE LEVELS
  */
 public class Pan extends God {
 
     /**
      * Default constructor
      */
-    protected Pan(GameState gameState) {
-        super(GodNameAndDescription.PAN, gameState);
+    protected Pan(GameState gameState, Player player) {
+        super(GodNameAndDescription.PAN, player, gameState);
     }
 
-
     /**
-     * @param indexTile is the tile chosen by the player to move the worker selected at the beginning
-     *                  of the turn.
+     * @param indexTile is the tile chosen by the player to move the worker selected at the beginning of the turn.
      * @throws IllegalArgumentException
      * @throws IllegalStateException    thrown if current operation in turn is not MOVE
      */
     @Override
     public void move(Tile.IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException, IllegalStateException {
-        if (gameState.getTurn().getCurrentOperation() != Operation.MOVE) {
-            throw new IllegalStateException("Trying to execute Move when current operation in Turn is: " +
-                    gameState.getTurn().getCurrentOperation());
-        }
         if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
         int levelDifference = (gameState.getIslandBoard().getTile(this.worker.getIndexTile()).getBuildingLevel() - gameState.getIslandBoard().getTile(indexTile).getBuildingLevel());
 
         gameState.getIslandBoard().changePosition(worker, indexTile);
-        if (levelDifference > 1) this.gameState.setWinner(this.gameState.getTurn().getCurrentPlayer());
-        gameState.getTurn().endCurrentOperation();
+        if (levelDifference > 1) player.setWinner(true);
     }
-
 
     @Override
     public Queue<Operation> getTurnOperations() {

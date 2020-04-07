@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.god;
 
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
-import it.polimi.ingsw.model.Operation;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.Collection;
@@ -16,8 +17,8 @@ public class Atlas extends God {
     /**
      * Default constructor
      */
-    protected Atlas(GameState gameState) {
-        super(GodNameAndDescription.ATLAS, gameState);
+    protected Atlas(GameState gameState, Player player) {
+        super(GodNameAndDescription.ATLAS, player, gameState);
     }
 
 

@@ -27,7 +27,9 @@ public class GameController implements Observer<Action> {
      */
     public GameController(GameState gameState) {
         this.gameState = gameState;
-        this.turn = new SetupTurn();
+
+        //TODO implement random choice of challenger
+        this.turn = new SetupTurn(gameState.getPlayers().get(0));
     }
 
     private Turn getTurn() {
@@ -75,20 +77,24 @@ public class GameController implements Observer<Action> {
         // TODO implement here
     }
 
-    synchronized
+
     @Override
-    public void update(Action a) {
-        /*TODO se non è il giocatore corrente viene scartata, qua non so se c'è bisogno del synchronized anche se credo di no*/
+    public synchronized void update(Action a) {
+
         if (a.getPlayer().equals(getTurn().getCurrentPlayer())) {
-            try {
-                if (a.isCompatible(turn.getCurrentOperation())) {
+
+            if (a.isCompatible(turn.getCurrentOperation())) {
+                try {
                     actionHandler.start(a);
-                } else {
-                    //TODO mandare errore al client
+                    turn.endCurrentOperation();
+                } catch (AlreadyOccupiedException | DomeAlreadyPresentException e) {
+                    //TODO: it has to be implemented (mann l'error strunz! )
                 }
-            } catch (AlreadyOccupiedException | DomeAlreadyPresentException e) {
-                e.printStackTrace();
+
+            } else {
+                //TODO send error's notification to the client
             }
+
         }/* else { TODO ipotesi di risposta
             a.getPlayer().getView().send(new AnotherTurnException);
         }*/

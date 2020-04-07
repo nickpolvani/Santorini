@@ -1,7 +1,7 @@
 package it.polimi.ingsw.bean.action;
 
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
-import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 

@@ -26,6 +26,8 @@ public class Player {
 
     private boolean winner;
 
+    private boolean looser;
+
     /**
      * Default constructor
      * When the game is initialized, every client has to provide his nickname. In this way, when we create the player's instance,
@@ -35,6 +37,7 @@ public class Player {
         this.nickname = nickname;
         this.gameState = gameState;
         this.winner = false;
+        this.looser = false;
     }
 
     /**
@@ -88,5 +91,13 @@ public class Player {
 
     public void setWinner(boolean winner) {
         this.winner = winner;
+    }
+
+    public boolean isLooser() {
+        return looser;
+    }
+
+    public void setLooser(boolean looser) {
+        this.looser = looser;
     }
 }

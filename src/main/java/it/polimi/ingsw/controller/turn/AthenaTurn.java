@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Player;
 
 /**
@@ -10,8 +10,8 @@ public class AthenaTurn extends BasicTurn {
     private boolean canMoveUp;
 
 
-    public AthenaTurn(GameState gameState, Player currentPlayer) {
-        super(gameState, currentPlayer);
+    public AthenaTurn(GameController gameController, Player currentPlayer) {
+        super(currentPlayer, gameController);
         this.canMoveUp = true;
     }
 

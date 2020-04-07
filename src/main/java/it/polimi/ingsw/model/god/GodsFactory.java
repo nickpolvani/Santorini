@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class GodsFactory {
      * @param name
      * @return
      */
-    public God getGod(GodNameAndDescription name) throws IllegalAccessException {
+    public God getGod(GodNameAndDescription name, Player player) throws IllegalAccessException {
         for (God g : createdGods) {
             if (g.getNameAndDescription().equals(name)) {
                 return g;
@@ -37,31 +38,31 @@ public class GodsFactory {
         God g = null;
         switch (name) {
             case APOLLO:
-                g = new Apollo(gameState);
+                g = new Apollo(gameState, player);
                 break;
             case ARTEMIS:
-                g = new Artemis(gameState);
+                g = new Artemis(gameState, player);
                 break;
             case ATHENA:
-                g = new Athena(gameState);
+                g = new Athena(gameState, player);
                 break;
             case ATLAS:
-                g = new Atlas(gameState);
+                g = new Atlas(gameState, player);
                 break;
             case DEMETER:
-                g = new Demeter(gameState);
+                g = new Demeter(gameState, player);
                 break;
             case HEPHAESTUS:
-                g = new Hephaestus(gameState);
+                g = new Hephaestus(gameState, player);
                 break;
             case MINOTAUR:
-                g = new Minotaur(gameState);
+                g = new Minotaur(gameState, player);
                 break;
             case PAN:
-                g = new Pan(gameState);
+                g = new Pan(gameState, player);
                 break;
             case PROMETHEUS:
-                g = new Prometheus(gameState);
+                g = new Prometheus(gameState, player);
                 break;
             default:
                 throw new IllegalArgumentException();
