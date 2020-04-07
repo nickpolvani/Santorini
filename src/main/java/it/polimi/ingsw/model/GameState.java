@@ -1,10 +1,8 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.controller.turn.SetupTurn;
 import it.polimi.ingsw.controller.turn.Turn;
-import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.model.god.GodsFactory;
 
 import java.util.ArrayList;
@@ -18,10 +16,6 @@ public class GameState {
      */
     private final IslandBoard islandBoard;
 
-    /**
-     * necessary if you want to use endGame method of controller
-     */
-    private GameController gameController;
     /**
      *
      */
@@ -52,12 +46,6 @@ public class GameState {
             players.add(new Player(n, this));
         }
         //TODO inizializzare il Turno, siamo in fase di setup dunque dovrebbe essere SetupTurn
-    }
-
-    public void setGameController(GameController gameController) throws AlreadySetException {
-        if (this.gameController != null)
-            throw new AlreadySetException("GameState and GameController are already bound");
-        this.gameController = gameController;
     }
 
     /**
@@ -105,25 +93,5 @@ public class GameState {
 
     public GodsFactory getGodsFactory() {
         return godsFactory;
-    }
-
-    /**
-     * @return the player who has to play his gameTurn
-     */
-    public Player getNextPlayer(Player currentPlayer) {
-        int numOfCurrentPlayer = this.players.indexOf(currentPlayer);
-        try {
-            return this.players.get(numOfCurrentPlayer + 1);
-        } catch (IndexOutOfBoundsException e) {
-            return this.players.get(0);
-        }
-    }
-
-    public void setWinner(Player winner) {
-        this.gameController.endGame(winner);
-    }
-
-    public void setLooser(Player looser) {
-        this.gameController.hasLost(looser);
     }
 }

@@ -24,6 +24,8 @@ public class Player {
      */
     private God god;
 
+    private boolean winner;
+
     /**
      * Default constructor
      * When the game is initialized, every client has to provide his nickname. In this way, when we create the player's instance,
@@ -32,6 +34,7 @@ public class Player {
     public Player(String nickname, GameState gameState) {
         this.nickname = nickname;
         this.gameState = gameState;
+        this.winner = false;
     }
 
     /**
@@ -62,7 +65,6 @@ public class Player {
             } catch (AlreadyOccupiedException e) {
                 System.err.println(e.getMessage());
             }
-
         }
     }
 
@@ -78,5 +80,13 @@ public class Player {
      */
     public God getGod() {
         return this.god;
+    }
+
+    public boolean isWinner() {
+        return winner;
+    }
+
+    public void setWinner(boolean winner) {
+        this.winner = winner;
     }
 }

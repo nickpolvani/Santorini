@@ -2,8 +2,9 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.action.ActionHandler;
+import it.polimi.ingsw.controller.turn.SetupTurn;
+import it.polimi.ingsw.controller.turn.Turn;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
-import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
@@ -15,6 +16,8 @@ import it.polimi.ingsw.observer.Observer;
 
 public class GameController implements Observer<Action> {
 
+    private Turn turn;
+
     private final GameState gameState;
 
     private final ActionHandler actionHandler = new ActionHandler();
@@ -24,10 +27,22 @@ public class GameController implements Observer<Action> {
      */
     public GameController(GameState gameState) {
         this.gameState = gameState;
+        this.turn = new SetupTurn();
+    }
+
+    private Turn getTurn() {
+        return turn;
+    }
+
+    /**
+     * @return the player who has to play his gameTurn
+     */
+    public Player getNextPlayer(Player currentPlayer) {
+        int numOfCurrentPlayer = gameState.getPlayers().indexOf(currentPlayer);
         try {
-            gameState.setGameController(this);
-        } catch (AlreadySetException e) {
-            System.err.println(e.getMessage());
+            return gameState.getPlayers().get(numOfCurrentPlayer + 1);
+        } catch (IndexOutOfBoundsException e) {
+            return gameState.getPlayers().get(0);
         }
     }
 
@@ -44,8 +59,8 @@ public class GameController implements Observer<Action> {
         // TODO implement here
     }
 
-    public void endGame(Player winner) {
-        // TODO implement here
+    public void hasWon(Player winner) {
+        // TODO deve gestire la chiusura del gioco
     }
 
     public void hasLost(Player looser) {
@@ -60,14 +75,17 @@ public class GameController implements Observer<Action> {
         // TODO implement here
     }
 
-
     synchronized
     @Override
     public void update(Action a) {
         /*TODO se non è il giocatore corrente viene scartata, qua non so se c'è bisogno del synchronized anche se credo di no*/
-        if (a.getPlayer().equals(gameState.getTurn().getCurrentPlayer())) {
+        if (a.getPlayer().equals(getTurn().getCurrentPlayer())) {
             try {
-                actionHandler.start(a);
+                if (a.isCompatible(turn.getCurrentOperation())) {
+                    actionHandler.start(a);
+                } else {
+                    //TODO mandare errore al client
+                }
             } catch (AlreadyOccupiedException | DomeAlreadyPresentException e) {
                 e.printStackTrace();
             }
@@ -75,4 +93,6 @@ public class GameController implements Observer<Action> {
             a.getPlayer().getView().send(new AnotherTurnException);
         }*/
     }
+
+
 }
