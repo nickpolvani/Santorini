@@ -1,6 +1,8 @@
 package it.polimi.ingsw.bean.action;
 
+
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
+import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
@@ -21,6 +23,12 @@ public class BuildAction extends Action {
     public boolean isDome() {
         return dome;
     }
+
+    @Override
+    public Boolean isCompatible(Operation operation) {
+        return operation == Operation.BUILD;
+    }
+
 
     @Override
     void run() throws DomeAlreadyPresentException {

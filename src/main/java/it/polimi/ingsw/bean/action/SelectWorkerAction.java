@@ -1,5 +1,6 @@
 package it.polimi.ingsw.bean.action;
 
+import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
@@ -13,6 +14,11 @@ public class SelectWorkerAction extends Action {
             throw new IllegalArgumentException();
         }
         this.worker = worker;
+    }
+
+    @Override
+    public Boolean isCompatible(Operation operation) {
+        return operation == Operation.SELECT_WORKER;
     }
 
     @Override

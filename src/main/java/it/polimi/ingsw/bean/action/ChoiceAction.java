@@ -1,5 +1,6 @@
 package it.polimi.ingsw.bean.action;
 
+import it.polimi.ingsw.model.Operation;
 import it.polimi.ingsw.model.Player;
 
 /**
@@ -17,5 +18,10 @@ public class ChoiceAction extends Action {
     @Override
     void run() {
         getPlayer().getGod().applyChoice(confirm);
+    }
+
+    @Override
+    public Boolean isCompatible(Operation operation) {
+        return operation == Operation.CHOOSE;
     }
 }
