@@ -3,6 +3,7 @@ package it.polimi.ingsw.bean.action;
 
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.Player;
 
@@ -19,7 +20,7 @@ public abstract class Action implements Serializable {
         this.player = player;
     }
 
-    abstract void run() throws AlreadyOccupiedException, DomeAlreadyPresentException;
+    abstract void run() throws AlreadyOccupiedException, DomeAlreadyPresentException, AlreadySetException;
 
     /**
      * @param operation is the current operation in Turn

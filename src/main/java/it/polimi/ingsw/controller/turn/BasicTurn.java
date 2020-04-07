@@ -34,6 +34,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
         this.currentPlayer = firstPlayer;
         this.turnOperations = currentPlayer.getGod().getTurnOperations();
         this.gameController = gameController;
+        notify(currentPlayer.getGod().getOptions(getCurrentOperation()));
     }
 
     /**
