@@ -79,7 +79,7 @@ public class Tile implements Cloneable {
      *
      * @return Returns true if there is worker or dome on the tile.
      */
-    public Boolean isOccupied() {
+    public boolean isOccupied() {
         return this.currentWorker != null || building.getDome();
     }
 
@@ -158,7 +158,7 @@ public class Tile implements Cloneable {
          *
          * @return Returns a boolean true if there is false otherwise.
          */
-        public Boolean getDome() {
+        public boolean getDome() {
             return dome;
         }
 

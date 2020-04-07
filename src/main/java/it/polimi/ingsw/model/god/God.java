@@ -177,8 +177,9 @@ public abstract class God {
      *
      * @param confirm
      */
-    public void applyChoice(boolean confirm) throws RuntimeException {
-        throw new RuntimeException("cannot call applyChoice method of abstract class God!!!");
+
+    public void applyChoice(boolean confirm) throws RuntimeException, DomeAlreadyPresentException {
+        //TODO implements here
     }
 
     /**
@@ -206,5 +207,6 @@ public abstract class God {
      * @return operations that the player can make during his turn, due to his God power
      */
     public abstract Queue<Operation> getTurnOperations();
+
 
 }
