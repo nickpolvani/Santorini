@@ -32,8 +32,10 @@ public class GameState {
         this.islandBoard = new IslandBoard();
         this.players = new ArrayList<>();
         this.godsFactory = new GodsFactory(this);
+        int i = 0;
         for (String n : nicknames) {
-            players.add(new Player(n, this));
+            players.add(new Player(n, this, Color.parseColor(i)));
+            i++;
         }
     }
 

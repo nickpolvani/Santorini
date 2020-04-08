@@ -2,8 +2,10 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.action.ActionHandler;
-import it.polimi.ingsw.controller.turn.SetupTurn;
+import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.controller.turn.Turn;
+import it.polimi.ingsw.controller.turn.setup.SetupGodsTurn;
+import it.polimi.ingsw.controller.turn.setup.SetupWorkersTurn;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observer.Observer;
@@ -27,12 +29,23 @@ public class GameController implements Observer<Action> {
         this.gameState = gameState;
 
         //TODO implement random choice of challenger
-        this.turn = new SetupTurn(gameState.getPlayers().get(0), this);
-        actionHandler = new ActionHandler((SetupTurn) turn);
+        this.turn = new SetupGodsTurn(gameState.getPlayers().get(0), this);
+        actionHandler = new ActionHandler((SetupGodsTurn) turn);
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 
     public Turn getTurn() {
         return turn;
+    }
+
+    public void setTurn(Turn nextTurn) {
+        if ((this.turn instanceof SetupGodsTurn && !(nextTurn instanceof SetupWorkersTurn)) ||
+                (this.turn instanceof SetupWorkersTurn && !(nextTurn instanceof BasicTurn)))
+            throw new IllegalStateException();
+        this.turn = nextTurn;
     }
 
     /**
@@ -76,12 +89,9 @@ public class GameController implements Observer<Action> {
         // TODO implement here
     }
 
-
     @Override
     public synchronized void update(Action a) {
-
         if (a.getPlayer().equals(getTurn().getCurrentPlayer())) {
-
             if (a.isCompatible(turn.getCurrentOperation())) {
                 try {
                     actionHandler.start(a);
@@ -98,9 +108,4 @@ public class GameController implements Observer<Action> {
             a.getPlayer().getView().send(new AnotherTurnException);
         }*/
     }
-
-    public GameState getGameState() {
-        return gameState;
-    }
-
 }

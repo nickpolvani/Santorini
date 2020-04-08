@@ -5,7 +5,9 @@ import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.observer.Observer;
 
+import java.util.List;
 import java.util.Queue;
 
 
@@ -30,10 +32,11 @@ public class BasicTurn extends Observable<Options> implements Turn {
     /**
      * Default constructor that set only which game the turn belongs to.
      */
-    public BasicTurn(Player firstPlayer, GameController gameController) {
+    public BasicTurn(GameController gameController, Player firstPlayer, List<Observer<Options>> observerList) {
         this.currentPlayer = firstPlayer;
         this.turnOperations = currentPlayer.getGod().getTurnOperations();
         this.gameController = gameController;
+        this.observers.addAll(observerList);
         notify(currentPlayer.getGod().getOptions(getCurrentOperation()));
     }
 

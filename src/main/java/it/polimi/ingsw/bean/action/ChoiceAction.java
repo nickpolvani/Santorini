@@ -1,6 +1,7 @@
 package it.polimi.ingsw.bean.action;
 
 import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.Player;
 
 /**
@@ -16,7 +17,7 @@ public class ChoiceAction extends Action {
     }
 
     @Override
-    void run() {
+    void run() throws DomeAlreadyPresentException {
         getPlayer().getGod().applyChoice(confirm);
     }
 
