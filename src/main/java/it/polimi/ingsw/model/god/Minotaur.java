@@ -37,14 +37,16 @@ public class Minotaur extends God {
 
         Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
+        Worker otherWorker;
 
         for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
 
             if (!(gameState.getIslandBoard().getTile(otherTile).getBuilding().getDome()) &&
                     gameState.getIslandBoard().getTile(otherTile).getBuildingLevel() - positionTile.getBuildingLevel() < 2) {
 
-                if (gameState.getIslandBoard().getTile(otherTile).getCurrentWorker() != null) {
-                    if (checkBackwardsTile(otherTile)) {
+                otherWorker = gameState.getIslandBoard().getTile(otherTile).getCurrentWorker();
+                if (otherWorker != null) {
+                    if (checkBackwardsTile(otherTile) && !Arrays.asList(player.getWorker()).contains(otherWorker)) {
                         tileToMove.add(otherTile);
                     }
                 } else {
@@ -54,6 +56,7 @@ public class Minotaur extends God {
         }
         return tileToMove;
     }
+
 
     @Override
     public void move(IndexTile indexTile) throws AlreadyOccupiedException {

@@ -62,7 +62,7 @@ public class Hephaestus extends God {
     }
 
     @Override
-    public void applyChoice(boolean confirm) throws RuntimeException, DomeAlreadyPresentException {
+    public void applyChoice(boolean confirm) throws DomeAlreadyPresentException {
         confirmed = confirm;
         if (confirm && gameState.getIslandBoard().getTile(tileForAdditionalBlock).getBuildingLevel() < 3) {
             gameState.getIslandBoard().getTile(tileForAdditionalBlock).getBuilding().addBlock();

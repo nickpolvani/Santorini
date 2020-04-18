@@ -71,7 +71,6 @@ public class Apollo extends God {
         } else {
             gameState.getIslandBoard().changePosition(worker, indexTile);
         }
-
         handleWinningCondition();
     }
 

@@ -142,4 +142,6 @@ public class BasicTurn extends Observable<Options> implements Turn {
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }
     }
+
 }
+

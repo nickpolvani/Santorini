@@ -50,10 +50,12 @@ public class Artemis extends God {
 
     @Override
     public void move(IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException {
-        super.move(indexTile);
+
         if (tileFrom == null) {
-            tileFrom = indexTile;
+            tileFrom = worker.getIndexTile();
         }
+        super.move(indexTile);
+
     }
 
     @Override
@@ -73,6 +75,10 @@ public class Artemis extends God {
         } else {
             return new LinkedList<>(Collections.singletonList(Operation.BUILD));
         }
+    }
+
+    public IndexTile getTileFrom() {
+        return tileFrom;
     }
 
     @Override
