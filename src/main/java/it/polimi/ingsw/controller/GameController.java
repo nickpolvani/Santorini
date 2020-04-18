@@ -85,6 +85,7 @@ public class GameController implements Observer<Action> {
             if (a.isCompatible(turn.getCurrentOperation())) {
                 try {
                     actionHandler.start(a);
+                    if (turn.getCurrentPlayer().isWinner()) hasWon(turn.getCurrentPlayer());
                     turn.endCurrentOperation();
                 } catch (Exception e) {
                     //TODO: it has to be implemented (mann l'error strunz! )

@@ -12,14 +12,18 @@ import java.util.Queue;
 
 /**
  * @author Polvani-Puoti-Sacchetta
+ * Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.
  */
 public class Athena extends God {
+
+    private boolean canMoveUp;
 
     /**
      * Default constructor
      */
     protected Athena(GameState gameState, Player player) {
         super(GodNameAndDescription.ATHENA, player, gameState);
+        canMoveUp = true;
     }
 
     /**
@@ -32,19 +36,28 @@ public class Athena extends God {
         if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
-        int levelDifference = (gameState.getIslandBoard().getTile(indexTile).getBuildingLevel() - gameState.getIslandBoard().getTile(this.worker.getIndexTile()).getBuildingLevel());
+        int levelDifference = (gameState.getIslandBoard().getTile(indexTile).getBuildingLevel() - gameState.getIslandBoard().getTile(worker.getIndexTile()).getBuildingLevel());
 
         gameState.getIslandBoard().changePosition(worker, indexTile);
         if (levelDifference > 0) {
-            //TODO come gestiamo il turno con athena anche per gli altri??
+            canMoveUp = false;
         }
+        handleWinningCondition();
     }
+
+    public boolean getCanMoveUp() {
+        return canMoveUp;
+    }
+
 
     @Override
     public Queue<Operation> getTurnOperations() {
         Operation[] operationsArray = {Operation.SELECT_WORKER, Operation.MOVE, Operation.BUILD};
         return new LinkedList<>(Arrays.asList(operationsArray));
-
     }
 
+    @Override
+    public void resetGodState() {
+        canMoveUp = true;
+    }
 }

@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * @author Puoti
  * APOLLO: Your Worker may  move into an opponent Worker’s space by forcing their Worker to
- * the space yours just vacated.
+ * the space just vacated.
  */
 public class Apollo extends God {
 
@@ -26,13 +26,12 @@ public class Apollo extends God {
 
 
     /**
-     *
      * @param indexTile is the current position for the worker
      * @return tiles where player can move his worker. We overridden this method because Apollo allows players to move his worker also
-     *          in a tile where another worker is in, switching positions of workers.
+     * in a tile where another worker is in, switching positions of workers.
      */
     @Override
-    protected Collection<IndexTile> tileToMove(IndexTile indexTile) {
+    public Collection<IndexTile> tileToMove(IndexTile indexTile) {
         Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
 
@@ -55,17 +54,17 @@ public class Apollo extends God {
         Worker otherWorker = gameState.getIslandBoard().getTile(indexTile).getCurrentWorker();
         if (otherWorker != null) {
             IndexTile whereSwitch = worker.getIndexTile();
+            //updating currentWorker's State
             gameState.getIslandBoard().getTile(indexTile).setCurrentWorker(null);
             gameState.getIslandBoard().changePosition(worker, indexTile);
+            //updating otherWorker's State
             gameState.getIslandBoard().getTile(whereSwitch).setCurrentWorker(otherWorker);
             otherWorker.setIndexTile(whereSwitch);
         } else {
             gameState.getIslandBoard().changePosition(worker, indexTile);
         }
 
-        if (gameState.getIslandBoard().getTile(worker.getIndexTile()).getBuildingLevel() == 3) {
-            this.player.setWinner(true);
-        }
+        handleWinningCondition();
     }
 
 
@@ -74,10 +73,5 @@ public class Apollo extends God {
         Operation[] operationsArray = {Operation.SELECT_WORKER, Operation.MOVE, Operation.BUILD};
         return new LinkedList<>(Arrays.asList(operationsArray));
     }
-
-    private void force(IndexTile indexTile) {
-        // TODO implement here
-    }
-
 
 }

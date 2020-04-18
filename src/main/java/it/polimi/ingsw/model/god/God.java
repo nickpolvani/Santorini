@@ -1,8 +1,5 @@
 package it.polimi.ingsw.model.god;
 
-import it.polimi.ingsw.bean.options.ConfirmOptions;
-import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
@@ -32,9 +29,14 @@ public abstract class God {
 
     protected final Player player;
 
-    protected String confirmMessage;
-
     protected Worker worker; // worker selected for the current BasicTurn
+
+    protected String choiceMessage;
+
+    protected boolean confirmed;
+
+    protected String choiceNotAllowedMessage;
+
 
     /**
      * Default constructor, can be called only by GodsFactory
@@ -44,6 +46,7 @@ public abstract class God {
         this.nameAndDescription = nameAndDescription;
         this.gameState = gameState;
         this.player = player;
+        this.confirmed = false;
     }
 
 
@@ -56,31 +59,6 @@ public abstract class God {
         return gameState;
     }
 
-    /**
-     * Notifies the View of the Options available for current operation in the turn
-     */
-
-    public final Options getOptions(Operation currentOperation) throws IllegalStateException {
-        switch (currentOperation) {
-
-            case MOVE:
-                return createTileOptions(tileToMove(worker.getIndexTile()), "These are the Tiles where you can move");
-            case BUILD:
-                return createTileOptions(tileToBuild(worker.getIndexTile()), "These are the Tiles where you can build");
-            case CHOOSE:
-                return createConfirmOptions();
-            case SELECT_WORKER:
-                Collection<IndexTile> indexTiles = new ArrayList<>();
-                Worker[] workers = player.getWorker();
-                for (Worker w : workers) {
-                    //with this check game does not pass as option a worker who can't move
-                    if (tileToMove(w.getIndexTile()).size() > 0) indexTiles.add(w.getIndexTile());
-                }
-                return createTileOptions(indexTiles, "Choose one of your workers");
-            default:
-                throw new IllegalStateException("Invalid current operation in Turn of " + player.getNickname());
-        }
-    }
 
     /**
      * @param worker selects worker for the current player's turn
@@ -89,11 +67,15 @@ public abstract class God {
         this.worker = worker;
     }
 
+    public Worker getWorker() {
+        return worker;
+    }
+
     /**
      * @param indexTile is the current position for the worker
      * @return default collection of tiles where the worker can go
      */
-    protected Collection<IndexTile> tileToMove(IndexTile indexTile) {
+    public Collection<IndexTile> tileToMove(IndexTile indexTile) {
         Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
 
@@ -120,6 +102,10 @@ public abstract class God {
         }
         gameState.getIslandBoard().changePosition(worker, indexTile);
 
+        handleWinningCondition();
+    }
+
+    protected void handleWinningCondition() {
         if (gameState.getIslandBoard().getTile(worker.getIndexTile()).getBuildingLevel() == 3) {
             this.player.setWinner(true);
         }
@@ -129,7 +115,7 @@ public abstract class God {
      * @param indexTile index of tile where the worker stands
      * @return default collection of tiles where the worker can build
      */
-    protected Collection<IndexTile> tileToBuild(IndexTile indexTile) {
+    public Collection<IndexTile> tileToBuild(IndexTile indexTile) {
         Collection<IndexTile> tileToBuild = new ArrayList<>();
         for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
             if (!gameState.getIslandBoard().getTile(otherTile).isOccupied()) {
@@ -170,32 +156,12 @@ public abstract class God {
         return tileToBuild(worker.getIndexTile()).size() == 0;
     }
 
-    /**
-     * Used when the user has to make a choice that changes his turn logic.
-     * not all classes need to implement this method if their power does not involve
-     * any player's choice
-     *
-     * @param confirm
-     */
-
-    public void applyChoice(boolean confirm) throws RuntimeException, DomeAlreadyPresentException {
-        //TODO implements here
+    public String getChoiceMessage() {
+        return choiceMessage;
     }
 
-    /**
-     * @param tilesToChoose
-     * @param message
-     * @return
-     */
-    protected final TileOptions createTileOptions(Collection<IndexTile> tilesToChoose, String message) {
-        return new TileOptions(player, tilesToChoose, gameState.getIslandBoard().clone(), message);
-    }
-
-    /**
-     * @return
-     */
-    public final ConfirmOptions createConfirmOptions() {
-        return new ConfirmOptions(player, this.confirmMessage, gameState.getIslandBoard().clone());
+    public String getChoiceNotAllowedMessage() {
+        return choiceNotAllowedMessage;
     }
 
     @Override
@@ -208,5 +174,31 @@ public abstract class God {
      */
     public abstract Queue<Operation> getTurnOperations();
 
+    public Queue<Operation> getRemainingOperations() {
+        return null;
+    }
 
+    ;
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    /**
+     * Every time a player starts his turn, his god is reset to his initial state
+     */
+    public void resetGodState() {
+        confirmed = false;
+    }
+
+    /**
+     * Used when the user has to make a choice that changes his turn logic.
+     * not all classes need to implement this method if their power does not involve
+     * any player's choice     *
+     *
+     * @param confirm: the choice of the player
+     */
+    public void applyChoice(boolean confirm) throws RuntimeException, DomeAlreadyPresentException {
+        this.confirmed = confirm;
+    }
 }

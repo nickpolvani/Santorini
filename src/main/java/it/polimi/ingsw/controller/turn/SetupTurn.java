@@ -107,7 +107,7 @@ public class SetupTurn extends Observable<Options> implements Turn {
                 }
             }
             options = new TileOptions(currentPlayer, freeIndexTiles, gameController.getGameState().getIslandBoard().clone(),
-                    "Choose two tiles where you want to place your workers");
+                    getCurrentOperation(), "Choose two tiles where you want to place your workers");
         }
         notify(options);
     }

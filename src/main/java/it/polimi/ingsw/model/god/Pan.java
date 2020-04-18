@@ -25,7 +25,7 @@ public class Pan extends God {
 
     /**
      * @param indexTile is the tile chosen by the player to move the worker selected at the beginning of the turn.
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException if you choose a tile where you cannot move
      * @throws IllegalStateException    thrown if current operation in turn is not MOVE
      */
     @Override
@@ -36,14 +36,16 @@ public class Pan extends God {
         int levelDifference = (gameState.getIslandBoard().getTile(this.worker.getIndexTile()).getBuildingLevel() - gameState.getIslandBoard().getTile(indexTile).getBuildingLevel());
 
         gameState.getIslandBoard().changePosition(worker, indexTile);
+
         if (levelDifference > 1) player.setWinner(true);
+        else handleWinningCondition();
+
     }
 
     @Override
     public Queue<Operation> getTurnOperations() {
         Operation[] operationsArray = {Operation.SELECT_WORKER, Operation.MOVE, Operation.BUILD};
         return new LinkedList<>(Arrays.asList(operationsArray));
-
     }
 
 

@@ -11,6 +11,7 @@ import java.util.*;
 
 /**
  * @author Polvani-Puoti-Sacchetta
+ * Your Worker may move one additional time, but not back to its initial space.
  */
 public class Artemis extends God {
 
@@ -22,17 +23,20 @@ public class Artemis extends God {
      */
     public Artemis(GameState gameState, Player player) {
         super(GodNameAndDescription.ARTEMIS, player, gameState);
+        choiceMessage = "Your Worker may move one additional time, but not back to its initial space, because of Artemis' power." +
+                "\nDo you want to perform the additional move? (Yes/No)";
+        choiceNotAllowedMessage = "You cannot make this choice, but you will not loose the game because the operation is optional.";
     }
 
 
     @Override
-    protected Collection<IndexTile> tileToMove(IndexTile indexTile) {
+    public Collection<IndexTile> tileToMove(IndexTile indexTile) {
         Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
         for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
             if (!(gameState.getIslandBoard().getTile(otherTile).isOccupied()) &&
                     gameState.getIslandBoard().getTile(otherTile).getBuildingLevel() - positionTile.getBuildingLevel() < 2) {
-                if (tileToMove != null) {
+                if (tileFrom != null) {
                     if (!otherTile.equals(tileFrom)) {
                         tileToMove.add(otherTile);
                     }
@@ -49,23 +53,31 @@ public class Artemis extends God {
         super.move(indexTile);
         if (tileFrom == null) {
             tileFrom = indexTile;
-        } else {
-            tileFrom = null;
         }
     }
 
     @Override
     public Queue<Operation> getTurnOperations() {
-        Operation[] operationsArray = {Operation.SELECT_WORKER, Operation.MOVE, Operation.CHOOSE, Operation.MOVE, Operation.BUILD};
+        Operation[] operationsArray = {Operation.SELECT_WORKER, Operation.MOVE, Operation.CHOOSE};
         return new LinkedList<>(Arrays.asList(operationsArray));
     }
 
     @Override
-    public void applyChoice(boolean confirm) throws RuntimeException {
-        if (!confirm) {
-            tileFrom = null;
-            //TODO gestire come sistemare l'evoluzione del turno nel caso in cui l'utente non confermi la scelta
+    public Queue<Operation> getRemainingOperations() {
+        if (confirmed) {
+            if (tileToMove(worker.getIndexTile()).size() == 0) {
+                return new LinkedList<>(Arrays.asList(Operation.SEND_MESSAGE, Operation.BUILD));
+            } else {
+                return new LinkedList<>(Arrays.asList(Operation.MOVE, Operation.BUILD));
+            }
+        } else {
+            return new LinkedList<>(Collections.singletonList(Operation.BUILD));
         }
+    }
 
+    @Override
+    public void resetGodState() {
+        tileFrom = null;
+        confirmed = false;
     }
 }

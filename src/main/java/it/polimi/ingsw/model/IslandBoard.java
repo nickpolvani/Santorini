@@ -75,6 +75,7 @@ public class IslandBoard implements Cloneable {
      */
     public void changePosition(Worker worker, Tile.IndexTile indexNewPosition) throws AlreadyOccupiedException {
         if (worker == null || indexNewPosition == null) throw new NullPointerException();
+
         this.getTile(worker.getIndexTile()).setCurrentWorker(null);
         getTile(indexNewPosition).setCurrentWorker(worker);
         worker.setIndexTile(indexNewPosition);

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Tile.IndexTile;
@@ -13,13 +14,15 @@ import java.util.Collection;
  */
 public class TileOptions extends Options {
 
+    private Operation currentOperation;
     private final Collection<IndexTile> tilesToChoose;
     private final Tile[][] boardClone;
     private final String message;
 
-    public TileOptions(Player player, Collection<IndexTile> tilesToChoose, Tile[][] boardClone, String message) {
+    public TileOptions(Player player, Collection<IndexTile> tilesToChoose, Tile[][] boardClone, Operation operation, String message) {
         super(player);
         this.tilesToChoose = tilesToChoose;
+        this.currentOperation = operation;
         this.boardClone = boardClone;
         this.message = message;
     }
