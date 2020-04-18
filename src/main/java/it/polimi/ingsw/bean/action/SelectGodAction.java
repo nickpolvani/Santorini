@@ -1,6 +1,7 @@
 package it.polimi.ingsw.bean.action;
 
 import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.controller.turn.setup.SetupGodsTurn;
 import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.GodNameAndDescription;
@@ -17,7 +18,7 @@ public class SelectGodAction extends SetupAction {
 
     @Override
     void run() throws AlreadySetException {
-        setupTurn.handleGodChoice(god);
+        ((SetupGodsTurn) setupTurn).handleGodChoice(god);
     }
 
     @Override

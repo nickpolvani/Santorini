@@ -1,17 +1,13 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.options.ConfirmOptions;
-import it.polimi.ingsw.bean.options.MessageOption;
 import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.observer.Observer;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Queue;
@@ -38,11 +34,12 @@ public class BasicTurn extends Observable<Options> implements Turn {
     /**
      * Default constructor that set only which game the turn belongs to.
      */
-    public BasicTurn(Player firstPlayer, GameController gameController) {
+    public BasicTurn(GameController gameController, Player firstPlayer, List<Observer<Options>> observerList) {
         this.currentPlayer = firstPlayer;
         this.currentPlayer.getGod().resetGodState();
         this.turnOperations = currentPlayer.getGod().getTurnOperations();
         this.gameController = gameController;
+        this.observers.addAll(observerList);
         notify(getOptions());
     }
 

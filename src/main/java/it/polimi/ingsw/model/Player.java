@@ -4,6 +4,9 @@ import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.model.god.God;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * @author Francesco Puoti
  */
@@ -15,6 +18,8 @@ public class Player {
     private final String nickname;
 
     private final GameState gameState;
+
+    private final Color color;
     /**
      * The reference to the player's workers
      */
@@ -33,11 +38,12 @@ public class Player {
      * When the game is initialized, every client has to provide his nickname. In this way, when we create the player's instance,
      * we set also his nickname. Therefore, the setter of nickname is unnecessary and useless.
      */
-    public Player(String nickname, GameState gameState) {
+    public Player(String nickname, GameState gameState, Color color) {
         this.nickname = nickname;
         this.gameState = gameState;
         this.winner = false;
         this.looser = false;
+        this.color = color;
     }
 
     /**
@@ -55,14 +61,13 @@ public class Player {
     }
 
     /**
-     * @param color   : when I set players's workers' team, I need to set the color of the team
      * @param indexes : is the TileIndexes' array selected by the player during the setup of the game
      */
-    public void setWorker(Color color, Tile.IndexTile[] indexes) throws AlreadySetException {
+    public void setWorker(Tile.IndexTile[] indexes) throws AlreadySetException {
         if (this.worker != null) throw new AlreadySetException("Team already set");
         this.worker = new Worker[2];
         for (int i = 0; i < worker.length; i++) {
-            worker[i] = new Worker(indexes[i], color);
+            worker[i] = new Worker(indexes[i], this.color);
             try {
                 gameState.getIslandBoard().getTile(indexes[i]).setCurrentWorker(worker[i]);
             } catch (AlreadyOccupiedException e) {
@@ -99,5 +104,25 @@ public class Player {
 
     public void setLooser(boolean looser) {
         this.looser = looser;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return winner == player.winner &&
+                looser == player.looser &&
+                Objects.equals(nickname, player.nickname) &&
+                color == player.color &&
+                Arrays.equals(worker, player.worker) &&
+                Objects.equals(god.getNameAndDescription(), player.god.getNameAndDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(nickname, gameState, color, god, winner, looser);
+        result = 31 * result + Arrays.hashCode(worker);
+        return result;
     }
 }

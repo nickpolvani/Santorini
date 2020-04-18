@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import java.util.Objects;
+
 /**
  * @author Polvani-Puoti-Sacchetta
  */
@@ -49,5 +51,19 @@ public class Worker implements Cloneable {
     @Override
     protected Worker clone() throws CloneNotSupportedException {
         return (Worker) super.clone();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Worker worker = (Worker) o;
+        return color == worker.color &&
+                Objects.equals(positionTile, worker.positionTile);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, positionTile);
     }
 }
