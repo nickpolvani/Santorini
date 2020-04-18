@@ -4,12 +4,11 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Tile.IndexTile;
+import it.polimi.ingsw.model.Worker;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author Polvani-Puoti-Sacchetta
@@ -35,8 +34,25 @@ public class Minotaur extends God {
 
     @Override
     public Collection<IndexTile> tileToMove(IndexTile indexTile) {
-        //TODO gestisci i controlli sulle tile dove sono presenti i worker degli opponents
-        return null;
+
+        Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
+        Collection<IndexTile> tileToMove = new ArrayList<>();
+
+        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
+
+            if (!(gameState.getIslandBoard().getTile(otherTile).getBuilding().getDome()) &&
+                    gameState.getIslandBoard().getTile(otherTile).getBuildingLevel() - positionTile.getBuildingLevel() < 2) {
+
+                if (gameState.getIslandBoard().getTile(otherTile).getCurrentWorker() != null) {
+                    if (checkBackwardsTile(otherTile)) {
+                        tileToMove.add(otherTile);
+                    }
+                } else {
+                    tileToMove.add(otherTile);
+                }
+            }
+        }
+        return tileToMove;
     }
 
     @Override
@@ -46,10 +62,30 @@ public class Minotaur extends God {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
 
+        Worker opponentWorker = gameState.getIslandBoard().getTile(indexTile).getCurrentWorker();
+
+        if (opponentWorker != null) {
+            IndexTile whereForce = new IndexTile((2 * opponentWorker.getIndexTile().getRow() - worker.getIndexTile().getRow()),
+                    (2 * opponentWorker.getIndexTile().getCol() - worker.getIndexTile().getCol()));
+
+            gameState.getIslandBoard().changePosition(opponentWorker, whereForce);
+
+        }
         gameState.getIslandBoard().changePosition(worker, indexTile);
-        //TODO gestisci il caso in cui forzi il worker avversario ad andare indietro.
 
         handleWinningCondition();
     }
+
+    public boolean checkBackwardsTile(IndexTile opponentWorker) {
+
+        IndexTile backwardsTile = new IndexTile((2 * opponentWorker.getRow() - worker.getIndexTile().getRow()),
+                (2 * opponentWorker.getCol() - worker.getIndexTile().getCol()));
+
+        if ((backwardsTile.getRow() > 4 || backwardsTile.getRow() < 0) || (backwardsTile.getCol() > 4 || backwardsTile.getCol() < 0))
+            return false;
+        else return !gameState.getIslandBoard().getTile(backwardsTile).isOccupied();
+
+    }
+
 
 }

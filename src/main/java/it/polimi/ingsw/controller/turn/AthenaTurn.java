@@ -90,10 +90,8 @@ public class AthenaTurn extends BasicTurn {
         } else {
             turnOperations.poll();
         }
-
         handleRemainingOperations();
     }
-
 
     /**
      * @return the options the current player has, according to his god's power and Athena's power

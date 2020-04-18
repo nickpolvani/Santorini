@@ -142,8 +142,7 @@ public class Tile implements Cloneable {
         }
 
         /**
-         * Questo va usato per costruire
-         * TODO traduci
+         * Method used to build a new blockLevel
          */
         public void addBlock() throws DomeAlreadyPresentException {
             if (this.level != BlockLevel.THREE) {

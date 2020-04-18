@@ -11,9 +11,6 @@ import java.util.List;
  */
 public class GodsFactory {
 
-    /**
-     * TODO forse qua sarebbe meglio un array, la dim la prendiamo del parametro della lobby dove salveremo il numero di giocatori
-     */
     private final List<God> createdGods = new ArrayList<>();
 
     private final GameState gameState;
@@ -23,8 +20,9 @@ public class GodsFactory {
     }
 
     /**
-     * @param name
-     * @return
+     * @param name   name of the god claimed
+     * @param player player who claim the god
+     * @return God's instance
      */
     public God getGod(GodNameAndDescription name, Player player) {
         for (God g : createdGods) {

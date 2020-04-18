@@ -65,6 +65,7 @@ public class IslandBoard implements Cloneable {
      * @return
      */
     public Tile getTile(Tile.IndexTile t) {
+
         return board[t.getRow()][t.getCol()];
     }
 

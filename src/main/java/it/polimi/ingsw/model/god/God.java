@@ -15,13 +15,9 @@ import java.util.Queue;
 
 /**
  * @author Polvani-Puoti-Sacchetta
- * TODO Dobbiamo pensare ad un modo per controllare la logica del turno a seconda del God
  */
 
-
 public abstract class God {
-
-    //TODO bisogna aggiungere ad ogni God le remoteView come observer, quando vengono instanziati.
 
     private final GodNameAndDescription nameAndDescription;
 
@@ -41,7 +37,6 @@ public abstract class God {
     /**
      * Default constructor, can be called only by GodsFactory
      */
-
     protected God(GodNameAndDescription nameAndDescription, Player player, GameState gameState) {
         this.nameAndDescription = nameAndDescription;
         this.gameState = gameState;
@@ -91,9 +86,9 @@ public abstract class God {
     /**
      * @param indexTile is the tile chosen by the player to move the worker selected at the beginning
      *                  of the turn.
-     * @throws IllegalArgumentException
-     * @throws AlreadyOccupiedException
-     * @throws IllegalStateException    thrown if current operation in turn is not MOVE
+     * @throws IllegalArgumentException if tile chosen is not in tileToMove List
+     * @throws AlreadyOccupiedException if the tile chosen has a worker yet
+     * @throws IllegalStateException    Thrown if current operation in turn is not MOVE
      */
     public void move(IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException {
 
@@ -114,6 +109,7 @@ public abstract class God {
     /**
      * @param indexTile index of tile where the worker stands
      * @return default collection of tiles where the worker can build
+     * @see Tile
      */
     public Collection<IndexTile> tileToBuild(IndexTile indexTile) {
         Collection<IndexTile> tileToBuild = new ArrayList<>();
