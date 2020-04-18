@@ -12,11 +12,9 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.god.Athena;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.model.god.GodNameAndDescription;
+import it.polimi.ingsw.observer.Observer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Type of Turn used when one of the players uses Athena
@@ -25,8 +23,8 @@ public class AthenaTurn extends BasicTurn {
     private Athena athena;
 
 
-    public AthenaTurn(GameController gameController, Player currentPlayer) {
-        super(currentPlayer, gameController);
+    public AthenaTurn(GameController gameController, Player currentPlayer, List<Observer<Options>> observerList) {
+        super(gameController, currentPlayer, observerList);
 
         for (Player p : gameController.getGameState().getPlayers()) {
             if (p.getGod().getNameAndDescription() == GodNameAndDescription.ATHENA) {
