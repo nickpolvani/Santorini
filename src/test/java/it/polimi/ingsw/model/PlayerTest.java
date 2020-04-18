@@ -58,13 +58,13 @@ public class PlayerTest {
         assertNull("Workers'array should be null after constructor without any call to the setter method", testPlayer.getWorker());
 
         try {
-            testPlayer.setWorker(Color.RED, indexes0);
+            testPlayer.setWorker(indexes0);
         } catch (AlreadySetException e) {
             System.out.println(e.getMessage());
         }
 
         try {
-            testPlayer.setWorker(Color.GREEN, indexes0);
+            testPlayer.setWorker(indexes0);
         } catch (AlreadySetException e) {
             System.out.println("Tried how the method trows exception when someone tries to set workers another time. Correct behaviour checked");
         }
@@ -74,17 +74,7 @@ public class PlayerTest {
     public void setGodTest() {
         Player testPlayer = gameState.getPlayers().get(0);
         assertNull("God not already set: property should be null", testPlayer.getGod());
-
-        try {
-            testPlayer.setGod(this.gameState.getGodsFactory().getGod(GodNameAndDescription.PAN));
-        } catch (IllegalAccessException e) {
-            System.out.println(e.getMessage());
-        }
-
-        try {
-            assertEquals(testPlayer.getGod(), gameState.getGodsFactory().getGod(GodNameAndDescription.PAN));
-        } catch (IllegalAccessException e) {
-            System.out.println("God of test player is not the one expected");
-        }
+        testPlayer.setGod(this.gameState.getGodsFactory().getGod(GodNameAndDescription.PAN, testPlayer));
+        assertEquals(testPlayer.getGod(), gameState.getGodsFactory().getGod(GodNameAndDescription.PAN, testPlayer));
     }
 }

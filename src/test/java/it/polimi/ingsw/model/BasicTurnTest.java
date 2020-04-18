@@ -1,14 +1,18 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.controller.turn.BasicTurn;
+import it.polimi.ingsw.controller.turn.setup.SetupWorkersTurn;
 import it.polimi.ingsw.model.god.GodNameAndDescription;
 import it.polimi.ingsw.model.god.GodsFactory;
+import it.polimi.ingsw.observer.Observer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -20,6 +24,9 @@ public class BasicTurnTest {
     private GameState gameState;
     private Set<String> players;
     private GameController gameController;
+    Player player1;
+    Player player2;
+    Player player3;
 
 
     @Before
@@ -33,24 +40,30 @@ public class BasicTurnTest {
 
         //setup Gods
         GodsFactory godsFactory = gameState.getGodsFactory();
-        // Pan is the only God we've implemented yet
-        gameState.getPlayers().get(0).setGod(godsFactory.getGod(GodNameAndDescription.PAN));
-        gameState.getPlayers().get(1).setGod(godsFactory.getGod(GodNameAndDescription.PAN));
-        gameState.getPlayers().get(2).setGod(godsFactory.getGod(GodNameAndDescription.PAN));
+        player1 = gameState.getPlayers().get(0);
+        player2 = gameState.getPlayers().get(1);
+        player3 = gameState.getPlayers().get(2);
+        player1.setGod(godsFactory.getGod(GodNameAndDescription.APOLLO, player1));
+        player2.setGod(godsFactory.getGod(GodNameAndDescription.ATLAS, player2));
+        player3.setGod(godsFactory.getGod(GodNameAndDescription.PROMETHEUS, player3));
 
         // setup Workers
 
         Tile.IndexTile[] workerPositions0 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
-        gameState.getPlayers().get(0).setWorker(Color.RED, workerPositions0);
+        player1.setWorker(workerPositions0);
 
         Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(2, 2), new Tile.IndexTile(3, 3)};
-        gameState.getPlayers().get(1).setWorker(Color.RED, workerPositions1);
+        player2.setWorker(workerPositions1);
 
         Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
-        gameState.getPlayers().get(2).setWorker(Color.RED, workerPositions2);
+        player3.setWorker(workerPositions2);
 
-        basicTurn = new BasicTurn(gameState, gameState.getPlayers().get(0));
-        gameState.setTurn(basicTurn);
+        basicTurn = new BasicTurn(gameController, gameState.getPlayers().get(0), new ArrayList<Observer<Options>>());
+
+
+        gameController.setTurn(new SetupWorkersTurn(gameController, player1, new ArrayList<Observer<Options>>()));
+        gameController.setTurn(basicTurn);
+        gameController.setTurn(basicTurn);
 
 
     }
@@ -66,28 +79,28 @@ public class BasicTurnTest {
 
     @Test
     public void switchTurnTest() {
-        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
+        assertEquals(basicTurn.getCurrentPlayer(), player1);
         basicTurn.switchTurn();
-        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(1));
+        assertEquals(basicTurn.getCurrentPlayer(), player2);
         basicTurn.switchTurn();
-        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(2));
+        assertEquals(basicTurn.getCurrentPlayer(), player3);
         basicTurn.switchTurn();
-        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
+        assertEquals(basicTurn.getCurrentPlayer(), player1);
     }
 
     @Test
     public void endCurrentOperationTest() {
-        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
+        assertEquals(basicTurn.getCurrentPlayer(), player1);
         assertEquals(basicTurn.getCurrentOperation(), Operation.SELECT_WORKER);
-        gameState.getPlayers().get(0).getGod().selectWorker(gameState.getPlayers().get(0).getWorker()[0]); // calls endCurrentOperation
-        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
+        player1.getGod().selectWorker(player1.getWorker()[0]);
+        basicTurn.endCurrentOperation();
+        assertEquals(basicTurn.getCurrentPlayer(), player1);
         assertEquals(basicTurn.getCurrentOperation(), Operation.MOVE);
         basicTurn.endCurrentOperation();
-        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(0));
+        assertEquals(basicTurn.getCurrentPlayer(), player1);
         assertEquals(basicTurn.getCurrentOperation(), Operation.BUILD);
         basicTurn.endCurrentOperation();
-        assertEquals(basicTurn.getCurrentPlayer(), gameState.getPlayers().get(1));
+        assertEquals(basicTurn.getCurrentPlayer(), player2);
         assertEquals(basicTurn.getCurrentOperation(), Operation.SELECT_WORKER);
-
     }
 }
