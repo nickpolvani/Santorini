@@ -1,10 +1,12 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.controller.turn;
 
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
-import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.controller.turn.setup.SetupWorkersTurn;
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.god.GodNameAndDescription;
 import it.polimi.ingsw.model.god.GodsFactory;
 import it.polimi.ingsw.observer.Observer;
@@ -20,14 +22,13 @@ import static org.junit.Assert.assertEquals;
 
 public class BasicTurnTest {
 
+    Player player1;
+    Player player2;
+    Player player3;
     private BasicTurn basicTurn;
     private GameState gameState;
     private Set<String> players;
     private GameController gameController;
-    Player player1;
-    Player player2;
-    Player player3;
-
 
     @Before
     public void setUp() throws Exception {

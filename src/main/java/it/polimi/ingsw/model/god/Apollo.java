@@ -34,11 +34,19 @@ public class Apollo extends God {
     public Collection<IndexTile> tileToMove(IndexTile indexTile) {
         Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
-
+        Worker otherWorker;
         for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
             if (!(gameState.getIslandBoard().getTile(otherTile).getBuilding().getDome()) &&
                     gameState.getIslandBoard().getTile(otherTile).getBuildingLevel() - positionTile.getBuildingLevel() < 2) {
-                tileToMove.add(otherTile);
+                otherWorker = gameState.getIslandBoard().getTile(otherTile).getCurrentWorker();
+                if (otherWorker != null) {
+                    if (!Arrays.asList(player.getWorker()).contains(otherWorker)) {
+                        tileToMove.add(otherTile);
+                    }
+                } else {
+                    tileToMove.add(otherTile);
+                }
+
             }
         }
         return tileToMove;
