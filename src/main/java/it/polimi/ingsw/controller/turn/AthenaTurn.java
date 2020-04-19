@@ -15,6 +15,7 @@ import it.polimi.ingsw.model.god.GodNameAndDescription;
 import it.polimi.ingsw.observer.Observer;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Type of Turn used when one of the players uses Athena
@@ -24,15 +25,25 @@ public class AthenaTurn extends BasicTurn {
 
 
     public AthenaTurn(GameController gameController, Player currentPlayer, List<Observer<Options>> observerList) {
-        super(gameController, currentPlayer, observerList);
+
+        this.currentPlayer = currentPlayer;
+        this.currentPlayer.getGod().resetGodState();
+        this.turnOperations = currentPlayer.getGod().getTurnOperations();
+        this.gameController = gameController;
+        this.observers.addAll(observerList);
 
         for (Player p : gameController.getGameState().getPlayers()) {
             if (p.getGod().getNameAndDescription() == GodNameAndDescription.ATHENA) {
                 athena = (Athena) p.getGod();
+                break;
             }
         }
 
         if (athena == null) throw new RuntimeException("Athena is not set despite we are in AthenaTurn");
+
+        notify(getOptions());
+
+
     }
 
 
@@ -55,19 +66,19 @@ public class AthenaTurn extends BasicTurn {
      * @param w: worker selected by the player at the beginning of a turn
      * @return collection of tiles where workers can move according to Athena's Power
      */
-    private Collection<Tile.IndexTile> athenaTileToMove(Worker w) {
-        Collection<Tile.IndexTile> res = currentPlayer.getGod().tileToMove(w.getIndexTile());
+    protected Collection<Tile.IndexTile> athenaTileToMove(Worker w) {
+        Collection<Tile.IndexTile> godTile = currentPlayer.getGod().tileToMove(w.getIndexTile());
+
         if (!athena.getCanMoveUp()) {
-            int currentWorkerLevel = gameController.getGameState().getIslandBoard().getTile(w.getIndexTile()).getBuildingLevel();
-            int otherLevel;
-            for (Tile.IndexTile t : res) {
-                otherLevel = gameController.getGameState().getIslandBoard().getTile(t).getBuildingLevel();
-                if (otherLevel - currentWorkerLevel > 0) {
-                    res.remove(t);
-                }
-            }
+            final int currentWorkerLevel = gameController.getGameState().getIslandBoard().getTile(w.getIndexTile()).getBuildingLevel();
+
+            return godTile.stream()
+                    .filter(t -> (gameController.getGameState().getIslandBoard().getTile(t).getBuildingLevel() - currentWorkerLevel) == 0)
+                    .collect(Collectors.toList());
+        } else {
+            return godTile;
         }
-        return res;
+
     }
 
 
@@ -79,12 +90,13 @@ public class AthenaTurn extends BasicTurn {
     public void endCurrentOperation() {
 
         if (getCurrentOperation().equals(Operation.CHOOSE)) {
-            this.turnOperations = getCurrentPlayer().getGod().getRemainingOperations();
 
             if (currentPlayer.getGod().getNameAndDescription() == GodNameAndDescription.ARTEMIS
                     && currentPlayer.getGod().isConfirmed()
                     && athenaTileToMove(currentPlayer.getGod().getWorker()).size() == 0) {
                 turnOperations = new LinkedList<>(Arrays.asList(Operation.SEND_MESSAGE, Operation.BUILD));
+            } else {
+                this.turnOperations = getCurrentPlayer().getGod().getRemainingOperations();
             }
 
         } else {
@@ -99,7 +111,7 @@ public class AthenaTurn extends BasicTurn {
      *                               this method checking Athena's Power
      */
     @Override
-    public Options getOptions() throws IllegalStateException {
+    public Options getOptions() {
         Operation currentOperation = getCurrentOperation();
         God currentGod = currentPlayer.getGod();
         Tile[][] boardClone = gameController.getGameState().getIslandBoard().clone();
@@ -112,7 +124,8 @@ public class AthenaTurn extends BasicTurn {
                 return new TileOptions(currentPlayer, currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
                         boardClone, currentOperation, "These are the Tiles where you can build");
             case CHOOSE:
-                return new ConfirmOptions(currentPlayer, currentGod.getChoiceMessage(), boardClone);
+                return new ConfirmOptions(currentPlayer, currentGod.getNameAndDescription().getDescriptionOfPower() +
+                        "\nDo you want to use your god's power? (Yes/No)", boardClone);
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
                 Worker[] workers = currentPlayer.getWorker();

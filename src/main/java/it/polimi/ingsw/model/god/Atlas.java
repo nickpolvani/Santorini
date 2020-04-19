@@ -23,8 +23,6 @@ public class Atlas extends God {
     protected Atlas(GameState gameState, Player player) {
 
         super(GodNameAndDescription.ATLAS, player, gameState);
-        choiceMessage = "Your next operation is a build: your Worker can build a dome at any level because of Atlas' power." +
-                "\nDo you want to use the power? (Yes/No)";
     }
 
 

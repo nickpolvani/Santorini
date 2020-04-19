@@ -46,7 +46,7 @@ public class Minotaur extends God {
 
                 otherWorker = gameState.getIslandBoard().getTile(otherTile).getCurrentWorker();
                 if (otherWorker != null) {
-                    if (checkBackwardsTile(otherTile) && !Arrays.asList(player.getWorker()).contains(otherWorker)) {
+                    if (checkBackwardsTile(indexTile, otherTile) && !Arrays.asList(player.getWorker()).contains(otherWorker)) {
                         tileToMove.add(otherTile);
                     }
                 } else {
@@ -79,15 +79,20 @@ public class Minotaur extends God {
         handleWinningCondition();
     }
 
-    public boolean checkBackwardsTile(IndexTile opponentWorker) {
-
-        IndexTile backwardsTile = new IndexTile((2 * opponentWorker.getRow() - worker.getIndexTile().getRow()),
-                (2 * opponentWorker.getCol() - worker.getIndexTile().getCol()));
+    /**
+     * @param myWorker       we need to pass as a parameter also the tile where i have the worker.
+     *                       In fact, during the Option.SELECT_WORKER is checked if the current player
+     *                       may not move any of his workers and the god does not have yet worker assigned (so NullPointerException).
+     * @param opponentWorker the tile where there's the opponent team's worker which could be forced to the tile straight backwards
+     * @return true if opponent worker can be forced; false otherwise.
+     */
+    public boolean checkBackwardsTile(IndexTile myWorker, IndexTile opponentWorker) {
+        IndexTile backwardsTile = new IndexTile((2 * opponentWorker.getRow() - myWorker.getRow()),
+                (2 * opponentWorker.getCol() - myWorker.getCol()));
 
         if ((backwardsTile.getRow() > 4 || backwardsTile.getRow() < 0) || (backwardsTile.getCol() > 4 || backwardsTile.getCol() < 0))
             return false;
         else return !gameState.getIslandBoard().getTile(backwardsTile).isOccupied();
-
     }
 
 

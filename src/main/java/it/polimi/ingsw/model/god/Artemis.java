@@ -23,8 +23,6 @@ public class Artemis extends God {
      */
     public Artemis(GameState gameState, Player player) {
         super(GodNameAndDescription.ARTEMIS, player, gameState);
-        choiceMessage = "Your Worker may move one additional time, but not back to its initial space, because of Artemis' power." +
-                "\nDo you want to perform the additional move? (Yes/No)";
         choiceNotAllowedMessage = "You cannot make this choice, but you will not loose the game because the operation is optional.";
     }
 

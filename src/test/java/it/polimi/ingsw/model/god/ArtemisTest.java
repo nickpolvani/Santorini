@@ -88,23 +88,21 @@ public class ArtemisTest {
                 && !foundTiles.contains(tileFromTest) && !foundTiles.contains(tile3));
     }
 
-    @Test
-    public void move() throws AlreadyOccupiedException {
+    @Test(expected = IllegalArgumentException.class)
+    public void move() throws Exception {
         Tile.IndexTile positionBeforeMove = artemis.worker.getIndexTile();
 
         artemis.move(new Tile.IndexTile(1, 1));
 
         assertEquals(artemis.getTileFrom(), positionBeforeMove);
 
-        try {
-            artemis.move(new Tile.IndexTile(1, 2));
-        } catch (Exception e) {
-            System.out.println(e.getMessage() + "\tTest Passed: Exception thrown correctly");
-        }
+        artemis.move(new Tile.IndexTile(1, 2));
+        //because this is the last instruction i could write @Test(expected = IllegalArgumentException.class)
+
     }
 
     @Test
-    public void getRemainingOperations() throws DomeAlreadyPresentException, AlreadyOccupiedException {
+    public void getRemainingOperations() throws Exception {
 
         LinkedList<Operation> expectedList = new LinkedList<>(Collections.singletonList(Operation.BUILD));
 

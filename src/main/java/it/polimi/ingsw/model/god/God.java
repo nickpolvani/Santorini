@@ -27,8 +27,6 @@ public abstract class God {
 
     protected Worker worker; // worker selected for the current BasicTurn
 
-    protected String choiceMessage;
-
     protected boolean confirmed;
 
     protected String choiceNotAllowedMessage;
@@ -152,17 +150,13 @@ public abstract class God {
         return tileToBuild(worker.getIndexTile()).size() == 0;
     }
 
-    public String getChoiceMessage() {
-        return choiceMessage;
-    }
-
     public String getChoiceNotAllowedMessage() {
         return choiceNotAllowedMessage;
     }
 
     @Override
     public String toString() {
-        return "Your god is " + this.nameAndDescription.getName() + "his power is:\n" + nameAndDescription.getDescriptionOfPower();
+        return "Your god is " + this.nameAndDescription.getName() + ". His power is: " + nameAndDescription.getDescriptionOfPower();
     }
 
     /**

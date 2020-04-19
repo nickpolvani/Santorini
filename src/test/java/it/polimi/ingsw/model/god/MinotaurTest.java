@@ -112,13 +112,13 @@ public class MinotaurTest {
     @Test
     public void checkBackwards() throws AlreadyOccupiedException {
 
-        assertTrue(minotaur.checkBackwardsTile(new Tile.IndexTile(1, 1)));
+        assertTrue(minotaur.checkBackwardsTile(new Tile.IndexTile(0, 1), new Tile.IndexTile(1, 1)));
 
         minotaur.selectWorker(testPlayer.getWorker()[1]);
         minotaur.move(new Tile.IndexTile(1, 3));
         assertEquals(minotaur.worker.getIndexTile(), new Tile.IndexTile(1, 3));
 
-        assertFalse(minotaur.checkBackwardsTile(new Tile.IndexTile(1, 4)));
+        assertFalse(minotaur.checkBackwardsTile(new Tile.IndexTile(1, 3), new Tile.IndexTile(1, 4)));
 
     }
 }

@@ -23,7 +23,6 @@ public class Demeter extends God {
     protected Demeter(GameState gameState, Player player) {
 
         super(GodNameAndDescription.DEMETER, player, gameState);
-        choiceMessage = "Your worker may build one additional time, but not on the same space. Choose where to build. Mind that if you have no choice, you won't loose";
         choiceNotAllowedMessage = "We checked your choice but you cannot build. Don't worry: it's an additional operation, so you won't loose!";
     }
 

@@ -27,7 +27,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
     /**
      *
      */
-    protected final GameController gameController;
+    protected GameController gameController;
     /**
      *
      */
@@ -47,6 +47,10 @@ public class BasicTurn extends Observable<Options> implements Turn {
         this.gameController = gameController;
         this.observers.addAll(observerList);
         notify(getOptions());
+    }
+
+    //we need this method because AthenaTurn has different order of operation in its constructor
+    protected BasicTurn() {
     }
 
     /**
@@ -101,12 +105,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
             gameController.hasLost(currentPlayer);
             switchTurn(); //this because after removing the looser whe have to notify the next player to play
         } else {
-            try {
-                notify(getOptions());
-            } catch (IllegalStateException e) {
-                System.err.println(e.getMessage());
-                e.printStackTrace();
-            }
+            notify(getOptions());
         }
     }
 
@@ -115,7 +114,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
      * @throws IllegalStateException We put this method in turn and not in gods because we have to handle also athenaTurn. In fact AthenaTurn will override
      *                               this method checking Athena's Power
      */
-    public Options getOptions() throws IllegalStateException {
+    public Options getOptions() {
         Operation currentOperation = getCurrentOperation();
         God currentGod = currentPlayer.getGod();
         Tile[][] boardClone = gameController.getGameState().getIslandBoard().clone();
@@ -127,7 +126,8 @@ public class BasicTurn extends Observable<Options> implements Turn {
                 return new TileOptions(currentPlayer, currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
                         boardClone, currentOperation, "These are the Tiles where you can build");
             case CHOOSE:
-                return new ConfirmOptions(currentPlayer, currentGod.getChoiceMessage(), boardClone);
+                return new ConfirmOptions(currentPlayer, currentGod.getNameAndDescription().getDescriptionOfPower() +
+                        "\nDo you want to use your god's power? (Yes/No)", boardClone);
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
                 Worker[] workers = currentPlayer.getWorker();

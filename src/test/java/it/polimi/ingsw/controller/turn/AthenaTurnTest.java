@@ -1,0 +1,198 @@
+package it.polimi.ingsw.controller.turn;
+
+import it.polimi.ingsw.bean.options.MessageOption;
+import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.TileOptions;
+import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.controller.turn.setup.SetupWorkersTurn;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Tile;
+import it.polimi.ingsw.model.god.GodNameAndDescription;
+import it.polimi.ingsw.model.god.GodsFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class AthenaTurnTest {
+
+    Player player1;
+    Player player2;
+    Player player3;
+    private AthenaTurn athenaTurn;
+    private GameState gameState;
+    private Set<String> players;
+    private GameController gameController;
+
+    @Before
+    public void setUp() throws Exception {
+
+        players = new LinkedHashSet<>();
+        players.add("Nick");
+        players.add("Juri");
+        players.add("Fra");
+        gameState = new GameState(players);
+        gameController = new GameController(gameState);
+
+        //setup Gods
+        GodsFactory godsFactory = gameState.getGodsFactory();
+        player1 = gameState.getPlayers().get(0);
+        player2 = gameState.getPlayers().get(1);
+        player3 = gameState.getPlayers().get(2);
+        player1.setGod(godsFactory.getGod(GodNameAndDescription.ATHENA, player1));
+        player2.setGod(godsFactory.getGod(GodNameAndDescription.ARTEMIS, player2));
+        player3.setGod(godsFactory.getGod(GodNameAndDescription.MINOTAUR, player3));
+
+        // setup Workers
+        Tile.IndexTile[] workerPositions0 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
+        player1.setWorker(workerPositions0);
+
+        Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(2, 2), new Tile.IndexTile(3, 3)};
+        player2.setWorker(workerPositions1);
+
+        Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(4, 0), new Tile.IndexTile(2, 1)};
+        player3.setWorker(workerPositions2);
+
+        athenaTurn = new AthenaTurn(gameController, gameState.getPlayers().get(0), new ArrayList<>());
+
+
+        gameController.setTurn(new SetupWorkersTurn(gameController, player1, new ArrayList<>()));
+        gameController.setTurn(athenaTurn);
+    }
+
+    @After
+    public void tearDown() {
+
+        athenaTurn = null;
+        gameState = null;
+        players = null;
+        gameController = null;
+
+    }
+
+    @Test
+    public void switchTurnTest() throws DomeAlreadyPresentException {
+
+        assertEquals(athenaTurn.currentPlayer, player1);
+        athenaTurn.switchTurn();
+        assertEquals(athenaTurn.currentPlayer, player2);
+        athenaTurn.switchTurn();
+        assertEquals(athenaTurn.currentPlayer, player3);
+        athenaTurn.switchTurn();
+        assertEquals(athenaTurn.currentPlayer, player1);
+
+        //testing the looser's check with player2
+        //building boundary domes
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 2)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 3)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(2, 3)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(2, 4)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(3, 1)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(3, 2)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(3, 4)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 2)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 3)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 4)).getBuilding().buildDome();
+
+        athenaTurn.switchTurn(); //call to gameController.hasLost(currentPlayer) performed successfully  (checked with debug)
+    }
+
+
+    @Test
+    public void athenaTileToMoveTest() throws Exception {
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().addBlock();
+        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorker()[0]);
+        athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(0, 1));
+
+        Tile.IndexTile tile1 = new Tile.IndexTile(1, 2);
+        Tile.IndexTile tile2 = new Tile.IndexTile(1, 3);
+        gameState.getIslandBoard().getTile(tile1).getBuilding().addBlock();
+        gameState.getIslandBoard().getTile(tile2).getBuilding().addBlock();
+        Collection<Tile.IndexTile> foundTiles = athenaTurn.athenaTileToMove(player2.getWorker()[0]);
+
+        assertTrue(!foundTiles.contains(tile1) && !foundTiles.contains(tile2));
+    }
+
+    @Test
+    public void endCurrentOperationTest() throws Exception {
+        assertEquals(athenaTurn.currentPlayer, player1);
+
+        athenaTurn.switchTurn(); //We want to play with Artemis to check some behaviors of AthenaTurn
+        assertEquals(athenaTurn.currentPlayer, player2);
+
+        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorker()[0]);
+        athenaTurn.endCurrentOperation();
+        assertEquals(athenaTurn.getCurrentOperation(), Operation.MOVE);
+        athenaTurn.endCurrentOperation();
+        assertEquals(athenaTurn.getCurrentOperation(), Operation.CHOOSE);
+        athenaTurn.currentPlayer.getGod().applyChoice(true);
+        athenaTurn.endCurrentOperation();
+        assertEquals(athenaTurn.turnOperations, new LinkedList<>(Arrays.asList(Operation.MOVE, Operation.BUILD)));
+
+        //now we want to check the if statement (so currentGod=Artemis) when current operation is a Operation.Choose
+        athenaTurn.switchTurn();
+        athenaTurn.switchTurn();
+        assertEquals(athenaTurn.currentPlayer, player1);
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().addBlock();
+        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorker()[0]);
+        athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(0, 1));
+
+        athenaTurn.switchTurn();
+        assertEquals(athenaTurn.currentPlayer, player2);
+
+        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorker()[0]);
+        athenaTurn.endCurrentOperation();
+        assertEquals(athenaTurn.getCurrentOperation(), Operation.MOVE);
+        athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(3, 2));
+        athenaTurn.endCurrentOperation();
+
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(2, 2)).getBuilding().addBlock();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(2, 3)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(3, 1)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 1)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 2)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 3)).getBuilding().buildDome();
+
+        assertEquals(athenaTurn.getCurrentOperation(), Operation.CHOOSE);
+        athenaTurn.currentPlayer.getGod().applyChoice(true);
+        athenaTurn.endCurrentOperation();
+        assertEquals(athenaTurn.turnOperations, new LinkedList<>(Arrays.asList(Operation.SEND_MESSAGE, Operation.BUILD)));
+    }
+
+    @Test
+    public void getOptionsTest() throws Exception {
+        assertEquals(athenaTurn.currentPlayer, player1);
+        assertEquals(athenaTurn.getCurrentOperation(), Operation.SELECT_WORKER);
+
+        Tile.IndexTile[] indexTiles = new Tile.IndexTile[]{player1.getWorker()[0].getIndexTile(), player1.getWorker()[1].getIndexTile()};
+        Options generatedOption = athenaTurn.getOptions();
+        assertEquals(generatedOption.getPlayer(), player1);
+        assertTrue(((TileOptions) generatedOption).getTilesToChoose().contains(indexTiles[0]) &&
+                ((TileOptions) generatedOption).getTilesToChoose().contains(indexTiles[1]) &&
+                ((TileOptions) generatedOption).getTilesToChoose().size() == 2);
+
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().buildDome();
+        gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 0)).getBuilding().buildDome();
+        generatedOption = athenaTurn.getOptions();
+        assertEquals(generatedOption.getPlayer(), player1);
+        assertTrue(((TileOptions) generatedOption).getTilesToChoose().contains(indexTiles[1]) &&
+                ((TileOptions) generatedOption).getTilesToChoose().size() == 1);
+
+        //CASE MOVE ALREADY TESTED IN EndCurrentOperationTest
+
+        //CASE BUILD EQUALS TO THE ONE OF BasicTurnTest
+
+        //CASE CHOOSE ALREADY TESTED IN EndCurrentOperationTest
+
+        athenaTurn.turnOperations = new LinkedList<>(Collections.singletonList(Operation.SEND_MESSAGE));
+        generatedOption = athenaTurn.getOptions();
+        assertEquals(((MessageOption) generatedOption).getMessage(), player1.getGod().getChoiceNotAllowedMessage());
+    }
+}

@@ -19,8 +19,6 @@ public class Prometheus extends God {
      */
     protected Prometheus(GameState gameState, Player player) {
         super(GodNameAndDescription.PROMETHEUS, player, gameState);
-        choiceMessage = "If your Worker will not move up, you can build both before and after moving." +
-                "\nDo you want to use Prometheus' power? (Yes/No)";
     }
 
     /**

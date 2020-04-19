@@ -74,11 +74,11 @@ public class GameController implements Observer<Action> {
     }
 
     public void hasWon(Player winner) {
-        // TODO deve gestire la chiusura del gioco
+        // TODO implement here: this method has to handle game's close
     }
 
     public void hasLost(Player looser) {
-        // TODO implement here
+        //TODO implement here
     }
 
     public void selectChallenger() {
