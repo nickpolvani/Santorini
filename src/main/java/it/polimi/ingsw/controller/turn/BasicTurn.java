@@ -60,8 +60,9 @@ public class BasicTurn extends Observable<Options> implements Turn {
         currentPlayer = gameController.getNextPlayer(currentPlayer);
         currentPlayer.getGod().resetGodState();
 
-        if (currentPlayer.getGod().cannotMove()) gameController.hasLost(currentPlayer);
-        else {
+        if (currentPlayer.getGod().cannotMove()) {
+            handleLooserNotification();
+        } else {
             this.turnOperations = currentPlayer.getGod().getTurnOperations();
             notify(getOptions()); //this notify is used to notify the new current player about his first move
         }
@@ -81,6 +82,10 @@ public class BasicTurn extends Observable<Options> implements Turn {
      * Then handleRemainingOperation is called.
      */
     public void endCurrentOperation() {
+
+        if (getCurrentPlayer().isWinner()) {
+            handleWinnerNotification();
+        }
 
         if (getCurrentOperation().equals(Operation.CHOOSE)) {
             this.turnOperations = getCurrentPlayer().getGod().getRemainingOperations();
@@ -102,7 +107,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
         if (turnOperations.isEmpty()) {
             switchTurn();
         } else if (getCurrentOperation() == Operation.BUILD && currentPlayer.getGod().cannotBuild()) {
-            gameController.hasLost(currentPlayer);
+            handleLooserNotification();
             switchTurn(); //this because after removing the looser whe have to notify the next player to play
         } else {
             notify(getOptions());
@@ -141,6 +146,24 @@ public class BasicTurn extends Observable<Options> implements Turn {
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }
+    }
+
+    /**
+     * When we notify, with MessageOption, if a player won, each view when receives message WIN will check if winner is equals
+     * to the player who it is linked to. In this way we can customize message for eac player.
+     */
+    public void handleWinnerNotification() {
+        notify(new MessageOption(currentPlayer, "WIN"));
+        gameController.hasWon(currentPlayer);
+    }
+
+    /**
+     * When we notify, with MessageOption, if a player lost, each view when receives message "LOST" will check if looser is equals
+     * to the player who it is linked to. In this way we can customize message for each player.
+     */
+    public void handleLooserNotification() {
+        notify(new MessageOption(currentPlayer, "LOST"));
+        gameController.hasLost(currentPlayer);
     }
 
 }

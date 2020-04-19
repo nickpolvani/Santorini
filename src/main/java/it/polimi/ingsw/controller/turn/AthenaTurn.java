@@ -42,8 +42,6 @@ public class AthenaTurn extends BasicTurn {
         if (athena == null) throw new RuntimeException("Athena is not set despite we are in AthenaTurn");
 
         notify(getOptions());
-
-
     }
 
 
@@ -57,7 +55,7 @@ public class AthenaTurn extends BasicTurn {
         if (currentOption != null) {
             notify(currentOption);
         } else {
-            gameController.hasLost(currentPlayer);
+            handleLooserNotification();
         }
 
     }
@@ -88,6 +86,10 @@ public class AthenaTurn extends BasicTurn {
      */
     @Override
     public void endCurrentOperation() {
+
+        if (getCurrentPlayer().isWinner()) {
+            handleWinnerNotification();
+        }
 
         if (getCurrentOperation().equals(Operation.CHOOSE)) {
 
@@ -133,9 +135,11 @@ public class AthenaTurn extends BasicTurn {
                     //with this check game does not pass as option a worker who can't move
                     if (athenaTileToMove(w).size() > 0) indexTiles.add(w.getIndexTile());
                 }
-                if (indexTiles.size() == 0) return null;
-
-                return new TileOptions(currentPlayer, indexTiles, boardClone, currentOperation, "Choose one of your workers");
+                if (indexTiles.size() == 0) {
+                    return null;
+                } else {
+                    return new TileOptions(currentPlayer, indexTiles, boardClone, currentOperation, "Choose one of your workers");
+                }
             case SEND_MESSAGE:
                 return new MessageOption(currentPlayer, currentGod.getChoiceNotAllowedMessage());
             default:
