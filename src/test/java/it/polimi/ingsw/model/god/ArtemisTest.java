@@ -34,20 +34,20 @@ public class ArtemisTest {
         this.gameController = new GameController(gameState);
 
         this.testPlayer = this.gameState.getPlayers().get(0);
-        testPlayer.setGod(gameState.getGodsFactory().getGod(GodNameAndDescription.ARTEMIS, testPlayer));
+        testPlayer.setGod(gameState.getGodsFactory().getGod(GodDescription.ARTEMIS, testPlayer));
         artemis = (Artemis) testPlayer.getGod();
         artemis.resetGodState();
 
         indexes = new Tile.IndexTile[2];
         indexes[0] = new Tile.IndexTile(0, 1);
         indexes[1] = new Tile.IndexTile(1, 2);
-        testPlayer.setWorker(indexes);
-        testPlayer.getGod().selectWorker(testPlayer.getWorker()[0]);
+        testPlayer.setWorkers(indexes);
+        testPlayer.getGod().selectWorker(testPlayer.getWorkers()[0]);
 
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         this.gameState = null;
         this.testPlayer = null;
         this.indexes = null;
@@ -70,8 +70,8 @@ public class ArtemisTest {
 
         Tile.IndexTile tileFromTest = artemis.worker.getIndexTile();
         artemis.move(tile3);
-        assertTrue(artemis.worker.getIndexTile().equals(tile3));
-        assertTrue(artemis.getTileFrom().equals(tileFromTest));
+        assertEquals(artemis.worker.getIndexTile(), tile3);
+        assertEquals(artemis.getTileFrom(), tileFromTest);
         artemis.applyChoice(true);
 
         gameState.getIslandBoard().getTile(tile2).getBuilding().addBlock();//now block level is 2

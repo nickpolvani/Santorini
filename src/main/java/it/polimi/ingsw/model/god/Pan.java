@@ -20,7 +20,7 @@ public class Pan extends God {
      * Default constructor
      */
     protected Pan(GameState gameState, Player player) {
-        super(GodNameAndDescription.PAN, player, gameState);
+        super(GodDescription.PAN, player, gameState);
     }
 
     /**

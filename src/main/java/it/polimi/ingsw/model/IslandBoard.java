@@ -4,6 +4,7 @@ import it.polimi.ingsw.exception.AlreadyOccupiedException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * IslandBoard models the game board. Above this are the workers' pawns and towers.
@@ -65,8 +66,11 @@ public class IslandBoard implements Cloneable {
      * @return
      */
     public Tile getTile(Tile.IndexTile t) {
-
         return board[t.getRow()][t.getCol()];
+    }
+
+    public Tile getTile(int row, int col) {
+        return board[row][col];
     }
 
     /**
@@ -80,6 +84,10 @@ public class IslandBoard implements Cloneable {
         this.getTile(worker.getIndexTile()).setCurrentWorker(null);
         getTile(indexNewPosition).setCurrentWorker(worker);
         worker.setIndexTile(indexNewPosition);
+    }
+
+    public boolean tilesAreFree(List<Tile.IndexTile> tiles) {
+        return tiles.stream().noneMatch(indexTile -> getTile(indexTile).isOccupied());
     }
 
     @Override

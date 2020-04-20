@@ -21,7 +21,7 @@ public class Hephaestus extends God {
      * Default constructor
      */
     protected Hephaestus(GameState gameState, Player player) {
-        super(GodNameAndDescription.HEPHAESTUS, player, gameState);
+        super(GodDescription.HEPHAESTUS, player, gameState);
         choiceNotAllowedMessage = "You cannot build a dome in additional build operation.\nYou will not loose the game.";
     }
 

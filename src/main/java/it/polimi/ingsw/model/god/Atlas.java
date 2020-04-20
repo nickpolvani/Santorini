@@ -22,7 +22,7 @@ public class Atlas extends God {
      */
     protected Atlas(GameState gameState, Player player) {
 
-        super(GodNameAndDescription.ATLAS, player, gameState);
+        super(GodDescription.ATLAS, player, gameState);
     }
 
 

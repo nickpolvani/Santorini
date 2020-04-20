@@ -21,7 +21,7 @@ public class Apollo extends God {
      * Default constructor
      */
     public Apollo(GameState gameState, Player player) {
-        super(GodNameAndDescription.APOLLO, player, gameState);
+        super(GodDescription.APOLLO, player, gameState);
     }
 
 
@@ -40,7 +40,7 @@ public class Apollo extends God {
                     gameState.getIslandBoard().getTile(otherTile).getBuildingLevel() - positionTile.getBuildingLevel() < 2) {
                 otherWorker = gameState.getIslandBoard().getTile(otherTile).getCurrentWorker();
                 if (otherWorker != null) {
-                    if (!Arrays.asList(player.getWorker()).contains(otherWorker)) {
+                    if (!Arrays.asList(player.getWorkers()).contains(otherWorker)) {
                         tileToMove.add(otherTile);
                     }
                 } else {

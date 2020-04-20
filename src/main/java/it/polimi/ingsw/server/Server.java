@@ -44,18 +44,12 @@ public class Server {
 
     synchronized void insertIntoLobby(String name, ClientConnection clientConnection) {
         if (tmpLobby.isFull())
-            throw new IllegalStateException("Non è possibile chiamare questo mettodo se tmp è piena"); //TODO traduci
+            throw new IllegalStateException("Cannot call this method is the lobby is full");
         tmpLobby.addClient(name, clientConnection);
         addRegisteredUsers(name, clientConnection);
         if (tmpLobby.isFull()) {
             lobbies.add(tmpLobby);
-            //questa varibile temporanena è stata inserita per poter settare tmpLobby a null prima di chiamre init
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    tmpLobby.init();
-                }
-            }).start();
+            new Thread(() -> tmpLobby.init()).start();
             tmpLobby = null;
         }
     }

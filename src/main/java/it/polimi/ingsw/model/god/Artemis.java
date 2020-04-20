@@ -22,7 +22,7 @@ public class Artemis extends God {
      * Default constructor
      */
     public Artemis(GameState gameState, Player player) {
-        super(GodNameAndDescription.ARTEMIS, player, gameState);
+        super(GodDescription.ARTEMIS, player, gameState);
         choiceNotAllowedMessage = "You cannot make this choice, but you will not loose the game because the operation is optional.";
     }
 

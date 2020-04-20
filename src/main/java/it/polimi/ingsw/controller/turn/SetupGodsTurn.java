@@ -1,12 +1,11 @@
-package it.polimi.ingsw.controller.turn.setup;
+package it.polimi.ingsw.controller.turn;
 
 import it.polimi.ingsw.bean.options.GodOptions;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
-import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.god.GodNameAndDescription;
+import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.observer.Observable;
 
 import java.util.*;
@@ -14,18 +13,18 @@ import java.util.*;
 public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
     private final Player challenger;
     private final Queue<Operation> turnOperations;
-    private final GameController gameController;
-    private final List<GodNameAndDescription> selectedGods = new ArrayList<>();
+    private final GameController controller;
+    private final List<GodDescription> selectedGods = new ArrayList<>();
     private Player currentPlayer;
-    private Boolean challengerGodChosen = false;
+    private Boolean challengerGodsChosen = false;
 
 
-    public SetupGodsTurn(Player challenger, GameController gameController) {
+    public SetupGodsTurn(Player challenger, GameController controller) {
         this.challenger = challenger;
         this.currentPlayer = challenger;
-        this.gameController = gameController;
+        this.controller = controller;
         turnOperations = new LinkedList<>();
-        for (int i = 0; i < gameController.getGameState().getPlayers().size(); i++) {
+        for (int i = 0; i < controller.getGameState().getPlayers().size(); i++) {
             turnOperations.add(Operation.CHOOSE_GOD);
         }
         notifyOptions();
@@ -45,6 +44,9 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
     public void endCurrentOperation() {
         this.turnOperations.poll();
         if (turnOperations.isEmpty()) {
+            if (!challengerGodsChosen) {
+                challengerGodsChosen = true;
+            }
             switchTurn();
         } else {
             notifyOptions();
@@ -53,41 +55,42 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
 
     @Override
     public void switchTurn() {
-        currentPlayer = gameController.getNextPlayer(currentPlayer);
+        currentPlayer = controller.getNextPlayer(currentPlayer);
         if (currentPlayer == challenger) {
+            //When the current player becomes the challenger again, only one god must remain in the selectedGods list.
             if (selectedGods.size() != 1) throw new IllegalStateException();
-            challenger.setGod(gameController.getGameState().getGodsFactory().getGod(selectedGods.get(0), challenger));
-            gameController.setTurn(new SetupWorkersTurn(gameController, gameController.getNextPlayer(currentPlayer), observers));
+            challenger.setGod(controller.getGameState().getGodsFactory().getGod(selectedGods.get(0), challenger));
+            SetupWorkersTurn setupWorkersTurn = new SetupWorkersTurn(controller, controller.getNextPlayer(currentPlayer), observers);
             observers.clear();
+            controller.setTurn(setupWorkersTurn);
+            setupWorkersTurn.start();
         } else {
             turnOperations.add(Operation.CHOOSE_GOD);
             notifyOptions();
         }
     }
 
-    public Boolean isChallengerGodChosen() {
-        return challengerGodChosen;
+    public Boolean isChallengerGodsChosen() {
+        return challengerGodsChosen;
     }
 
-    public void handleGodChoice(GodNameAndDescription god) throws AlreadySetException {
-        if (!isChallengerGodChosen()) {
+    public void handleGodChoice(GodDescription god) {
+        if (!isChallengerGodsChosen()) {
             if (selectedGods.contains(god)) {
-                throw new AlreadySetException();
+                throw new IllegalArgumentException();
             }
             selectedGods.add(god);
         } else {
-            currentPlayer.setGod(gameController.getGameState().getGodsFactory().getGod(god, currentPlayer));
+            currentPlayer.setGod(controller.getGameState().getGodsFactory().getGod(god, currentPlayer));
             selectedGods.remove(god);
-
         }
-        endCurrentOperation();
     }
 
     private void notifyOptions() {
         Options options;
-        if (!challengerGodChosen) {
-            List<GodNameAndDescription> gods = new ArrayList<>(Arrays.asList(GodNameAndDescription.values()));
-            for (GodNameAndDescription god : selectedGods) {
+        if (!challengerGodsChosen) {
+            List<GodDescription> gods = new ArrayList<>(Arrays.asList(GodDescription.values()));
+            for (GodDescription god : selectedGods) {
                 gods.remove(god);
             }
             options = new GodOptions(currentPlayer, gods, "Choose a God");

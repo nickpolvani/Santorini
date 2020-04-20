@@ -19,7 +19,7 @@ import java.util.Queue;
 
 public abstract class God {
 
-    private final GodNameAndDescription nameAndDescription;
+    private final GodDescription godDescription;
 
     protected final GameState gameState;
 
@@ -35,16 +35,16 @@ public abstract class God {
     /**
      * Default constructor, can be called only by GodsFactory
      */
-    protected God(GodNameAndDescription nameAndDescription, Player player, GameState gameState) {
-        this.nameAndDescription = nameAndDescription;
+    protected God(GodDescription godDescription, Player player, GameState gameState) {
+        this.godDescription = godDescription;
         this.gameState = gameState;
         this.player = player;
         this.confirmed = false;
     }
 
 
-    public GodNameAndDescription getNameAndDescription() {
-        return nameAndDescription;
+    public GodDescription getGodDescription() {
+        return godDescription;
     }
 
 
@@ -140,7 +140,7 @@ public abstract class God {
      * @return
      */
     public boolean cannotMove() {
-        Worker[] workers = player.getWorker();
+        Worker[] workers = player.getWorkers();
         return tileToMove(workers[0].getIndexTile()).size() == 0 &&
                 tileToMove(workers[1].getIndexTile()).size() == 0;
     }
@@ -156,7 +156,7 @@ public abstract class God {
 
     @Override
     public String toString() {
-        return "Your god is " + this.nameAndDescription.getName() + ". His power is: " + nameAndDescription.getDescriptionOfPower();
+        return "Your god is " + this.godDescription.getName() + ". His power is: " + godDescription.getDescriptionOfPower();
     }
 
     /**
@@ -167,8 +167,6 @@ public abstract class God {
     public Queue<Operation> getRemainingOperations() {
         return null;
     }
-
-    ;
 
     public boolean isConfirmed() {
         return confirmed;

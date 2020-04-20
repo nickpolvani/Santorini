@@ -4,6 +4,9 @@ import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 
@@ -69,5 +72,14 @@ public class IslandBoardTest {
                 assertEquals(islandBoard.getBoard()[j][i], boardClone[j][i]);
             }
         }
+    }
+
+    @Test
+    public void tilesAreFree() throws AlreadyOccupiedException {
+        islandBoard.getTile(0, 0).setCurrentWorker(new Worker(new Tile.IndexTile(0, 0), Color.RED));
+        islandBoard.getTile(1, 1).setCurrentWorker(new Worker(new Tile.IndexTile(1, 1), Color.BLUE));
+        assertTrue(islandBoard.tilesAreFree(new ArrayList<>(Arrays.asList(new Tile.IndexTile(1, 2), new Tile.IndexTile(2, 2), new Tile.IndexTile(4, 2)))));
+        assertFalse(islandBoard.tilesAreFree(new ArrayList<>(Arrays.asList(new Tile.IndexTile(1, 1), new Tile.IndexTile(2, 2), new Tile.IndexTile(4, 2)))));
+
     }
 }

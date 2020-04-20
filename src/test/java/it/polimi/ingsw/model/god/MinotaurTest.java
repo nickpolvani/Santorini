@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
-import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
@@ -37,28 +36,28 @@ public class MinotaurTest {
         this.gameController = new GameController(gameState);
 
         this.testPlayer = this.gameState.getPlayers().get(0);
-        testPlayer.setGod(gameState.getGodsFactory().getGod(GodNameAndDescription.MINOTAUR, testPlayer));
+        testPlayer.setGod(gameState.getGodsFactory().getGod(GodDescription.MINOTAUR, testPlayer));
         minotaur = (Minotaur) testPlayer.getGod();
         minotaur.resetGodState();
         indexes = new Tile.IndexTile[2];
         indexes[0] = new Tile.IndexTile(0, 1);
         indexes[1] = new Tile.IndexTile(1, 2);
-        testPlayer.setWorker(indexes);
-        testPlayer.getGod().selectWorker(testPlayer.getWorker()[0]);
+        testPlayer.setWorkers(indexes);
+        testPlayer.getGod().selectWorker(testPlayer.getWorkers()[0]);
 
         indexes[0] = new Tile.IndexTile(1, 1);
         indexes[1] = new Tile.IndexTile(3, 2);
-        gameState.getPlayers().get(1).setWorker(indexes);
+        gameState.getPlayers().get(1).setWorkers(indexes);
 
         indexes[0] = new Tile.IndexTile(4, 1);
         indexes[1] = new Tile.IndexTile(4, 2);
-        gameState.getPlayers().get(2).setWorker(indexes);
+        gameState.getPlayers().get(2).setWorkers(indexes);
 
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 2)).getBuilding().buildDome();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         this.gameState = null;
         this.testPlayer = null;
         this.indexes = null;
@@ -69,7 +68,7 @@ public class MinotaurTest {
     }
 
     @Test
-    public void tileToMove() throws AlreadySetException, DomeAlreadyPresentException {
+    public void tileToMove() throws DomeAlreadyPresentException {
 
         Tile.IndexTile tile1 = new Tile.IndexTile(0, 0);
         Tile.IndexTile tile2 = new Tile.IndexTile(1, 0);
@@ -114,7 +113,7 @@ public class MinotaurTest {
 
         assertTrue(minotaur.checkBackwardsTile(new Tile.IndexTile(0, 1), new Tile.IndexTile(1, 1)));
 
-        minotaur.selectWorker(testPlayer.getWorker()[1]);
+        minotaur.selectWorker(testPlayer.getWorkers()[1]);
         minotaur.move(new Tile.IndexTile(1, 3));
         assertEquals(minotaur.worker.getIndexTile(), new Tile.IndexTile(1, 3));
 

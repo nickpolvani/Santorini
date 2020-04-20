@@ -9,7 +9,7 @@ public class SelectWorkerAction extends Action {
 
     public SelectWorkerAction(Player player, Worker worker) throws IllegalArgumentException {
         super(player);
-        Worker[] workers = player.getWorker();
+        Worker[] workers = player.getWorkers();
         if (!(worker.equals(workers[0]) || worker.equals(workers[1]))) {
             throw new IllegalArgumentException();
         }

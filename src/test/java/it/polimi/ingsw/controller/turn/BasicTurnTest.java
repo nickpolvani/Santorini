@@ -1,15 +1,12 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
-import it.polimi.ingsw.controller.turn.setup.SetupWorkersTurn;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.god.GodNameAndDescription;
+import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.model.god.GodsFactory;
-import it.polimi.ingsw.observer.Observer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,25 +41,24 @@ public class BasicTurnTest {
         player1 = gameState.getPlayers().get(0);
         player2 = gameState.getPlayers().get(1);
         player3 = gameState.getPlayers().get(2);
-        player1.setGod(godsFactory.getGod(GodNameAndDescription.APOLLO, player1));
-        player2.setGod(godsFactory.getGod(GodNameAndDescription.ATLAS, player2));
-        player3.setGod(godsFactory.getGod(GodNameAndDescription.PROMETHEUS, player3));
+        player1.setGod(godsFactory.getGod(GodDescription.APOLLO, player1));
+        player2.setGod(godsFactory.getGod(GodDescription.ATLAS, player2));
+        player3.setGod(godsFactory.getGod(GodDescription.PROMETHEUS, player3));
 
         // setup Workers
-
         Tile.IndexTile[] workerPositions0 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
-        player1.setWorker(workerPositions0);
+        player1.setWorkers(workerPositions0);
 
         Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(2, 2), new Tile.IndexTile(3, 3)};
-        player2.setWorker(workerPositions1);
+        player2.setWorkers(workerPositions1);
 
         Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
-        player3.setWorker(workerPositions2);
+        player3.setWorkers(workerPositions2);
 
-        basicTurn = new BasicTurn(gameController, gameState.getPlayers().get(0), new ArrayList<Observer<Options>>());
+        basicTurn = new BasicTurn(gameController, gameState.getPlayers().get(0), new ArrayList<>());
 
 
-        gameController.setTurn(new SetupWorkersTurn(gameController, player1, new ArrayList<Observer<Options>>()));
+        gameController.setTurn(new SetupWorkersTurn(gameController, player1, new ArrayList<>()));
         gameController.setTurn(basicTurn);
         gameController.setTurn(basicTurn);
 
@@ -70,7 +66,7 @@ public class BasicTurnTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         basicTurn = null;
         gameState = null;
         players = null;
@@ -93,7 +89,7 @@ public class BasicTurnTest {
     public void endCurrentOperationTest() {
         assertEquals(basicTurn.getCurrentPlayer(), player1);
         assertEquals(basicTurn.getCurrentOperation(), Operation.SELECT_WORKER);
-        player1.getGod().selectWorker(player1.getWorker()[0]);
+        player1.getGod().selectWorker(player1.getWorkers()[0]);
         basicTurn.endCurrentOperation();
         assertEquals(basicTurn.getCurrentPlayer(), player1);
         assertEquals(basicTurn.getCurrentOperation(), Operation.MOVE);

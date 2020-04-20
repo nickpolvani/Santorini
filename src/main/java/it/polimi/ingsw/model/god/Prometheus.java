@@ -18,7 +18,7 @@ public class Prometheus extends God {
      * Default constructor
      */
     protected Prometheus(GameState gameState, Player player) {
-        super(GodNameAndDescription.PROMETHEUS, player, gameState);
+        super(GodDescription.PROMETHEUS, player, gameState);
     }
 
     /**

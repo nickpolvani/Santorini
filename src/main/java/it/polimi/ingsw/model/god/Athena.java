@@ -22,7 +22,7 @@ public class Athena extends God {
      * Default constructor
      */
     protected Athena(GameState gameState, Player player) {
-        super(GodNameAndDescription.ATHENA, player, gameState);
+        super(GodDescription.ATHENA, player, gameState);
         canMoveUp = true;
     }
 

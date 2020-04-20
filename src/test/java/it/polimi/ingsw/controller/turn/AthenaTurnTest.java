@@ -5,12 +5,11 @@ import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
-import it.polimi.ingsw.controller.turn.setup.SetupWorkersTurn;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.god.GodNameAndDescription;
+import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.model.god.GodsFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -46,19 +45,19 @@ public class AthenaTurnTest {
         player1 = gameState.getPlayers().get(0);
         player2 = gameState.getPlayers().get(1);
         player3 = gameState.getPlayers().get(2);
-        player1.setGod(godsFactory.getGod(GodNameAndDescription.ATHENA, player1));
-        player2.setGod(godsFactory.getGod(GodNameAndDescription.ARTEMIS, player2));
-        player3.setGod(godsFactory.getGod(GodNameAndDescription.MINOTAUR, player3));
+        player1.setGod(godsFactory.getGod(GodDescription.ATHENA, player1));
+        player2.setGod(godsFactory.getGod(GodDescription.ARTEMIS, player2));
+        player3.setGod(godsFactory.getGod(GodDescription.MINOTAUR, player3));
 
         // setup Workers
         Tile.IndexTile[] workerPositions0 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
-        player1.setWorker(workerPositions0);
+        player1.setWorkers(workerPositions0);
 
         Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(2, 2), new Tile.IndexTile(3, 3)};
-        player2.setWorker(workerPositions1);
+        player2.setWorkers(workerPositions1);
 
         Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(4, 0), new Tile.IndexTile(2, 1)};
-        player3.setWorker(workerPositions2);
+        player3.setWorkers(workerPositions2);
 
         athenaTurn = new AthenaTurn(gameController, gameState.getPlayers().get(0), new ArrayList<>());
 
@@ -108,14 +107,14 @@ public class AthenaTurnTest {
     @Test
     public void athenaTileToMoveTest() throws Exception {
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().addBlock();
-        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorker()[0]);
+        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers()[0]);
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(0, 1));
 
         Tile.IndexTile tile1 = new Tile.IndexTile(1, 2);
         Tile.IndexTile tile2 = new Tile.IndexTile(1, 3);
         gameState.getIslandBoard().getTile(tile1).getBuilding().addBlock();
         gameState.getIslandBoard().getTile(tile2).getBuilding().addBlock();
-        Collection<Tile.IndexTile> foundTiles = athenaTurn.athenaTileToMove(player2.getWorker()[0]);
+        Collection<Tile.IndexTile> foundTiles = athenaTurn.athenaTileToMove(player2.getWorkers()[0]);
 
         assertTrue(!foundTiles.contains(tile1) && !foundTiles.contains(tile2));
     }
@@ -127,7 +126,7 @@ public class AthenaTurnTest {
         athenaTurn.switchTurn(); //We want to play with Artemis to check some behaviors of AthenaTurn
         assertEquals(athenaTurn.currentPlayer, player2);
 
-        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorker()[0]);
+        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorkers()[0]);
         athenaTurn.endCurrentOperation();
         assertEquals(athenaTurn.getCurrentOperation(), Operation.MOVE);
         athenaTurn.endCurrentOperation();
@@ -141,13 +140,13 @@ public class AthenaTurnTest {
         athenaTurn.switchTurn();
         assertEquals(athenaTurn.currentPlayer, player1);
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().addBlock();
-        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorker()[0]);
+        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers()[0]);
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(0, 1));
 
         athenaTurn.switchTurn();
         assertEquals(athenaTurn.currentPlayer, player2);
 
-        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorker()[0]);
+        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorkers()[0]);
         athenaTurn.endCurrentOperation();
         assertEquals(athenaTurn.getCurrentOperation(), Operation.MOVE);
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(3, 2));
@@ -171,7 +170,7 @@ public class AthenaTurnTest {
         assertEquals(athenaTurn.currentPlayer, player1);
         assertEquals(athenaTurn.getCurrentOperation(), Operation.SELECT_WORKER);
 
-        Tile.IndexTile[] indexTiles = new Tile.IndexTile[]{player1.getWorker()[0].getIndexTile(), player1.getWorker()[1].getIndexTile()};
+        Tile.IndexTile[] indexTiles = new Tile.IndexTile[]{player1.getWorkers()[0].getIndexTile(), player1.getWorkers()[1].getIndexTile()};
         Options generatedOption = athenaTurn.getOptions();
         assertEquals(generatedOption.getPlayer(), player1);
         assertTrue(((TileOptions) generatedOption).getTilesToChoose().contains(indexTiles[0]) &&

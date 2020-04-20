@@ -23,7 +23,7 @@ public class Player {
     /**
      * The reference to the player's workers
      */
-    private Worker[] worker;
+    private Worker[] workers;
     /**
      * it's provides the reference of the god selected by the player, who will use it for all the game
      */
@@ -56,22 +56,22 @@ public class Player {
     /**
      * @return this.worker
      */
-    public Worker[] getWorker() {
-        return this.worker;
+    public Worker[] getWorkers() {
+        return this.workers;
     }
 
     /**
      * @param indexes : is the TileIndexes' array selected by the player during the setup of the game
      */
-    public void setWorker(Tile.IndexTile[] indexes) throws AlreadySetException {
-        if (this.worker != null) throw new AlreadySetException("Team already set");
-        this.worker = new Worker[2];
-        for (int i = 0; i < worker.length; i++) {
-            worker[i] = new Worker(indexes[i], this.color);
+    public void setWorkers(Tile.IndexTile[] indexes) throws AlreadySetException {
+        if (this.workers != null) throw new AlreadySetException("Team already set");
+        this.workers = new Worker[2];
+        for (int i = 0; i < workers.length; i++) {
+            workers[i] = new Worker(indexes[i], this.color);
             try {
-                gameState.getIslandBoard().getTile(indexes[i]).setCurrentWorker(worker[i]);
+                gameState.getIslandBoard().getTile(indexes[i]).setCurrentWorker(workers[i]);
             } catch (AlreadyOccupiedException e) {
-                System.err.println(e.getMessage());
+                e.printStackTrace();
             }
         }
     }
@@ -115,14 +115,14 @@ public class Player {
                 looser == player.looser &&
                 Objects.equals(nickname, player.nickname) &&
                 color == player.color &&
-                Arrays.equals(worker, player.worker) &&
-                Objects.equals(god.getNameAndDescription(), player.god.getNameAndDescription());
+                Arrays.equals(workers, player.workers) &&
+                Objects.equals(god.getGodDescription(), player.god.getGodDescription());
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(nickname, gameState, color, god, winner, looser);
-        result = 31 * result + Arrays.hashCode(worker);
+        result = 31 * result + Arrays.hashCode(workers);
         return result;
     }
 }

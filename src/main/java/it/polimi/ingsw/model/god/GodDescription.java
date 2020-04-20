@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.god;
 /**
  * @author Polvani-Puoti-Sacchetta
  */
-public enum GodNameAndDescription {
+public enum GodDescription {
     APOLLO("Apollo", "Your Worker may  move into an opponent Worker’s space by forcing their Worker to the space just vacated."),
     ARTEMIS("Artemis", "Your Worker may move one additional time, but not back to its initial space."),
     ATHENA("Athena", "If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn."),
@@ -18,7 +18,7 @@ public enum GodNameAndDescription {
     private final String descriptionOfPower;
 
 
-    GodNameAndDescription(String name, String description) {
+    GodDescription(String name, String description) {
         this.name = name;
         this.descriptionOfPower = description;
     }

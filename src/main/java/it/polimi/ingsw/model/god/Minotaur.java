@@ -21,7 +21,7 @@ public class Minotaur extends God {
      * Default constructor
      */
     protected Minotaur(GameState gameState, Player player) {
-        super(GodNameAndDescription.MINOTAUR, player, gameState);
+        super(GodDescription.MINOTAUR, player, gameState);
 
     }
 
@@ -46,7 +46,7 @@ public class Minotaur extends God {
 
                 otherWorker = gameState.getIslandBoard().getTile(otherTile).getCurrentWorker();
                 if (otherWorker != null) {
-                    if (checkBackwardsTile(indexTile, otherTile) && !Arrays.asList(player.getWorker()).contains(otherWorker)) {
+                    if (checkBackwardsTile(indexTile, otherTile) && !Arrays.asList(player.getWorkers()).contains(otherWorker)) {
                         tileToMove.add(otherTile);
                     }
                 } else {

@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.exception.AlreadySetException;
-import it.polimi.ingsw.model.god.GodNameAndDescription;
+import it.polimi.ingsw.model.god.GodDescription;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -55,16 +55,16 @@ public class PlayerTest {
     @Test
     public void setWorkerTest() {
         Player testPlayer = gameState.getPlayers().get(0);
-        assertNull("Workers'array should be null after constructor without any call to the setter method", testPlayer.getWorker());
+        assertNull("Workers'array should be null after constructor without any call to the setter method", testPlayer.getWorkers());
 
         try {
-            testPlayer.setWorker(indexes0);
+            testPlayer.setWorkers(indexes0);
         } catch (AlreadySetException e) {
             System.out.println(e.getMessage());
         }
 
         try {
-            testPlayer.setWorker(indexes0);
+            testPlayer.setWorkers(indexes0);
         } catch (AlreadySetException e) {
             System.out.println("Tried how the method trows exception when someone tries to set workers another time. Correct behaviour checked");
         }
@@ -74,7 +74,7 @@ public class PlayerTest {
     public void setGodTest() {
         Player testPlayer = gameState.getPlayers().get(0);
         assertNull("God not already set: property should be null", testPlayer.getGod());
-        testPlayer.setGod(this.gameState.getGodsFactory().getGod(GodNameAndDescription.PAN, testPlayer));
-        assertEquals(testPlayer.getGod(), gameState.getGodsFactory().getGod(GodNameAndDescription.PAN, testPlayer));
+        testPlayer.setGod(gameState.getGodsFactory().getGod(GodDescription.PAN, testPlayer));
+        assertEquals(testPlayer.getGod(), gameState.getGodsFactory().getGod(GodDescription.PAN, testPlayer));
     }
 }

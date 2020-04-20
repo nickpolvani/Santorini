@@ -17,7 +17,6 @@ public class NodAction extends Action {
      */
     @Override
     void run() {
-        return;
     }
 
     @Override

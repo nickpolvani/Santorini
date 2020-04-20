@@ -24,16 +24,16 @@ public class GodsFactory {
      * @param player player who claim the god
      * @return God's instance
      */
-    public God getGod(GodNameAndDescription name, Player player) {
+    public God getGod(GodDescription name, Player player) {
         for (God g : createdGods) {
-            if (g.getNameAndDescription().equals(name)) {
+            if (g.getGodDescription().equals(name)) {
                 return g;
             }
         }
 
         if (createdGods.size() == gameState.getPlayers().size())
             throw new RuntimeException();
-        God g = null;
+        God g;
         switch (name) {
             case APOLLO:
                 g = new Apollo(gameState, player);

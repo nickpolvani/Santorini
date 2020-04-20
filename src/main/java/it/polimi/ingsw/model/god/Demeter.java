@@ -22,7 +22,7 @@ public class Demeter extends God {
      */
     protected Demeter(GameState gameState, Player player) {
 
-        super(GodNameAndDescription.DEMETER, player, gameState);
+        super(GodDescription.DEMETER, player, gameState);
         choiceNotAllowedMessage = "We checked your choice but you cannot build. Don't worry: it's an additional operation, so you won't loose!";
     }
 

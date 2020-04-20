@@ -1,7 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.god.GodNameAndDescription;
+import it.polimi.ingsw.model.god.GodDescription;
 
 import java.util.List;
 
@@ -11,17 +11,17 @@ import java.util.List;
  */
 public class GodOptions extends Options {
 
-    private final List<GodNameAndDescription> godsToChoose;
+    private final List<GodDescription> godsToChoose;
     private final String message;
 
-    public GodOptions(Player player, List<GodNameAndDescription> godsToChoose, String message) {
+    public GodOptions(Player player, List<GodDescription> godsToChoose, String message) {
         super(player);
         this.godsToChoose = godsToChoose;
         this.message = message;
     }
 
 
-    public List<GodNameAndDescription> getGodsToChoose() {
+    public List<GodDescription> getGodsToChoose() {
         return godsToChoose;
     }
 

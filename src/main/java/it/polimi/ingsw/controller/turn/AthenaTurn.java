@@ -11,7 +11,7 @@ import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.god.Athena;
 import it.polimi.ingsw.model.god.God;
-import it.polimi.ingsw.model.god.GodNameAndDescription;
+import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.observer.Observer;
 
 import java.util.*;
@@ -25,23 +25,17 @@ public class AthenaTurn extends BasicTurn {
 
 
     public AthenaTurn(GameController gameController, Player currentPlayer, List<Observer<Options>> observerList) {
-
-        this.currentPlayer = currentPlayer;
+        super(gameController, currentPlayer, observerList);
         this.currentPlayer.getGod().resetGodState();
         this.turnOperations = currentPlayer.getGod().getTurnOperations();
-        this.gameController = gameController;
-        this.observers.addAll(observerList);
-
         for (Player p : gameController.getGameState().getPlayers()) {
-            if (p.getGod().getNameAndDescription() == GodNameAndDescription.ATHENA) {
+            if (p.getGod().getGodDescription() == GodDescription.ATHENA) {
                 athena = (Athena) p.getGod();
                 break;
             }
         }
 
         if (athena == null) throw new RuntimeException("Athena is not set despite we are in AthenaTurn");
-
-        notify(getOptions());
     }
 
 
@@ -93,7 +87,7 @@ public class AthenaTurn extends BasicTurn {
 
         if (getCurrentOperation().equals(Operation.CHOOSE)) {
 
-            if (currentPlayer.getGod().getNameAndDescription() == GodNameAndDescription.ARTEMIS
+            if (currentPlayer.getGod().getGodDescription() == GodDescription.ARTEMIS
                     && currentPlayer.getGod().isConfirmed()
                     && athenaTileToMove(currentPlayer.getGod().getWorker()).size() == 0) {
                 turnOperations = new LinkedList<>(Arrays.asList(Operation.SEND_MESSAGE, Operation.BUILD));
@@ -126,11 +120,11 @@ public class AthenaTurn extends BasicTurn {
                 return new TileOptions(currentPlayer, currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
                         boardClone, currentOperation, "These are the Tiles where you can build");
             case CHOOSE:
-                return new ConfirmOptions(currentPlayer, currentGod.getNameAndDescription().getDescriptionOfPower() +
+                return new ConfirmOptions(currentPlayer, currentGod.getGodDescription().getDescriptionOfPower() +
                         "\nDo you want to use your god's power? (Yes/No)", boardClone);
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
-                Worker[] workers = currentPlayer.getWorker();
+                Worker[] workers = currentPlayer.getWorkers();
                 for (Worker w : workers) {
                     //with this check game does not pass as option a worker who can't move
                     if (athenaTileToMove(w).size() > 0) indexTiles.add(w.getIndexTile());

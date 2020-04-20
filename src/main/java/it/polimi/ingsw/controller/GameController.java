@@ -3,9 +3,12 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.action.ActionHandler;
 import it.polimi.ingsw.controller.turn.BasicTurn;
+import it.polimi.ingsw.controller.turn.SetupGodsTurn;
+import it.polimi.ingsw.controller.turn.SetupWorkersTurn;
 import it.polimi.ingsw.controller.turn.Turn;
-import it.polimi.ingsw.controller.turn.setup.SetupGodsTurn;
-import it.polimi.ingsw.controller.turn.setup.SetupWorkersTurn;
+import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.exception.AlreadySetException;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observer.Observer;
@@ -96,10 +99,9 @@ public class GameController implements Observer<Action> {
                 try {
                     actionHandler.start(a);
                     turn.endCurrentOperation();
-                } catch (Exception e) {
-                    //TODO: it has to be implemented (mann l'error strunz! )
+                } catch (DomeAlreadyPresentException | AlreadyOccupiedException | AlreadySetException e) {
+                    e.printStackTrace();
                 }
-
             } else {
                 //TODO send error's notification to the client
             }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.bean.action;
 
-import it.polimi.ingsw.controller.turn.setup.SetupTurn;
+import it.polimi.ingsw.controller.turn.SetupTurn;
 import it.polimi.ingsw.model.Player;
 
 public abstract class SetupAction extends Action {

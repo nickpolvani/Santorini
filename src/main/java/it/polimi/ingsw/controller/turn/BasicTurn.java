@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.utilities.Start;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +24,7 @@ import java.util.Queue;
  * Type of Turn to be used after setup is finished
  */
 
-public class BasicTurn extends Observable<Options> implements Turn {
+public class BasicTurn extends Observable<Options> implements Turn, Start {
     /**
      *
      */
@@ -46,11 +47,6 @@ public class BasicTurn extends Observable<Options> implements Turn {
         this.turnOperations = currentPlayer.getGod().getTurnOperations();
         this.gameController = gameController;
         this.observers.addAll(observerList);
-        notify(getOptions());
-    }
-
-    //we need this method because AthenaTurn has different order of operation in its constructor
-    protected BasicTurn() {
     }
 
     /**
@@ -131,11 +127,11 @@ public class BasicTurn extends Observable<Options> implements Turn {
                 return new TileOptions(currentPlayer, currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
                         boardClone, currentOperation, "These are the Tiles where you can build");
             case CHOOSE:
-                return new ConfirmOptions(currentPlayer, currentGod.getNameAndDescription().getDescriptionOfPower() +
+                return new ConfirmOptions(currentPlayer, currentGod.getGodDescription().getDescriptionOfPower() +
                         "\nDo you want to use your god's power? (Yes/No)", boardClone);
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
-                Worker[] workers = currentPlayer.getWorker();
+                Worker[] workers = currentPlayer.getWorkers();
                 for (Worker w : workers) {
                     //with this check game does not pass as option a worker who can't move
                     if (currentGod.tileToMove(w.getIndexTile()).size() > 0) indexTiles.add(w.getIndexTile());
@@ -166,5 +162,8 @@ public class BasicTurn extends Observable<Options> implements Turn {
         gameController.hasLost(currentPlayer);
     }
 
+    public void start() {
+        notify(getOptions());
+    }
 }
 
