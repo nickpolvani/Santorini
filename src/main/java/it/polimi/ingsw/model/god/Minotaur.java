@@ -86,7 +86,7 @@ public class Minotaur extends God {
      * @param opponentWorker the tile where there's the opponent team's worker which could be forced to the tile straight backwards
      * @return true if opponent worker can be forced; false otherwise.
      */
-    public boolean checkBackwardsTile(IndexTile myWorker, IndexTile opponentWorker) {
+    protected boolean checkBackwardsTile(IndexTile myWorker, IndexTile opponentWorker) {
         IndexTile backwardsTile = new IndexTile((2 * opponentWorker.getRow() - myWorker.getRow()),
                 (2 * opponentWorker.getCol() - myWorker.getCol()));
 

@@ -148,7 +148,7 @@ public class BasicTurn extends Observable<Options> implements Turn, Start {
      * When we notify, with MessageOption, if a player won, each view when receives message WIN will check if winner is equals
      * to the player who it is linked to. In this way we can customize message for eac player.
      */
-    public void handleWinnerNotification() {
+    protected void handleWinnerNotification() {
         notify(new MessageOption(currentPlayer, "WIN"));
         gameController.hasWon(currentPlayer);
     }
@@ -157,7 +157,7 @@ public class BasicTurn extends Observable<Options> implements Turn, Start {
      * When we notify, with MessageOption, if a player lost, each view when receives message "LOST" will check if looser is equals
      * to the player who it is linked to. In this way we can customize message for each player.
      */
-    public void handleLooserNotification() {
+    protected void handleLooserNotification() {
         notify(new MessageOption(currentPlayer, "LOST"));
         gameController.hasLost(currentPlayer);
     }
