@@ -7,7 +7,10 @@ import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author Polvani-Puoti-Sacchetta.
@@ -16,6 +19,7 @@ import java.util.*;
 public class Hephaestus extends God {
 
     private Tile.IndexTile tileForAdditionalBlock;
+    private Queue<Operation> remainingOperations;
 
     /**
      * Default constructor
@@ -23,11 +27,6 @@ public class Hephaestus extends God {
     protected Hephaestus(GameState gameState, Player player) {
         super(GodDescription.HEPHAESTUS, player, gameState);
         choiceNotAllowedMessage = "You cannot build a dome in additional build operation.\nYou will not loose the game.";
-    }
-
-    @Override
-    public Collection<Tile.IndexTile> tileToBuild(Tile.IndexTile tile) {
-        return super.tileToBuild(tile);
     }
 
     @Override
@@ -49,24 +48,23 @@ public class Hephaestus extends God {
      */
     @Override
     public Queue<Operation> getRemainingOperations() {
-        if (confirmed) {
-            if (gameState.getIslandBoard().getTile(tileForAdditionalBlock).getBuildingLevel() < 3) {
-                return new LinkedList<>();
-            } else {
-                return new LinkedList<>(Collections.singletonList(Operation.SEND_MESSAGE));
-            }
-        } else {
-            return new LinkedList<>();
-        }
-
+        return remainingOperations;
     }
 
     @Override
     public void applyChoice(boolean confirm) throws DomeAlreadyPresentException {
         confirmed = confirm;
-        if (confirm && gameState.getIslandBoard().getTile(tileForAdditionalBlock).getBuildingLevel() < 3) {
-            gameState.getIslandBoard().getTile(tileForAdditionalBlock).getBuilding().addBlock();
+        remainingOperations = new LinkedList<>();
+        if (confirmed) {
+            // the player can build the additional block
+            if (gameState.getIslandBoard().getTile(tileForAdditionalBlock).getBuildingLevel() < 3) {
+                gameState.getIslandBoard().getTile(tileForAdditionalBlock).getBuilding().addBlock();
+
+            } else { // the player cannot build the additional block, so he has to be notified
+                remainingOperations = new LinkedList<>(Collections.singletonList(Operation.SEND_MESSAGE));
+            }
         }
+
     }
 
     @Override
