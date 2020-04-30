@@ -62,10 +62,10 @@ public class AthenaTurn extends BasicTurn {
         Collection<Tile.IndexTile> godTile = currentPlayer.getGod().tileToMove(w.getIndexTile());
 
         if (!athena.getCanMoveUp()) {
-            final int currentWorkerLevel = gameController.getGameState().getIslandBoard().getTile(w.getIndexTile()).getBuildingLevel();
+            final int currentWorkerLevel = gameController.getGameState().getIslandBoard().getBuildingLevel(w.getIndexTile());
 
             return godTile.stream()
-                    .filter(t -> (gameController.getGameState().getIslandBoard().getTile(t).getBuildingLevel() - currentWorkerLevel) == 0)
+                    .filter(t -> (gameController.getGameState().getIslandBoard().getBuildingLevel(t) - currentWorkerLevel) == 0)
                     .collect(Collectors.toList());
         } else {
             return godTile;

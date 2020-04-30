@@ -33,9 +33,9 @@ public class Pan extends God {
         if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
-        int levelDifference = (gameState.getIslandBoard().getTile(this.worker.getIndexTile()).getBuildingLevel() - gameState.getIslandBoard().getTile(indexTile).getBuildingLevel());
+        int levelDifference = (board.getBuildingLevel(worker.getIndexTile()) - board.getBuildingLevel(indexTile));
 
-        gameState.getIslandBoard().changePosition(worker, indexTile);
+        board.changePosition(worker, indexTile);
 
         if (levelDifference > 1) player.setWinner(true);
         else handleWinningCondition();

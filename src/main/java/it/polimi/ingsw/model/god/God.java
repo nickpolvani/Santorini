@@ -3,11 +3,8 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
-import it.polimi.ingsw.model.GameState;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Tile;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Tile.IndexTile;
-import it.polimi.ingsw.model.Worker;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +18,7 @@ public abstract class God {
 
     private final GodDescription godDescription;
 
-    protected final GameState gameState;
+    protected final IslandBoard board;
 
     protected final Player player;
 
@@ -37,7 +34,7 @@ public abstract class God {
      */
     protected God(GodDescription godDescription, Player player, GameState gameState) {
         this.godDescription = godDescription;
-        this.gameState = gameState;
+        this.board = gameState.getIslandBoard();
         this.player = player;
         this.confirmed = false;
     }
@@ -45,11 +42,6 @@ public abstract class God {
 
     public GodDescription getGodDescription() {
         return godDescription;
-    }
-
-
-    public GameState getGameState() {
-        return gameState;
     }
 
 
@@ -69,12 +61,12 @@ public abstract class God {
      * @return default collection of tiles where the worker can go
      */
     public Collection<IndexTile> tileToMove(IndexTile indexTile) {
-        Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
+        Tile positionTile = board.getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
 
-        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
-            if (!(gameState.getIslandBoard().getTile(otherTile).isOccupied()) &&
-                    gameState.getIslandBoard().getTile(otherTile).getBuildingLevel() - positionTile.getBuildingLevel() < 2) {
+        for (IndexTile otherTile : board.indexOfNeighbouringTiles(indexTile)) {
+            if (!(board.getTile(otherTile).isOccupied()) &&
+                    board.getBuildingLevel(otherTile) - positionTile.getBuildingLevel() < 2) {
                 tileToMove.add(otherTile);
             }
         }
@@ -93,13 +85,13 @@ public abstract class God {
         if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
-        gameState.getIslandBoard().changePosition(worker, indexTile);
+        board.changePosition(worker, indexTile);
 
         handleWinningCondition();
     }
 
     protected void handleWinningCondition() {
-        if (gameState.getIslandBoard().getTile(worker.getIndexTile()).getBuildingLevel() == 3) {
+        if (board.getBuildingLevel(worker.getIndexTile()) == 3) {
             this.player.setWinner(true);
         }
     }
@@ -111,8 +103,8 @@ public abstract class God {
      */
     public Collection<IndexTile> tileToBuild(IndexTile indexTile) {
         Collection<IndexTile> tileToBuild = new ArrayList<>();
-        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
-            if (!gameState.getIslandBoard().getTile(otherTile).isOccupied()) {
+        for (IndexTile otherTile : board.indexOfNeighbouringTiles(indexTile)) {
+            if (!board.isOccupied(otherTile)) {
                 tileToBuild.add(otherTile);
             }
         }
@@ -131,7 +123,7 @@ public abstract class God {
             throw new IllegalArgumentException("Tile where you want to build is not allowed!");
         }
 
-        gameState.getIslandBoard().getTile(indexTile).getBuilding().addBlock();
+        board.getTile(indexTile).getBuilding().addBlock();
     }
 
     /**

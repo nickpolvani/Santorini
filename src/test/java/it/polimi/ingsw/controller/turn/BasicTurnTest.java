@@ -66,7 +66,7 @@ public class BasicTurnTest {
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws Exception {
         basicTurn = null;
         gameState = null;
         players = null;

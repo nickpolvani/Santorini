@@ -29,11 +29,11 @@ public class Artemis extends God {
 
     @Override
     public Collection<IndexTile> tileToMove(IndexTile indexTile) {
-        Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
+        Tile positionTile = board.getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
-        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
-            if (!(gameState.getIslandBoard().getTile(otherTile).isOccupied()) &&
-                    gameState.getIslandBoard().getTile(otherTile).getBuildingLevel() - positionTile.getBuildingLevel() < 2) {
+        for (IndexTile otherTile : board.indexOfNeighbouringTiles(indexTile)) {
+            if (!(board.isOccupied(otherTile)) &&
+                    board.getBuildingLevel(otherTile) - positionTile.getBuildingLevel() < 2) {
                 if (tileFrom != null) {
                     if (!otherTile.equals(tileFrom)) {
                         tileToMove.add(otherTile);

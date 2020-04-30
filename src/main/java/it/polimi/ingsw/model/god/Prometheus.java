@@ -28,14 +28,14 @@ public class Prometheus extends God {
      */
     @Override
     public Collection<IndexTile> tileToMove(IndexTile indexTile) {
-        Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
+        Tile positionTile = board.getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
         int maxLevelDifference = 2;
 
         if (confirmed = true) maxLevelDifference = 1;
-        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
-            if (!(gameState.getIslandBoard().getTile(otherTile).isOccupied()) &&
-                    gameState.getIslandBoard().getTile(otherTile).getBuildingLevel() - positionTile.getBuildingLevel() < maxLevelDifference) {
+        for (IndexTile otherTile : board.indexOfNeighbouringTiles(indexTile)) {
+            if (!(board.isOccupied(otherTile)) &&
+                    board.getBuildingLevel(otherTile) - positionTile.getBuildingLevel() < maxLevelDifference) {
                 tileToMove.add(otherTile);
             }
         }

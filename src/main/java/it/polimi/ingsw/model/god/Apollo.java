@@ -32,13 +32,14 @@ public class Apollo extends God {
      */
     @Override
     public Collection<IndexTile> tileToMove(IndexTile indexTile) {
-        Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
+        Tile positionTile = board.getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
         Worker otherWorker;
-        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
-            if (!(gameState.getIslandBoard().getTile(otherTile).getBuilding().getDome()) &&
-                    gameState.getIslandBoard().getTile(otherTile).getBuildingLevel() - positionTile.getBuildingLevel() < 2) {
-                otherWorker = gameState.getIslandBoard().getTile(otherTile).getCurrentWorker();
+
+        for (IndexTile otherTile : board.indexOfNeighbouringTiles(indexTile)) {
+            if (!(board.getDome(otherTile)) &&
+                    board.getBuildingLevel(otherTile) - positionTile.getBuildingLevel() < 2) {
+                otherWorker = board.getCurrentWorker(otherTile);
                 if (otherWorker != null) {
                     if (!Arrays.asList(player.getWorkers()).contains(otherWorker)) {
                         tileToMove.add(otherTile);
@@ -59,17 +60,17 @@ public class Apollo extends God {
         if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
-        Worker otherWorker = gameState.getIslandBoard().getTile(indexTile).getCurrentWorker();
+        Worker otherWorker = board.getCurrentWorker(indexTile);
         if (otherWorker != null) {
             IndexTile whereSwitch = worker.getIndexTile();
             //updating currentWorker's State
-            gameState.getIslandBoard().getTile(indexTile).setCurrentWorker(null);
-            gameState.getIslandBoard().changePosition(worker, indexTile);
+            board.getTile(indexTile).setCurrentWorker(null);
+            board.changePosition(worker, indexTile);
             //updating otherWorker's State
-            gameState.getIslandBoard().getTile(whereSwitch).setCurrentWorker(otherWorker);
+            board.getTile(whereSwitch).setCurrentWorker(otherWorker);
             otherWorker.setIndexTile(whereSwitch);
         } else {
-            gameState.getIslandBoard().changePosition(worker, indexTile);
+            board.changePosition(worker, indexTile);
         }
         handleWinningCondition();
     }

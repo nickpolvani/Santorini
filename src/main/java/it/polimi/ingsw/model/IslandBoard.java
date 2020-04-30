@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,17 +62,6 @@ public class IslandBoard implements Cloneable {
         return indexTiles;
     }
 
-    /**
-     * @param
-     * @return
-     */
-    public Tile getTile(Tile.IndexTile t) {
-        return board[t.getRow()][t.getCol()];
-    }
-
-    public Tile getTile(int row, int col) {
-        return board[row][col];
-    }
 
     /**
      * @param worker
@@ -86,12 +76,71 @@ public class IslandBoard implements Cloneable {
         worker.setIndexTile(indexNewPosition);
     }
 
+    @Override
+    public Tile[][] clone() {
+        return board.clone();
+    }
+
+
+    // UTILITY METHODS : Following methods has been implemented to be taken care of coding clarity
+
     public boolean tilesAreFree(List<Tile.IndexTile> tiles) {
         return tiles.stream().noneMatch(indexTile -> getTile(indexTile).isOccupied());
     }
 
-    @Override
-    public Tile[][] clone() {
-        return board.clone();
+    public Tile getTile(Tile.IndexTile t) {
+        return board[t.getRow()][t.getCol()];
+    }
+
+    public Tile getTile(int row, int col) {
+        return board[row][col];
+    }
+
+    public int getBuildingLevel(int row, int col) {
+        return board[row][col].getBuilding().getLevel().getLevelInt();
+    }
+
+    public int getBuildingLevel(Tile.IndexTile t) {
+        return this.getBuildingLevel(t.getRow(), t.getCol());
+    }
+
+    public boolean getDome(int row, int col) {
+        return this.getDome(new Tile.IndexTile(row, col));
+    }
+
+    public boolean getDome(Tile.IndexTile t) {
+        return board[t.getRow()][t.getCol()].getBuilding().getDome();
+    }
+
+    public void addBlock(int row, int col) throws DomeAlreadyPresentException {
+        this.addBlock(new Tile.IndexTile(row, col));
+    }
+
+    public void addBlock(Tile.IndexTile t) throws DomeAlreadyPresentException {
+        board[t.getRow()][t.getCol()].getBuilding().addBlock();
+    }
+
+    public void setCurrentWorker(Worker w, int row, int col) throws AlreadyOccupiedException {
+        this.setCurrentWorker(w, new Tile.IndexTile(row, col));
+    }
+
+    public void setCurrentWorker(Worker w, Tile.IndexTile t) throws AlreadyOccupiedException {
+        board[t.getRow()][t.getCol()].setCurrentWorker(w);
+    }
+
+    public Worker getCurrentWorker(int row, int col) {
+        return this.getCurrentWorker(new Tile.IndexTile(row, col));
+    }
+
+    public Worker getCurrentWorker(Tile.IndexTile t) {
+        return board[t.getRow()][t.getCol()].getCurrentWorker();
+    }
+
+    public boolean isOccupied(int row, int col) {
+        return this.isOccupied(new Tile.IndexTile(row, col));
+    }
+
+    public boolean isOccupied(Tile.IndexTile t) {
+        return board[t.getRow()][t.getCol()].isOccupied();
     }
 }

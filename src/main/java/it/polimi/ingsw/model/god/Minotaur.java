@@ -35,16 +35,16 @@ public class Minotaur extends God {
     @Override
     public Collection<IndexTile> tileToMove(IndexTile indexTile) {
 
-        Tile positionTile = gameState.getIslandBoard().getTile(indexTile);
+        Tile positionTile = board.getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
         Worker otherWorker;
 
-        for (IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
+        for (IndexTile otherTile : board.indexOfNeighbouringTiles(indexTile)) {
 
-            if (!(gameState.getIslandBoard().getTile(otherTile).getBuilding().getDome()) &&
-                    gameState.getIslandBoard().getTile(otherTile).getBuildingLevel() - positionTile.getBuildingLevel() < 2) {
+            if (!(board.getTile(otherTile).getBuilding().getDome()) &&
+                    board.getBuildingLevel(otherTile) - board.getBuildingLevel(positionTile.getIndex()) < 2) {
 
-                otherWorker = gameState.getIslandBoard().getTile(otherTile).getCurrentWorker();
+                otherWorker = board.getTile(otherTile).getCurrentWorker();
                 if (otherWorker != null) {
                     if (checkBackwardsTile(indexTile, otherTile) && !Arrays.asList(player.getWorkers()).contains(otherWorker)) {
                         tileToMove.add(otherTile);
@@ -65,16 +65,16 @@ public class Minotaur extends God {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
 
-        Worker opponentWorker = gameState.getIslandBoard().getTile(indexTile).getCurrentWorker();
+        Worker opponentWorker = board.getTile(indexTile).getCurrentWorker();
 
         if (opponentWorker != null) {
             IndexTile whereForce = new IndexTile((2 * opponentWorker.getIndexTile().getRow() - worker.getIndexTile().getRow()),
                     (2 * opponentWorker.getIndexTile().getCol() - worker.getIndexTile().getCol()));
 
-            gameState.getIslandBoard().changePosition(opponentWorker, whereForce);
+            board.changePosition(opponentWorker, whereForce);
 
         }
-        gameState.getIslandBoard().changePosition(worker, indexTile);
+        board.changePosition(worker, indexTile);
 
         handleWinningCondition();
     }
@@ -92,7 +92,7 @@ public class Minotaur extends God {
 
         if ((backwardsTile.getRow() > 4 || backwardsTile.getRow() < 0) || (backwardsTile.getCol() > 4 || backwardsTile.getCol() < 0))
             return false;
-        else return !gameState.getIslandBoard().getTile(backwardsTile).isOccupied();
+        else return !board.isOccupied(backwardsTile);
     }
 
 

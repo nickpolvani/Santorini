@@ -30,8 +30,8 @@ public class Demeter extends God {
     public Collection<Tile.IndexTile> tileToBuild(Tile.IndexTile indexTile) {
 
         Collection<Tile.IndexTile> tileToBuild = new ArrayList<>();
-        for (Tile.IndexTile otherTile : gameState.getIslandBoard().indexOfNeighbouringTiles(indexTile)) {
-            if (!gameState.getIslandBoard().getTile(otherTile).isOccupied()) {
+        for (Tile.IndexTile otherTile : board.indexOfNeighbouringTiles(indexTile)) {
+            if (!board.isOccupied(otherTile)) {
                 if (tileAlreadyBuild != null) {
                     if (!otherTile.equals(tileAlreadyBuild)) {
                         tileToBuild.add(otherTile);

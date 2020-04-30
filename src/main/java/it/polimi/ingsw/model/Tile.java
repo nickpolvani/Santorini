@@ -46,6 +46,10 @@ public class Tile implements Cloneable {
         return index;
     }
 
+    public int getBuildingLevel() {
+        return building.getLevel().getLevelInt();
+    }
+
     /**
      * @return Return worker's instance currently on the tile or null if it's free.
      */
@@ -70,9 +74,6 @@ public class Tile implements Cloneable {
         return building;
     }
 
-    public int getBuildingLevel() {
-        return this.building.getLevel().getLevelInt();
-    }
 
     /**
      * To know if the tile is free or occupied. A tile is occupied if it's present a worker or a dome on it.
@@ -88,7 +89,7 @@ public class Tile implements Cloneable {
         return (Tile) super.clone();
     }
 
-/*    @Override
+/*  @Override
     public boolean equals(Object obj) {
         return obj instanceof Tile && ((Tile) obj).building.equals(this.building) && ((Tile) obj).index.equals(this.index);
     }*/

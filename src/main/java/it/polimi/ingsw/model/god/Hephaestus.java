@@ -57,8 +57,8 @@ public class Hephaestus extends God {
         remainingOperations = new LinkedList<>();
         if (confirmed) {
             // the player can build the additional block
-            if (gameState.getIslandBoard().getTile(tileForAdditionalBlock).getBuildingLevel() < 3) {
-                gameState.getIslandBoard().getTile(tileForAdditionalBlock).getBuilding().addBlock();
+            if (board.getBuildingLevel(tileForAdditionalBlock) < 3) {
+                board.addBlock(tileForAdditionalBlock);
 
             } else { // the player cannot build the additional block, so he has to be notified
                 remainingOperations = new LinkedList<>(Collections.singletonList(Operation.SEND_MESSAGE));

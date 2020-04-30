@@ -45,9 +45,9 @@ public class Atlas extends God {
         }
 
         if (confirmed) {
-            gameState.getIslandBoard().getTile(indexTile).getBuilding().buildDome();
+            board.getTile(indexTile).getBuilding().buildDome();
         } else {
-            gameState.getIslandBoard().getTile(indexTile).getBuilding().addBlock();
+            board.getTile(indexTile).getBuilding().addBlock();
         }
     }
 

@@ -65,32 +65,16 @@ public class GameController implements Observer<Action> {
 
     public void init() {
         // TODO implement here
-
-    }
-
-    public void playGame() {
-        // TODO implement here
-    }
-
-    public void playTurn() {
-        // TODO implement here
     }
 
     public void hasWon(Player winner) {
-        // TODO implement here: this method has to handle game's close
+        // TODO implement here
     }
 
     public void hasLost(Player looser) {
         //TODO implement here
     }
 
-    public void selectChallenger() {
-        // TODO implement here
-    }
-
-    public void selectGods() {
-        // TODO implement here
-    }
 
     @Override
     public synchronized void update(Action a) {

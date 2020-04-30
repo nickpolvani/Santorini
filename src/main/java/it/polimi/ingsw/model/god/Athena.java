@@ -36,9 +36,9 @@ public class Athena extends God {
         if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
-        int levelDifference = (gameState.getIslandBoard().getTile(indexTile).getBuildingLevel() - gameState.getIslandBoard().getTile(worker.getIndexTile()).getBuildingLevel());
+        int levelDifference = (board.getBuildingLevel(indexTile) - board.getBuildingLevel(worker.getIndexTile()));
 
-        gameState.getIslandBoard().changePosition(worker, indexTile);
+        board.changePosition(worker, indexTile);
         if (levelDifference > 0) {
             canMoveUp = false;
         }

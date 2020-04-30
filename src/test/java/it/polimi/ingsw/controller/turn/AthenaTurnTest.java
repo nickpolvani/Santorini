@@ -9,6 +9,7 @@ import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
+import it.polimi.ingsw.model.god.Athena;
 import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.model.god.GodsFactory;
 import org.junit.After;
@@ -17,8 +18,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class AthenaTurnTest {
 
@@ -100,7 +100,8 @@ public class AthenaTurnTest {
         gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 3)).getBuilding().buildDome();
         gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 4)).getBuilding().buildDome();
 
-        athenaTurn.switchTurn(); //call to gameController.hasLost(currentPlayer) performed successfully  (checked with debug)
+        athenaTurn.switchTurn();
+        //TODO after implementing controller, we have to implement also assertEquals(gameController.hasLost)
     }
 
 
@@ -108,7 +109,10 @@ public class AthenaTurnTest {
     public void athenaTileToMoveTest() throws Exception {
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().addBlock();
         athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers()[0]);
+
+        //move of the worker of the player with athena
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(0, 1));
+        assertFalse(((Athena) player1.getGod()).getCanMoveUp());
 
         Tile.IndexTile tile1 = new Tile.IndexTile(1, 2);
         Tile.IndexTile tile2 = new Tile.IndexTile(1, 3);
@@ -139,6 +143,7 @@ public class AthenaTurnTest {
         athenaTurn.switchTurn();
         athenaTurn.switchTurn();
         assertEquals(athenaTurn.currentPlayer, player1);
+        assertTrue(((Athena) player1.getGod()).getCanMoveUp());
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().addBlock();
         athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers()[0]);
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(0, 1));
@@ -164,6 +169,12 @@ public class AthenaTurnTest {
         athenaTurn.endCurrentOperation();
         assertEquals(athenaTurn.turnOperations, new LinkedList<>(Arrays.asList(Operation.SEND_MESSAGE, Operation.BUILD)));
     }
+
+    /*
+        switchTurn() has not been separately tested because in endCurrentOperation Test it is called a lot of time.
+        Therefore, it's already been tested.
+     */
+
 
     @Test
     public void getOptionsTest() throws Exception {
