@@ -16,13 +16,13 @@ public class Worker implements Cloneable {
      * every worker has a position on the island board, more specifically on a tile.
      * positionTile represents the current position of the worker
      */
-    private Tile.IndexTile positionTile;
+    private Tile.IndexTile indexTile;
 
     /**
      * Default constructor
      */
-    public Worker(Tile.IndexTile positionTile, Color color) {
-        this.positionTile = positionTile;
+    public Worker(Tile.IndexTile indexTile, Color color) {
+        this.indexTile = indexTile;
         this.color = color;
     }
 
@@ -38,20 +38,21 @@ public class Worker implements Cloneable {
      * @return this.positionTile
      */
     public Tile.IndexTile getIndexTile() {
-        return this.positionTile;
+        return this.indexTile;
     }
 
     /**
      * @param positionTile :the reference of the new tile where a player decides to move his worker
      */
     public void setIndexTile(Tile.IndexTile positionTile) {
-        this.positionTile = positionTile;
+        this.indexTile = positionTile;
     }
 
     @Override
-    protected Worker clone() throws CloneNotSupportedException {
-        return (Worker) super.clone();
+    public Worker clone() {
+        return new Worker(this.indexTile.clone(), this.color);
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -59,11 +60,11 @@ public class Worker implements Cloneable {
         if (o == null || getClass() != o.getClass()) return false;
         Worker worker = (Worker) o;
         return color == worker.color &&
-                Objects.equals(positionTile, worker.positionTile);
+                Objects.equals(indexTile, worker.indexTile);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, positionTile);
+        return Objects.hash(color, indexTile);
     }
 }

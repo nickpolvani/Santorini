@@ -1,7 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Tile;
 
 
 /**
@@ -13,9 +13,9 @@ public class ConfirmOptions extends Options {
     private final String message; // message that the user will see from the View
 
 
-    private final Tile[][] boardClone; // holds the new state of the game.
+    private final IslandBoard boardClone; // holds the new state of the game.
 
-    public ConfirmOptions(Player player, String message, Tile[][] boardClone) {
+    public ConfirmOptions(Player player, String message, IslandBoard boardClone) {
         super(player);
         this.message = message;
         this.boardClone = boardClone;
@@ -26,7 +26,7 @@ public class ConfirmOptions extends Options {
     }
 
 
-    public Tile[][] getBoardClone() {
+    public IslandBoard getBoardClone() {
         return boardClone;
     }
 }

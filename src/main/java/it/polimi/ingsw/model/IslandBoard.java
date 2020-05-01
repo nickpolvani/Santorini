@@ -40,6 +40,16 @@ public class IslandBoard implements Cloneable {
         }
     }
 
+    private IslandBoard(Tile[][] board) {
+        if (board.length != N_ROWS)
+            throw new IllegalArgumentException("argument board has wrong size");
+        for (int i = 0; i < N_ROWS; i++) {
+            if (board[i].length != N_COLS)
+                throw new IllegalArgumentException("argument board has wrong size");
+        }
+        this.board = board;
+    }
+
     /**
      * @return Returns the board of the model.
      */
@@ -77,8 +87,14 @@ public class IslandBoard implements Cloneable {
     }
 
     @Override
-    public Tile[][] clone() {
-        return board.clone();
+    public IslandBoard clone() {
+        Tile[][] boardClone = new Tile[N_ROWS][N_COLS];
+        for (int row = 0; row < N_ROWS; row++) {
+            for (int col = 0; col < N_COLS; col++) {
+                boardClone[row][col] = this.board[row][col].clone();
+            }
+        }
+        return new IslandBoard(boardClone);
     }
 
 

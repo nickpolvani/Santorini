@@ -1,8 +1,8 @@
 package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.Collection;
@@ -16,10 +16,10 @@ public class TileOptions extends Options {
 
     private Operation currentOperation;
     private final Collection<IndexTile> tilesToChoose;
-    private final Tile[][] boardClone;
+    private final IslandBoard boardClone;
     private final String message;
 
-    public TileOptions(Player player, Collection<IndexTile> tilesToChoose, Tile[][] boardClone, Operation operation, String message) {
+    public TileOptions(Player player, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, String message) {
         super(player);
         this.tilesToChoose = tilesToChoose;
         this.currentOperation = operation;
@@ -32,7 +32,7 @@ public class TileOptions extends Options {
         return tilesToChoose;
     }
 
-    public Tile[][] getBoardClone() {
+    public IslandBoard getBoardClone() {
         return boardClone;
     }
 

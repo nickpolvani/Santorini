@@ -65,8 +65,8 @@ public class SetupWorkersTurn extends Observable<Options> implements SetupTurn, 
 
     private void notifyOptions() {
         List<Tile.IndexTile> freeIndexTiles = new ArrayList<>();
-        Arrays.stream(controller.getGameState().getIslandBoard().clone()).
-                forEach(colTile -> Arrays.stream(colTile)
+        Arrays.stream(controller.getGameState().getIslandBoard().clone().getBoard())
+                .forEach(colTile -> Arrays.stream(colTile)
                         .filter(tile -> !tile.isOccupied()).forEach(t -> freeIndexTiles.add(t.getIndex())));
 
         Options options = new TileOptions(currentPlayer, freeIndexTiles,

@@ -66,10 +66,11 @@ public class IslandBoardTest {
 
     @Test
     public void cloneTest() {
-        Tile[][] boardClone = islandBoard.clone();
+        IslandBoard boardClone = islandBoard.clone();
         for (int i = 0; i < IslandBoard.N_COLS; i++) {
             for (int j = 0; j < IslandBoard.N_ROWS; j++) {
-                assertEquals(islandBoard.getBoard()[j][i], boardClone[j][i]);
+                assertEquals(islandBoard.getBoard()[j][i], boardClone.getBoard()[j][i]);
+                assertFalse(islandBoard.getBoard()[j][i] == boardClone.getBoard()[j][i]);
             }
         }
     }

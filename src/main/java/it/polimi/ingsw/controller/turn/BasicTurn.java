@@ -6,6 +6,7 @@ import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
@@ -118,7 +119,7 @@ public class BasicTurn extends Observable<Options> implements Turn, Start {
     public Options getOptions() {
         Operation currentOperation = getCurrentOperation();
         God currentGod = currentPlayer.getGod();
-        Tile[][] boardClone = gameController.getGameState().getIslandBoard().clone();
+        IslandBoard boardClone = gameController.getGameState().getIslandBoard().clone();
         switch (currentOperation) {
             case MOVE:
                 return new TileOptions(currentPlayer, currentGod.tileToMove(currentGod.getWorker().getIndexTile()),

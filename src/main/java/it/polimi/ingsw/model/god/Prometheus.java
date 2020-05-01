@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Polvani-Puoti-Sacchetta
@@ -18,7 +19,10 @@ public class Prometheus extends God {
      * Default constructor
      */
     protected Prometheus(GameState gameState, Player player) {
+
         super(GodDescription.PROMETHEUS, player, gameState);
+        this.choiceNotAllowedMessage = "The additional build in this case is not allowed because " +
+                "you would loose the game, your next operation is \"move\"";
     }
 
     /**
@@ -48,11 +52,42 @@ public class Prometheus extends God {
         return new LinkedList<>(Arrays.asList(operationsArray));
     }
 
+
+    /**
+     * @return true if the player can perform the optional build without loosing
+     */
+    private boolean checkValidOptionalBuild() {
+        int currentLevel = board.getBuildingLevel(this.worker.getIndexTile());
+        // tiles on the same or lower level
+        List<IndexTile> validTileToMove = tileToMove(this.worker.getIndexTile()).stream()
+                .filter(t -> board.getBuildingLevel(t) - currentLevel <= 0).collect(Collectors.toList());
+
+        long numberValidTilesToBuild = tileToBuild(this.worker.getIndexTile()).size();
+        // player can only build in the unique tile where he would be allowed to move
+        // with this check we avoid the player defeat.
+        // We know that tileToBuild includes tileToMove, so if both have size = 1, they contain the same element.
+        if (validTileToMove.size() == 1 && numberValidTilesToBuild == 1 &&
+                board.getBuildingLevel(validTileToMove.get(0)) - currentLevel == 0) {
+            return false;
+        }
+        // the worker is surrounded by tiles that are at least one level higher,
+        // performing the optional build would result in the player defeat
+        else if (validTileToMove.size() == 0) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public Queue<Operation> getRemainingOperations() {
         Operation[] operationsArray;
         if (confirmed) {
-            operationsArray = new Operation[]{Operation.BUILD, Operation.MOVE, Operation.BUILD};
+            if (checkValidOptionalBuild()) {
+                operationsArray = new Operation[]{Operation.BUILD, Operation.MOVE, Operation.BUILD};
+            } else {
+                operationsArray = new Operation[]{Operation.SEND_MESSAGE, Operation.MOVE, Operation.BUILD};
+            }
+
         } else {
             operationsArray = new Operation[]{Operation.MOVE, Operation.BUILD};
         }

@@ -50,11 +50,16 @@ public class TileTest {
     }
 
     @Test
-    public void cloneTest() throws CloneNotSupportedException {
+    public void cloneTest() throws CloneNotSupportedException, AlreadyOccupiedException {
+        tile.setCurrentWorker(new Worker(tile.getIndex(), Color.RED));
         Tile clone = tile.clone();
         assertEquals(tile.getCurrentWorker(), clone.getCurrentWorker());
+        assertFalse(tile.getCurrentWorker() == clone.getCurrentWorker());
         assertEquals(tile.getIndex(), clone.getIndex());
+        assertFalse(tile.getIndex() == clone.getIndex());
         assertEquals(tile.getBuilding(), clone.getBuilding());
+        assertFalse(tile.getBuilding() == clone.getBuilding());
+        assertFalse(clone == tile);
     }
 
     @Test

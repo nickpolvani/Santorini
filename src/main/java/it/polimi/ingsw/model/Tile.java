@@ -39,6 +39,12 @@ public class Tile implements Cloneable {
         index = new IndexTile(row, col);
     }
 
+    private Tile(IndexTile index, Building building) {
+        this.currentWorker = null;
+        this.building = building;
+        this.index = index;
+    }
+
     /**
      * @return Return a IndexTile containing tile's index in the board
      */
@@ -84,15 +90,6 @@ public class Tile implements Cloneable {
         return this.currentWorker != null || building.getDome();
     }
 
-    @Override
-    public Tile clone() throws CloneNotSupportedException {
-        return (Tile) super.clone();
-    }
-
-/*  @Override
-    public boolean equals(Object obj) {
-        return obj instanceof Tile && ((Tile) obj).building.equals(this.building) && ((Tile) obj).index.equals(this.index);
-    }*/
 
     @Override
     public boolean equals(Object o) {
@@ -103,6 +100,20 @@ public class Tile implements Cloneable {
                 building.equals(tile.building) &&
                 Objects.equals(currentWorker, tile.currentWorker);
     }
+
+    @Override
+    public Tile clone() {
+        Tile clone = new Tile(this.index.clone(), this.building.clone());
+        if (this.currentWorker != null) {
+            try {
+                clone.setCurrentWorker(this.currentWorker.clone());
+            } catch (AlreadyOccupiedException e) {
+                e.printStackTrace();
+            }
+        }
+        return clone;
+    }
+
 
     @Override
     public int hashCode() {
@@ -133,6 +144,11 @@ public class Tile implements Cloneable {
         private Building() {
             level = BlockLevel.GROUND;
             dome = false;
+        }
+
+        private Building(BlockLevel level, Boolean dome) {
+            this.level = level;
+            this.dome = dome;
         }
 
         /**
@@ -183,6 +199,12 @@ public class Tile implements Cloneable {
         public int hashCode() {
             return Objects.hash(level, dome);
         }
+
+        @Override
+        public Building clone() {
+            return new Building(this.level, this.dome);
+        }
+
     }
 
     /**
@@ -227,6 +249,11 @@ public class Tile implements Cloneable {
             if (!(o instanceof IndexTile)) return false;
             IndexTile otherIndex = (IndexTile) o;
             return this.col == otherIndex.getCol() && this.row == otherIndex.getRow();
+        }
+
+        @Override
+        public IndexTile clone() {
+            return new IndexTile(this.row, this.col);
         }
     }
 
