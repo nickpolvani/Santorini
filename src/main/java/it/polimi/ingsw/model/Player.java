@@ -3,21 +3,23 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.model.god.God;
+import org.apache.log4j.Logger;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
 /**
  * @author Francesco Puoti
  */
-public class Player {
+public class Player implements Serializable {
 
     /**
      * Name Inserted by the player during the game's initialization
      */
     private final String nickname;
 
-    private final GameState gameState;
+    private transient final GameState gameState;
 
     private final Color color;
     /**
@@ -35,7 +37,7 @@ public class Player {
 
     /**
      * Default constructor
-     * When the game is initialized, every client has to provide his nickname. In this way, when we create the player's instance,
+     * When the game is initialized, every Client has to provide his nickname. In this way, when we create the player's instance,
      * we set also his nickname. Therefore, the setter of nickname is unnecessary and useless.
      */
     public Player(String nickname, GameState gameState, Color color) {
@@ -44,6 +46,7 @@ public class Player {
         this.winner = false;
         this.looser = false;
         this.color = color;
+        Logger.getLogger("Server").debug("Created player " + nickname + " color: " + color);
     }
 
     /**

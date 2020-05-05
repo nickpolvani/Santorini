@@ -8,8 +8,8 @@ import it.polimi.ingsw.server.ClientConnection;
 
 public abstract class View extends Observable<Action> implements Observer<Options> {
 
-    protected final String nickname;
-    protected final ClientConnection clientConnection;
+    private final String nickname;
+    private final ClientConnection clientConnection;
 
     protected View(String nickname, ClientConnection clientConnection) {
         this.nickname = nickname;

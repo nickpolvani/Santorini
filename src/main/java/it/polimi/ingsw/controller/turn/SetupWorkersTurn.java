@@ -13,12 +13,13 @@ import it.polimi.ingsw.utilities.Start;
 
 import java.util.*;
 
-public class SetupWorkersTurn extends Observable<Options> implements SetupTurn, Start {
+public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
 
     private Player currentPlayer;
     private final GameController controller;
     private final Player firstPlayer;
     private final Queue<Operation> turnOperations = new LinkedList<>();
+    private boolean started = false;
 
     public SetupWorkersTurn(GameController controller, Player firstPlayer, List<Observer<Options>> observers) {
         this.controller = controller;
@@ -76,6 +77,13 @@ public class SetupWorkersTurn extends Observable<Options> implements SetupTurn, 
     }
 
     public void start() {
+        if (isStarted()) throw new RuntimeException();
+        started = true;
         notifyOptions();
+    }
+
+    @Override
+    public boolean isStarted() {
+        return started;
     }
 }

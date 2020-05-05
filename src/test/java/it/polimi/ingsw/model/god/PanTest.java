@@ -37,7 +37,7 @@ public class PanTest {
         this.gameState = new GameState(players);
         this.testPlayer = this.gameState.getPlayers().get(0);
         testPlayer.setGod(gameState.getGodsFactory().getGod(GodDescription.PAN, testPlayer));
-        gameController = new GameController(gameState);
+        gameController = new GameController(gameState, null);
 
         indexes = new Tile.IndexTile[2];
         indexes[0] = new Tile.IndexTile(0, 1);

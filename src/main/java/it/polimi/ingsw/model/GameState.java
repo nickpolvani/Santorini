@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.god.GodsFactory;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,10 @@ public class GameState {
      *
      */
     private final GodsFactory godsFactory;
+    /**
+     *
+     */
+    private final Logger logger = Logger.getLogger("Server");
 
 
     /**
@@ -28,6 +33,7 @@ public class GameState {
      * there's no setter for islandBoard.
      */
     public GameState(Set<String> nicknames) {
+        logger.debug("Start to initialize the model");
         if (nicknames.size() < 2 || nicknames.size() > 3) throw new IllegalArgumentException();
         this.islandBoard = new IslandBoard();
         this.players = new ArrayList<>();
@@ -37,6 +43,7 @@ public class GameState {
             players.add(new Player(n, this, Color.parseColor(i)));
             i++;
         }
+        logger.debug("Model initialized!");
     }
 
     /**

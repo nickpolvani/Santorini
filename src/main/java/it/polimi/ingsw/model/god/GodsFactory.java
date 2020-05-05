@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class GodsFactory {
 
     public GodsFactory(GameState gameState) {
         this.gameState = gameState;
+        Logger.getLogger("Server").debug("GodFactory created");
     }
 
     /**

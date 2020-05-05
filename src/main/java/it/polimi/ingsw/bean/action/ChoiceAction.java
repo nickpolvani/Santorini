@@ -17,7 +17,7 @@ public class ChoiceAction extends Action {
     }
 
     @Override
-    void run() throws DomeAlreadyPresentException {
+    void execute() throws DomeAlreadyPresentException {
         getPlayer().getGod().applyChoice(confirm);
 
     }

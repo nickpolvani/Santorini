@@ -22,7 +22,7 @@ public class SelectWorkerAction extends Action {
     }
 
     @Override
-    void run() {
+    void execute() {
         getPlayer().getGod().selectWorker(worker);
     }
 }

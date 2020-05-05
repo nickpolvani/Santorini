@@ -16,7 +16,7 @@ public class PlaceWorkerActions extends Action {
     }
 
     @Override
-    void run() throws AlreadySetException {
+    void execute() throws AlreadySetException {
         getPlayer().setWorkers(positions);
     }
 

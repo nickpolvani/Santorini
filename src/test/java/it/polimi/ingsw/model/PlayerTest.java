@@ -3,10 +3,11 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.model.god.GodDescription;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.io.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -19,27 +20,27 @@ import static org.junit.Assert.assertNull;
 
 public class PlayerTest {
 
-    static GameState gameState;
-    static GameController gameController;
-    static Tile.IndexTile[] indexes0;
+    GameState gameState;
+    GameController gameController;
+    Tile.IndexTile[] indexes0;
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
         Set<String> players = new LinkedHashSet<>();
         players.add("Francesco");
         players.add("Nick");
         players.add("Juri");
 
         gameState = new GameState(players);
-        gameController = new GameController(gameState);
+        gameController = new GameController(gameState, null);
 
         indexes0 = new Tile.IndexTile[2];
         indexes0[0] = new Tile.IndexTile(0, 1);
         indexes0[1] = new Tile.IndexTile(1, 2);
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @After
+    public void tearDown() {
         gameState = null;
         gameController = null;
         indexes0 = null;
@@ -76,5 +77,20 @@ public class PlayerTest {
         assertNull("God not already set: property should be null", testPlayer.getGod());
         testPlayer.setGod(gameState.getGodsFactory().getGod(GodDescription.PAN, testPlayer));
         assertEquals(testPlayer.getGod(), gameState.getGodsFactory().getGod(GodDescription.PAN, testPlayer));
+    }
+
+    @Test
+    public void serialize() throws IOException, ClassNotFoundException {
+        Player player = gameState.getPlayers().get(0);
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(os);
+        out.reset();
+        out.writeObject(player);
+        out.flush();
+        ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
+        ObjectInputStream in = new ObjectInputStream(is);
+        Player pOut = (Player) in.readObject();
+        assertEquals(player.getWorkers(), pOut.getWorkers());
+        assertEquals(player.getNickname(), pOut.getNickname());
     }
 }

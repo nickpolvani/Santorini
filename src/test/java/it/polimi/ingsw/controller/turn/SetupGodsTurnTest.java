@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.god.GodDescription;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -19,27 +20,29 @@ public class SetupGodsTurnTest {
     SetupGodsTurn turn;
     GameController controller;
     GameState model;
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
         Set<String> players = new LinkedHashSet<>(Arrays.asList("juri", "fra", "nick"));
         model = new GameState(players);
-        controller = new GameController(model);
+        controller = new GameController(model, null);
         turn = (SetupGodsTurn) controller.getTurn();
+        turn.start();
     }
 
     @Test
     public void endCurrentOperation() {
         assertEquals(turn.getCurrentPlayer(), model.getPlayers().get(0));
-        assertEquals(turn.getCurrentOperation(), Operation.CHOOSE_GOD);
+        assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
         turn.endCurrentOperation();
         assertEquals(turn.getCurrentPlayer(), model.getPlayers().get(0));
-        assertEquals(turn.getCurrentOperation(), Operation.CHOOSE_GOD);
+        assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
         turn.endCurrentOperation();
         assertEquals(turn.getCurrentPlayer(), model.getPlayers().get(0));
-        assertEquals(turn.getCurrentOperation(), Operation.CHOOSE_GOD);
+        assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
         turn.endCurrentOperation();
-        assertNotEquals(turn.getCurrentPlayer(), model.getPlayers().get(0));
+        assertNotEquals(model.getPlayers().get(0), turn.getCurrentPlayer());
     }
 
     @Test(expected = IllegalStateException.class)

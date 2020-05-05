@@ -24,7 +24,7 @@ public class SetupWorkersTurnTest {
     public void setUp() {
         Set<String> players = new LinkedHashSet<>(Arrays.asList("juri", "fra", "nick"));
         model = new GameState(players);
-        controller = new GameController(model);
+        controller = new GameController(model, null);
         List<Observer<Options>> observers = new ArrayList<>();
         turn = new SetupWorkersTurn(controller, model.getPlayers().get(0), observers);
         controller.setTurn(turn);

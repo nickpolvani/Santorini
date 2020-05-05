@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,6 +39,7 @@ public class IslandBoard implements Cloneable {
                 this.board[r][c] = new Tile(r, c);
             }
         }
+        Logger.getLogger("Server").debug("IslandBoard created");
     }
 
     private IslandBoard(Tile[][] board) {

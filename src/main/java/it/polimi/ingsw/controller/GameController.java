@@ -2,6 +2,8 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.action.ActionHandler;
+import it.polimi.ingsw.bean.options.MessageOption;
+import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.controller.turn.SetupGodsTurn;
 import it.polimi.ingsw.controller.turn.SetupWorkersTurn;
@@ -11,13 +13,13 @@ import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.server.Lobby;
+import org.apache.log4j.Logger;
 
-/**
- * @author Polvani-Puoti-Sacchetta
- */
-
-public class GameController implements Observer<Action> {
+public class GameController extends Observable<Options> implements Observer<Action> {
 
     private Turn turn;
 
@@ -25,12 +27,17 @@ public class GameController implements Observer<Action> {
 
     private final ActionHandler actionHandler;
 
+    private final Lobby lobby;
+
+    private final Logger logger = Logger.getLogger("Server");
+
     /**
      * Default constructor
      */
-    public GameController(GameState gameState) {
+    public GameController(GameState gameState, Lobby lobby) {
+        logger.debug("Start to initialize the controller");
         this.gameState = gameState;
-
+        this.lobby = lobby;
         //TODO implement random choice of challenger
         this.turn = new SetupGodsTurn(gameState.getPlayers().get(0), this);
         actionHandler = new ActionHandler((SetupGodsTurn) turn);
@@ -63,33 +70,45 @@ public class GameController implements Observer<Action> {
         }
     }
 
-    public void init() {
-        // TODO implement here
+    public void start() {
+        this.turn.start();
     }
 
     public void hasWon(Player winner) {
-        // TODO implement here
+        notify(new MessageOption(winner, MessageOption.Enum.WIN));
+        lobby.close();
     }
 
     public void hasLost(Player looser) {
-        //TODO implement here
+        notify(new MessageOption(looser, MessageOption.Enum.LOST));
+        gameState.getPlayers().remove(looser);
+        if (lobby.size == 2) {
+            Player winner = gameState.getPlayers().get(0);
+            hasWon(winner);
+        } else {
+            for (Worker w : looser.getWorkers()) {
+                try {
+                    gameState.getIslandBoard().getTile(w.getIndexTile()).setCurrentWorker(null);
+                } catch (AlreadyOccupiedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
-
 
     @Override
     public synchronized void update(Action a) {
         if (a.getPlayer().equals(getTurn().getCurrentPlayer())) {
             if (a.isCompatible(turn.getCurrentOperation())) {
                 try {
-                    actionHandler.start(a);
+                    actionHandler.execute(a);
                     turn.endCurrentOperation();
                 } catch (DomeAlreadyPresentException | AlreadyOccupiedException | AlreadySetException e) {
                     e.printStackTrace();
                 }
             } else {
-                //TODO send error's notification to the client
+                //TODO send error's notification to the Client
             }
-
         }/* else { TODO ipotesi di risposta
             a.getPlayer().getView().send(new AnotherTurnException);
         }*/

@@ -4,6 +4,7 @@ import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.ClientConnection;
+import org.apache.log4j.Logger;
 
 public class RemoteView extends View {
 
@@ -19,14 +20,14 @@ public class RemoteView extends View {
 
     @Override
     public void update(Options message) {
-        clientConnection.asyncSend(message);
+        getClientConnection().asyncSend(message);
     }
 
     private class ActionReceiver implements Observer<Action> {
-        //TODO la remoteView è un observer della ClientConnection. Quando arriva un messaggio la RemoteView viene notificata
+        private final Logger logger = Logger.getLogger("Server");
         @Override
         public void update(Action action) {
-            System.out.println("Received: " + action);
+            logger.debug("Received: " + action);
             handleMove(action);
         }
     }

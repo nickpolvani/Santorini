@@ -25,7 +25,7 @@ public class BuildAction extends Action {
 
 
     @Override
-    void run() throws DomeAlreadyPresentException {
+    void execute() throws DomeAlreadyPresentException {
         this.getPlayer().getGod().build(this.indexTile);
     }
 

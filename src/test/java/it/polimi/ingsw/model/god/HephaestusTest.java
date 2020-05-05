@@ -34,7 +34,7 @@ public class HephaestusTest {
         players.add("Juri");
         players.add("Fra");
         gameState = new GameState(players);
-        gameController = new GameController(gameState);
+        gameController = new GameController(gameState, null);
 
         //setup Gods
         GodsFactory godsFactory = gameState.getGodsFactory();

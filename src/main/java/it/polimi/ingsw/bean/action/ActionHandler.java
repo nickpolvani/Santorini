@@ -12,10 +12,10 @@ public class ActionHandler {
         this.setupTurn = setupTurn;
     }
 
-    public synchronized void start(Action a) throws AlreadyOccupiedException, DomeAlreadyPresentException, AlreadySetException {
+    public synchronized void execute(Action a) throws AlreadyOccupiedException, DomeAlreadyPresentException, AlreadySetException {
         if (a instanceof SetupAction) {
             ((SetupAction) a).setSetupWorkersTurn(setupTurn);
         }
-        a.run();
+        a.execute();
     }
 }

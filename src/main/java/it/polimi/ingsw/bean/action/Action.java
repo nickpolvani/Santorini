@@ -20,7 +20,7 @@ public abstract class Action implements Serializable {
         this.player = player;
     }
 
-    abstract void run() throws AlreadyOccupiedException, DomeAlreadyPresentException, AlreadySetException;
+    abstract void execute() throws AlreadyOccupiedException, DomeAlreadyPresentException, AlreadySetException;
 
     /**
      * @param operation is the current operation in Turn

@@ -16,7 +16,7 @@ public class NodAction extends Action {
      * The user does not have to do anything, just receive message, it does not change model.
      */
     @Override
-    void run() {
+    void execute() {
     }
 
     @Override

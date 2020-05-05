@@ -16,7 +16,7 @@ public class SelectGodAction extends SetupAction {
 
 
     @Override
-    void run() {
+    void execute() {
         ((SetupGodsTurn) setupTurn).handleGodChoice(god);
     }
 

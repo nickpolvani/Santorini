@@ -30,8 +30,9 @@ public class ArtemisTest {
         players.add("Francesco");
         players.add("Nick");
         players.add("Juri");
+
         this.gameState = new GameState(players);
-        this.gameController = new GameController(gameState);
+        this.gameController = new GameController(gameState, null);
 
         this.testPlayer = this.gameState.getPlayers().get(0);
         testPlayer.setGod(gameState.getGodsFactory().getGod(GodDescription.ARTEMIS, testPlayer));

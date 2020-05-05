@@ -13,7 +13,6 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
-import it.polimi.ingsw.utilities.Start;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,7 +24,7 @@ import java.util.Queue;
  * Type of Turn to be used after setup is finished
  */
 
-public class BasicTurn extends Observable<Options> implements Turn, Start {
+public class BasicTurn extends Observable<Options> implements Turn {
     /**
      *
      */
@@ -38,6 +37,8 @@ public class BasicTurn extends Observable<Options> implements Turn, Start {
      *
      */
     protected Queue<Operation> turnOperations;
+
+    private boolean started;
 
     /**
      * Default constructor that set only which game the turn belongs to.
@@ -139,7 +140,7 @@ public class BasicTurn extends Observable<Options> implements Turn, Start {
                 }
                 return new TileOptions(currentPlayer, indexTiles, boardClone, currentOperation, "Choose one of your workers");
             case SEND_MESSAGE:
-                return new MessageOption(currentPlayer, currentGod.getChoiceNotAllowedMessage());
+                return new MessageOption(currentPlayer, MessageOption.Enum.NOTALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()));
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }
@@ -150,7 +151,7 @@ public class BasicTurn extends Observable<Options> implements Turn, Start {
      * to the player who it is linked to. In this way we can customize message for eac player.
      */
     protected void handleWinnerNotification() {
-        notify(new MessageOption(currentPlayer, "WIN"));
+        notify(new MessageOption(currentPlayer, MessageOption.Enum.WIN));
         gameController.hasWon(currentPlayer);
     }
 
@@ -159,12 +160,19 @@ public class BasicTurn extends Observable<Options> implements Turn, Start {
      * to the player who it is linked to. In this way we can customize message for each player.
      */
     protected void handleLooserNotification() {
-        notify(new MessageOption(currentPlayer, "LOST"));
+        notify(new MessageOption(currentPlayer, MessageOption.Enum.LOST));
         gameController.hasLost(currentPlayer);
     }
 
     public void start() {
+        if (isStarted()) throw new RuntimeException();
+        started = true;
         notify(getOptions());
+    }
+
+    @Override
+    public boolean isStarted() {
+        return started;
     }
 }
 

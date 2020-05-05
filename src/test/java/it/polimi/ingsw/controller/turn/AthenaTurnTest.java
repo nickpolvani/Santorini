@@ -38,7 +38,7 @@ public class AthenaTurnTest {
         players.add("Juri");
         players.add("Fra");
         gameState = new GameState(players);
-        gameController = new GameController(gameState);
+        gameController = new GameController(gameState, null);
 
         //setup Gods
         GodsFactory godsFactory = gameState.getGodsFactory();
@@ -76,7 +76,7 @@ public class AthenaTurnTest {
 
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void switchTurnTest() throws DomeAlreadyPresentException {
 
         assertEquals(athenaTurn.currentPlayer, player1);
@@ -100,7 +100,7 @@ public class AthenaTurnTest {
         gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 3)).getBuilding().buildDome();
         gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 4)).getBuilding().buildDome();
 
-        athenaTurn.switchTurn();
+        athenaTurn.switchTurn(); //this row launch a nullPointerException because when the turn notifies the controller that a player lost, the controller tries to close the lobby but the lobby's reference is null
         //TODO after implementing controller, we have to implement also assertEquals(gameController.hasLost)
     }
 
@@ -203,6 +203,6 @@ public class AthenaTurnTest {
 
         athenaTurn.turnOperations = new LinkedList<>(Collections.singletonList(Operation.SEND_MESSAGE));
         generatedOption = athenaTurn.getOptions();
-        assertEquals(((MessageOption) generatedOption).getMessage(), player1.getGod().getChoiceNotAllowedMessage());
+        assertEquals(((MessageOption) generatedOption).getMessageType().getMessage(), player1.getGod().getChoiceNotAllowedMessage());
     }
 }

@@ -7,6 +7,7 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.observer.Observable;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 
@@ -17,6 +18,8 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
     private final List<GodDescription> selectedGods = new ArrayList<>();
     private Player currentPlayer;
     private Boolean challengerGodsChosen = false;
+    private final Logger logger = Logger.getLogger("Server");
+    private boolean started = false;
 
 
     public SetupGodsTurn(Player challenger, GameController controller) {
@@ -27,7 +30,7 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
         for (int i = 0; i < controller.getGameState().getPlayers().size(); i++) {
             turnOperations.add(Operation.CHOOSE_GOD);
         }
-        notifyOptions();
+        logger.debug("SetupGodsTurn initialized!");
     }
 
     @Override
@@ -98,5 +101,18 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
             options = new GodOptions(currentPlayer, selectedGods, "Choose a God");
         }
         notify(options);
+    }
+
+    @Override
+    public void start() {
+        if (isStarted()) throw new RuntimeException();
+        started = true;
+        notifyOptions();
+        logger.debug("First options has been notified");
+    }
+
+    @Override
+    public boolean isStarted() {
+        return started;
     }
 }

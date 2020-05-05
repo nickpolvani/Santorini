@@ -24,7 +24,7 @@ public class MoveAction extends Action {
     }
 
     @Override
-    void run() throws AlreadyOccupiedException {
+    void execute() throws AlreadyOccupiedException {
         this.getPlayer().getGod().move(indexTile);
     }
 }

@@ -136,7 +136,7 @@ public class AthenaTurn extends BasicTurn {
                     return new TileOptions(currentPlayer, indexTiles, boardClone, currentOperation, "Choose one of your workers");
                 }
             case SEND_MESSAGE:
-                return new MessageOption(currentPlayer, currentGod.getChoiceNotAllowedMessage());
+                return new MessageOption(currentPlayer, MessageOption.Enum.NOTALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()));
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }
