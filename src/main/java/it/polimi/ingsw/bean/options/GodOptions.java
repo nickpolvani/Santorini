@@ -1,5 +1,6 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.GodDescription;
 
@@ -18,6 +19,7 @@ public class GodOptions extends Options {
         super(player);
         this.godsToChoose = godsToChoose;
         this.message = message;
+        this.currentOperation = Operation.CHOOSE_GOD;
     }
 
 

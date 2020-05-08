@@ -1,5 +1,6 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
 
@@ -19,6 +20,7 @@ public class ConfirmOptions extends Options {
         super(player);
         this.message = message;
         this.boardClone = boardClone;
+        this.currentOperation = Operation.CHOOSE;
     }
 
     public String getMessage() {

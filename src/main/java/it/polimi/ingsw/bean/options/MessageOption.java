@@ -1,5 +1,6 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
 
 public class MessageOption extends Options {
@@ -9,6 +10,7 @@ public class MessageOption extends Options {
     public MessageOption(Player player, Enum messageType) {
         super(player);
         this.messageType = messageType;
+        this.currentOperation = Operation.SEND_MESSAGE;
     }
 
     public Enum getMessageType() {

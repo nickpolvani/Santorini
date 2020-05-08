@@ -1,5 +1,6 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
 
 import java.io.Serializable;
@@ -22,6 +23,7 @@ public abstract class Options implements Serializable {
      */
     private final Player player;
 
+    protected Operation currentOperation;
 
     public Options(Player player) {
         this.player = player;
@@ -31,4 +33,6 @@ public abstract class Options implements Serializable {
     public Player getPlayer() {
         return player;
     }
+
+
 }

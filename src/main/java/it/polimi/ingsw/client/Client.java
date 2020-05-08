@@ -38,6 +38,7 @@ public class Client {
                     } else if (inputObject instanceof Options) {
                         Options op = (Options) inputObject;
                         System.out.println(((Options) inputObject).getPlayer().getWorkers());
+
                     } else {
                         throw new IllegalArgumentException();
                     }

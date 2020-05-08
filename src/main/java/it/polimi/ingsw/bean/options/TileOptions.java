@@ -14,7 +14,7 @@ import java.util.Collection;
  */
 public class TileOptions extends Options {
 
-    private Operation currentOperation;
+
     private final Collection<IndexTile> tilesToChoose;
     private final IslandBoard boardClone;
     private final String message;

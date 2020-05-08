@@ -1,11 +1,12 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * @author Polvani-Puoti-Sacchetta
  */
-public class Worker implements Cloneable {
+public class Worker implements Cloneable, Serializable {
 
     /**
      * The color of worker's team, which is chosen by the Client, at the game's start, and it will be the same for the whole game.
