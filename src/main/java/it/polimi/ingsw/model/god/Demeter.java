@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Polvani-Puoti-Sacchetta
@@ -29,19 +30,11 @@ public class Demeter extends God {
     @Override
     public Collection<Tile.IndexTile> tileToBuild(Tile.IndexTile indexTile) {
 
-        Collection<Tile.IndexTile> tileToBuild = new ArrayList<>();
-        for (Tile.IndexTile otherTile : board.indexOfNeighbouringTiles(indexTile)) {
-            if (!board.isOccupied(otherTile)) {
-                if (tileAlreadyBuild != null) {
-                    if (!otherTile.equals(tileAlreadyBuild)) {
-                        tileToBuild.add(otherTile);
-                    }
-                } else {
-                    tileToBuild.add(otherTile);
-                }
-            }
+        Collection<Tile.IndexTile> tileToBuild = board.indexOfNeighbouringTiles(indexTile);
+        if (tileAlreadyBuild != null) {
+            return tileToBuild.stream().filter(t -> !(t.equals(tileAlreadyBuild)) && !board.isOccupied(t)).collect(Collectors.toList());
         }
-        return tileToBuild;
+        return tileToBuild.stream().filter(t -> !board.isOccupied(t)).collect(Collectors.toList());
     }
 
     @Override

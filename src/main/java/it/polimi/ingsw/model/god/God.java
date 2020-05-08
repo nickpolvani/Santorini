@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Queue;
 
-/**
- * @author Polvani-Puoti-Sacchetta
- */
 
 public abstract class God {
 
@@ -22,7 +19,7 @@ public abstract class God {
 
     protected final Player player;
 
-    protected Worker worker; // worker selected for the current BasicTurn
+    protected Worker worker; // worker selected for the current turn
 
     protected boolean confirmed;
 

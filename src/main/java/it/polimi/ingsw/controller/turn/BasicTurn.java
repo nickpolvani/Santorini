@@ -124,13 +124,13 @@ public class BasicTurn extends Observable<Options> implements Turn {
         switch (currentOperation) {
             case MOVE:
                 return new TileOptions(currentPlayer, currentGod.tileToMove(currentGod.getWorker().getIndexTile()),
-                        boardClone, currentOperation, "These are the Tiles where you can move");
+                        boardClone, currentOperation, Options.MessageType.MOVE);
             case BUILD:
                 return new TileOptions(currentPlayer, currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
-                        boardClone, currentOperation, "These are the Tiles where you can build");
+                        boardClone, currentOperation, Options.MessageType.BUILD);
             case CHOOSE:
-                return new ConfirmOptions(currentPlayer, currentGod.getGodDescription().getDescriptionOfPower() +
-                        "\nDo you want to use your god's power? (Yes/No)", boardClone);
+                return new ConfirmOptions(currentPlayer, boardClone, Options.MessageType.CHOOSE.setMessage(currentGod.getGodDescription().getDescriptionOfPower() +
+                        "\nDo you want to use your god's power? (Yes/No)"));
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
                 Worker[] workers = currentPlayer.getWorkers();
@@ -138,9 +138,9 @@ public class BasicTurn extends Observable<Options> implements Turn {
                     //with this check game does not pass as option a worker who can't move
                     if (currentGod.tileToMove(w.getIndexTile()).size() > 0) indexTiles.add(w.getIndexTile());
                 }
-                return new TileOptions(currentPlayer, indexTiles, boardClone, currentOperation, "Choose one of your workers");
+                return new TileOptions(currentPlayer, indexTiles, boardClone, currentOperation, Options.MessageType.SELECT_WORKER);
             case SEND_MESSAGE:
-                return new MessageOption(currentPlayer, MessageOption.Enum.NOTALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()));
+                return new MessageOption(currentPlayer, Options.MessageType.NOT_ALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()));
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }
@@ -151,7 +151,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
      * to the player who it is linked to. In this way we can customize message for eac player.
      */
     protected void handleWinnerNotification() {
-        notify(new MessageOption(currentPlayer, MessageOption.Enum.WIN));
+        notify(new MessageOption(currentPlayer, Options.MessageType.WIN));
         gameController.hasWon(currentPlayer);
     }
 
@@ -160,7 +160,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
      * to the player who it is linked to. In this way we can customize message for each player.
      */
     protected void handleLooserNotification() {
-        notify(new MessageOption(currentPlayer, MessageOption.Enum.LOST));
+        notify(new MessageOption(currentPlayer, Options.MessageType.LOST));
         gameController.hasLost(currentPlayer);
     }
 

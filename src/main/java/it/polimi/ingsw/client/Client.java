@@ -13,11 +13,13 @@ public class Client {
     private final String ip;
     private final int port;
     private boolean active = true;
+    private final Controller controller;
 
 
-    public Client(String ip, int port) {
+    public Client(String ip, int port, Controller controller) {
         this.ip = ip;
         this.port = port;
+        this.controller = controller;
     }
 
     public synchronized boolean isActive() {
@@ -36,7 +38,6 @@ public class Client {
                     if (inputObject instanceof String) {
                         System.out.println((String) inputObject);
                     } else if (inputObject instanceof Options) {
-                        Options op = (Options) inputObject;
                         System.out.println(((Options) inputObject).getPlayer().getWorkers());
 
                     } else {

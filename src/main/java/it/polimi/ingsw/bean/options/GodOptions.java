@@ -13,21 +13,19 @@ import java.util.List;
 public class GodOptions extends Options {
 
     private final List<GodDescription> godsToChoose;
-    private final String message;
 
-    public GodOptions(Player player, List<GodDescription> godsToChoose, String message) {
-        super(player);
+    public GodOptions(Player player, List<GodDescription> godsToChoose, MessageType message) {
+        super(player, message);
         this.godsToChoose = godsToChoose;
-        this.message = message;
         this.currentOperation = Operation.CHOOSE_GOD;
     }
-
 
     public List<GodDescription> getGodsToChoose() {
         return godsToChoose;
     }
 
-    public String getMessage() {
-        return message;
+    @Override
+    public void execute() {
+
     }
 }

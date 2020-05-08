@@ -72,7 +72,7 @@ public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
 
         Options options = new TileOptions(currentPlayer, freeIndexTiles,
                 controller.getGameState().getIslandBoard().clone(), getCurrentOperation(),
-                "Choose two tiles where you want to place your workers");
+                Options.MessageType.PLACE_WORKERS);
         notify(options);
     }
 

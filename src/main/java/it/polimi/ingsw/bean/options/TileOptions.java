@@ -14,19 +14,15 @@ import java.util.Collection;
  */
 public class TileOptions extends Options {
 
-
     private final Collection<IndexTile> tilesToChoose;
     private final IslandBoard boardClone;
-    private final String message;
 
-    public TileOptions(Player player, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, String message) {
-        super(player);
+    public TileOptions(Player player, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, MessageType message) {
+        super(player, message);
         this.tilesToChoose = tilesToChoose;
         this.currentOperation = operation;
         this.boardClone = boardClone;
-        this.message = message;
     }
-
 
     public Collection<IndexTile> getTilesToChoose() {
         return tilesToChoose;
@@ -36,7 +32,8 @@ public class TileOptions extends Options {
         return boardClone;
     }
 
-    public String getMessage() {
-        return message;
+    @Override
+    public void execute() {
+
     }
 }

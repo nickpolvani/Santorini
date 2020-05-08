@@ -96,9 +96,9 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
             for (GodDescription god : selectedGods) {
                 gods.remove(god);
             }
-            options = new GodOptions(currentPlayer, gods, "Choose a God");
+            options = new GodOptions(currentPlayer, gods, Options.MessageType.CHOOSE_GOD);
         } else {
-            options = new GodOptions(currentPlayer, selectedGods, "Choose a God");
+            options = new GodOptions(currentPlayer, selectedGods, Options.MessageType.CHOOSE_GOD);
         }
         notify(options);
     }

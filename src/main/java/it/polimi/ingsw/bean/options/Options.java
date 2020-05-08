@@ -25,14 +25,52 @@ public abstract class Options implements Serializable {
 
     protected Operation currentOperation;
 
-    public Options(Player player) {
-        this.player = player;
-    }
+    protected final MessageType messageType;
 
+    public Options(Player player, MessageType messageType) {
+        this.player = player;
+        this.messageType = messageType;
+    }
 
     public Player getPlayer() {
         return player;
     }
 
+    public MessageType getMessageType() {
+        return messageType;
+    }
 
+    public abstract void execute();
+
+
+    public enum MessageType {
+        WIN,
+        LOST,
+        NOT_ALLOWED,
+        MOVE("These are the Tiles where you can move"),
+        BUILD("These are the Tiles where you can build"),
+        PLACE_WORKERS("Choose two tiles where you want to place your workers"),
+        SELECT_WORKER("Choose one of your workers"),
+        CHOOSE,
+        CHOOSE_GOD("Choose a God");
+
+        private String message;
+
+        MessageType(String message) {
+            this.message = message;
+        }
+
+        MessageType() {
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        // pattern fluent interface: it allows you to set the message and to use at the same time the set object.
+        public MessageType setMessage(String message) {
+            this.message = message;
+            return this;
+        }
+    }
 }

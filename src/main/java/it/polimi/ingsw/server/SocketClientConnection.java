@@ -22,6 +22,7 @@ public class SocketClientConnection extends Observable<Action> implements Client
     private boolean active = true;
 
     public SocketClientConnection(Socket socket, Server server) {
+        super();
         this.socket = socket;
         this.server = server;
     }

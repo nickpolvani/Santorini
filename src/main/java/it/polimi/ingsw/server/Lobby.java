@@ -2,8 +2,6 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.GameState;
-import it.polimi.ingsw.view.RemoteView;
-import it.polimi.ingsw.view.View;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -13,7 +11,7 @@ import java.util.Map;
 
 public class Lobby {
     public final int size;
-    private final List<View> remoteViews = new ArrayList<>();
+    private final List<RemoteView> remoteViews = new ArrayList<>();
     private final Map<String, ClientConnection> connectionMap = new LinkedHashMap<>();
     private boolean full = false;
     public final int id;
@@ -40,7 +38,7 @@ public class Lobby {
     //Method to close the lobby
     //TODO write javadoc
     public void close() {
-        for (View w : remoteViews) {
+        for (RemoteView w : remoteViews) {
             w.getClientConnection().closeConnection();
         }
         logger.info("Closed lobby ID=" + id);
@@ -61,10 +59,10 @@ public class Lobby {
         started = true;
         gameState = new GameState(connectionMap.keySet());
         gameController = new GameController(gameState, this);
-        for (String s : connectionMap.keySet()) {
-            remoteViews.add(new RemoteView(s, connectionMap.get(s)));
+        for (String nickname : connectionMap.keySet()) {
+            remoteViews.add(new RemoteView(nickname, connectionMap.get(nickname)));
         }
-        for (View v : remoteViews) {
+        for (RemoteView v : remoteViews) {
             gameController.addObserver(v);
             gameController.getTurn().addObserver(v);
             v.addObserver(gameController);

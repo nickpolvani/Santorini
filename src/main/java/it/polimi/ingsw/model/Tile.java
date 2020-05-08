@@ -21,7 +21,7 @@ public class Tile implements Cloneable {
      */
     private final IndexTile index;
     /**
-     * Enum used to define the height of the tower
+     * MessageType used to define the height of the tower
      */
     private final Building building;
     /**

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.options.MessageOption;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.controller.GameController;
@@ -203,6 +202,6 @@ public class AthenaTurnTest {
 
         athenaTurn.turnOperations = new LinkedList<>(Collections.singletonList(Operation.SEND_MESSAGE));
         generatedOption = athenaTurn.getOptions();
-        assertEquals(((MessageOption) generatedOption).getMessageType().getMessage(), player1.getGod().getChoiceNotAllowedMessage());
+        assertEquals((generatedOption).getMessageType().getMessage(), player1.getGod().getChoiceNotAllowedMessage());
     }
 }

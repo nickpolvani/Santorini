@@ -116,13 +116,13 @@ public class AthenaTurn extends BasicTurn {
         switch (currentOperation) {
             case MOVE:
                 return new TileOptions(currentPlayer, athenaTileToMove(currentGod.getWorker()),
-                        boardClone, currentOperation, "These are the Tiles where you can move");
+                        boardClone, currentOperation, Options.MessageType.MOVE);
             case BUILD:
                 return new TileOptions(currentPlayer, currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
-                        boardClone, currentOperation, "These are the Tiles where you can build");
+                        boardClone, currentOperation, Options.MessageType.BUILD);
             case CHOOSE:
-                return new ConfirmOptions(currentPlayer, currentGod.getGodDescription().getDescriptionOfPower() +
-                        "\nDo you want to use your god's power? (Yes/No)", boardClone);
+                return new ConfirmOptions(currentPlayer, boardClone, Options.MessageType.CHOOSE.setMessage(currentGod.getGodDescription().getDescriptionOfPower() +
+                        "\nDo you want to use your god's power? (Yes/No)"));
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
                 Worker[] workers = currentPlayer.getWorkers();
@@ -133,10 +133,10 @@ public class AthenaTurn extends BasicTurn {
                 if (indexTiles.size() == 0) {
                     return null;
                 } else {
-                    return new TileOptions(currentPlayer, indexTiles, boardClone, currentOperation, "Choose one of your workers");
+                    return new TileOptions(currentPlayer, indexTiles, boardClone, currentOperation, Options.MessageType.SELECT_WORKER);
                 }
             case SEND_MESSAGE:
-                return new MessageOption(currentPlayer, MessageOption.Enum.NOTALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()));
+                return new MessageOption(currentPlayer, Options.MessageType.NOT_ALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()));
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }

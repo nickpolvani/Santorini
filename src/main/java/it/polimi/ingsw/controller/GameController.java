@@ -75,12 +75,12 @@ public class GameController extends Observable<Options> implements Observer<Acti
     }
 
     public void hasWon(Player winner) {
-        notify(new MessageOption(winner, MessageOption.Enum.WIN));
+        notify(new MessageOption(winner, Options.MessageType.WIN));
         lobby.close();
     }
 
     public void hasLost(Player looser) {
-        notify(new MessageOption(looser, MessageOption.Enum.LOST));
+        notify(new MessageOption(looser, Options.MessageType.LOST));
         gameState.getPlayers().remove(looser);
         if (lobby.size == 2) {
             Player winner = gameState.getPlayers().get(0);
