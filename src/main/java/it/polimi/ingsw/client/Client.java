@@ -15,6 +15,8 @@ public class Client {
     private boolean active = true;
     private final Controller controller;
 
+    protected Object sendActionLock = new Object();
+
 
     public Client(String ip, int port, Controller controller) {
         this.ip = ip;
@@ -39,7 +41,8 @@ public class Client {
                         System.out.println((String) inputObject);
                     } else if (inputObject instanceof Options) {
                         System.out.println(((Options) inputObject).getPlayer().getWorkers());
-
+                        //TODO non so se qua ci serve un nuovo thread per fare questo
+                        controller.handleOptions((Options) inputObject);
                     } else {
                         throw new IllegalArgumentException();
                     }
@@ -52,14 +55,25 @@ public class Client {
         return t;
     }
 
-    public Thread asyncWriteToSocket(final Scanner stdin, final ObjectOutputStream socketOut) {
+    public Thread asyncWriteToSocket(final ObjectOutputStream socketOut) {
         Thread t = new Thread(() -> {
             try {
                 while (isActive()) {
-                    Object o = stdin.nextLine();
-                    socketOut.reset();
-                    socketOut.writeObject(o);
-                    socketOut.flush();
+                    synchronized (sendActionLock) {
+                        while (controller.getCurrentAction() == null) {
+                            sendActionLock.wait();
+                        }
+                        if (controller.isValidAction()) {
+                            socketOut.reset();
+                            socketOut.writeObject(controller.getCurrentAction());
+                            socketOut.flush();
+
+                        } else {
+                            controller.reportInvalidAction();
+                        }
+                        controller.setCurrentAction(null);
+                    }
+
                 }
             } catch (Exception e) {
                 setActive(false);
@@ -79,7 +93,8 @@ public class Client {
 
         try {
             Thread t0 = asyncReadFromSocket(socketIn);
-            Thread t1 = asyncWriteToSocket(stdin, socketOut);
+            Thread t1 = asyncWriteToSocket(socketOut);
+            //TODO ci serve un altro thread per gestire la Cli o la Gui
             t0.join();
             t1.join();
         } catch (InterruptedException | NoSuchElementException e) {
@@ -91,4 +106,6 @@ public class Client {
             socket.close();
         }
     }
+
+
 }

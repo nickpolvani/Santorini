@@ -1,5 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.bean.action.Action;
+import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
 
@@ -40,7 +42,9 @@ public abstract class Options implements Serializable {
         return messageType;
     }
 
-    public abstract void execute();
+    public abstract void execute(View view);
+
+    public abstract boolean isValid(Action currentAction);
 
 
     public enum MessageType {

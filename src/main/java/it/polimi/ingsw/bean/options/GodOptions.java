@@ -1,5 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.bean.action.Action;
+import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.GodDescription;
@@ -25,7 +27,16 @@ public class GodOptions extends Options {
     }
 
     @Override
-    public void execute() {
+    public void execute(View view) {
+        StringBuilder mess = new StringBuilder(this.messageType.getMessage());
+        for (GodDescription g : godsToChoose) {
+            mess.append(g.toString() + "\n");
+        }
+        view.showMessage(mess.toString());
+    }
 
+    @Override
+    public boolean isValid(Action currentAction) {
+        return false;
     }
 }

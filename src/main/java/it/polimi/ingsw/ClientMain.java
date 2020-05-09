@@ -12,21 +12,26 @@ import java.util.Scanner;
 
 public class ClientMain {
     public static void main(String[] args) {
-        View view;
-        System.out.println("Con cosa vuoi giocare?");
+        View view = null;
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
+        String input = "";
 
-        switch (input.toUpperCase()) {
-            case "CLI":
-                view = new CLI();
-                break;
-            case "GUI":
-                view = new GUI();
-                break;
-            default:
-                throw new IllegalArgumentException();
+        while (!input.equals("CLI") || !input.equals("GUI")) {
+            System.out.println("Choose weather you want to play with GUI or CLI. Enter [CLI/GUI]");
+            input = scanner.nextLine();
+
+            switch (input.toUpperCase()) {
+                case "CLI":
+                    view = new CLI();
+                    break;
+                case "GUI":
+                    view = new GUI();
+                    break;
+                default:
+                    throw new IllegalArgumentException();
+            }
         }
+
 
         Client client = new Client("127.0.0.1", 12345, new Controller(view));
         try {

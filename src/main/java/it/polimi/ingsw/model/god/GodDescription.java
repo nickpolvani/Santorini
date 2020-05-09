@@ -30,4 +30,10 @@ public enum GodDescription {
     public String getDescriptionOfPower() {
         return descriptionOfPower;
     }
+
+
+    @Override
+    public String toString() {
+        return name + " " + descriptionOfPower;
+    }
 }

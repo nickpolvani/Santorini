@@ -1,5 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.bean.action.Action;
+import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
@@ -24,7 +26,13 @@ public class ConfirmOptions extends Options {
     }
 
     @Override
-    public void execute() {
+    public void execute(View view) {
+        view.updateBoard(boardClone);
+        view.showMessage(messageType.getMessage());
+    }
 
+    @Override
+    public boolean isValid(Action currentAction) {
+        return false;
     }
 }
