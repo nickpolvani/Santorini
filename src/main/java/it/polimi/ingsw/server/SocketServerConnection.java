@@ -1,6 +1,10 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.bean.action.Action;
+import it.polimi.ingsw.bean.action.ChooseNicknameAction;
+import it.polimi.ingsw.bean.action.GameAction;
+import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.WithoutPlayerOptions;
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.observer.Observable;
 import org.apache.log4j.Logger;
 
@@ -9,9 +13,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class SocketClientConnection extends Observable<Action> implements ClientConnection, Runnable {
+public class SocketServerConnection extends Observable<GameAction> implements ClientConnection, Runnable {
 
-    // Questa è la socket per comunicare al Client
+    // Questa è la socket per comunicare al SocketClientConnection
     private final Socket socket;
     private final Server server;
     private ObjectInputStream in;
@@ -21,8 +25,7 @@ public class SocketClientConnection extends Observable<Action> implements Client
 
     private boolean active = true;
 
-    public SocketClientConnection(Socket socket, Server server) {
-        super();
+    public SocketServerConnection(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
     }
@@ -42,7 +45,7 @@ public class SocketClientConnection extends Observable<Action> implements Client
     }
 
     @Override
-    public synchronized void closeConnection() { //Questo avvisa della chiusura il Client
+    public synchronized void closeConnection() { //Questo avvisa della chiusura il SocketClientConnection
         if (isActive()) {
             send("Connection closed!");
         }
@@ -52,7 +55,7 @@ public class SocketClientConnection extends Observable<Action> implements Client
         } catch (IOException e) {
             System.err.println("Error when closing socket!");
         }
-        logger.debug("Closing SocketClientConnection of " + username + " PORT=" + socket.getPort());
+        logger.debug("Closing SocketServerConnection of " + username + " PORT=" + socket.getPort());
     }
 
     private void close() {
@@ -70,34 +73,34 @@ public class SocketClientConnection extends Observable<Action> implements Client
     @Override
     public void run() {
         Object read;
-        boolean b;
+        boolean nicknameApproved = false;
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
-            send("Welcome!\nWhat is your username?");
+            send(new WithoutPlayerOptions(null, Options.MessageType.CHOOSE_NAME, Operation.SELECT_NICKNAME));
             do {
                 read = in.readObject();
-                if (!(read instanceof String)) throw new IllegalArgumentException();
-                if (server.getRegisteredUsers().containsKey(read)) {
-                    b = true;
-                    send("The chosen username is already in use!\nTry again: ");
+                if (!(read instanceof ChooseNicknameAction)) throw new IllegalArgumentException();
+                String s = ((ChooseNicknameAction) read).getNickname();
+                if (server.getRegisteredUsers().containsKey(((ChooseNicknameAction) read).getNickname())) {
+                    send(new WithoutPlayerOptions(s, Options.MessageType.NICKNAME_ALREADY_SET, Operation.SELECT_NICKNAME));
                 } else {
-                    b = false;
+                    send(new WithoutPlayerOptions(s, Options.MessageType.NICKNAME_APPROVED, Operation.SELECT_NICKNAME));
+                    nicknameApproved = true;
                 }
-            } while (b);
-            username = (String) read;
+            } while (!nicknameApproved);
+            username = ((ChooseNicknameAction) read).getNickname();
             server.addRegisteredUsers(username, this);
-            send("Ok, your username is: " + username);
             logger.debug("Player's username on socket with port=" + socket.getPort() + " is: " + username);
             server.insertIntoLobby(username, this, in);
             while (isActive()) {
                 Object o = in.readObject();
-                if (!(o instanceof Action))
+                if (!(o instanceof GameAction))
                     throw new IllegalArgumentException("An object has arrived that is not a instance of action");
-                notify((Action) o);
+                notify((GameAction) o);
             }
         } catch (IOException e) {
-            logger.warn(e.getMessage() + " of SocketClientConnection USERNAME=" + username + " PORT=" + socket.getPort(), e);
+            logger.warn(e.getMessage() + " of SocketServerConnection USERNAME=" + username + " PORT=" + socket.getPort(), e);
         } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         } finally {

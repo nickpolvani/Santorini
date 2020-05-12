@@ -7,12 +7,33 @@ public class Observable<T> {
     protected final List<Observer<T>> observers = new ArrayList<>();
 
     public void addObserver(Observer<T> observer) {
-        observers.add(observer);
+        synchronized (observers) {
+            observers.add(observer);
+        }
+    }
+
+    public void addObserverList(List<Observer<T>> observerList) {
+        synchronized (observerList) {
+            synchronized (observers) {
+                /*TODO if (observerList.containsAll(observers)) throw  new IllegalArgumentException();*/
+                for (Observer o : observerList) {
+                    addObserver(o);
+                }
+            }
+        }
     }
 
     public void notify(T message) {
-        for (Observer<T> observer : observers) {
-            observer.update(message);
+        synchronized (observers) {
+            for (Observer<T> observer : observers) {
+                observer.update(message);
+            }
+        }
+    }
+
+    public void clearObserver() {
+        synchronized (observers) {
+            observers.clear();
         }
     }
 }

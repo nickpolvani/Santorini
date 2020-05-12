@@ -1,9 +1,6 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.options.ConfirmOptions;
-import it.polimi.ingsw.bean.options.MessageOption;
-import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.TileOptions;
+import it.polimi.ingsw.bean.options.*;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
@@ -24,7 +21,7 @@ import java.util.Queue;
  * Type of Turn to be used after setup is finished
  */
 
-public class BasicTurn extends Observable<Options> implements Turn {
+public class BasicTurn extends Observable<PlayerOptions> implements Turn {
     /**
      *
      */
@@ -43,12 +40,12 @@ public class BasicTurn extends Observable<Options> implements Turn {
     /**
      * Default constructor that set only which game the turn belongs to.
      */
-    public BasicTurn(GameController gameController, Player firstPlayer, List<Observer<Options>> observerList) {
+    public BasicTurn(GameController gameController, Player firstPlayer, List<Observer<PlayerOptions>> observerList) {
         this.currentPlayer = firstPlayer;
         this.currentPlayer.getGod().resetGodState();
         this.turnOperations = currentPlayer.getGod().getTurnOperations();
         this.gameController = gameController;
-        this.observers.addAll(observerList);
+        addObserverList(observerList);
     }
 
     /**
@@ -117,19 +114,19 @@ public class BasicTurn extends Observable<Options> implements Turn {
      * @throws IllegalStateException We put this method in turn and not in gods because we have to handle also athenaTurn. In fact AthenaTurn will override
      *                               this method checking Athena's Power
      */
-    public Options getOptions() {
+    public PlayerOptions getOptions() {
         Operation currentOperation = getCurrentOperation();
         God currentGod = currentPlayer.getGod();
         IslandBoard boardClone = gameController.getGameState().getIslandBoard().clone();
         switch (currentOperation) {
             case MOVE:
-                return new TileOptions(currentPlayer, currentGod.tileToMove(currentGod.getWorker().getIndexTile()),
+                return new TilePlayerOptions(currentPlayer, currentGod.tileToMove(currentGod.getWorker().getIndexTile()),
                         boardClone, currentOperation, Options.MessageType.MOVE);
             case BUILD:
-                return new TileOptions(currentPlayer, currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
+                return new TilePlayerOptions(currentPlayer, currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
                         boardClone, currentOperation, Options.MessageType.BUILD);
             case CHOOSE:
-                return new ConfirmOptions(currentPlayer, boardClone, Options.MessageType.CHOOSE.setMessage(currentGod.getGodDescription().getDescriptionOfPower() +
+                return new ChoosePlayerOptions(currentPlayer, boardClone, Options.MessageType.CHOOSE.setMessage(currentGod.getGodDescription().getDescriptionOfPower() +
                         "\nDo you want to use your god's power? (Yes/No)"));
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
@@ -138,7 +135,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
                     //with this check game does not pass as option a worker who can't move
                     if (currentGod.tileToMove(w.getIndexTile()).size() > 0) indexTiles.add(w.getIndexTile());
                 }
-                return new TileOptions(currentPlayer, indexTiles, boardClone, currentOperation, Options.MessageType.SELECT_WORKER);
+                return new TilePlayerOptions(currentPlayer, indexTiles, boardClone, currentOperation, Options.MessageType.SELECT_WORKER);
             case SEND_MESSAGE:
                 return new MessageOption(currentPlayer, Options.MessageType.NOT_ALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()));
             default:

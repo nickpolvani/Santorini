@@ -1,7 +1,8 @@
 package it.polimi.ingsw.controller.turn;
 
 import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.TileOptions;
+import it.polimi.ingsw.bean.options.PlayerOptions;
+import it.polimi.ingsw.bean.options.TilePlayerOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
@@ -13,7 +14,7 @@ import it.polimi.ingsw.utilities.Start;
 
 import java.util.*;
 
-public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
+public class SetupWorkersTurn extends Observable<PlayerOptions> implements SetupTurn {
 
     private Player currentPlayer;
     private final GameController controller;
@@ -21,13 +22,13 @@ public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
     private final Queue<Operation> turnOperations = new LinkedList<>();
     private boolean started = false;
 
-    public SetupWorkersTurn(GameController controller, Player firstPlayer, List<Observer<Options>> observers) {
+    public SetupWorkersTurn(GameController controller, Player firstPlayer, List<Observer<PlayerOptions>> observers) {
         this.controller = controller;
         this.currentPlayer = firstPlayer;
         this.firstPlayer = firstPlayer;
         this.turnOperations.add(Operation.PLACE_WORKERS);
         this.observers.clear();
-        this.observers.addAll(observers);
+        addObserverList(observers);
     }
 
     @Override
@@ -47,6 +48,7 @@ public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
             } else {
                 nextTurn = new BasicTurn(controller, currentPlayer, observers);
             }
+            clearObserver();
             controller.setTurn((Turn) nextTurn);
             nextTurn.start();
         } else {
@@ -70,10 +72,10 @@ public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
                 .forEach(colTile -> Arrays.stream(colTile)
                         .filter(tile -> !tile.isOccupied()).forEach(t -> freeIndexTiles.add(t.getIndex())));
 
-        Options options = new TileOptions(currentPlayer, freeIndexTiles,
+        PlayerOptions playerOptions = new TilePlayerOptions(currentPlayer, freeIndexTiles,
                 controller.getGameState().getIslandBoard().clone(), getCurrentOperation(),
                 Options.MessageType.PLACE_WORKERS);
-        notify(options);
+        notify(playerOptions);
     }
 
     public void start() {

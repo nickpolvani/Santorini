@@ -1,5 +1,9 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.bean.action.LobbySizeAction;
+import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.WithoutPlayerOptions;
+import it.polimi.ingsw.controller.Operation;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -40,16 +44,16 @@ public class Server {
     void createNewLobby(ClientConnection clientConnection, String name, ObjectInputStream in) throws IOException, ClassNotFoundException {
         //perhaps the asynchronous sending method can be a problem
 
-        clientConnection.asyncSend("How many people do you want to play with?");
+        clientConnection.asyncSend(new WithoutPlayerOptions(name, Options.MessageType.CHOOSE_LOBBY_SIZE, Operation.SELECT_LOBBY_SIZE));
         boolean b;
         int numberPlayers;
         do {
             Object read = in.readObject();
-            if (!(read instanceof String)) throw new IllegalArgumentException();
-            numberPlayers = Integer.parseInt((String) read);
+            if (!(read instanceof LobbySizeAction)) throw new IllegalArgumentException();
+            numberPlayers = ((LobbySizeAction) read).getLobbySize();
             if (numberPlayers != 2 && numberPlayers != 3) {
                 b = true;
-                clientConnection.asyncSend("Numero inserito non corretto!\nRiprovaci"); //TODO traduci
+                clientConnection.asyncSend(new WithoutPlayerOptions(name, Options.MessageType.NOT_ALLOWED.setMessage("Numero inserito non corretto!\nRiprovaci"), Operation.SELECT_LOBBY_SIZE)); //TODO traduci
             } else {
                 b = false;
             }
@@ -129,7 +133,7 @@ public class Server {
             try {
                 Socket newSocket = serverSocket.accept();
                 logger.info("New connection is active on PORT=" + newSocket.getPort());
-                SocketClientConnection socketConnection = new SocketClientConnection(newSocket, this);
+                SocketServerConnection socketConnection = new SocketServerConnection(newSocket, this);
                 executor.submit(socketConnection);
             } catch (IOException e) {
                 System.out.println(e.getMessage());

@@ -3,14 +3,13 @@ package it.polimi.ingsw.bean.action;
 
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
-public class BuildAction extends Action {
+public class BuildGameAction extends GameAction {
     private final IndexTile indexTile;
 
-    public BuildAction(IndexTile indexTile, Player player) {
-        super(player);
+    public BuildGameAction(IndexTile indexTile, String nickname) {
+        super(nickname);
         this.indexTile = indexTile;
     }
 

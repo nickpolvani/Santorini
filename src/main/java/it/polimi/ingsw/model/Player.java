@@ -37,7 +37,7 @@ public class Player implements Serializable {
 
     /**
      * Default constructor
-     * When the game is initialized, every Client has to provide his nickname. In this way, when we create the player's instance,
+     * When the game is initialized, every SocketClientConnection has to provide his nickname. In this way, when we create the player's instance,
      * we set also his nickname. Therefore, the setter of nickname is unnecessary and useless.
      */
     public Player(String nickname, GameState gameState, Color color) {

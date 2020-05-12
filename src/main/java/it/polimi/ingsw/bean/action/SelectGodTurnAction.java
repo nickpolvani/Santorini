@@ -2,15 +2,14 @@ package it.polimi.ingsw.bean.action;
 
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.controller.turn.SetupGodsTurn;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.GodDescription;
 
-public class SelectGodAction extends SetupAction {
+public class SelectGodTurnAction extends SetupTurnAction {
 
     private final GodDescription god;
 
-    public SelectGodAction(Player player, GodDescription god) {
-        super(player);
+    public SelectGodTurnAction(GodDescription god, String nickname) {
+        super(nickname);
         this.god = god;
     }
 

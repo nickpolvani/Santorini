@@ -36,4 +36,28 @@ public enum GodDescription {
     public String toString() {
         return name + " " + descriptionOfPower;
     }
+
+    public static GodDescription parse(String godName) {
+        if (godName.toUpperCase().equals(APOLLO.getName().toUpperCase())) {
+            return APOLLO;
+        } else if (godName.toUpperCase().equals(ARTEMIS.getName().toUpperCase())) {
+            return ARTEMIS;
+        } else if (godName.toUpperCase().equals(ATHENA.getName().toUpperCase())) {
+            return ATHENA;
+        } else if (godName.toUpperCase().equals(ATLAS.getName().toUpperCase())) {
+            return ATLAS;
+        } else if (godName.toUpperCase().equals(DEMETER.getName().toUpperCase())) {
+            return DEMETER;
+        } else if (godName.toUpperCase().equals(PAN.getName().toUpperCase())) {
+            return PAN;
+        } else if (godName.toUpperCase().equals(MINOTAUR.getName().toUpperCase())) {
+            return MINOTAUR;
+        } else if (godName.toUpperCase().equals(PROMETHEUS.getName().toUpperCase())) {
+            return PROMETHEUS;
+        } else if (godName.toUpperCase().equals(HEPHAESTUS.getName().toUpperCase())) {
+            return HEPHAESTUS;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
 }

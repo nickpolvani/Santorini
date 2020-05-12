@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller.turn;
 
 import it.polimi.ingsw.bean.action.PlaceWorkerActions;
-import it.polimi.ingsw.bean.action.SelectGodAction;
-import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.action.SelectGodTurnAction;
+import it.polimi.ingsw.bean.options.PlayerOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.GameState;
@@ -27,7 +27,7 @@ public class TotalSetupTest {
         Set<String> players = new LinkedHashSet<>(Arrays.asList("juri", "fra", "nick"));
         model = new GameState(players);
         controller = new GameController(model, null);
-        List<Observer<Options>> observers = new ArrayList<>();
+        List<Observer<PlayerOptions>> observers = new ArrayList<>();
         turn = (SetupTurn) controller.getTurn();
         turn.start();
     }
@@ -39,7 +39,7 @@ public class TotalSetupTest {
         for (int i = 0; i < model.getPlayers().size(); i++) {
             assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
             assertEquals(model.getPlayers().get(0), turn.getCurrentPlayer());
-            controller.update(new SelectGodAction(turn.getCurrentPlayer(), godChosen));
+            controller.update(new SelectGodTurnAction(godChosen, turn.getCurrentPlayer().getNickname()));
             if (i == 0) {
                 godChosen = GodDescription.ARTEMIS;
             } else if (i == 1) {
@@ -51,7 +51,7 @@ public class TotalSetupTest {
 
         for (int i = 1; i < model.getPlayers().size(); i++) {
             assertEquals(model.getPlayers().get(i), turn.getCurrentPlayer());
-            controller.update(new SelectGodAction(turn.getCurrentPlayer(), godChosen));
+            controller.update(new SelectGodTurnAction(godChosen, turn.getCurrentPlayer().getNickname()));
             assertEquals(godChosen, model.getPlayers().get(i).getGod().getGodDescription());
             if (i == 1) {
                 godChosen = GodDescription.ARTEMIS;
@@ -76,7 +76,7 @@ public class TotalSetupTest {
         for (int i = 0; i < model.getPlayers().size(); i++) {
             assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
             assertEquals(model.getPlayers().get(0), turn.getCurrentPlayer());
-            controller.update(new SelectGodAction(turn.getCurrentPlayer(), godChosen));
+            controller.update(new SelectGodTurnAction(godChosen, turn.getCurrentPlayer().getNickname()));
             if (i == 0) {
                 godChosen = GodDescription.ARTEMIS;
             } else if (i == 1) {
@@ -88,7 +88,7 @@ public class TotalSetupTest {
 
         for (int i = 1; i < model.getPlayers().size(); i++) {
             assertEquals(model.getPlayers().get(i), turn.getCurrentPlayer());
-            controller.update(new SelectGodAction(turn.getCurrentPlayer(), godChosen));
+            controller.update(new SelectGodTurnAction(godChosen, turn.getCurrentPlayer().getNickname()));
             assertEquals(godChosen, model.getPlayers().get(i).getGod().getGodDescription());
             if (i == 1) {
                 godChosen = GodDescription.ARTEMIS;
@@ -112,8 +112,8 @@ public class TotalSetupTest {
             if (i == 3) i = 0;
             assertEquals(Operation.PLACE_WORKERS, turn.getCurrentOperation());
             assertEquals(model.getPlayers().get(i), turn.getCurrentPlayer());
-            controller.update(new PlaceWorkerActions(turn.getCurrentPlayer(),
-                    new Tile.IndexTile[]{position1, position2}));
+            controller.update(new PlaceWorkerActions(new Tile.IndexTile[]{position1, position2},
+                    turn.getCurrentPlayer().getNickname()));
             assertEquals(model.getPlayers().get(i).getWorkers()[0],
                     model.getIslandBoard().getTile(position1).getCurrentWorker());
             assertEquals(model.getPlayers().get(i).getWorkers()[1],

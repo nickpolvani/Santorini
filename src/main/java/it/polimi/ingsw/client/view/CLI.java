@@ -13,13 +13,14 @@ public class CLI extends View {
     private boolean yourTurn;
 
 
+    private final boolean active = true;
+    private final Scanner in = new Scanner(System.in);
+
     @Override
     public void showMessage(String message) {
-
         new Thread(() -> {
             System.out.println(message);
         }).start();
-
     }
 
     public void waitForResponse() {
@@ -39,6 +40,21 @@ public class CLI extends View {
     @Override
     public void updateBoard(IslandBoard board) {
 
+    }
+
+    public void readInput() {
+        while (isActive()) {
+            String input = in.nextLine();
+            notify(input);
+        }
+    }
+
+    public void start() {
+        new Thread(() -> readInput()).start();
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     public void printWelcome() {

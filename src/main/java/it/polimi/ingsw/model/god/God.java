@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Queue;
 
@@ -43,9 +44,19 @@ public abstract class God {
 
 
     /**
-     * @param worker selects worker for the current player's turn
+     * @param workerPosition selects worker for the current player's turn
      */
+    public final void selectWorker(Tile.IndexTile workerPosition) {
+        this.worker = board.getCurrentWorker(workerPosition);
+        if (worker == null || !Arrays.asList(player.getWorkers()).contains(worker)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
     public final void selectWorker(Worker worker) {
+        if (worker == null || !Arrays.asList(player.getWorkers()).contains(worker)) {
+            throw new IllegalArgumentException();
+        }
         this.worker = worker;
     }
 

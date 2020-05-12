@@ -1,9 +1,10 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.action.ActionHandler;
+import it.polimi.ingsw.bean.action.GameAction;
 import it.polimi.ingsw.bean.options.MessageOption;
 import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.PlayerOptions;
 import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.controller.turn.SetupGodsTurn;
 import it.polimi.ingsw.controller.turn.SetupWorkersTurn;
@@ -19,7 +20,7 @@ import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.Lobby;
 import org.apache.log4j.Logger;
 
-public class GameController extends Observable<Options> implements Observer<Action> {
+public class GameController extends Observable<PlayerOptions> implements Observer<GameAction> {
 
     private Turn turn;
 
@@ -96,18 +97,28 @@ public class GameController extends Observable<Options> implements Observer<Acti
         }
     }
 
+    private Player findPlayer(String nickname) {
+        for (Player p : getGameState().getPlayers()) {
+            if (p.getNickname().equals(nickname)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     @Override
-    public synchronized void update(Action a) {
-        if (a.getPlayer().equals(getTurn().getCurrentPlayer())) {
+    public synchronized void update(GameAction a) {
+        if (a.getNickname().equals(getTurn().getCurrentPlayer().getNickname())) {
             if (a.isCompatible(turn.getCurrentOperation())) {
                 try {
-                    actionHandler.execute(a);
+
+                    actionHandler.execute(a, findPlayer(a.getNickname()));
                     turn.endCurrentOperation();
                 } catch (DomeAlreadyPresentException | AlreadyOccupiedException | AlreadySetException e) {
                     e.printStackTrace();
                 }
             } else {
-                //TODO send error's notification to the Client
+                //TODO send error's notification to the SocketClientConnection
             }
         }/* else { TODO ipotesi di risposta
             a.getPlayer().getView().send(new AnotherTurnException);

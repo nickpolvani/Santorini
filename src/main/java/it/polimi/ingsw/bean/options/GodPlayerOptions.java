@@ -1,6 +1,5 @@
 package it.polimi.ingsw.bean.options;
 
-import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
@@ -9,17 +8,16 @@ import it.polimi.ingsw.model.god.GodDescription;
 import java.util.List;
 
 /**
- * These type of Options are sent to the user in setup, when they have to choose between a set of
+ * These type of PlayerOptions are sent to the user in setup, when they have to choose between a set of
  * Gods. Since the game has not started yet, There is no need to have a board in these type of options
  */
-public class GodOptions extends Options {
+public class GodPlayerOptions extends PlayerOptions {
 
     private final List<GodDescription> godsToChoose;
 
-    public GodOptions(Player player, List<GodDescription> godsToChoose, MessageType message) {
-        super(player, message);
+    public GodPlayerOptions(Player player, List<GodDescription> godsToChoose, MessageType message) {
+        super(player, message, Operation.CHOOSE_GOD);
         this.godsToChoose = godsToChoose;
-        this.currentOperation = Operation.CHOOSE_GOD;
     }
 
     public List<GodDescription> getGodsToChoose() {
@@ -36,7 +34,7 @@ public class GodOptions extends Options {
     }
 
     @Override
-    public boolean isValid(Action currentAction) {
-        return false;
+    public String isValid(String attribute) {
+        return null;
     }
 }

@@ -1,41 +1,22 @@
 package it.polimi.ingsw.bean.options;
 
-import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
-import it.polimi.ingsw.model.Player;
 
 import java.io.Serializable;
 
-/**
- * classes Options are used to notify the user of possible options to choose from.
- */
-
-//TODO In the Actions we have the method run(), we need the equivalent in this classes, but we don't know how the View works yet
-//The alternative is to do an explicit cast in the View class to get variables that are
-// not in this class, but are in subclasses.
 public abstract class Options implements Serializable {
 
-
-    /**
-     * the attribute player refers to the user that has to make an action
-     * based on the options available, all the other players cannot make actions
-     * they have to wait for their turn.
-     * TODO This aspect has to be checked by the View
-     */
-    private final Player player;
-
+    protected final MessageType messageType;
     protected Operation currentOperation;
 
-    protected final MessageType messageType;
-
-    public Options(Player player, MessageType messageType) {
-        this.player = player;
+    protected Options(MessageType messageType, Operation operation) {
         this.messageType = messageType;
+        this.currentOperation = operation;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Operation getCurrentOperation() {
+        return currentOperation;
     }
 
     public MessageType getMessageType() {
@@ -44,8 +25,7 @@ public abstract class Options implements Serializable {
 
     public abstract void execute(View view);
 
-    public abstract boolean isValid(Action currentAction);
-
+    public abstract String isValid(String attribute);
 
     public enum MessageType {
         WIN,
@@ -56,7 +36,11 @@ public abstract class Options implements Serializable {
         PLACE_WORKERS("Choose two tiles where you want to place your workers"),
         SELECT_WORKER("Choose one of your workers"),
         CHOOSE,
-        CHOOSE_GOD("Choose a God");
+        CHOOSE_GOD("Choose a God"),
+        CHOOSE_NAME("Choose your nickname"),
+        CHOOSE_LOBBY_SIZE("How many people do you want to play with?"),
+        NICKNAME_ALREADY_SET,
+        NICKNAME_APPROVED;
 
         private String message;
 

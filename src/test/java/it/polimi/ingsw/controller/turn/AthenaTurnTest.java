@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.TileOptions;
+import it.polimi.ingsw.bean.options.PlayerOptions;
+import it.polimi.ingsw.bean.options.TilePlayerOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
@@ -107,7 +107,7 @@ public class AthenaTurnTest {
     @Test
     public void athenaTileToMoveTest() throws Exception {
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().addBlock();
-        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers()[0]);
+        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers()[0].getIndexTile());
 
         //move of the worker of the player with athena
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(0, 1));
@@ -129,7 +129,7 @@ public class AthenaTurnTest {
         athenaTurn.switchTurn(); //We want to play with Artemis to check some behaviors of AthenaTurn
         assertEquals(athenaTurn.currentPlayer, player2);
 
-        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorkers()[0]);
+        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorkers()[0].getIndexTile());
         athenaTurn.endCurrentOperation();
         assertEquals(athenaTurn.getCurrentOperation(), Operation.MOVE);
         athenaTurn.endCurrentOperation();
@@ -144,13 +144,13 @@ public class AthenaTurnTest {
         assertEquals(athenaTurn.currentPlayer, player1);
         assertTrue(((Athena) player1.getGod()).getCanMoveUp());
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().addBlock();
-        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers()[0]);
+        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers()[0].getIndexTile());
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(0, 1));
 
         athenaTurn.switchTurn();
         assertEquals(athenaTurn.currentPlayer, player2);
 
-        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorkers()[0]);
+        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorkers()[0].getIndexTile());
         athenaTurn.endCurrentOperation();
         assertEquals(athenaTurn.getCurrentOperation(), Operation.MOVE);
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(3, 2));
@@ -181,18 +181,18 @@ public class AthenaTurnTest {
         assertEquals(athenaTurn.getCurrentOperation(), Operation.SELECT_WORKER);
 
         Tile.IndexTile[] indexTiles = new Tile.IndexTile[]{player1.getWorkers()[0].getIndexTile(), player1.getWorkers()[1].getIndexTile()};
-        Options generatedOption = athenaTurn.getOptions();
+        PlayerOptions generatedOption = athenaTurn.getOptions();
         assertEquals(generatedOption.getPlayer(), player1);
-        assertTrue(((TileOptions) generatedOption).getTilesToChoose().contains(indexTiles[0]) &&
-                ((TileOptions) generatedOption).getTilesToChoose().contains(indexTiles[1]) &&
-                ((TileOptions) generatedOption).getTilesToChoose().size() == 2);
+        assertTrue(((TilePlayerOptions) generatedOption).getTilesToChoose().contains(indexTiles[0]) &&
+                ((TilePlayerOptions) generatedOption).getTilesToChoose().contains(indexTiles[1]) &&
+                ((TilePlayerOptions) generatedOption).getTilesToChoose().size() == 2);
 
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().buildDome();
         gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 0)).getBuilding().buildDome();
         generatedOption = athenaTurn.getOptions();
         assertEquals(generatedOption.getPlayer(), player1);
-        assertTrue(((TileOptions) generatedOption).getTilesToChoose().contains(indexTiles[1]) &&
-                ((TileOptions) generatedOption).getTilesToChoose().size() == 1);
+        assertTrue(((TilePlayerOptions) generatedOption).getTilesToChoose().contains(indexTiles[1]) &&
+                ((TilePlayerOptions) generatedOption).getTilesToChoose().size() == 1);
 
         //CASE MOVE ALREADY TESTED IN EndCurrentOperationTest
 

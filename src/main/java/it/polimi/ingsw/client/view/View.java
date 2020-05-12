@@ -1,8 +1,10 @@
 package it.polimi.ingsw.client.view;
 
 import it.polimi.ingsw.model.IslandBoard;
+import it.polimi.ingsw.observer.Observable;
 
-public abstract class View {
+
+public abstract class View extends Observable<String> {
 
     private String nickname;
 
@@ -18,4 +20,6 @@ public abstract class View {
     public abstract void showMessage(String message);
 
     public abstract void updateBoard(IslandBoard board);
+
+    public abstract void start();
 }

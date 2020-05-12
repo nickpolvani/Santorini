@@ -1,15 +1,14 @@
 package it.polimi.ingsw.bean.action;
 
 import it.polimi.ingsw.controller.Operation;
-import it.polimi.ingsw.model.Player;
 
 /**
  * this action is created by the view when user receives one message (MessageOption).
  */
-public class NodAction extends Action {
+public class NodGameAction extends GameAction {
 
-    public NodAction(Player player) {
-        super(player);
+    public NodGameAction(String nickname) {
+        super(nickname);
     }
 
     /**

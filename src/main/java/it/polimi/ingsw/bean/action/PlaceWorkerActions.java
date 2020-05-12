@@ -2,15 +2,14 @@ package it.polimi.ingsw.bean.action;
 
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadySetException;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 
-public class PlaceWorkerActions extends Action {
+public class PlaceWorkerActions extends GameAction {
 
     private final Tile.IndexTile[] positions;
 
-    public PlaceWorkerActions(Player player, Tile.IndexTile[] positions) {
-        super(player);
+    public PlaceWorkerActions(Tile.IndexTile[] positions, String nickname) {
+        super(nickname);
         if (positions.length != 2) throw new IllegalArgumentException();
         this.positions = positions;
     }

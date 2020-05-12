@@ -2,17 +2,16 @@ package it.polimi.ingsw.bean.action;
 
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
-import it.polimi.ingsw.model.Player;
 
 /**
  * Used by classes God when the user has to answer a question that changes
  * the logic of the player's turn
  */
-public class ChoiceAction extends Action {
+public class ConfirmGameAction extends GameAction {
     private final boolean confirm;
 
-    ChoiceAction(boolean confirm, Player player) {
-        super(player);
+    public ConfirmGameAction(boolean confirm, String nickname) {
+        super(nickname);
         this.confirm = confirm;
     }
 

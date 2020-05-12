@@ -1,6 +1,5 @@
 package it.polimi.ingsw.bean.options;
 
-import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
@@ -14,15 +13,14 @@ import java.util.Collection;
  * or select the worker for his turn. Contains also a copy of the board to notify the user that the game has
  * changed.
  */
-public class TileOptions extends Options {
+public class TilePlayerOptions extends PlayerOptions {
 
     private final Collection<IndexTile> tilesToChoose;
     private final IslandBoard boardClone;
 
-    public TileOptions(Player player, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, MessageType message) {
-        super(player, message);
+    public TilePlayerOptions(Player player, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, MessageType message) {
+        super(player, message, operation);
         this.tilesToChoose = tilesToChoose;
-        this.currentOperation = operation;
         this.boardClone = boardClone;
     }
 
@@ -41,7 +39,7 @@ public class TileOptions extends Options {
     }
 
     @Override
-    public boolean isValid(Action currentAction) {
-        return false;
+    public String isValid(String attribute) {
+        return null;
     }
 }

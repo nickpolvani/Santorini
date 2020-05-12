@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.action.SelectGodAction;
+import it.polimi.ingsw.bean.action.SelectGodTurnAction;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.GameState;
@@ -60,22 +60,22 @@ public class SetupGodsTurnTest {
     public void turnFlow() {
         assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
         assertEquals(model.getPlayers().get(0), turn.getCurrentPlayer());
-        controller.update(new SelectGodAction(turn.getCurrentPlayer(), GodDescription.APOLLO));
+        controller.update(new SelectGodTurnAction(GodDescription.APOLLO, turn.getCurrentPlayer().getNickname()));
 
         assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
         assertEquals(model.getPlayers().get(0), turn.getCurrentPlayer());
-        controller.update(new SelectGodAction(turn.getCurrentPlayer(), GodDescription.PAN));
+        controller.update(new SelectGodTurnAction(GodDescription.PAN, turn.getCurrentPlayer().getNickname()));
 
         assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
         assertEquals(model.getPlayers().get(0), turn.getCurrentPlayer());
-        controller.update(new SelectGodAction(turn.getCurrentPlayer(), GodDescription.ARTEMIS));
+        controller.update(new SelectGodTurnAction(GodDescription.ARTEMIS, turn.getCurrentPlayer().getNickname()));
 
         assertEquals(model.getPlayers().get(1), turn.getCurrentPlayer());
-        controller.update(new SelectGodAction(turn.getCurrentPlayer(), GodDescription.APOLLO));
+        controller.update(new SelectGodTurnAction(GodDescription.APOLLO, turn.getCurrentPlayer().getNickname()));
         assertEquals(GodDescription.APOLLO, model.getPlayers().get(1).getGod().getGodDescription());
 
         assertEquals(model.getPlayers().get(2), turn.getCurrentPlayer());
-        controller.update(new SelectGodAction(turn.getCurrentPlayer(), GodDescription.ARTEMIS));
+        controller.update(new SelectGodTurnAction(GodDescription.ARTEMIS, turn.getCurrentPlayer().getNickname()));
         assertEquals(GodDescription.ARTEMIS, model.getPlayers().get(2).getGod().getGodDescription());
 
         assertEquals(GodDescription.PAN, model.getPlayers().get(0).getGod().getGodDescription());

@@ -1,14 +1,13 @@
 package it.polimi.ingsw.bean.action;
 
 import it.polimi.ingsw.controller.turn.SetupTurn;
-import it.polimi.ingsw.model.Player;
 
-public abstract class SetupAction extends Action {
+public abstract class SetupTurnAction extends GameAction {
 
     protected SetupTurn setupTurn;
 
-    public SetupAction(Player player) {
-        super(player);
+    public SetupTurnAction(String nickname) {
+        super(nickname);
     }
 
     void setSetupWorkersTurn(SetupTurn setupTurn) {

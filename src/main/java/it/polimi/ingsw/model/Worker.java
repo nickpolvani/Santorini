@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Worker implements Cloneable, Serializable {
 
     /**
-     * The color of worker's team, which is chosen by the Client, at the game's start, and it will be the same for the whole game.
+     * The color of worker's team, which is chosen by the SocketClientConnection, at the game's start, and it will be the same for the whole game.
      */
     private final Color color;
 

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller.turn;
 
 import it.polimi.ingsw.bean.action.PlaceWorkerActions;
-import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.PlayerOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.GameState;
@@ -25,7 +25,7 @@ public class SetupWorkersTurnTest {
         Set<String> players = new LinkedHashSet<>(Arrays.asList("juri", "fra", "nick"));
         model = new GameState(players);
         controller = new GameController(model, null);
-        List<Observer<Options>> observers = new ArrayList<>();
+        List<Observer<PlayerOptions>> observers = new ArrayList<>();
         turn = new SetupWorkersTurn(controller, model.getPlayers().get(0), observers);
         controller.setTurn(turn);
     }
@@ -53,8 +53,8 @@ public class SetupWorkersTurnTest {
         for (int i = 0; i < model.getPlayers().size(); i++) {
             assertEquals(Operation.PLACE_WORKERS, turn.getCurrentOperation());
             assertEquals(model.getPlayers().get(i), turn.getCurrentPlayer());
-            controller.update(new PlaceWorkerActions(turn.getCurrentPlayer(),
-                    new Tile.IndexTile[]{position1, position2}));
+            controller.update(new PlaceWorkerActions(new Tile.IndexTile[]{position1, position2},
+                    turn.getCurrentPlayer().getNickname()));
             assertEquals(model.getPlayers().get(i).getWorkers()[0],
                     model.getIslandBoard().getTile(position1).getCurrentWorker());
             assertEquals(model.getPlayers().get(i).getWorkers()[1],

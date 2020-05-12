@@ -2,10 +2,9 @@ package it.polimi.ingsw.bean.action;
 
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
-public class MoveAction extends Action {
+public class MoveGameAction extends GameAction {
 
     private final IndexTile indexTile;
 
@@ -13,8 +12,8 @@ public class MoveAction extends Action {
         return indexTile;
     }
 
-    public MoveAction(Player player, IndexTile indexTile) {
-        super(player);
+    public MoveGameAction(IndexTile indexTile, String nickname) {
+        super(nickname);
         this.indexTile = indexTile;
     }
 

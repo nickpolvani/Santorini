@@ -28,6 +28,11 @@ public class GUI extends View {
 
     }
 
+    @Override
+    public void start() {
+
+    }
+
     public static void main(String[] args) throws IOException {
         GUI gui = new GUI();
         gui.createAndShowGUI();
@@ -40,11 +45,9 @@ public class GUI extends View {
         frame.setLayout(new BorderLayout());
         JPanel textPanel = new JPanel();
 
-
-        JTextArea textArea = new JTextArea("Welcome to Santorini");
-        textPanel.add(textArea);
+        JLabel jlabel = new JLabel("Welcome to Santorini");
+        textPanel.add(jlabel);
         String path = new File(".").getCanonicalPath();
-
 
         final BufferedImage bufferedImage = ImageIO.read(new File(path + "/src/main/resources/images/SantoriniBoard.png"));
 
