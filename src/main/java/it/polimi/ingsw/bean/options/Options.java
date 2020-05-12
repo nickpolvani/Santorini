@@ -9,6 +9,7 @@ public abstract class Options implements Serializable {
 
     protected final MessageType messageType;
     protected Operation currentOperation;
+    protected String alert;
 
     protected Options(MessageType messageType, Operation operation) {
         this.messageType = messageType;
@@ -25,7 +26,7 @@ public abstract class Options implements Serializable {
 
     public abstract void execute(View view);
 
-    public abstract String isValid(String attribute);
+    public abstract String isValid(String userInput);
 
     public enum MessageType {
         WIN,

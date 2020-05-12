@@ -18,15 +18,22 @@ public class GUI extends View {
         this.board = null;
     }
 
+
     @Override
     public void showMessage(String message) {
 
     }
 
     @Override
-    public void updateBoard(IslandBoard board) {
+    public void printBoard(IslandBoard board) {
 
     }
+
+    @Override
+    public void readInput() {
+
+    }
+
 
     @Override
     public void start() {
@@ -36,7 +43,6 @@ public class GUI extends View {
     public static void main(String[] args) throws IOException {
         GUI gui = new GUI();
         gui.createAndShowGUI();
-
     }
 
     public void createAndShowGUI() throws IOException {

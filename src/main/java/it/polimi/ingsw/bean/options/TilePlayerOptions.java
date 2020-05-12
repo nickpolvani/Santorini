@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 /**
  * class used when the player has to choose between a set of tiles, for example to select a Tile to build, move
@@ -22,6 +23,8 @@ public class TilePlayerOptions extends PlayerOptions {
         super(player, message, operation);
         this.tilesToChoose = tilesToChoose;
         this.boardClone = boardClone;
+        alert = "Please insert only one couple of numbers split by a comma." +
+                "Obviously, numbers has to be within 0 and 4";
     }
 
     public Collection<IndexTile> getTilesToChoose() {
@@ -34,12 +37,18 @@ public class TilePlayerOptions extends PlayerOptions {
 
     @Override
     public void execute(View view) {
-        view.updateBoard(boardClone);
-        view.showMessage(messageType.getMessage());
+        view.printBoard(boardClone);
+        if (view.getNickname().equals(this.getPlayer().getNickname())) {
+            view.showMessage(messageType.getMessage() + alert);
+        }
     }
 
     @Override
-    public String isValid(String attribute) {
-        return null;
+    public String isValid(String userInput) {
+        Pattern checkTile = Pattern.compile("[01234],[01234]");
+        if (checkTile.matcher(userInput).matches()) {
+            return null;
+        } else return alert;
     }
+
 }

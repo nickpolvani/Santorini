@@ -19,7 +19,9 @@ public abstract class View extends Observable<String> {
 
     public abstract void showMessage(String message);
 
-    public abstract void updateBoard(IslandBoard board);
+    public abstract void printBoard(IslandBoard board);
+
+    public abstract void readInput();
 
     public abstract void start();
 }

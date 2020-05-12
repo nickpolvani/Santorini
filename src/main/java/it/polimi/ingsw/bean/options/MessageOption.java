@@ -13,12 +13,14 @@ public class MessageOption extends PlayerOptions {
 
     @Override
     public void execute(View view) {
-        view.showMessage(messageType.getMessage());
+        if (view.getNickname().equals(this.getPlayer().getNickname())) {
+            view.showMessage(messageType.getMessage());
+        }
     }
 
     @Override
-    public String isValid(String attribute) {
-        if (attribute == null) return null;
+    public String isValid(String userInput) {
+        if (userInput == null) return null;
         throw new IllegalArgumentException();
     }
 }

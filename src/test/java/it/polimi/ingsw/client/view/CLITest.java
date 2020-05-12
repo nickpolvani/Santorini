@@ -8,10 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-
-import static org.junit.Assert.assertFalse;
-
 public class CLITest {
 
     CLI cli;
@@ -48,19 +44,6 @@ public class CLITest {
         cli.printBoard(board);
     }
 
-    @Test
-    public void waitForResponseTest() throws InterruptedException {
-        String mockUpInput = "TestInputString";
-        System.setIn(new ByteArrayInputStream(mockUpInput.getBytes()));
 
-        cli.waitForResponse();
 
-        for (int i = 0; i < 4; i++) {
-            Thread.sleep(1000);
-            System.setIn(new ByteArrayInputStream(mockUpInput.getBytes()));
-        }
-
-        assertFalse(cli.isYourTurn());
-        cli.setYourTurn(true);
-    }
 }

@@ -18,6 +18,7 @@ public class GodPlayerOptions extends PlayerOptions {
     public GodPlayerOptions(Player player, List<GodDescription> godsToChoose, MessageType message) {
         super(player, message, Operation.CHOOSE_GOD);
         this.godsToChoose = godsToChoose;
+        alert = "Please insert one of the list:";
     }
 
     public List<GodDescription> getGodsToChoose() {
@@ -26,15 +27,23 @@ public class GodPlayerOptions extends PlayerOptions {
 
     @Override
     public void execute(View view) {
-        StringBuilder mess = new StringBuilder(this.messageType.getMessage());
-        for (GodDescription g : godsToChoose) {
-            mess.append(g.toString() + "\n");
+        if (view.getNickname().equals(this.getPlayer().getNickname())) {
+            view.showMessage(messageType.getMessage() + godsList() + alert);
         }
-        view.showMessage(mess.toString());
     }
 
     @Override
-    public String isValid(String attribute) {
-        return null;
+    public String isValid(String userInput) {
+        if (godsList().toLowerCase().contains(userInput.toLowerCase())) {
+            return null;
+        } else return alert;
+    }
+
+    private String godsList() {
+        StringBuilder list = new StringBuilder(this.messageType.getMessage());
+        for (GodDescription g : godsToChoose) {
+            list.append(g.toString() + "\n");
+        }
+        return list.toString();
     }
 }

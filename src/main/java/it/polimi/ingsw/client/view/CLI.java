@@ -10,9 +10,6 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 public class CLI extends View {
 
-    private boolean yourTurn;
-
-
     private final boolean active = true;
     private final Scanner in = new Scanner(System.in);
 
@@ -21,25 +18,6 @@ public class CLI extends View {
         new Thread(() -> {
             System.out.println(message);
         }).start();
-    }
-
-    public void waitForResponse() {
-        setYourTurn(true);
-        Scanner reader = new Scanner(System.in);
-        String input = reader.nextLine();
-        setYourTurn(false);
-        new Thread(() -> {
-            while (!isYourTurn()) {
-                if (new Scanner(System.in).hasNext()) {
-                    System.out.println("It's not your turn yet. Wait for it!");
-                }
-            }
-        }).start();
-    }
-
-    @Override
-    public void updateBoard(IslandBoard board) {
-
     }
 
     public void readInput() {
@@ -117,13 +95,5 @@ public class CLI extends View {
         AnsiConsole.systemInstall();
         AnsiConsole.out().println(ansi().eraseLine().render(utility.toString()));
     }
-
-
-    public synchronized boolean isYourTurn() {
-        return yourTurn;
-    }
-
-    public synchronized void setYourTurn(boolean yourTurn) {
-        this.yourTurn = yourTurn;
-    }
 }
+
