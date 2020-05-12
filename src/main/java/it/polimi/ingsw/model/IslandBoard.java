@@ -99,6 +99,73 @@ public class IslandBoard implements Cloneable {
         return new IslandBoard(boardClone);
     }
 
+    @Override
+    public String toString() {
+        int tileRows = board[0][0].getN_ROWS();
+        int tileCols = board[0][0].getN_COLS();
+        StringBuilder grid = new StringBuilder();
+
+        //FIRST ROW
+        grid.append("  ");
+        for (int i = 0; i < N_COLS; i++) {
+            for (int j = 0; j < tileCols; j++) {
+                if (j == 4) {
+                    grid.append(i);
+                } else {
+                    grid.append(" ");
+                }
+            }
+        }
+        grid.append("\n");
+
+        //GRID ROWS
+        for (int i = 0; i < N_ROWS; i++) {
+
+            /*
+            For all row of the board, I use a StringBuilderArray. The dimension of the array is equal to the number of Tiles' row;
+            Instead cols are not set at the start but, using string builder, we can add the row of the concerned tile in the string builder.
+             */
+
+            StringBuilder[] lines = new StringBuilder[tileRows];
+
+            for (int l = 0; l < lines.length; l++) {
+                lines[l] = new StringBuilder();
+                if (l == 1) {
+                    lines[l].append(" " + i + " ");
+                } else {
+                    lines[l].append("   ");
+                }
+            }
+
+            /*
+            For all tiles in the line i of the board, we put is l_th line in the l_th String builder of the array
+            We have a situation of this type for all Row of the Board:
+            String Builder
+            ||-> firstRowOfFirstTileInRow + FirstRowOfSecondTileInRow + .. + FirstRowOfLastTileInRow
+            ||-> secondRowOfFirstTileInRow + secondRowOfSecondTileInRow + .. + secondRowOfLastTileInRow
+            ||->                        ...             .....           .....
+            ||->lastRowOfFirstTileInRow + lastRowOfSecondTileInRow + .. + lastRowOfLastTileInRow
+             */
+            for (Tile tile : board[i]) {
+                String tileString = tile.toString();
+                int l = 0;
+                for (char c : tileString.toCharArray()) {
+                    if (c == '\n') {
+                        l++;
+                    } else {
+                        lines[l].append(c);
+                    }
+                }
+            }
+
+            for (StringBuilder line : lines) {
+                grid.append(line + "\n");
+            }
+
+        }
+
+        return grid.toString();
+    }
 
     // UTILITY METHODS : Following methods has been implemented to be taken care of coding clarity
 

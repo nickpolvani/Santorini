@@ -16,6 +16,8 @@ import java.util.Objects;
  */
 public class Tile implements Cloneable {
 
+    private static final int N_ROWS = 4;
+    private static final int N_COLS = 7;
     /**
      * The tile's index pair in the board
      */
@@ -112,6 +114,38 @@ public class Tile implements Cloneable {
             }
         }
         return clone;
+    }
+
+    public int getN_ROWS() {
+        return N_ROWS;
+    }
+
+    public int getN_COLS() {
+        return N_COLS;
+    }
+
+    @Override
+    public final String toString() {
+
+        char[] firstLine = ("+—————+").toCharArray();
+        char[] secondLine;
+        char[] thirdLine;
+        if (building.getDome()) {
+            secondLine = ("| / \\ |").toCharArray();
+            thirdLine = ("| \\ / |").toCharArray();
+        } else {
+            secondLine = ("| " + "L " + getBuildingLevel() + " |").toCharArray();
+            thirdLine = ("| " + (currentWorker != null ? ("w " + currentWorker.getColor().getNum()) : "   ") + " |").toCharArray();
+        }
+        char[] fourthLine = ("+—————+").toCharArray();
+
+        char[][] tileAsMatrix = new char[][]{firstLine, secondLine, thirdLine, fourthLine};
+
+        StringBuilder rep = new StringBuilder((this.N_ROWS * (this.N_COLS + 1)));
+        for (char[] line : tileAsMatrix) {
+            rep.append(line).append('\n');
+        }
+        return rep.toString();
     }
 
 
