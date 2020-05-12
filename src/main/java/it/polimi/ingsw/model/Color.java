@@ -30,4 +30,8 @@ public enum Color {
                 throw new IllegalArgumentException();
         }
     }
+
+    public int getNum() {
+        return num;
+    }
 }
