@@ -16,9 +16,10 @@ public class SelectWorkerGameAction extends GameAction {
     @Override
     void setPlayer(Player player) {
         Worker[] workers = player.getWorkers();
-        if (!(workerPosition.equals(workers[0]) || workerPosition.equals(workers[1]))) {
+        if (!(workerPosition.equals(workers[0].getIndexTile()) || workerPosition.equals(workers[1].getIndexTile()))) {
             throw new IllegalArgumentException();
         }
+        this.player = player;
     }
 
     @Override

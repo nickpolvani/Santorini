@@ -1,5 +1,6 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.client.Message;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
@@ -38,7 +39,12 @@ public class TileOptions extends Options {
     public void execute(View view) {
         view.printBoard(boardClone);
         if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(messageType + alert);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(messageType).append(" ").append(alert).append(":\n");
+            for (IndexTile i : tilesToChoose) {
+                stringBuilder.append(i.toString() + " ");
+            }
+            view.showMessage(stringBuilder.toString());
         }
     }
 
@@ -46,7 +52,10 @@ public class TileOptions extends Options {
     public String isValid(String userInput) {
         Pattern checkTile = Pattern.compile("[01234],[01234]");
         if (checkTile.matcher(userInput).matches()) {
-            return null;
+            IndexTile indexTile = (IndexTile) Message.parseMessage(this, userInput);
+            if (tilesToChoose.contains(indexTile))
+                return null;
+            else return alert;
         } else return alert;
     }
 

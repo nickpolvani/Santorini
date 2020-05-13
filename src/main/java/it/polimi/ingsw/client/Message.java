@@ -51,7 +51,7 @@ public class Message {
     }
 
     private static Boolean parseBoolean(String message) {
-        return Boolean.parseBoolean(message);
+        return message.toLowerCase().equals("yes") || message.toLowerCase().equals("y");
     }
 
     private static Tile.IndexTile parseSingleIndex(String message) {

@@ -31,6 +31,7 @@ public class Controller implements Observer<String> {
         }
         if (errorString == null) {
             Object m = Message.parseMessage(currentOption, message);
+            if (m == null) throw new IllegalStateException();
             Action action;
             if (nickname == null) {
                 action = ActionFactory.createAction(currentOption, m, message); //used when the user has to choose a nickname

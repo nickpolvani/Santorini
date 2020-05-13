@@ -142,7 +142,7 @@ public class Tile implements Cloneable, Serializable {
 
         char[][] tileAsMatrix = new char[][]{firstLine, secondLine, thirdLine, fourthLine};
 
-        StringBuilder rep = new StringBuilder((this.N_ROWS * (this.N_COLS + 1)));
+        StringBuilder rep = new StringBuilder((N_ROWS * (N_COLS + 1)));
         for (char[] line : tileAsMatrix) {
             rep.append(line).append('\n');
         }
@@ -289,6 +289,11 @@ public class Tile implements Cloneable, Serializable {
         @Override
         public IndexTile clone() {
             return new IndexTile(this.row, this.col);
+        }
+
+        @Override
+        public String toString() {
+            return "(" + row + "," + col + ")";
         }
     }
 

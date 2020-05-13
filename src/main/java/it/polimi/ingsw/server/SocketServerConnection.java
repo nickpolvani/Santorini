@@ -98,7 +98,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             while (isActive()) {
                 Object o = in.readObject();
                 if (!(o instanceof GameAction))
-                    throw new IllegalArgumentException("An object has arrived that is not a instance of action");
+                    logger.error("An object has arrived that is not a instance of action", new IllegalArgumentException());
                 notify((GameAction) o);
             }
         } catch (IOException e) {
@@ -106,6 +106,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         } finally {
+            logger.warn("Branch finally of SocketServerConnection of " + username);
             close();
         }
     }
