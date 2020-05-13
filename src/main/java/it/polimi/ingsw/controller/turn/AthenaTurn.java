@@ -14,6 +14,7 @@ import it.polimi.ingsw.model.god.Athena;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.utilities.MessageType;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -116,13 +117,13 @@ public class AthenaTurn extends BasicTurn {
         switch (currentOperation) {
             case MOVE:
                 return new TileOptions(currentPlayer.getNickname(), athenaTileToMove(currentGod.getWorker()),
-                        boardClone, currentOperation, Options.MessageType.MOVE);
+                        boardClone, currentOperation, MessageType.MOVE);
             case BUILD:
                 return new TileOptions(currentPlayer.getNickname(), currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
-                        boardClone, currentOperation, Options.MessageType.BUILD);
+                        boardClone, currentOperation, MessageType.BUILD);
             case CHOOSE:
-                return new ChooseOptions(currentPlayer.getNickname(), boardClone, Options.MessageType.CHOOSE.setMessage(currentGod.getGodDescription().getDescriptionOfPower() +
-                        "\nDo you want to use your god's power? (Yes/No)"));
+                return new ChooseOptions(currentPlayer.getNickname(), boardClone, currentGod.getGodDescription().getDescriptionOfPower() +
+                        "\nDo you want to use your god's power? (Yes/No)");
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
                 Worker[] workers = currentPlayer.getWorkers();
@@ -133,10 +134,10 @@ public class AthenaTurn extends BasicTurn {
                 if (indexTiles.size() == 0) {
                     return null;
                 } else {
-                    return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, Options.MessageType.SELECT_WORKER);
+                    return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, MessageType.SELECT_WORKER);
                 }
             case SEND_MESSAGE:
-                return new MessageOption(currentPlayer.getNickname(), Options.MessageType.NOT_ALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()), getCurrentOperation());
+                return new MessageOption(currentPlayer.getNickname(), currentGod.getChoiceNotAllowedMessage(), getCurrentOperation());
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }

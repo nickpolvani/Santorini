@@ -202,6 +202,6 @@ public class AthenaTurnTest {
 
         athenaTurn.turnOperations = new LinkedList<>(Collections.singletonList(Operation.SEND_MESSAGE));
         generatedOption = athenaTurn.getOptions();
-        assertEquals((generatedOption).getMessageType().getMessage(), player1.getGod().getChoiceNotAllowedMessage());
+        assertEquals((generatedOption).getMessageType(), player1.getGod().getChoiceNotAllowedMessage());
     }
 }

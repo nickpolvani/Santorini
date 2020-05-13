@@ -6,14 +6,14 @@ import it.polimi.ingsw.controller.Operation;
 public class MessageOption extends Options {
 
 
-    public MessageOption(String nickname, MessageType messageType, Operation operation) {
-        super(nickname, messageType, Operation.SEND_MESSAGE);
+    public MessageOption(String nickname, String messageType, Operation operation) {
+        super(nickname, messageType, operation);
     }
 
     @Override
     public void execute(View view) {
         if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(messageType.getMessage());
+            view.showMessage(messageType);
         }
     }
 

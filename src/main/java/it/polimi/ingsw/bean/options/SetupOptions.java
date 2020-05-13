@@ -9,7 +9,7 @@ import it.polimi.ingsw.controller.Operation;
 public class SetupOptions extends Options {
 
 
-    public SetupOptions(String nickname, MessageType messageType, Operation operation) {
+    public SetupOptions(String nickname, String messageType, Operation operation) {
         super(nickname, messageType, operation);
     }
 
@@ -19,20 +19,26 @@ public class SetupOptions extends Options {
 
     @Override
     public void execute(View view) {
-        view.showMessage(messageType.getMessage());
+        view.showMessage(messageType);
     }
 
     @Override
     public String isValid(String userInput) {
-        if (currentOperation == Operation.SELECT_NICKNAME)
+        return null;
+        /*if (currentOperation == Operation.SELECT_NICKNAME)
             return null;
         else if (currentOperation == Operation.SELECT_LOBBY_SIZE) {
-            int size = Integer.parseInt(userInput);
+            int size;
+            try{
+                size = Integer.parseInt(userInput);
+            }catch (Exception e){
+                return "Insert number is not valid. Please try again!";
+            }
             if (size != 3 && size != 2) {
                 return "Insert number is not valid. Please try again!";
             }
             return null;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException();*/
     }
 }

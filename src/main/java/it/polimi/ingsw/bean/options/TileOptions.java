@@ -18,7 +18,7 @@ public class TileOptions extends Options {
     private final Collection<IndexTile> tilesToChoose;
     private final IslandBoard boardClone;
 
-    public TileOptions(String nickname, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, MessageType message) {
+    public TileOptions(String nickname, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, String message) {
         super(nickname, message, operation);
         this.tilesToChoose = tilesToChoose;
         this.boardClone = boardClone;
@@ -38,7 +38,7 @@ public class TileOptions extends Options {
     public void execute(View view) {
         view.printBoard(boardClone);
         if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(messageType.getMessage() + alert);
+            view.showMessage(messageType + alert);
         }
     }
 

@@ -8,6 +8,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.regex.Pattern;
+
+import static org.junit.Assert.assertTrue;
+
 public class CLITest {
 
     CLI cli;
@@ -44,6 +48,15 @@ public class CLITest {
         cli.printBoard(board);
     }
 
+    @Test
+    public void testing() {
+
+        String userInput = "1,             1-         1,          2";
+        String toCheck = userInput.replace(" ", "");
+        Pattern checkTile = Pattern.compile("[01234],[01234]-[01234],[01234]");
+        assertTrue(checkTile.matcher(toCheck).matches());
+
+    }
 
 
 }

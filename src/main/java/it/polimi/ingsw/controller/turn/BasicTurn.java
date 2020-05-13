@@ -13,6 +13,7 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.utilities.MessageType;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -124,13 +125,13 @@ public class BasicTurn extends Observable<Options> implements Turn {
         switch (currentOperation) {
             case MOVE:
                 return new TileOptions(currentPlayer.getNickname(), currentGod.tileToMove(currentGod.getWorker().getIndexTile()),
-                        boardClone, currentOperation, Options.MessageType.MOVE);
+                        boardClone, currentOperation, MessageType.MOVE);
             case BUILD:
                 return new TileOptions(currentPlayer.getNickname(), currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
-                        boardClone, currentOperation, Options.MessageType.BUILD);
+                        boardClone, currentOperation, MessageType.BUILD);
             case CHOOSE:
-                return new ChooseOptions(currentPlayer.getNickname(), boardClone, Options.MessageType.CHOOSE.setMessage(currentGod.getGodDescription().getDescriptionOfPower() +
-                        "\nDo you want to use your god's power? (Yes/No)"));
+                return new ChooseOptions(currentPlayer.getNickname(), boardClone, currentGod.getGodDescription().getDescriptionOfPower() +
+                        "\nDo you want to use your god's power? (Yes/No)");
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
                 Worker[] workers = currentPlayer.getWorkers();
@@ -138,9 +139,9 @@ public class BasicTurn extends Observable<Options> implements Turn {
                     //with this check game does not pass as option a worker who can't move
                     if (currentGod.tileToMove(w.getIndexTile()).size() > 0) indexTiles.add(w.getIndexTile());
                 }
-                return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, Options.MessageType.SELECT_WORKER);
+                return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, MessageType.SELECT_WORKER);
             case SEND_MESSAGE:
-                return new MessageOption(currentPlayer.getNickname(), Options.MessageType.NOT_ALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()), getCurrentOperation());
+                return new MessageOption(currentPlayer.getNickname(), currentGod.getChoiceNotAllowedMessage(), getCurrentOperation());
 
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
@@ -152,7 +153,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
      * to the player who it is linked to. In this way we can customize message for eac player.
      */
     protected void handleWinnerNotification() {
-        notify(new MessageOption(currentPlayer.getNickname(), Options.MessageType.WIN, this.getCurrentOperation()));
+        notify(new MessageOption(currentPlayer.getNickname(), MessageType.WIN, this.getCurrentOperation()));
         gameController.hasWon(currentPlayer);
     }
 
@@ -161,7 +162,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
      * to the player who it is linked to. In this way we can customize message for each player.
      */
     protected void handleLooserNotification() {
-        notify(new MessageOption(currentPlayer.getNickname(), Options.MessageType.LOST, getCurrentOperation()));
+        notify(new MessageOption(currentPlayer.getNickname(), MessageType.LOST, getCurrentOperation()));
         gameController.hasLost(currentPlayer);
     }
 

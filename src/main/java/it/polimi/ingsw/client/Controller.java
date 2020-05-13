@@ -8,6 +8,7 @@ import it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.GUI;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.utilities.MessageType;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -46,7 +47,7 @@ public class Controller implements Observer<String> {
 
     public void handleOption(Options options) {
         currentOption = options;
-        if (options.getMessageType() == Options.MessageType.NICKNAME_APPROVED) {
+        if (options.getMessageType().equals(MessageType.NICKNAME_APPROVED)) {
             this.nickname = options.getNickname();
             clientView.setNickname(options.getNickname());
         }

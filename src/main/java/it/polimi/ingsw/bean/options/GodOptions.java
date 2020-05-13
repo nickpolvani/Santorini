@@ -14,7 +14,7 @@ public class GodOptions extends Options {
 
     private final List<GodDescription> godsToChoose;
 
-    public GodOptions(String nickname, List<GodDescription> godsToChoose, MessageType message) {
+    public GodOptions(String nickname, List<GodDescription> godsToChoose, String message) {
         super(nickname, message, Operation.CHOOSE_GOD);
         this.godsToChoose = godsToChoose;
         alert = "Please insert one of the list:";
@@ -24,13 +24,12 @@ public class GodOptions extends Options {
     @Override
     public void execute(View view) {
         if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(messageType.getMessage() + godsList() + alert);
+            view.showMessage(messageType + "\n" + godsList() + alert);
         }
     }
 
     @Override
     public String isValid(String userInput) {
-
 
         if (godsToChoose.stream().
                 anyMatch(x -> x.getName().toLowerCase().equals(userInput.toLowerCase()))) {
@@ -41,7 +40,7 @@ public class GodOptions extends Options {
     }
 
     private String godsList() {
-        StringBuilder list = new StringBuilder(this.messageType.getMessage());
+        StringBuilder list = new StringBuilder();
         for (GodDescription g : godsToChoose) {
             list.append(g.toString() + "\n");
         }

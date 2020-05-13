@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller.turn;
 
 import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.TileOptions;
+import it.polimi.ingsw.bean.options.PlaceWorkersOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.utilities.MessageType;
 import it.polimi.ingsw.utilities.Start;
 
 import java.util.*;
@@ -71,9 +72,9 @@ public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
                 .forEach(colTile -> Arrays.stream(colTile)
                         .filter(tile -> !tile.isOccupied()).forEach(t -> freeIndexTiles.add(t.getIndex())));
 
-        Options playerOptions = new TileOptions(currentPlayer.getNickname(), freeIndexTiles,
+        Options playerOptions = new PlaceWorkersOptions(currentPlayer.getNickname(), freeIndexTiles,
                 controller.getGameState().getIslandBoard().clone(), getCurrentOperation(),
-                Options.MessageType.PLACE_WORKERS);
+                MessageType.PLACE_WORKERS);
         notify(playerOptions);
     }
 

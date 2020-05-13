@@ -15,7 +15,7 @@ public class ChooseOptions extends Options {
 
     private final IslandBoard boardClone;
 
-    public ChooseOptions(String nickname, IslandBoard boardClone, MessageType message) {
+    public ChooseOptions(String nickname, IslandBoard boardClone, String message) {
         super(nickname, message, Operation.CHOOSE);
         this.boardClone = boardClone;
         alert = "Please insert [Yes/No] or [Y,N]. Doesn't matter if the input has neither uppercase nor lowercase letters.";
@@ -29,7 +29,7 @@ public class ChooseOptions extends Options {
     public void execute(View view) {
         view.printBoard(boardClone);
         if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(messageType.getMessage() + alert);
+            view.showMessage(messageType + alert);
         }
     }
 

@@ -4,6 +4,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Objects;
  *
  * @author Juri Sacchetta
  */
-public class Tile implements Cloneable {
+public class Tile implements Cloneable, Serializable {
 
     private static final int N_ROWS = 4;
     private static final int N_COLS = 7;
@@ -160,7 +161,7 @@ public class Tile implements Cloneable {
      * the height of the tower in memory the other to know if there is a dome.
      * The complete towers consist of three blocks and a dome.
      */
-    public static class Building {
+    public static class Building implements Serializable {
 
         /**
          * Used to set the of tower's height.
@@ -245,7 +246,7 @@ public class Tile implements Cloneable {
      * Class used to model the index integer pair.
      * There are two final variables one for row and one for column.
      */
-    public static class IndexTile {
+    public static class IndexTile implements Serializable {
         final int row, col;
 
         /**

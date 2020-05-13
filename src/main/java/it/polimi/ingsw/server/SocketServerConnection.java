@@ -2,10 +2,10 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.bean.action.ChooseNicknameAction;
 import it.polimi.ingsw.bean.action.GameAction;
-import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.bean.options.SetupOptions;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.utilities.MessageType;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -65,6 +65,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         }
     }
 
+
     @Override
     public void asyncSend(final Object message) {
         new Thread(() -> send(message)).start();
@@ -77,18 +78,19 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
-            send(new SetupOptions(null, Options.MessageType.CHOOSE_NAME, Operation.SELECT_NICKNAME));
+            send(new SetupOptions(null, MessageType.CHOOSE_NAME, Operation.SELECT_NICKNAME));
             do {
                 read = in.readObject();
                 if (!(read instanceof ChooseNicknameAction)) throw new IllegalArgumentException();
                 String nickname = ((ChooseNicknameAction) read).getNickname();
                 if (server.getRegisteredUsers().containsKey(nickname)) {
-                    send(new SetupOptions(nickname, Options.MessageType.NICKNAME_ALREADY_SET, Operation.SELECT_NICKNAME));
+                    send(new SetupOptions(nickname, MessageType.NICKNAME_ALREADY_SET, Operation.SELECT_NICKNAME));
                 } else {
-                    send(new SetupOptions(nickname, Options.MessageType.NICKNAME_APPROVED, Operation.SELECT_NICKNAME));
+                    send(new SetupOptions(nickname, MessageType.NICKNAME_APPROVED, Operation.SELECT_NICKNAME));
                     nicknameApproved = true;
                 }
             } while (!nicknameApproved);
+
             username = ((ChooseNicknameAction) read).getNickname();
             server.addRegisteredUsers(username, this);
             logger.debug("Player's username on socket with port=" + socket.getPort() + " is: " + username);

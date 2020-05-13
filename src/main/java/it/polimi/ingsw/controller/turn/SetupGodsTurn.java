@@ -7,6 +7,7 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.utilities.MessageType;
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -96,9 +97,11 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
             for (GodDescription god : selectedGods) {
                 gods.remove(god);
             }
-            options = new GodOptions(currentPlayer.getNickname(), gods, Options.MessageType.CHOOSE_GOD);
+            options = new GodOptions(currentPlayer.getNickname(), gods,
+                    MessageType.CHOOSE_GOD + ("You're the challenger: choose the Gods for the game. Insert" +
+                            " one god per time!"));
         } else {
-            options = new GodOptions(currentPlayer.getNickname(), selectedGods, Options.MessageType.CHOOSE_GOD);
+            options = new GodOptions(currentPlayer.getNickname(), selectedGods, MessageType.CHOOSE_GOD);
         }
         notify(options);
     }

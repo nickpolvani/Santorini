@@ -17,6 +17,7 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.Lobby;
+import it.polimi.ingsw.utilities.MessageType;
 import org.apache.log4j.Logger;
 
 public class GameController extends Observable<Options> implements Observer<GameAction> {
@@ -75,12 +76,12 @@ public class GameController extends Observable<Options> implements Observer<Game
     }
 
     public void hasWon(Player winner) {
-        notify(new MessageOption(winner.getNickname(), Options.MessageType.WIN, Operation.SEND_MESSAGE));
+        notify(new MessageOption(winner.getNickname(), MessageType.WIN + winner.getNickname(), Operation.SEND_MESSAGE));
         lobby.close();
     }
 
     public void hasLost(Player looser) {
-        notify(new MessageOption(looser.getNickname(), Options.MessageType.LOST, Operation.SEND_MESSAGE));
+        notify(new MessageOption(looser.getNickname(), MessageType.LOST, Operation.SEND_MESSAGE));
         gameState.getPlayers().remove(looser);
         if (lobby.size == 2) {
             Player winner = gameState.getPlayers().get(0);

@@ -1,9 +1,10 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.bean.action.LobbySizeAction;
-import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.MessageOption;
 import it.polimi.ingsw.bean.options.SetupOptions;
 import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.utilities.MessageType;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class Server {
     void createNewLobby(ClientConnection clientConnection, String name, ObjectInputStream in) throws IOException, ClassNotFoundException {
         //perhaps the asynchronous sending method can be a problem
 
-        clientConnection.asyncSend(new SetupOptions(name, Options.MessageType.CHOOSE_LOBBY_SIZE, Operation.SELECT_LOBBY_SIZE));
+        clientConnection.asyncSend(new SetupOptions(name, MessageType.CHOOSE_LOBBY_SIZE, Operation.SELECT_LOBBY_SIZE));
         boolean b;
         int numberPlayers;
         do {
@@ -53,13 +54,15 @@ public class Server {
             numberPlayers = ((LobbySizeAction) read).getLobbySize();
             if (numberPlayers != 2 && numberPlayers != 3) {
                 b = true;
-                clientConnection.asyncSend(new SetupOptions(name, Options.MessageType.NOT_ALLOWED.setMessage("Inserted Number is not allowed. Please reinsert it!"), Operation.SELECT_LOBBY_SIZE)); //TODO traduci
+                clientConnection.asyncSend(new SetupOptions(name, ("Inserted Number is not allowed. Please reinsert it!"), Operation.SELECT_LOBBY_SIZE));
             } else {
                 b = false;
             }
         } while (b);
         if (!thereIsAOpenLobby()) {
             openLobby = new Lobby(numberPlayers, currentLobbyNum);
+            MessageOption mess = new MessageOption(name, "Lobby successfully created. Wait for other players", Operation.SEND_MESSAGE);
+            clientConnection.asyncSend(mess);
             logger.info("Created a new openLobby ID=" + currentLobbyNum + " SIZE=" + numberPlayers);
             currentLobbyNum += 1;
         } else {
@@ -72,8 +75,10 @@ public class Server {
             createNewLobby(clientConnection, name, in);
         }
         if (openLobby.isFull())
-            logger.error("Insertion into a full lobby", new IllegalAccessException("Cannot call this method is the lobby is full"));
+            logger.error("Insertion into a full lobby", new IllegalAccessException("Cannot call this method if the lobby is full"));
         openLobby.addClient(name, clientConnection);
+        clientConnection.asyncSend(new SetupOptions(name, ("Successfully added to a lobby." +
+                " It has " + openLobby.size + " players." + " Wait until the lobby starts.."), Operation.SEND_MESSAGE));
         if (openLobby.isStarted() || openLobby.isFull()) {
             lobbiesInProgress.add(openLobby);
             openLobby = null;

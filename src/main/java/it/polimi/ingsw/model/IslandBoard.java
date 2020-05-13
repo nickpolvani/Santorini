@@ -4,6 +4,7 @@ import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import org.apache.log4j.Logger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author Juri Sacchetta
  */
-public class IslandBoard implements Cloneable {
+public class IslandBoard implements Cloneable, Serializable {
 
     /**
      * This constant define the rows numbers of the board

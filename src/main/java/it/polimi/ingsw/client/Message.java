@@ -4,8 +4,6 @@ import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.god.GodDescription;
 
-import java.util.ArrayList;
-
 public class Message {
 
     public static Object parseMessage(Options currentOption, String message) {
@@ -42,9 +40,9 @@ public class Message {
 
     private static Object parseDoubleIndex(String message) {
         String[] split = message.split("-");
-        ArrayList<Tile.IndexTile> index = new ArrayList<>();
-        index.add(parseSingleIndex(split[0]));
-        index.add(parseSingleIndex(split[1]));
+        Tile.IndexTile[] index = new Tile.IndexTile[2];
+        index[0] = (parseSingleIndex(split[0]));
+        index[1] = (parseSingleIndex(split[1]));
         return index;
     }
 
