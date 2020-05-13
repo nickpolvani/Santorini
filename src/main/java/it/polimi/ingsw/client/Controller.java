@@ -45,16 +45,16 @@ public class Controller implements Observer<String> {
     }
 
     public void handleOption(Options options) {
+        currentOption = options;
         if (options.getMessageType() == Options.MessageType.NICKNAME_APPROVED) {
-            this.nickname = ((SetupOptions) options).getNickname();
-            clientView.setNickname(((SetupOptions) options).getNickname());
+            this.nickname = options.getNickname();
+            clientView.setNickname(options.getNickname());
         }
         if (options instanceof SetupOptions) {
             isMyTurn = true;
         } else {
             isMyTurn = currentOption.getNickname().equals(this.nickname);
         }
-        currentOption = options;
         options.execute(clientView);
     }
 

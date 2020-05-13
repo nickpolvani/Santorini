@@ -39,7 +39,7 @@ public class SocketClientConnection {
                 while (isActive()) {
                     Object inputObject = in.readObject();
                     if (inputObject instanceof Options) {
-                        System.out.println(inputObject);
+                       // System.out.println(inputObject);
                         controller.handleOption((Options) inputObject);
                     } else {
                         throw new IllegalArgumentException();
