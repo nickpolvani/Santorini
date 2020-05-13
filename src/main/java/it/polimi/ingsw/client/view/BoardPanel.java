@@ -22,9 +22,6 @@ class BoardPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        //int height = getWidth(); // the image is squared
-
-        //int height = (int) (((double)getWidth()) * 1080 / 1920  );
         g.drawImage(img.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH), 0, 0, null);
     }
 }

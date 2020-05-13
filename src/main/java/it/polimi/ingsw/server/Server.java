@@ -2,7 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.bean.action.LobbySizeAction;
 import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.WithoutPlayerOptions;
+import it.polimi.ingsw.bean.options.SetupOptions;
 import it.polimi.ingsw.controller.Operation;
 import org.apache.log4j.Logger;
 
@@ -44,7 +44,7 @@ public class Server {
     void createNewLobby(ClientConnection clientConnection, String name, ObjectInputStream in) throws IOException, ClassNotFoundException {
         //perhaps the asynchronous sending method can be a problem
 
-        clientConnection.asyncSend(new WithoutPlayerOptions(name, Options.MessageType.CHOOSE_LOBBY_SIZE, Operation.SELECT_LOBBY_SIZE));
+        clientConnection.asyncSend(new SetupOptions(name, Options.MessageType.CHOOSE_LOBBY_SIZE, Operation.SELECT_LOBBY_SIZE));
         boolean b;
         int numberPlayers;
         do {
@@ -53,7 +53,7 @@ public class Server {
             numberPlayers = ((LobbySizeAction) read).getLobbySize();
             if (numberPlayers != 2 && numberPlayers != 3) {
                 b = true;
-                clientConnection.asyncSend(new WithoutPlayerOptions(name, Options.MessageType.NOT_ALLOWED.setMessage("Inserted Number is not allowed. Please reinsert it!"), Operation.SELECT_LOBBY_SIZE)); //TODO traduci
+                clientConnection.asyncSend(new SetupOptions(name, Options.MessageType.NOT_ALLOWED.setMessage("Inserted Number is not allowed. Please reinsert it!"), Operation.SELECT_LOBBY_SIZE)); //TODO traduci
             } else {
                 b = false;
             }

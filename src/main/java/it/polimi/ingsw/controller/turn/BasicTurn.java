@@ -1,6 +1,9 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.options.*;
+import it.polimi.ingsw.bean.options.ChooseOptions;
+import it.polimi.ingsw.bean.options.MessageOption;
+import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
@@ -21,7 +24,7 @@ import java.util.Queue;
  * Type of Turn to be used after setup is finished
  */
 
-public class BasicTurn extends Observable<PlayerOptions> implements Turn {
+public class BasicTurn extends Observable<Options> implements Turn {
     /**
      *
      */
@@ -40,7 +43,7 @@ public class BasicTurn extends Observable<PlayerOptions> implements Turn {
     /**
      * Default constructor that set only which game the turn belongs to.
      */
-    public BasicTurn(GameController gameController, Player firstPlayer, List<Observer<PlayerOptions>> observerList) {
+    public BasicTurn(GameController gameController, Player firstPlayer, List<Observer<Options>> observerList) {
         this.currentPlayer = firstPlayer;
         this.currentPlayer.getGod().resetGodState();
         this.turnOperations = currentPlayer.getGod().getTurnOperations();
@@ -114,19 +117,19 @@ public class BasicTurn extends Observable<PlayerOptions> implements Turn {
      * @throws IllegalStateException We put this method in turn and not in gods because we have to handle also athenaTurn. In fact AthenaTurn will override
      *                               this method checking Athena's Power
      */
-    public PlayerOptions getOptions() {
+    public Options getOptions() {
         Operation currentOperation = getCurrentOperation();
         God currentGod = currentPlayer.getGod();
         IslandBoard boardClone = gameController.getGameState().getIslandBoard().clone();
         switch (currentOperation) {
             case MOVE:
-                return new TilePlayerOptions(currentPlayer, currentGod.tileToMove(currentGod.getWorker().getIndexTile()),
+                return new TileOptions(currentPlayer.getNickname(), currentGod.tileToMove(currentGod.getWorker().getIndexTile()),
                         boardClone, currentOperation, Options.MessageType.MOVE);
             case BUILD:
-                return new TilePlayerOptions(currentPlayer, currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
+                return new TileOptions(currentPlayer.getNickname(), currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
                         boardClone, currentOperation, Options.MessageType.BUILD);
             case CHOOSE:
-                return new ChoosePlayerOptions(currentPlayer, boardClone, Options.MessageType.CHOOSE.setMessage(currentGod.getGodDescription().getDescriptionOfPower() +
+                return new ChooseOptions(currentPlayer.getNickname(), boardClone, Options.MessageType.CHOOSE.setMessage(currentGod.getGodDescription().getDescriptionOfPower() +
                         "\nDo you want to use your god's power? (Yes/No)"));
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
@@ -135,9 +138,10 @@ public class BasicTurn extends Observable<PlayerOptions> implements Turn {
                     //with this check game does not pass as option a worker who can't move
                     if (currentGod.tileToMove(w.getIndexTile()).size() > 0) indexTiles.add(w.getIndexTile());
                 }
-                return new TilePlayerOptions(currentPlayer, indexTiles, boardClone, currentOperation, Options.MessageType.SELECT_WORKER);
+                return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, Options.MessageType.SELECT_WORKER);
             case SEND_MESSAGE:
-                return new MessageOption(currentPlayer, Options.MessageType.NOT_ALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()));
+                return new MessageOption(currentPlayer.getNickname(), Options.MessageType.NOT_ALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()), getCurrentOperation());
+
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }
@@ -148,7 +152,7 @@ public class BasicTurn extends Observable<PlayerOptions> implements Turn {
      * to the player who it is linked to. In this way we can customize message for eac player.
      */
     protected void handleWinnerNotification() {
-        notify(new MessageOption(currentPlayer, Options.MessageType.WIN));
+        notify(new MessageOption(currentPlayer.getNickname(), Options.MessageType.WIN, this.getCurrentOperation()));
         gameController.hasWon(currentPlayer);
     }
 
@@ -157,7 +161,7 @@ public class BasicTurn extends Observable<PlayerOptions> implements Turn {
      * to the player who it is linked to. In this way we can customize message for each player.
      */
     protected void handleLooserNotification() {
-        notify(new MessageOption(currentPlayer, Options.MessageType.LOST));
+        notify(new MessageOption(currentPlayer.getNickname(), Options.MessageType.LOST, getCurrentOperation()));
         gameController.hasLost(currentPlayer);
     }
 

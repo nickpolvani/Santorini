@@ -2,21 +2,20 @@ package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.GodDescription;
 
 import java.util.List;
 
 /**
- * These type of PlayerOptions are sent to the user in setup, when they have to choose between a set of
+ * These type of Options are sent to the user in setup, when they have to choose between a set of
  * Gods. Since the game has not started yet, There is no need to have a board in these type of options
  */
-public class GodPlayerOptions extends PlayerOptions {
+public class GodOptions extends Options {
 
     private final List<GodDescription> godsToChoose;
 
-    public GodPlayerOptions(Player player, List<GodDescription> godsToChoose, MessageType message) {
-        super(player, message, Operation.CHOOSE_GOD);
+    public GodOptions(String nickname, List<GodDescription> godsToChoose, MessageType message) {
+        super(nickname, message, Operation.CHOOSE_GOD);
         this.godsToChoose = godsToChoose;
         alert = "Please insert one of the list:";
     }
@@ -24,13 +23,14 @@ public class GodPlayerOptions extends PlayerOptions {
 
     @Override
     public void execute(View view) {
-        if (view.getNickname().equals(this.getPlayer().getNickname())) {
+        if (view.getNickname().equals(this.nickname)) {
             view.showMessage(messageType.getMessage() + godsList() + alert);
         }
     }
 
     @Override
     public String isValid(String userInput) {
+
 
         if (godsToChoose.stream().
                 anyMatch(x -> x.getName().toLowerCase().equals(userInput.toLowerCase()))) {

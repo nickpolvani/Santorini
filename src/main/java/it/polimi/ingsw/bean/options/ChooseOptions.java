@@ -3,21 +3,20 @@ package it.polimi.ingsw.bean.options;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
-import it.polimi.ingsw.model.Player;
 
 import java.util.Arrays;
 
 
 /**
- * ChoosePlayerOptions are instantiated when the player has to make a decision during the turn,
+ * ChooseOptions are instantiated when the player has to make a decision during the turn,
  * due to the power of his chosen God.
  */
-public class ChoosePlayerOptions extends PlayerOptions {
+public class ChooseOptions extends Options {
 
     private final IslandBoard boardClone;
 
-    public ChoosePlayerOptions(Player player, IslandBoard boardClone, MessageType message) {
-        super(player, message, Operation.CHOOSE);
+    public ChooseOptions(String nickname, IslandBoard boardClone, MessageType message) {
+        super(nickname, message, Operation.CHOOSE);
         this.boardClone = boardClone;
         alert = "Please insert [Yes/No] or [Y,N]. Doesn't matter if the input has neither uppercase nor lowercase letters.";
     }
@@ -29,7 +28,7 @@ public class ChoosePlayerOptions extends PlayerOptions {
     @Override
     public void execute(View view) {
         view.printBoard(boardClone);
-        if (view.getNickname().equals(this.getPlayer().getNickname())) {
+        if (view.getNickname().equals(this.nickname)) {
             view.showMessage(messageType.getMessage() + alert);
         }
     }

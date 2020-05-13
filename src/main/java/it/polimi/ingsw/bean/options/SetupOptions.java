@@ -6,13 +6,11 @@ import it.polimi.ingsw.controller.Operation;
 /**
  * we use it in case of setting both lobby size and nickname of the user.
  */
-public class WithoutPlayerOptions extends Options {
+public class SetupOptions extends Options {
 
-    protected String nickname;
 
-    public WithoutPlayerOptions(String nickname, MessageType messageType, Operation operation) {
-        super(messageType, operation);
-        this.nickname = nickname;
+    public SetupOptions(String nickname, MessageType messageType, Operation operation) {
+        super(nickname, messageType, operation);
     }
 
     public String getNickname() {

@@ -14,6 +14,12 @@ public class GUI extends View {
 
     IslandBoard board;
 
+    JPanel gamePanel;
+
+    JPanel setupPanel;
+
+    JPanel chooseGodPanel;
+
     public GUI() {
         this.board = null;
     }

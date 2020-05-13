@@ -1,8 +1,7 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.options.GodPlayerOptions;
+import it.polimi.ingsw.bean.options.GodOptions;
 import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.PlayerOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
@@ -12,7 +11,7 @@ import org.apache.log4j.Logger;
 
 import java.util.*;
 
-public class SetupGodsTurn extends Observable<PlayerOptions> implements SetupTurn {
+public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
     private final Player challenger;
     private final Queue<Operation> turnOperations;
     private final GameController controller;
@@ -91,17 +90,17 @@ public class SetupGodsTurn extends Observable<PlayerOptions> implements SetupTur
     }
 
     private void notifyOptions() {
-        PlayerOptions playerOptions;
+        Options options;
         if (!challengerGodsChosen) {
             List<GodDescription> gods = new ArrayList<>(Arrays.asList(GodDescription.values()));
             for (GodDescription god : selectedGods) {
                 gods.remove(god);
             }
-            playerOptions = new GodPlayerOptions(currentPlayer, gods, Options.MessageType.CHOOSE_GOD);
+            options = new GodOptions(currentPlayer.getNickname(), gods, Options.MessageType.CHOOSE_GOD);
         } else {
-            playerOptions = new GodPlayerOptions(currentPlayer, selectedGods, Options.MessageType.CHOOSE_GOD);
+            options = new GodOptions(currentPlayer.getNickname(), selectedGods, Options.MessageType.CHOOSE_GOD);
         }
-        notify(playerOptions);
+        notify(options);
     }
 
     @Override

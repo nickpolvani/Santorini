@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.options.PlayerOptions;
-import it.polimi.ingsw.bean.options.TilePlayerOptions;
+import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
@@ -181,18 +181,18 @@ public class AthenaTurnTest {
         assertEquals(athenaTurn.getCurrentOperation(), Operation.SELECT_WORKER);
 
         Tile.IndexTile[] indexTiles = new Tile.IndexTile[]{player1.getWorkers()[0].getIndexTile(), player1.getWorkers()[1].getIndexTile()};
-        PlayerOptions generatedOption = athenaTurn.getOptions();
-        assertEquals(generatedOption.getPlayer(), player1);
-        assertTrue(((TilePlayerOptions) generatedOption).getTilesToChoose().contains(indexTiles[0]) &&
-                ((TilePlayerOptions) generatedOption).getTilesToChoose().contains(indexTiles[1]) &&
-                ((TilePlayerOptions) generatedOption).getTilesToChoose().size() == 2);
+        Options generatedOption = athenaTurn.getOptions();
+        assertEquals(generatedOption.getNickname(), player1.getNickname());
+        assertTrue(((TileOptions) generatedOption).getTilesToChoose().contains(indexTiles[0]) &&
+                ((TileOptions) generatedOption).getTilesToChoose().contains(indexTiles[1]) &&
+                ((TileOptions) generatedOption).getTilesToChoose().size() == 2);
 
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().buildDome();
         gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 0)).getBuilding().buildDome();
         generatedOption = athenaTurn.getOptions();
-        assertEquals(generatedOption.getPlayer(), player1);
-        assertTrue(((TilePlayerOptions) generatedOption).getTilesToChoose().contains(indexTiles[1]) &&
-                ((TilePlayerOptions) generatedOption).getTilesToChoose().size() == 1);
+        assertEquals(generatedOption.getNickname(), player1.getNickname());
+        assertTrue(((TileOptions) generatedOption).getTilesToChoose().contains(indexTiles[1]) &&
+                ((TileOptions) generatedOption).getTilesToChoose().size() == 1);
 
         //CASE MOVE ALREADY TESTED IN EndCurrentOperationTest
 

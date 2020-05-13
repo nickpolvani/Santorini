@@ -1,6 +1,9 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.options.*;
+import it.polimi.ingsw.bean.options.ChooseOptions;
+import it.polimi.ingsw.bean.options.MessageOption;
+import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
@@ -22,7 +25,7 @@ public class AthenaTurn extends BasicTurn {
     private Athena athena;
 
 
-    public AthenaTurn(GameController gameController, Player currentPlayer, List<Observer<PlayerOptions>> observerList) {
+    public AthenaTurn(GameController gameController, Player currentPlayer, List<Observer<Options>> observerList) {
         super(gameController, currentPlayer, observerList);
         this.currentPlayer.getGod().resetGodState();
         this.turnOperations = currentPlayer.getGod().getTurnOperations();
@@ -43,7 +46,7 @@ public class AthenaTurn extends BasicTurn {
         currentPlayer.getGod().resetGodState();
         this.turnOperations = currentPlayer.getGod().getTurnOperations();
 
-        PlayerOptions currentOption = getOptions();
+        Options currentOption = getOptions();
         if (currentOption != null) {
             notify(currentOption);
         } else {
@@ -105,20 +108,20 @@ public class AthenaTurn extends BasicTurn {
      *                               this method checking Athena's Power
      */
     @Override
-    public PlayerOptions getOptions() {
+    public Options getOptions() {
         Operation currentOperation = getCurrentOperation();
         God currentGod = currentPlayer.getGod();
         IslandBoard boardClone = gameController.getGameState().getIslandBoard().clone();
 
         switch (currentOperation) {
             case MOVE:
-                return new TilePlayerOptions(currentPlayer, athenaTileToMove(currentGod.getWorker()),
+                return new TileOptions(currentPlayer.getNickname(), athenaTileToMove(currentGod.getWorker()),
                         boardClone, currentOperation, Options.MessageType.MOVE);
             case BUILD:
-                return new TilePlayerOptions(currentPlayer, currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
+                return new TileOptions(currentPlayer.getNickname(), currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
                         boardClone, currentOperation, Options.MessageType.BUILD);
             case CHOOSE:
-                return new ChoosePlayerOptions(currentPlayer, boardClone, Options.MessageType.CHOOSE.setMessage(currentGod.getGodDescription().getDescriptionOfPower() +
+                return new ChooseOptions(currentPlayer.getNickname(), boardClone, Options.MessageType.CHOOSE.setMessage(currentGod.getGodDescription().getDescriptionOfPower() +
                         "\nDo you want to use your god's power? (Yes/No)"));
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
@@ -130,10 +133,10 @@ public class AthenaTurn extends BasicTurn {
                 if (indexTiles.size() == 0) {
                     return null;
                 } else {
-                    return new TilePlayerOptions(currentPlayer, indexTiles, boardClone, currentOperation, Options.MessageType.SELECT_WORKER);
+                    return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, Options.MessageType.SELECT_WORKER);
                 }
             case SEND_MESSAGE:
-                return new MessageOption(currentPlayer, Options.MessageType.NOT_ALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()));
+                return new MessageOption(currentPlayer.getNickname(), Options.MessageType.NOT_ALLOWED.setMessage(currentGod.getChoiceNotAllowedMessage()), getCurrentOperation());
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }

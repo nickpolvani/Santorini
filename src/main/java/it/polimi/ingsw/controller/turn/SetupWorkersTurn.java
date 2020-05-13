@@ -1,8 +1,7 @@
 package it.polimi.ingsw.controller.turn;
 
 import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.PlayerOptions;
-import it.polimi.ingsw.bean.options.TilePlayerOptions;
+import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
@@ -14,7 +13,7 @@ import it.polimi.ingsw.utilities.Start;
 
 import java.util.*;
 
-public class SetupWorkersTurn extends Observable<PlayerOptions> implements SetupTurn {
+public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
 
     private Player currentPlayer;
     private final GameController controller;
@@ -22,7 +21,7 @@ public class SetupWorkersTurn extends Observable<PlayerOptions> implements Setup
     private final Queue<Operation> turnOperations = new LinkedList<>();
     private boolean started = false;
 
-    public SetupWorkersTurn(GameController controller, Player firstPlayer, List<Observer<PlayerOptions>> observers) {
+    public SetupWorkersTurn(GameController controller, Player firstPlayer, List<Observer<Options>> observers) {
         this.controller = controller;
         this.currentPlayer = firstPlayer;
         this.firstPlayer = firstPlayer;
@@ -72,7 +71,7 @@ public class SetupWorkersTurn extends Observable<PlayerOptions> implements Setup
                 .forEach(colTile -> Arrays.stream(colTile)
                         .filter(tile -> !tile.isOccupied()).forEach(t -> freeIndexTiles.add(t.getIndex())));
 
-        PlayerOptions playerOptions = new TilePlayerOptions(currentPlayer, freeIndexTiles,
+        Options playerOptions = new TileOptions(currentPlayer.getNickname(), freeIndexTiles,
                 controller.getGameState().getIslandBoard().clone(), getCurrentOperation(),
                 Options.MessageType.PLACE_WORKERS);
         notify(playerOptions);

@@ -2,18 +2,17 @@ package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
-import it.polimi.ingsw.model.Player;
 
-public class MessageOption extends PlayerOptions {
+public class MessageOption extends Options {
 
-    public MessageOption(Player player, MessageType messageType) {
-        super(player, messageType, Operation.SEND_MESSAGE);
+
+    public MessageOption(String nickname, MessageType messageType, Operation operation) {
+        super(nickname, messageType, Operation.SEND_MESSAGE);
     }
-
 
     @Override
     public void execute(View view) {
-        if (view.getNickname().equals(this.getPlayer().getNickname())) {
+        if (view.getNickname().equals(this.nickname)) {
             view.showMessage(messageType.getMessage());
         }
     }

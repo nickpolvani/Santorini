@@ -3,7 +3,6 @@ package it.polimi.ingsw.bean.options;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.Collection;
@@ -14,13 +13,13 @@ import java.util.regex.Pattern;
  * or select the worker for his turn. Contains also a copy of the board to notify the user that the game has
  * changed.
  */
-public class TilePlayerOptions extends PlayerOptions {
+public class TileOptions extends Options {
 
     private final Collection<IndexTile> tilesToChoose;
     private final IslandBoard boardClone;
 
-    public TilePlayerOptions(Player player, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, MessageType message) {
-        super(player, message, operation);
+    public TileOptions(String nickname, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, MessageType message) {
+        super(nickname, message, operation);
         this.tilesToChoose = tilesToChoose;
         this.boardClone = boardClone;
         alert = "Please insert only one couple of numbers split by a comma." +
@@ -38,7 +37,7 @@ public class TilePlayerOptions extends PlayerOptions {
     @Override
     public void execute(View view) {
         view.printBoard(boardClone);
-        if (view.getNickname().equals(this.getPlayer().getNickname())) {
+        if (view.getNickname().equals(this.nickname)) {
             view.showMessage(messageType.getMessage() + alert);
         }
     }

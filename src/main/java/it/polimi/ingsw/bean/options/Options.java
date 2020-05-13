@@ -10,10 +10,12 @@ public abstract class Options implements Serializable {
     protected final MessageType messageType;
     protected Operation currentOperation;
     protected String alert;
+    protected String nickname;
 
-    protected Options(MessageType messageType, Operation operation) {
+    protected Options(String nickname, MessageType messageType, Operation operation) {
         this.messageType = messageType;
         this.currentOperation = operation;
+        this.nickname = nickname;
     }
 
     public Operation getCurrentOperation() {
@@ -27,6 +29,11 @@ public abstract class Options implements Serializable {
     public abstract void execute(View view);
 
     public abstract String isValid(String userInput);
+
+    public String getNickname() {
+        return nickname;
+    }
+
 
     public enum MessageType {
         WIN,

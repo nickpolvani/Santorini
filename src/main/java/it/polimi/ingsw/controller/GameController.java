@@ -4,7 +4,6 @@ import it.polimi.ingsw.bean.action.ActionHandler;
 import it.polimi.ingsw.bean.action.GameAction;
 import it.polimi.ingsw.bean.options.MessageOption;
 import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.PlayerOptions;
 import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.controller.turn.SetupGodsTurn;
 import it.polimi.ingsw.controller.turn.SetupWorkersTurn;
@@ -20,7 +19,7 @@ import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.Lobby;
 import org.apache.log4j.Logger;
 
-public class GameController extends Observable<PlayerOptions> implements Observer<GameAction> {
+public class GameController extends Observable<Options> implements Observer<GameAction> {
 
     private Turn turn;
 
@@ -76,12 +75,12 @@ public class GameController extends Observable<PlayerOptions> implements Observe
     }
 
     public void hasWon(Player winner) {
-        notify(new MessageOption(winner, Options.MessageType.WIN));
+        notify(new MessageOption(winner.getNickname(), Options.MessageType.WIN, Operation.SEND_MESSAGE));
         lobby.close();
     }
 
     public void hasLost(Player looser) {
-        notify(new MessageOption(looser, Options.MessageType.LOST));
+        notify(new MessageOption(looser.getNickname(), Options.MessageType.LOST, Operation.SEND_MESSAGE));
         gameState.getPlayers().remove(looser);
         if (lobby.size == 2) {
             Player winner = gameState.getPlayers().get(0);

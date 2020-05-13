@@ -3,7 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.action.ActionFactory;
 import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.WithoutPlayerOptions;
+import it.polimi.ingsw.bean.options.SetupOptions;
 import it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.GUI;
 import it.polimi.ingsw.client.view.View;
@@ -19,14 +19,20 @@ public class Controller implements Observer<String> {
     private Options currentOption;
     private String nickname;
 
+    private boolean isMyTurn = true;
+
     @Override
     public void update(String message) {
         String errorString = currentOption.isValid(message);
+        if (!isMyTurn) {
+            clientView.showMessage("It's " + currentOption.getNickname() + "'s turn. Wait until it's your turn");
+            return;
+        }
         if (errorString == null) {
             Object m = Message.parseMessage(currentOption, message);
             Action action;
             if (nickname == null) {
-                action = ActionFactory.createAction(currentOption, m, message);
+                action = ActionFactory.createAction(currentOption, m, message); //used when the user has to choose a nickname
             } else {
                 action = ActionFactory.createAction(currentOption, m, nickname);
             }
@@ -38,13 +44,18 @@ public class Controller implements Observer<String> {
 
     }
 
-    public void handleOption(Options playerOptions) {
-        if (playerOptions.getMessageType() == Options.MessageType.NICKNAME_APPROVED) {
-            this.nickname = ((WithoutPlayerOptions) playerOptions).getNickname();
-            clientView.setNickname(((WithoutPlayerOptions) playerOptions).getNickname());
+    public void handleOption(Options options) {
+        if (options.getMessageType() == Options.MessageType.NICKNAME_APPROVED) {
+            this.nickname = ((SetupOptions) options).getNickname();
+            clientView.setNickname(((SetupOptions) options).getNickname());
         }
-        currentOption = playerOptions;
-        playerOptions.execute(clientView);
+        if (options instanceof SetupOptions) {
+            isMyTurn = true;
+        } else {
+            isMyTurn = currentOption.getNickname().equals(this.nickname);
+        }
+        currentOption = options;
+        options.execute(clientView);
     }
 
     public void setup() {
