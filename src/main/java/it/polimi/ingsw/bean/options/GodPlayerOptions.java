@@ -21,9 +21,6 @@ public class GodPlayerOptions extends PlayerOptions {
         alert = "Please insert one of the list:";
     }
 
-    public List<GodDescription> getGodsToChoose() {
-        return godsToChoose;
-    }
 
     @Override
     public void execute(View view) {
@@ -34,9 +31,13 @@ public class GodPlayerOptions extends PlayerOptions {
 
     @Override
     public String isValid(String userInput) {
-        if (godsList().toLowerCase().contains(userInput.toLowerCase())) {
+
+        if (godsToChoose.stream().
+                anyMatch(x -> x.getName().toLowerCase().equals(userInput.toLowerCase()))) {
             return null;
-        } else return alert;
+        }
+
+        return "Not Valid Input: " + alert;
     }
 
     private String godsList() {

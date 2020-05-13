@@ -53,7 +53,7 @@ public class Server {
             numberPlayers = ((LobbySizeAction) read).getLobbySize();
             if (numberPlayers != 2 && numberPlayers != 3) {
                 b = true;
-                clientConnection.asyncSend(new WithoutPlayerOptions(name, Options.MessageType.NOT_ALLOWED.setMessage("Numero inserito non corretto!\nRiprovaci"), Operation.SELECT_LOBBY_SIZE)); //TODO traduci
+                clientConnection.asyncSend(new WithoutPlayerOptions(name, Options.MessageType.NOT_ALLOWED.setMessage("Inserted Number is not allowed. Please reinsert it!"), Operation.SELECT_LOBBY_SIZE)); //TODO traduci
             } else {
                 b = false;
             }

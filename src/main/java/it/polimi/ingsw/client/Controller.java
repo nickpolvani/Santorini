@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.bean.action.Action;
+import it.polimi.ingsw.bean.action.ActionFactory;
 import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.WithoutPlayerOptions;
 import it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.GUI;
 import it.polimi.ingsw.client.view.View;
@@ -19,20 +21,30 @@ public class Controller implements Observer<String> {
 
     @Override
     public void update(String message) {
-        if (nickname == null) nickname = message;
         String errorString = currentOption.isValid(message);
-        Object m = Message.parseMessage(currentOption, message);
         if (errorString == null) {
-            Action action = ActionFactory.createAction(currentOption, m, nickname);
+            Object m = Message.parseMessage(currentOption, message);
+            Action action;
+            if (nickname == null) {
+                action = ActionFactory.createAction(currentOption, m, message);
+            } else {
+                action = ActionFactory.createAction(currentOption, m, nickname);
+            }
             socketClientConnection.asyncWriteToSocket(action);
         } else {
-            clientView.showMessage(errorString); //TODO
+            clientView.showMessage(errorString);
         }
+
+
     }
 
     public void handleOption(Options playerOptions) {
+        if (playerOptions.getMessageType() == Options.MessageType.NICKNAME_APPROVED) {
+            this.nickname = ((WithoutPlayerOptions) playerOptions).getNickname();
+            clientView.setNickname(((WithoutPlayerOptions) playerOptions).getNickname());
+        }
         currentOption = playerOptions;
-        clientView.showMessage(playerOptions.getMessageType().getMessage());
+        playerOptions.execute(clientView);
     }
 
     public void setup() {

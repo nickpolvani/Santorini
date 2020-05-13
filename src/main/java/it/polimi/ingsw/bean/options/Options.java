@@ -32,16 +32,16 @@ public abstract class Options implements Serializable {
         WIN,
         LOST,
         NOT_ALLOWED,
-        MOVE("These are the Tiles where you can move"),
-        BUILD("These are the Tiles where you can build"),
-        PLACE_WORKERS("Choose two tiles where you want to place your workers"),
-        SELECT_WORKER("Choose one of your workers"),
+        MOVE("These are the Tiles where you can move\n"),
+        BUILD("These are the Tiles where you can build\n"),
+        PLACE_WORKERS("Choose two tiles where you want to place your workers\n"),
+        SELECT_WORKER("Choose one of your workers\n"),
         CHOOSE,
-        CHOOSE_GOD("Choose a God"),
-        CHOOSE_NAME("Choose your nickname"),
-        CHOOSE_LOBBY_SIZE("How many people do you want to play with?"),
-        NICKNAME_ALREADY_SET,
-        NICKNAME_APPROVED;
+        CHOOSE_GOD("Choose a God\n"),
+        CHOOSE_NAME("Choose your nickname\n"),
+        CHOOSE_LOBBY_SIZE("How many people do you want to play with?\n"),
+        NICKNAME_ALREADY_SET("We are sorry but your nickname has been already chosen. Please insert another one.\n"),
+        NICKNAME_APPROVED("Well done, your nickname is valid!\n");
 
         private String message;
 

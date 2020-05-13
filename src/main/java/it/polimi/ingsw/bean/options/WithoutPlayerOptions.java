@@ -21,7 +21,7 @@ public class WithoutPlayerOptions extends Options {
 
     @Override
     public void execute(View view) {
-
+        view.showMessage(messageType.getMessage());
     }
 
     @Override
@@ -30,7 +30,7 @@ public class WithoutPlayerOptions extends Options {
             return null;
         else if (currentOperation == Operation.SELECT_LOBBY_SIZE) {
             int size = Integer.parseInt(userInput);
-            if (size > 3 || size < 2) {
+            if (size != 3 && size != 2) {
                 return "Insert number is not valid. Please try again!";
             }
             return null;

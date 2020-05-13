@@ -37,7 +37,7 @@ public enum GodDescription {
         return name + " " + descriptionOfPower;
     }
 
-    public static GodDescription parse(String godName) {
+    public static GodDescription parse(String godName) throws IllegalArgumentException {
         if (godName.toUpperCase().equals(APOLLO.getName().toUpperCase())) {
             return APOLLO;
         } else if (godName.toUpperCase().equals(ARTEMIS.getName().toUpperCase())) {

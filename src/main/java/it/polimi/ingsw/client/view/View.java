@@ -13,7 +13,7 @@ public abstract class View extends Observable<String> {
     }
 
     public void setNickname(String nickname) {
-        if (nickname != null && !nickname.isEmpty()) throw new IllegalStateException();
+        if (this.nickname != null && !this.nickname.isEmpty()) throw new IllegalStateException();
         this.nickname = nickname;
     }
 

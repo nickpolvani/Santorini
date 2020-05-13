@@ -81,11 +81,11 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             do {
                 read = in.readObject();
                 if (!(read instanceof ChooseNicknameAction)) throw new IllegalArgumentException();
-                String s = ((ChooseNicknameAction) read).getNickname();
-                if (server.getRegisteredUsers().containsKey(((ChooseNicknameAction) read).getNickname())) {
-                    send(new WithoutPlayerOptions(s, Options.MessageType.NICKNAME_ALREADY_SET, Operation.SELECT_NICKNAME));
+                String nickname = ((ChooseNicknameAction) read).getNickname();
+                if (server.getRegisteredUsers().containsKey(nickname)) {
+                    send(new WithoutPlayerOptions(nickname, Options.MessageType.NICKNAME_ALREADY_SET, Operation.SELECT_NICKNAME));
                 } else {
-                    send(new WithoutPlayerOptions(s, Options.MessageType.NICKNAME_APPROVED, Operation.SELECT_NICKNAME));
+                    send(new WithoutPlayerOptions(nickname, Options.MessageType.NICKNAME_APPROVED, Operation.SELECT_NICKNAME));
                     nicknameApproved = true;
                 }
             } while (!nicknameApproved);
