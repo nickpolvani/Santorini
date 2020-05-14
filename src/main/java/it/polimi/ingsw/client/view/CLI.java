@@ -10,25 +10,31 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 public class CLI extends View {
 
-    private final boolean active = true;
+    private boolean active = true;
     private final Scanner in = new Scanner(System.in);
+
+    public CLI() {
+        printWelcome();
+    }
 
     @Override
     public void showMessage(String message) {
-        new Thread(() -> {
-            System.out.println(message);
-        }).start();
+        new Thread(() ->
+                System.out.println(message)
+        ).start();
     }
 
     public void readInput() {
         while (isActive()) {
             String input = in.nextLine();
-            notify(input);
+            if (isActive()) {
+                notify(input);
+            }
         }
     }
 
     public void start() {
-        new Thread(() -> readInput()).start();
+        new Thread(this::readInput).start();
     }
 
     public boolean isActive() {
@@ -37,7 +43,7 @@ public class CLI extends View {
 
     public void printWelcome() {
 
-        System.setProperty("jansi.passthrough", "true");
+        /*System.setProperty("jansi.passthrough", "true");*/
         AnsiConsole.systemInstall();
 
         String welcome =
@@ -94,6 +100,11 @@ public class CLI extends View {
         System.setProperty("jansi.passthrough", "true");
         AnsiConsole.systemInstall();
         AnsiConsole.out().println(ansi().eraseLine().render(utility.toString()));
+    }
+
+
+    public void close() {
+        active = false;
     }
 }
 

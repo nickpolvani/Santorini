@@ -56,7 +56,7 @@ public class Demeter extends God {
     public Queue<Operation> getRemainingOperations() {
         if (confirmed) {
             if (tileToBuild(worker.getIndexTile()).size() == 0) {
-                return new LinkedList<>(Collections.singletonList(Operation.SEND_MESSAGE));
+                return new LinkedList<>(Collections.singletonList(Operation.MESSAGE_NO_REPLY));
             } else {
                 return new LinkedList<>(Collections.singletonList(Operation.BUILD));
             }

@@ -25,7 +25,7 @@ public class ActionFactory {
                 if (!(object instanceof GodDescription)) throw new IllegalArgumentException();
                 action = new SelectGodTurnAction((GodDescription) object, nickname);
                 break;
-            case SEND_MESSAGE:
+            case MESSAGE_NO_REPLY:
                 if (object != null) throw new IllegalArgumentException();
                 action = new NodGameAction(nickname);
                 break;

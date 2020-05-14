@@ -7,10 +7,12 @@ import it.polimi.ingsw.bean.options.SetupOptions;
 import it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.GUI;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.utilities.MessageType;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.Scanner;
 
 public class Controller implements Observer<String> {
@@ -21,9 +23,19 @@ public class Controller implements Observer<String> {
     private String nickname;
 
     private boolean isMyTurn = true;
+    private final String alredyProcessedOptionsMessage = "Hai già risposto";
+    private boolean waitingInput;
+
+    public String getNickname() {
+        return nickname;
+    }
 
     @Override
-    public void update(String message) {
+    public synchronized void update(String message) {
+        if (!waitingInput) {
+            clientView.showMessage(alredyProcessedOptionsMessage);
+            return;
+        }
         String errorString = currentOption.isValid(message);
         if (!isMyTurn) {
             clientView.showMessage("It's " + currentOption.getNickname() + "'s turn. Wait until it's your turn");
@@ -39,14 +51,17 @@ public class Controller implements Observer<String> {
                 action = ActionFactory.createAction(currentOption, m, nickname);
             }
             socketClientConnection.asyncWriteToSocket(action);
+            waitingInput = false;
+            notifyAll();
         } else {
             clientView.showMessage(errorString);
         }
-
-
     }
 
-    public void handleOption(Options options) {
+    public synchronized void handleOption(Options options) throws InterruptedException {
+        while (waitingInput) {
+            wait();
+        }
         currentOption = options;
         if (options.getMessageType().equals(MessageType.NICKNAME_APPROVED)) {
             this.nickname = options.getNickname();
@@ -58,6 +73,9 @@ public class Controller implements Observer<String> {
             isMyTurn = currentOption.getNickname().equals(this.nickname);
         }
         options.execute(clientView);
+        if (isMyTurn && !(currentOption.getCurrentOperation() == Operation.MESSAGE_NO_REPLY)) {
+            waitingInput = true;
+        }
     }
 
     public void setup() {
@@ -77,8 +95,18 @@ public class Controller implements Observer<String> {
             clientView.start();
             this.socketClientConnection = new SocketClientConnection(this);
             this.socketClientConnection.run();
+        } catch (ConnectException e) {
+            clientView.showMessage(e.getMessage());
+            clientView.showMessage("Connection refused. Cannot ping server");
         } catch (IOException e) {
-            e.printStackTrace();
+            clientView.showMessage(e.getMessage());
+            clientView.showMessage("Connection closed on Server-side");
+        } finally {
+            tearDown();
         }
+    }
+
+    private void tearDown() {
+        clientView.close();
     }
 }

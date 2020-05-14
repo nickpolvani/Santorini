@@ -76,12 +76,12 @@ public class GameController extends Observable<Options> implements Observer<Game
     }
 
     public void hasWon(Player winner) {
-        notify(new MessageOption(winner.getNickname(), MessageType.WIN + winner.getNickname(), Operation.SEND_MESSAGE));
+        notify(new MessageOption(winner.getNickname(), MessageType.WIN + winner.getNickname(), Operation.MESSAGE_NO_REPLY));
         lobby.close();
     }
 
     public void hasLost(Player looser) {
-        notify(new MessageOption(looser.getNickname(), MessageType.LOST, Operation.SEND_MESSAGE));
+        notify(new MessageOption(looser.getNickname(), MessageType.LOST, Operation.MESSAGE_NO_REPLY));
         gameState.getPlayers().remove(looser);
         if (lobby.size == 2) {
             Player winner = gameState.getPlayers().get(0);

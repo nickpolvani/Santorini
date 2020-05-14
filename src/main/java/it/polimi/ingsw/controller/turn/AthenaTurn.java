@@ -92,7 +92,7 @@ public class AthenaTurn extends BasicTurn {
             if (currentPlayer.getGod().getGodDescription() == GodDescription.ARTEMIS
                     && currentPlayer.getGod().isConfirmed()
                     && athenaTileToMove(currentPlayer.getGod().getWorker()).size() == 0) {
-                turnOperations = new LinkedList<>(Arrays.asList(Operation.SEND_MESSAGE, Operation.BUILD));
+                turnOperations = new LinkedList<>(Arrays.asList(Operation.MESSAGE_NO_REPLY, Operation.BUILD));
             } else {
                 this.turnOperations = getCurrentPlayer().getGod().getRemainingOperations();
             }
@@ -136,7 +136,7 @@ public class AthenaTurn extends BasicTurn {
                 } else {
                     return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, MessageType.SELECT_WORKER);
                 }
-            case SEND_MESSAGE:
+            case MESSAGE_NO_REPLY:
                 return new MessageOption(currentPlayer.getNickname(), currentGod.getChoiceNotAllowedMessage(), getCurrentOperation());
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());

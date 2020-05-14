@@ -24,4 +24,6 @@ public abstract class View extends Observable<String> {
     public abstract void readInput();
 
     public abstract void start();
+
+    public abstract void close();
 }

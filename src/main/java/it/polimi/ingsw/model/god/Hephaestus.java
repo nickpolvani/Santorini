@@ -61,7 +61,7 @@ public class Hephaestus extends God {
                 board.addBlock(tileForAdditionalBlock);
 
             } else { // the player cannot build the additional block, so he has to be notified
-                remainingOperations = new LinkedList<>(Collections.singletonList(Operation.SEND_MESSAGE));
+                remainingOperations = new LinkedList<>(Collections.singletonList(Operation.MESSAGE_NO_REPLY));
             }
         }
 

@@ -46,6 +46,11 @@ public class GUI extends View {
 
     }
 
+    @Override
+    public void close() {
+
+    }
+
     public static void main(String[] args) throws IOException {
         GUI gui = new GUI();
         gui.createAndShowGUI();

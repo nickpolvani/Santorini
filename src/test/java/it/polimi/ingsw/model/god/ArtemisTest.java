@@ -122,7 +122,7 @@ public class ArtemisTest {
         Tile.IndexTile tile4 = new Tile.IndexTile(0, 2);
         gameState.getIslandBoard().getTile(tile4).getBuilding().buildDome();
 
-        expectedList.set(0, Operation.SEND_MESSAGE); //now expectedList = {Operation.SEND_MESSAGE, Operation.BUILD}
+        expectedList.set(0, Operation.MESSAGE_NO_REPLY); //now expectedList = {Operation.SEND_MESSAGE, Operation.BUILD}
         assertEquals(artemis.getRemainingOperations(), expectedList);
     }
 

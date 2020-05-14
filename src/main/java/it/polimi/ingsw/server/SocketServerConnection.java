@@ -86,7 +86,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
                 if (server.getRegisteredUsers().containsKey(nickname)) {
                     send(new SetupOptions(nickname, MessageType.NICKNAME_ALREADY_SET, Operation.SELECT_NICKNAME));
                 } else {
-                    send(new SetupOptions(nickname, MessageType.NICKNAME_APPROVED, Operation.SELECT_NICKNAME));
+                    send(new SetupOptions(nickname, MessageType.NICKNAME_APPROVED, Operation.MESSAGE_NO_REPLY));
                     nicknameApproved = true;
                 }
             } while (!nicknameApproved);

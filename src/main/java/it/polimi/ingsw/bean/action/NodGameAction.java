@@ -20,6 +20,6 @@ public class NodGameAction extends GameAction {
 
     @Override
     public Boolean isCompatible(Operation operation) {
-        return operation == Operation.SEND_MESSAGE;
+        return operation == Operation.MESSAGE_NO_REPLY;
     }
 }

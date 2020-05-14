@@ -24,14 +24,14 @@ public class SetupOptions extends Options {
 
     @Override
     public String isValid(String userInput) {
-        return null;
-        /*if (currentOperation == Operation.SELECT_NICKNAME)
+        if (currentOperation == Operation.SELECT_NICKNAME) {
+            if (userInput.isEmpty()) return alert;
             return null;
-        else if (currentOperation == Operation.SELECT_LOBBY_SIZE) {
+        } else if (currentOperation == Operation.SELECT_LOBBY_SIZE) {
             int size;
-            try{
+            try {
                 size = Integer.parseInt(userInput);
-            }catch (Exception e){
+            } catch (Exception e) {
                 return "Insert number is not valid. Please try again!";
             }
             if (size != 3 && size != 2) {
@@ -39,6 +39,6 @@ public class SetupOptions extends Options {
             }
             return null;
         }
-        throw new IllegalArgumentException();*/
+        throw new IllegalArgumentException();
     }
 }

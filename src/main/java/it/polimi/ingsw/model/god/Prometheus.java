@@ -72,10 +72,7 @@ public class Prometheus extends God {
         }
         // the worker is surrounded by tiles that are at least one level higher,
         // performing the optional build would result in the player defeat
-        else if (validTileToMove.size() == 0) {
-            return false;
-        }
-        return true;
+        else return validTileToMove.size() != 0;
     }
 
     @Override
@@ -85,7 +82,7 @@ public class Prometheus extends God {
             if (checkValidOptionalBuild()) {
                 operationsArray = new Operation[]{Operation.BUILD, Operation.MOVE, Operation.BUILD};
             } else {
-                operationsArray = new Operation[]{Operation.SEND_MESSAGE, Operation.MOVE, Operation.BUILD};
+                operationsArray = new Operation[]{Operation.MESSAGE_NO_REPLY, Operation.MOVE, Operation.BUILD};
             }
 
         } else {

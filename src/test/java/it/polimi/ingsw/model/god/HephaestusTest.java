@@ -96,7 +96,7 @@ public class HephaestusTest {
             hephaestus.applyChoice(true);
             assertEquals(t.getBuilding().getLevel(), BlockLevel.THREE);
             assertTrue(hephaestus.getRemainingOperations().size() == 1 &&
-                    hephaestus.getRemainingOperations().contains(Operation.SEND_MESSAGE));
+                    hephaestus.getRemainingOperations().contains(Operation.MESSAGE_NO_REPLY));
         } catch (DomeAlreadyPresentException e) {
             e.printStackTrace();
         }

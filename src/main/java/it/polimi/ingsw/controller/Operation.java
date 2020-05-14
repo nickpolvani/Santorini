@@ -9,5 +9,5 @@ public enum Operation {
     CHOOSE,
     CHOOSE_GOD,
     PLACE_WORKERS,
-    SEND_MESSAGE,
+    MESSAGE_NO_REPLY,
 }

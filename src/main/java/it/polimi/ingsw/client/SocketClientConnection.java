@@ -39,8 +39,13 @@ public class SocketClientConnection {
                 while (isActive()) {
                     Object inputObject = in.readObject();
                     if (inputObject instanceof Options) {
-                       // System.out.println(inputObject);
-                        controller.handleOption((Options) inputObject);
+                        new Thread(() -> {
+                            try {
+                                controller.handleOption((Options) inputObject);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }).start();
                     } else {
                         throw new IllegalArgumentException();
                     }
@@ -77,12 +82,17 @@ public class SocketClientConnection {
         try {
             Thread t0 = asyncReadFromSocket();
             t0.join();
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            in.close();
-            out.close();
-            socket.close();
+            closeConnection();
         }
+    }
+
+    public void closeConnection() throws IOException {
+        active = false;
+        in.close();
+        out.close();
+        socket.close();
     }
 }

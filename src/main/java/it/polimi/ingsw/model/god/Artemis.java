@@ -66,7 +66,7 @@ public class Artemis extends God {
     public Queue<Operation> getRemainingOperations() {
         if (confirmed) {
             if (tileToMove(worker.getIndexTile()).size() == 0) {
-                return new LinkedList<>(Arrays.asList(Operation.SEND_MESSAGE, Operation.BUILD));
+                return new LinkedList<>(Arrays.asList(Operation.MESSAGE_NO_REPLY, Operation.BUILD));
             } else {
                 return new LinkedList<>(Arrays.asList(Operation.MOVE, Operation.BUILD));
             }

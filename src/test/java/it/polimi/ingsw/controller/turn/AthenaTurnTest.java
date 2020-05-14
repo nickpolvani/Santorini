@@ -166,7 +166,7 @@ public class AthenaTurnTest {
         assertEquals(athenaTurn.getCurrentOperation(), Operation.CHOOSE);
         athenaTurn.currentPlayer.getGod().applyChoice(true);
         athenaTurn.endCurrentOperation();
-        assertEquals(athenaTurn.turnOperations, new LinkedList<>(Arrays.asList(Operation.SEND_MESSAGE, Operation.BUILD)));
+        assertEquals(athenaTurn.turnOperations, new LinkedList<>(Arrays.asList(Operation.MESSAGE_NO_REPLY, Operation.BUILD)));
     }
 
     /*
@@ -200,7 +200,7 @@ public class AthenaTurnTest {
 
         //CASE CHOOSE ALREADY TESTED IN EndCurrentOperationTest
 
-        athenaTurn.turnOperations = new LinkedList<>(Collections.singletonList(Operation.SEND_MESSAGE));
+        athenaTurn.turnOperations = new LinkedList<>(Collections.singletonList(Operation.MESSAGE_NO_REPLY));
         generatedOption = athenaTurn.getOptions();
         assertEquals((generatedOption).getMessageType(), player1.getGod().getChoiceNotAllowedMessage());
     }

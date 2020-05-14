@@ -29,7 +29,7 @@ public class Message {
             case PLACE_WORKERS:
                 object = parseDoubleIndex(message);
                 break;
-            case SEND_MESSAGE:
+            case MESSAGE_NO_REPLY:
                 object = null;
                 break;
             default:

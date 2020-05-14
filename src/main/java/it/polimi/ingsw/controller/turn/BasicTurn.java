@@ -140,7 +140,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
                     if (currentGod.tileToMove(w.getIndexTile()).size() > 0) indexTiles.add(w.getIndexTile());
                 }
                 return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, MessageType.SELECT_WORKER);
-            case SEND_MESSAGE:
+            case MESSAGE_NO_REPLY:
                 return new MessageOption(currentPlayer.getNickname(), currentGod.getChoiceNotAllowedMessage(), getCurrentOperation());
 
             default:
