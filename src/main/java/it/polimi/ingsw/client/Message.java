@@ -38,7 +38,7 @@ public class Message {
         return object;
     }
 
-    private static Object parseDoubleIndex(String message) {
+    public static Object parseDoubleIndex(String message) {
         String[] split = message.split("-");
         Tile.IndexTile[] index = new Tile.IndexTile[2];
         index[0] = (parseSingleIndex(split[0]));

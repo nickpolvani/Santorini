@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  */
 public class TileOptions extends Options {
 
-    private final Collection<IndexTile> tilesToChoose;
+    protected final Collection<IndexTile> tilesToChoose;
     private final IslandBoard boardClone;
 
     public TileOptions(String nickname, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, String message) {

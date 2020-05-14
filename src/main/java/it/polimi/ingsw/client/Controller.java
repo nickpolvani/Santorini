@@ -23,7 +23,7 @@ public class Controller implements Observer<String> {
     private String nickname;
 
     private boolean isMyTurn = true;
-    private final String alredyProcessedOptionsMessage = "Hai già risposto";
+    private final String alredyProcessedOptionsMessage = "You have already answered, wait...";
     private boolean waitingInput;
 
     public String getNickname() {
@@ -32,18 +32,21 @@ public class Controller implements Observer<String> {
 
     @Override
     public synchronized void update(String message) {
+        if (!isMyTurn) {
+            clientView.showMessage("It's " + currentOption.getNickname() + "'s turn. Wait until it's your turn");
+            return;
+        }
         if (!waitingInput) {
             clientView.showMessage(alredyProcessedOptionsMessage);
             return;
         }
         String errorString = currentOption.isValid(message);
-        if (!isMyTurn) {
-            clientView.showMessage("It's " + currentOption.getNickname() + "'s turn. Wait until it's your turn");
-            return;
-        }
+
         if (errorString == null) {
             Object m = Message.parseMessage(currentOption, message);
-            if (m == null) throw new IllegalStateException();
+            if (m == null) {
+                throw new IllegalStateException();
+            }
             Action action;
             if (nickname == null) {
                 action = ActionFactory.createAction(currentOption, m, message); //used when the user has to choose a nickname

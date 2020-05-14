@@ -19,7 +19,6 @@ public class MessageOption extends Options {
 
     @Override
     public String isValid(String userInput) {
-        if (userInput == null) return null;
-        throw new IllegalArgumentException();
+        return null; // a MessageOption does not expect any user input, so whatever the user may write is accepted
     }
 }

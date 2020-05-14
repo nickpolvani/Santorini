@@ -9,6 +9,7 @@ import it.polimi.ingsw.controller.Operation;
 public class SetupOptions extends Options {
 
 
+
     public SetupOptions(String nickname, String messageType, Operation operation) {
         super(nickname, messageType, operation);
     }
@@ -25,7 +26,9 @@ public class SetupOptions extends Options {
     @Override
     public String isValid(String userInput) {
         if (currentOperation == Operation.SELECT_NICKNAME) {
-            if (userInput.isEmpty()) return alert;
+            if (userInput.isEmpty()) {
+                return "You have given an empty nickname. Choose a valid nickname";
+            }
             return null;
         } else if (currentOperation == Operation.SELECT_LOBBY_SIZE) {
             int size;
