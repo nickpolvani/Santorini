@@ -128,7 +128,7 @@ public class Tile implements Cloneable, Serializable {
     @Override
     public final String toString() {
 
-        char[] firstLine = ("+—————+").toCharArray();
+        char[] firstLine = ("+-----+").toCharArray();
         char[] secondLine;
         char[] thirdLine;
         if (building.getDome()) {
@@ -138,7 +138,7 @@ public class Tile implements Cloneable, Serializable {
             secondLine = ("| " + "L " + getBuildingLevel() + " |").toCharArray();
             thirdLine = ("| " + (currentWorker != null ? ("w " + currentWorker.getColor().getNum()) : "   ") + " |").toCharArray();
         }
-        char[] fourthLine = ("+—————+").toCharArray();
+        char[] fourthLine = ("+-----+").toCharArray();
 
         char[][] tileAsMatrix = new char[][]{firstLine, secondLine, thirdLine, fourthLine};
 

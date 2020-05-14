@@ -43,7 +43,11 @@ public class CLI extends View {
 
     public void printWelcome() {
 
-        /*System.setProperty("jansi.passthrough", "true");*/
+        /*
+        This Line is necessary only if you want to open client in Terminal of Intellij. Either powershell or cmd does not need this
+
+        System.setProperty("jansi.passthrough", "true");
+         */
         AnsiConsole.systemInstall();
 
         String welcome =
@@ -53,7 +57,7 @@ public class CLI extends View {
                         "| |/ |/ /  __/ / /__/ /_/ / / / / / /  __/    / / / /_/ /   ___/ / /_/ / / / / /_/ /_/ / /  / / / / / /  \n" +
                         "|__/|__/\\___/_/\\___/\\____/_/ /_/ /_/\\___/    /_/  \\____/   /____/\\__,_/_/ /_/\\__/\\____/_/  /_/_/ /_/_/   \n";
 
-        AnsiConsole.out().println(ansi().eraseLine().fg(Ansi.Color.BLUE).a(welcome).reset());
+        AnsiConsole.out().println(ansi().eraseLine().fg(Ansi.Color.RED).a(welcome).reset());
 
     }
 
@@ -62,10 +66,10 @@ public class CLI extends View {
         StringBuilder utility = new StringBuilder();
 
         utility.append(
-                ">>  L# : It means that on the tile there is a block of level n° '#'\n" +
+                "@|yellow >>  L# : It means that on the tile there is a block of level n° '#'\n" +
                         ">>  W : There is a worker on tile. Every worker has the color of his team!\n" +
                         ">>  / \\" + "\n" +
-                        "    \\ / : A dome has been built on thi tile\n\n"
+                        "    \\ / : A dome has been built on thi tile|@ \n"
         );
 
 
@@ -97,7 +101,11 @@ public class CLI extends View {
                 utility.append(rep[i]);
             }
         }
+        /*
+        This Line is necessary only if you want to open client in Terminal of Intellij. Either powershell or cmd does not need this
+
         System.setProperty("jansi.passthrough", "true");
+         */
         AnsiConsole.systemInstall();
         AnsiConsole.out().println(ansi().eraseLine().render(utility.toString()));
     }
