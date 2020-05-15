@@ -18,7 +18,7 @@ public class PlaceWorkersOptions extends TileOptions {
 
     @Override
     public String isValid(String userInput) {
-        String toCheck = userInput.replace(" ", "");
+        String toCheck = userInput.replace(" ", "").replace("(", "").replace(")", "");
         Pattern checkTile = Pattern.compile("[01234],[01234]-[01234],[01234]");
         if (checkTile.matcher(toCheck).matches()) {
             Tile.IndexTile[] tilesChosen = (Tile.IndexTile[]) Message.parseDoubleIndex(userInput);

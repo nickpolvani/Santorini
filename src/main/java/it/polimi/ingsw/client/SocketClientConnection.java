@@ -51,8 +51,12 @@ public class SocketClientConnection {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-                setActive(false);
+                controller.getClientView().showMessage("Connection  Server-side has been closed, maybe because you opponents are gone");
+                try {
+                    closeConnection();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
         t.start();
@@ -60,9 +64,7 @@ public class SocketClientConnection {
     }
 
     public void asyncWriteToSocket(final Action gameAction) {
-        Thread t = new Thread(() -> {
-            writeToSocket(gameAction);
-        });
+        Thread t = new Thread(() -> writeToSocket(gameAction));
         t.start();
     }
 
@@ -91,6 +93,7 @@ public class SocketClientConnection {
 
     public void closeConnection() throws IOException {
         active = false;
+        controller.getClientView().close();
         in.close();
         out.close();
         socket.close();

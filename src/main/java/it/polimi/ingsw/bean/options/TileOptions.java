@@ -42,7 +42,7 @@ public class TileOptions extends Options {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(messageType).append(" ").append(alert).append(":\n");
             for (IndexTile i : tilesToChoose) {
-                stringBuilder.append(i.toString() + " ");
+                stringBuilder.append(i.toString()).append(" ");
             }
             view.showMessage(stringBuilder.toString());
         }
@@ -50,8 +50,9 @@ public class TileOptions extends Options {
 
     @Override
     public String isValid(String userInput) {
+        String toCheck = userInput.replace(" ", "").replace("(", "").replace(")", "");
         Pattern checkTile = Pattern.compile("[01234],[01234]");
-        if (checkTile.matcher(userInput).matches()) {
+        if (checkTile.matcher(toCheck).matches()) {
             IndexTile indexTile = (IndexTile) Message.parseMessage(this, userInput);
             if (tilesToChoose.contains(indexTile))
                 return null;
