@@ -1,6 +1,6 @@
 package it.polimi.ingsw.bean.options;
 
-import it.polimi.ingsw.client.Message;
+import it.polimi.ingsw.client.MessageParser;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
@@ -18,6 +18,11 @@ public class TileOptions extends Options {
 
     protected final Collection<IndexTile> tilesToChoose;
     private final IslandBoard boardClone;
+    /*
+    This property is used to avoid printing another time the board after a SELECT_WORKER operation.
+    In fact that operation does not change the state of the board, so it's useless printing the board another time.
+     */
+    private static boolean afterSelectWorker;
 
     public TileOptions(String nickname, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, String message) {
         super(nickname, message, operation);
@@ -37,13 +42,21 @@ public class TileOptions extends Options {
 
     @Override
     public void execute(View view) {
-        view.printBoard(boardClone);
+        if (!afterSelectWorker) {
+            view.printBoard(boardClone);
+            if (currentOperation == Operation.SELECT_WORKER) {
+                afterSelectWorker = true;
+            }
+        } else {
+            afterSelectWorker = false;
+        }
         if (view.getNickname().equals(this.nickname)) {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(messageType).append(" ").append(alert).append(":\n");
+            stringBuilder.append(messageType).append(":\n");
             for (IndexTile i : tilesToChoose) {
                 stringBuilder.append(i.toString()).append(" ");
             }
+            stringBuilder.append(alert);
             view.showMessage(stringBuilder.toString());
         }
     }
@@ -53,7 +66,7 @@ public class TileOptions extends Options {
         String toCheck = userInput.replace(" ", "").replace("(", "").replace(")", "");
         Pattern checkTile = Pattern.compile("[01234],[01234]");
         if (checkTile.matcher(toCheck).matches()) {
-            IndexTile indexTile = (IndexTile) Message.parseMessage(this, userInput);
+            IndexTile indexTile = (IndexTile) MessageParser.parseMessage(this, userInput);
             if (tilesToChoose.contains(indexTile))
                 return null;
             else return alert;

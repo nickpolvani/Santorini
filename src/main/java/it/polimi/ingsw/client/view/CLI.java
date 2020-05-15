@@ -69,7 +69,7 @@ public class CLI extends View {
                 "@|yellow >>  L# : It means that on the tile there is a block of level n° '#'\n" +
                         ">>  W : There is a worker on tile. Every worker has the color of his team!\n" +
                         ">>  / \\" + "\n" +
-                        "    \\ / : A dome has been built on thi tile|@ \n"
+                        "    \\ / : A dome has been built on tile|@ \n"
         );
 
 
@@ -101,15 +101,14 @@ public class CLI extends View {
                 utility.append(rep[i]);
             }
         }
-        /*
-        This Line is necessary only if you want to open client in Terminal of Intellij. Either powershell or cmd does not need this
 
+
+        //This Line is necessary only if you want to open client in Terminal of Intellij. Either powershell or cmd does not need this
         System.setProperty("jansi.passthrough", "true");
-         */
+
         AnsiConsole.systemInstall();
         AnsiConsole.out().println(ansi().eraseLine().render(utility.toString()));
     }
-
 
     public void close() {
         active = false;

@@ -42,7 +42,7 @@ public class GodOptions extends Options {
     private String godsList() {
         StringBuilder list = new StringBuilder();
         for (GodDescription g : godsToChoose) {
-            list.append(g.toString() + "\n");
+            list.append(">" + g.getName() + ":\n" + "    " + g.getDescriptionOfPower() + "\n");
         }
         return list.toString();
     }

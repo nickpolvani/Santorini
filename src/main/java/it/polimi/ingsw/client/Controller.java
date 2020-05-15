@@ -20,15 +20,23 @@ import java.util.TimerTask;
 public class Controller implements Observer<String> {
 
     private View clientView;
+    private final long timeToAnswer = 60000; //milliseconds
+
     private SocketClientConnection socketClientConnection;
     private Options currentOption;
     private String nickname;
-
+    /**
+     * Flag used to check, when inputs from view arrive, if it's the turn of the player linked to this specific view
+     */
     private boolean isMyTurn = true;
-    private boolean waitingInput;
 
-    private final long timeToAnswer = 30000; //milliseconds
+
     private Timer timer;
+    /**
+     * Since we use a different thread to receive elements from socket and from view,
+     * it may happen that controller is notified of an operation when it shouldn't
+     */
+    private boolean waitingInput = false;
 
 
     public String getNickname() {
@@ -39,6 +47,13 @@ public class Controller implements Observer<String> {
         return clientView;
     }
 
+    /**
+     * This method is used to check if the player's input isValid before of sending it to the server.
+     * It also handles message received from user when he should wait either while other players are performing
+     * their turn or while server is parsing his choices.
+     *
+     * @param message The message received from CLI or GUI
+     */
     @Override
     public synchronized void update(String message) {
         if (!waitingInput) {
@@ -52,7 +67,7 @@ public class Controller implements Observer<String> {
         timer.cancel();
         String errorString = currentOption.isValid(message);
         if (errorString == null) {
-            Object m = Message.parseMessage(currentOption, message);
+            Object m = MessageParser.parseMessage(currentOption, message);
             if (m == null) {
                 throw new IllegalStateException();
             }
@@ -71,7 +86,12 @@ public class Controller implements Observer<String> {
         }
     }
 
-
+    /**
+     * This method receives Option notified from socket and set properties necessary during the option handling
+     *
+     * @param options Option notified from the thread which receives the Object from the socket.
+     * @throws InterruptedException
+     */
     public synchronized void handleOption(Options options) throws InterruptedException {
         while (waitingInput) {
             wait();
@@ -86,6 +106,7 @@ public class Controller implements Observer<String> {
         } else {
             isMyTurn = currentOption.getNickname().equals(this.nickname);
         }
+        clientView.setCurrentOption(options);
         options.execute(clientView);
         if (isMyTurn && !(currentOption.getCurrentOperation() == Operation.MESSAGE_NO_REPLY)) {
             waitingInput = true;
@@ -93,6 +114,10 @@ public class Controller implements Observer<String> {
         }
     }
 
+    /**
+     * Controller Setup method which calls constructor of either of CLI and GUI in line with players' choice and, in addition,
+     * tries to open a new connection with the server using the SocketClientConnection instance.
+     */
     public void setup() {
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -121,19 +146,26 @@ public class Controller implements Observer<String> {
         }
     }
 
-
+    /**
+     * This method provide a scheduled Timer that notify to the players both when the provided input time is about to finish
+     * and when the aforementioned time is up and the player looses the game.
+     */
     private void startTimerToAnswer() {
         timer = new Timer();
         timer.schedule(checkTime(), timeToAnswer);
         timer.schedule(printRemainingTime(), timeToAnswer / 2);
     }
 
+    /**
+     * This method provides a new timerTask which checks, after a defined amount of milliseconds, if the due time,
+     * in which the player has to send his answer, is up;
+     */
     private TimerTask checkTime() {
         return new TimerTask() {
             @Override
             public void run() {
                 if (waitingInput) {
-                    clientView.showMessage("Time to answer is up, you loose");
+                    clientView.showMessage("\nTime to answer is up, you loose");
                     try {
                         clientView.close();
                         socketClientConnection.closeConnection();
@@ -145,6 +177,10 @@ public class Controller implements Observer<String> {
         };
     }
 
+    /**
+     * This method provides a new timerTask which notify to the player tha amount of remaining time in which he has to send
+     * his answer
+     */
     private TimerTask printRemainingTime() {
         return new TimerTask() {
             @Override

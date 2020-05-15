@@ -1,6 +1,6 @@
 package it.polimi.ingsw.bean.options;
 
-import it.polimi.ingsw.client.Message;
+import it.polimi.ingsw.client.MessageParser;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Tile;
@@ -21,7 +21,7 @@ public class PlaceWorkersOptions extends TileOptions {
         String toCheck = userInput.replace(" ", "").replace("(", "").replace(")", "");
         Pattern checkTile = Pattern.compile("[01234],[01234]-[01234],[01234]");
         if (checkTile.matcher(toCheck).matches()) {
-            Tile.IndexTile[] tilesChosen = (Tile.IndexTile[]) Message.parseDoubleIndex(userInput);
+            Tile.IndexTile[] tilesChosen = (Tile.IndexTile[]) MessageParser.parseDoubleIndex(userInput);
             if (!tilesChosen[0].equals(tilesChosen[1]) && tilesToChoose.contains(tilesChosen[0]) &&
                     tilesToChoose.contains(tilesChosen[1])) {
                 return null;
