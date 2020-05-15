@@ -61,7 +61,9 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
     private void close() {
         if (isActive()) {
             active = false;
-            server.removePlayer(username);
+            if (username != null) {
+                server.removePlayer(username);
+            }
         }
     }
 
@@ -102,11 +104,10 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
                 notify((GameAction) o);
             }
         } catch (IOException e) {
-            logger.warn(e.getMessage() + " of SocketServerConnection USERNAME=" + username + " PORT=" + socket.getPort(), e);
+            logger.warn(e.getMessage() + " of SocketServerConnection USERNAME=" + username + " PORT=" + socket.getPort());
         } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         } finally {
-            logger.warn("Branch finally of SocketServerConnection of " + username);
             close();
         }
     }

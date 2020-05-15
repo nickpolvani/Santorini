@@ -118,6 +118,7 @@ public class Server {
             closeLobby(tmp);
         } else if (openLobby != null) { //caso in cui la lobby stata creata ma non inizializzata
             openLobby.removePlayer(username);
+            removeRegisteredUsers(username);
         } else { //caso quando la connesione cade prima di definire la prima lobby
             removeRegisteredUsers(username);
         }
