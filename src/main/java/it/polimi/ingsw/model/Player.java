@@ -21,7 +21,7 @@ public class Player implements Serializable {
 
     private transient final GameState gameState;
 
-    private final Color color;
+    public final Color color;
     /**
      * The reference to the player's workers
      */

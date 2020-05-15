@@ -85,7 +85,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
                 read = in.readObject();
                 if (!(read instanceof ChooseNicknameAction)) throw new IllegalArgumentException();
                 String nickname = ((ChooseNicknameAction) read).getNickname();
-                if (server.getRegisteredUsers().containsKey(nickname)) {
+                if (nickname.isEmpty() || server.getRegisteredUsers().containsKey(nickname)) {
                     send(new SetupOptions(nickname, MessageType.NICKNAME_ALREADY_SET, Operation.SELECT_NICKNAME));
                 } else {
                     send(new SetupOptions(nickname, MessageType.NICKNAME_APPROVED, Operation.MESSAGE_NO_REPLY));

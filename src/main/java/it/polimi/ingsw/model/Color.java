@@ -4,7 +4,7 @@ package it.polimi.ingsw.model;
  * @author Polvani-Puoti-Sacchetta
  */
 public enum Color {
-    RED("red", 0), BLUE("blue", 1), GREEN("green", 2);
+    RED("RED", 0), BLUE("BLUE", 1), YELLOW("YELLOW", 2);
 
     private final String message;
     private final int num;
@@ -25,7 +25,7 @@ public enum Color {
             case 1:
                 return BLUE;
             case 2:
-                return GREEN;
+                return YELLOW;
             default:
                 throw new IllegalArgumentException();
         }

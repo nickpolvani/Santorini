@@ -42,13 +42,14 @@ public class TileOptions extends Options {
 
     @Override
     public void execute(View view) {
-        if (!afterSelectWorker) {
+        if (!afterSelectWorker && !afterChooseOption) {
             view.printBoard(boardClone);
             if (currentOperation == Operation.SELECT_WORKER) {
                 afterSelectWorker = true;
             }
         } else {
-            afterSelectWorker = false;
+            if (afterSelectWorker) afterSelectWorker = false;
+            if (afterChooseOption) afterChooseOption = false;
         }
         if (view.getNickname().equals(this.nickname)) {
             StringBuilder stringBuilder = new StringBuilder();

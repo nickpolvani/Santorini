@@ -28,6 +28,7 @@ public class ChooseOptions extends Options {
     @Override
     public void execute(View view) {
         view.printBoard(boardClone);
+        afterChooseOption = true;
         if (view.getNickname().equals(this.nickname)) {
             view.showMessage(messageType + "\n" + alert);
         }

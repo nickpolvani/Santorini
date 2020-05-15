@@ -2,6 +2,7 @@ package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.utilities.MessageType;
 
 public class MessageOption extends Options {
 
@@ -12,6 +13,18 @@ public class MessageOption extends Options {
 
     @Override
     public void execute(View view) {
+        if (messageType.contains(MessageType.WIN) || messageType.contains(MessageType.LOST)) {
+            if (view.getNickname().equals(this.nickname)) {
+                if (messageType.contains(MessageType.WIN)) {
+                    view.showMessage("Congratulation, you are the Winner!!!!");
+                } else {
+                    view.showMessage("Sorry, but you lost the game");
+                }
+            } else {
+                view.showMessage(messageType);
+            }
+            return;
+        }
         if (view.getNickname().equals(this.nickname)) {
             view.showMessage(messageType);
         }

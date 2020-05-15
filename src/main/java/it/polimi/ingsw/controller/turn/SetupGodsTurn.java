@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller.turn;
 
 import it.polimi.ingsw.bean.options.GodOptions;
+import it.polimi.ingsw.bean.options.MessageOption;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
@@ -64,11 +65,10 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
             //When the current player becomes the challenger again, only one god must remain in the selectedGods list.
             if (selectedGods.size() != 1) throw new IllegalStateException();
             challenger.setGod(controller.getGameState().getGodsFactory().getGod(selectedGods.get(0), challenger));
-            //TODO the challenger does not get notified of his god
-            /*
-            String message = "Your god for this game is: " + selectedGods.get(0).toString();
-            notify(new MessageOption(challenger.getNickname(), message, getCurrentOperation()));
-            */
+            for (Player p : controller.getGameState().getPlayers()) {
+                String message = "Your god for this game is: " + p.getGod().toString();
+                notify(new MessageOption(challenger.getNickname(), message, Operation.MESSAGE_NO_REPLY));
+            }
             SetupWorkersTurn setupWorkersTurn = new SetupWorkersTurn(controller, controller.getNextPlayer(currentPlayer), observers);
             clearObserver();
             controller.setTurn(setupWorkersTurn);

@@ -67,7 +67,7 @@ public class AthenaTurn extends BasicTurn {
             final int currentWorkerLevel = gameController.getGameState().getIslandBoard().getBuildingLevel(w.getIndexTile());
 
             return godTile.stream()
-                    .filter(t -> (gameController.getGameState().getIslandBoard().getBuildingLevel(t) - currentWorkerLevel) == 0)
+                    .filter(t -> (gameController.getGameState().getIslandBoard().getBuildingLevel(t) - currentWorkerLevel) < 1)
                     .collect(Collectors.toList());
         } else {
             return godTile;

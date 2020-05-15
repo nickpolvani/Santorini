@@ -2,7 +2,7 @@ package it.polimi.ingsw.utilities;
 
 public class MessageType {
     public final static String WIN = "The winner is: ";
-    public final static String LOST = "Sorry but you lost";
+    public final static String LOST = "The looser is: ";
     public final static String MOVE = "These are the Tiles where you can move";
     public final static String BUILD = "These are the Tiles where you can build";
     public final static String PLACE_WORKERS = "Choose two tiles where you want to place your workers";

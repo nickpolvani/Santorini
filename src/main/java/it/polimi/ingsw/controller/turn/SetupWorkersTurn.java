@@ -74,7 +74,7 @@ public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
 
         Options playerOptions = new PlaceWorkersOptions(currentPlayer.getNickname(), freeIndexTiles,
                 controller.getGameState().getIslandBoard().clone(), getCurrentOperation(),
-                MessageType.PLACE_WORKERS);
+                (MessageType.PLACE_WORKERS + ", the color of your team is " + currentPlayer.color.getMessage()));
         notify(playerOptions);
     }
 
