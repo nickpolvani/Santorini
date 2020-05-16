@@ -41,7 +41,13 @@ public abstract class View extends Observable<String> {
     /**
      * Method used to show the island board current state to the players
      */
-    public abstract void printBoard(IslandBoard board);
+    public void printBoard(IslandBoard board) {
+        if (!isSameBoard(board)) {
+            updateBoard(board);
+        }
+    }
+
+    protected abstract void updateBoard(IslandBoard board);
 
     /**
      * the process who read inputs of the players

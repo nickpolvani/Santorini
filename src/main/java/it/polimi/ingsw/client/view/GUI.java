@@ -31,7 +31,7 @@ public class GUI extends View {
     }
 
     @Override
-    public void printBoard(IslandBoard board) {
+    public void updateBoard(IslandBoard board) {
 
     }
 

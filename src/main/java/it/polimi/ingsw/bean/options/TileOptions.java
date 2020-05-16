@@ -38,9 +38,7 @@ public class TileOptions extends Options {
 
     @Override
     public void execute(View view) {
-        if (!view.isSameBoard(boardClone)) {
-            view.printBoard(boardClone);
-        }
+        view.printBoard(boardClone);
         if (view.getNickname().equals(this.nickname)) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(messageType).append(":\n");

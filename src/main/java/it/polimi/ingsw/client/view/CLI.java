@@ -61,7 +61,7 @@ public class CLI extends View {
 
     }
 
-    public void printBoard(IslandBoard board) {
+    public void updateBoard(IslandBoard board) {
         this.board = board;
         StringBuilder utility = new StringBuilder();
 
