@@ -2,7 +2,6 @@ package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
-import it.polimi.ingsw.model.IslandBoard;
 
 import java.util.Arrays;
 
@@ -13,22 +12,14 @@ import java.util.Arrays;
  */
 public class ChooseOptions extends Options {
 
-    private final IslandBoard boardClone;
-
-    public ChooseOptions(String nickname, IslandBoard boardClone, String message) {
+    public ChooseOptions(String nickname, String message) {
         super(nickname, message, Operation.CHOOSE);
-        this.boardClone = boardClone;
         alert = "Please insert [Yes/No] or [Y,N]";
-    }
-
-    public IslandBoard getBoardClone() {
-        return boardClone;
     }
 
     @Override
     public void execute(View view) {
-        view.printBoard(boardClone);
-        afterChooseOption = true;
+        view.setAfterChooseOption(true);
         if (view.getNickname().equals(this.nickname)) {
             view.showMessage(messageType + "\n" + alert);
         }

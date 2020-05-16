@@ -4,6 +4,8 @@ import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.god.GodDescription;
 
+import java.util.List;
+
 public class ActionFactory {
 
     public static Action createAction(Options options, Object object, String nickname) {
@@ -22,8 +24,8 @@ public class ActionFactory {
                 action = new ConfirmGameAction((Boolean) object, nickname);
                 break;
             case CHOOSE_GOD:
-                if (!(object instanceof GodDescription)) throw new IllegalArgumentException();
-                action = new SelectGodTurnAction((GodDescription) object, nickname);
+                if (!(object instanceof List)) throw new IllegalArgumentException();
+                action = new SelectGodTurnAction((List<GodDescription>) object, nickname);
                 break;
             case MESSAGE_NO_REPLY:
                 if (object != null) throw new IllegalArgumentException();

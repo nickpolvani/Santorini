@@ -130,7 +130,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
                 return new TileOptions(currentPlayer.getNickname(), currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
                         boardClone, currentOperation, MessageType.BUILD);
             case CHOOSE:
-                return new ChooseOptions(currentPlayer.getNickname(), boardClone, currentGod.getGodDescription().getDescriptionOfPower() +
+                return new ChooseOptions(currentPlayer.getNickname(), currentGod.getGodDescription().getDescriptionOfPower() +
                         "\nDo you want to use your god's power? (Yes/No)");
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();

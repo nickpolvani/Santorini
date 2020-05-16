@@ -1,23 +1,8 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.action.SelectGodTurnAction;
-import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.controller.Operation;
-import it.polimi.ingsw.model.GameState;
-import it.polimi.ingsw.model.god.GodDescription;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import static org.junit.Assert.*;
-
 public class SetupGodsTurnTest {
 
-    SetupGodsTurn turn;
+    /*SetupGodsTurn turn;
     GameController controller;
     GameState model;
     public ExpectedException thrown = ExpectedException.none();
@@ -80,5 +65,5 @@ public class SetupGodsTurnTest {
 
         assertEquals(GodDescription.PAN, model.getPlayers().get(0).getGod().getGodDescription());
         assertTrue(controller.getTurn() instanceof SetupWorkersTurn);
-    }
+    }*/
 }

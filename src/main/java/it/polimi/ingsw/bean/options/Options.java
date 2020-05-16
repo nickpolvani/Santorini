@@ -11,13 +11,14 @@ public abstract class Options implements Serializable {
     protected Operation currentOperation;
     protected String alert;
     protected String nickname;
-    protected static boolean afterChooseOption = false;
+
 
     protected Options(String nickname, String messageType, Operation operation) {
         this.messageType = messageType;
         this.currentOperation = operation;
         this.nickname = nickname;
     }
+
 
     public Operation getCurrentOperation() {
         return currentOperation;

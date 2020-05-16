@@ -118,7 +118,7 @@ public class AthenaTurnTest {
         gameState.getIslandBoard().getTile(tile1).getBuilding().addBlock();
         gameState.getIslandBoard().getTile(tile2).getBuilding().addBlock();
         Collection<Tile.IndexTile> foundTiles = athenaTurn.athenaTileToMove(player2.getWorkers()[0]);
-
+        //TODO check the case in which a worker is on a level higher than the level of one of neighbouring tiles
         assertTrue(!foundTiles.contains(tile1) && !foundTiles.contains(tile2));
     }
 

@@ -18,11 +18,7 @@ public class TileOptions extends Options {
 
     protected final Collection<IndexTile> tilesToChoose;
     private final IslandBoard boardClone;
-    /*
-    This property is used to avoid printing another time the board after a SELECT_WORKER operation.
-    In fact that operation does not change the state of the board, so it's useless printing the board another time.
-     */
-    private static boolean afterSelectWorker;
+
 
     public TileOptions(String nickname, Collection<IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, String message) {
         super(nickname, message, operation);
@@ -42,14 +38,14 @@ public class TileOptions extends Options {
 
     @Override
     public void execute(View view) {
-        if (!afterSelectWorker && !afterChooseOption) {
+        if (!view.isAfterSelectWorker() && !view.isAfterChooseOption()) {
             view.printBoard(boardClone);
             if (currentOperation == Operation.SELECT_WORKER) {
-                afterSelectWorker = true;
+                view.setAfterSelectWorker(true);
             }
         } else {
-            if (afterSelectWorker) afterSelectWorker = false;
-            if (afterChooseOption) afterChooseOption = false;
+            if (view.isAfterSelectWorker()) view.setAfterSelectWorker(false);
+            if (view.isAfterChooseOption()) view.setAfterChooseOption(false);
         }
         if (view.getNickname().equals(this.nickname)) {
             StringBuilder stringBuilder = new StringBuilder();

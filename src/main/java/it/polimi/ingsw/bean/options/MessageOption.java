@@ -23,10 +23,10 @@ public class MessageOption extends Options {
             } else {
                 view.showMessage(messageType);
             }
-            return;
-        }
-        if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(messageType);
+        } else {
+            if (view.getNickname().equals(this.nickname)) {
+                view.showMessage(messageType);
+            }
         }
     }
 

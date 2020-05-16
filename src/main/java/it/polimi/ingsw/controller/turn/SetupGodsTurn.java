@@ -29,9 +29,7 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
         this.currentPlayer = challenger;
         this.controller = controller;
         turnOperations = new LinkedList<>();
-        for (int i = 0; i < controller.getGameState().getPlayers().size(); i++) {
-            turnOperations.add(Operation.CHOOSE_GOD);
-        }
+        turnOperations.add(Operation.CHOOSE_GOD);
         logger.debug("SetupGodsTurn initialized!");
     }
 
@@ -67,7 +65,7 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
             challenger.setGod(controller.getGameState().getGodsFactory().getGod(selectedGods.get(0), challenger));
             for (Player p : controller.getGameState().getPlayers()) {
                 String message = "Your god for this game is: " + p.getGod().toString();
-                notify(new MessageOption(challenger.getNickname(), message, Operation.MESSAGE_NO_REPLY));
+                notify(new MessageOption(p.getNickname(), message, Operation.MESSAGE_NO_REPLY));
             }
             SetupWorkersTurn setupWorkersTurn = new SetupWorkersTurn(controller, controller.getNextPlayer(currentPlayer), observers);
             clearObserver();
@@ -83,15 +81,22 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
         return challengerGodsChosen;
     }
 
-    public void handleGodChoice(GodDescription god) {
+    public void handleGodChoice(List<GodDescription> inputGods) {
         if (!isChallengerGodsChosen()) {
-            if (selectedGods.contains(god)) {
+            if (selectedGods.containsAll(inputGods)) {
                 throw new IllegalArgumentException();
             }
-            selectedGods.add(god);
+            if (inputGods.size() != controller.getGameState().getPlayers().size()) {
+                //Adding this operation provides to the challenger the chance to insert the corrected god list.
+                turnOperations.add(Operation.CHOOSE_GOD);
+
+            } else {
+                selectedGods.addAll(inputGods);
+            }
         } else {
-            currentPlayer.setGod(controller.getGameState().getGodsFactory().getGod(god, currentPlayer));
-            selectedGods.remove(god);
+            if (inputGods.size() > 1) throw new IllegalArgumentException();
+            currentPlayer.setGod(controller.getGameState().getGodsFactory().getGod(inputGods.get(0), currentPlayer));
+            selectedGods.remove(inputGods.get(0));
         }
     }
 
@@ -102,9 +107,9 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
             for (GodDescription god : selectedGods) {
                 gods.remove(god);
             }
-            options = new GodOptions(currentPlayer.getNickname(), gods,
-                    MessageType.CHOOSE_GOD + ("You're the challenger: choose the Gods for the game. Insert" +
-                            " one god per time!"));
+            String message = MessageType.CHOOSE_GOD + ("You're the challenger: choose the Gods for the game.\n" +
+                    "Insert the correct number of gods: " + controller.getGameState().getPlayers().size());
+            options = new GodOptions(currentPlayer.getNickname(), gods, message);
         } else {
             options = new GodOptions(currentPlayer.getNickname(), selectedGods, MessageType.CHOOSE_GOD);
         }

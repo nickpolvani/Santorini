@@ -90,7 +90,7 @@ public class Controller implements Observer<String> {
      * This method receives Option notified from socket and set properties necessary during the option handling
      *
      * @param options Option notified from the thread which receives the Object from the socket.
-     * @throws InterruptedException
+     * @throws InterruptedException Exception thrown by wait() method.
      */
     public synchronized void handleOption(Options options) throws InterruptedException {
         while (waitingInput) {
@@ -185,7 +185,7 @@ public class Controller implements Observer<String> {
         return new TimerTask() {
             @Override
             public void run() {
-                clientView.showMessage("Hurry Up, only " + timeToAnswer / 2000 + " seconds remain to answer");
+                clientView.showMessage("\nHurry Up, only " + timeToAnswer / 2000 + " seconds remain to answer.");
             }
         };
     }

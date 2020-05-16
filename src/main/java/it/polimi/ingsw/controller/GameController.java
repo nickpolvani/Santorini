@@ -76,12 +76,14 @@ public class GameController extends Observable<Options> implements Observer<Game
     }
 
     public void hasWon(Player winner) {
-        notify(new MessageOption(winner.getNickname(), (MessageType.WIN + winner.getNickname()), Operation.MESSAGE_NO_REPLY));
+        String notifyMessage = (MessageType.WIN + winner.getNickname());
+        notify(new MessageOption(winner.getNickname(), notifyMessage, Operation.MESSAGE_NO_REPLY));
         lobby.close();
     }
 
     public void hasLost(Player looser) {
-        notify(new MessageOption(looser.getNickname(), MessageType.LOST, Operation.MESSAGE_NO_REPLY));
+        String notifyMessage = (MessageType.LOST + looser.getNickname());
+        notify(new MessageOption(looser.getNickname(), notifyMessage, Operation.MESSAGE_NO_REPLY));
         gameState.getPlayers().remove(looser);
         if (lobby.size == 2) {
             Player winner = null;
@@ -115,7 +117,6 @@ public class GameController extends Observable<Options> implements Observer<Game
         if (a.getNickname().equals(getTurn().getCurrentPlayer().getNickname())) {
             if (a.isCompatible(turn.getCurrentOperation())) {
                 try {
-
                     actionHandler.execute(a, findPlayer(a.getNickname()));
                     turn.endCurrentOperation();
                 } catch (DomeAlreadyPresentException | AlreadyOccupiedException | AlreadySetException e) {

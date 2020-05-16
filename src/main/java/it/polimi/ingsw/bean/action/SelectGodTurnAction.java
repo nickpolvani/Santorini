@@ -4,19 +4,23 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.controller.turn.SetupGodsTurn;
 import it.polimi.ingsw.model.god.GodDescription;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SelectGodTurnAction extends SetupTurnAction {
 
-    private final GodDescription god;
+    private final List<GodDescription> godsChosen;
 
-    public SelectGodTurnAction(GodDescription god, String nickname) {
+    public SelectGodTurnAction(List<GodDescription> gods, String nickname) {
         super(nickname);
-        this.god = god;
+        godsChosen = new ArrayList<>();
+        godsChosen.addAll(gods);
     }
 
 
     @Override
     void execute() {
-        ((SetupGodsTurn) setupTurn).handleGodChoice(god);
+        ((SetupGodsTurn) setupTurn).handleGodChoice(godsChosen);
     }
 
     @Override

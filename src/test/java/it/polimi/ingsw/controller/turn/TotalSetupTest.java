@@ -1,28 +1,14 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.action.PlaceWorkerActions;
-import it.polimi.ingsw.bean.action.SelectGodTurnAction;
-import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.GameState;
-import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.god.GodDescription;
-import it.polimi.ingsw.observer.Observer;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class TotalSetupTest {
     GameState model;
     GameController controller;
     SetupTurn turn;
 
-    @Before
+   /* @Before
     public void setUp() {
         Set<String> players = new LinkedHashSet<>(Arrays.asList("juri", "fra", "nick"));
         model = new GameState(players);
@@ -127,6 +113,6 @@ public class TotalSetupTest {
             }
             if (i == 0) break;
         }
-    }
+    }*/
 
 }

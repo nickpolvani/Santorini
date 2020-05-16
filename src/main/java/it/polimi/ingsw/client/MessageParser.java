@@ -1,8 +1,12 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.bean.options.GodOptions;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.god.GodDescription;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MessageParser {
 
@@ -24,7 +28,7 @@ public class MessageParser {
                 object = parseBoolean(message);
                 break;
             case CHOOSE_GOD:
-                object = parseGodDescription(message);
+                object = parseGodDescription(message, ((GodOptions) currentOption).getGodsListSize());
                 break;
             case PLACE_WORKERS:
                 object = parseDoubleIndex(message);
@@ -46,8 +50,14 @@ public class MessageParser {
         return index;
     }
 
-    private static GodDescription parseGodDescription(String message) {
-        return GodDescription.parse(message);
+
+    private static List<GodDescription> parseGodDescription(String message, int listSize) {
+        List<GodDescription> gods = new ArrayList<>();
+        String[] godsArray = message.replace(" ", "").split(",");
+        for (String s : godsArray) {
+            gods.add(GodDescription.parse(s));
+        }
+        return gods;
     }
 
     private static Boolean parseBoolean(String message) {
