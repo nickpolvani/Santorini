@@ -19,7 +19,6 @@ public class ChooseOptions extends Options {
 
     @Override
     public void execute(View view) {
-        view.setAfterChooseOption(true);
         if (view.getNickname().equals(this.nickname)) {
             view.showMessage(messageType + "\n" + alert);
         }

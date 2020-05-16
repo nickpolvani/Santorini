@@ -101,6 +101,19 @@ public class IslandBoard implements Cloneable, Serializable {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof IslandBoard)) return false;
+        for (int i = 0; i < N_ROWS; i++) {
+            for (int j = 0; j < N_COLS; j++) {
+                if (!(this.board[i][j].equals(((IslandBoard) obj).getTile(i, j)))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
     public String toString() {
         int tileRows = board[0][0].getN_ROWS();
         int tileCols = board[0][0].getN_COLS();
