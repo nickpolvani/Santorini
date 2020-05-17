@@ -47,6 +47,8 @@ public class TileOptions extends Options {
             }
             stringBuilder.append(alert);
             view.showMessage(stringBuilder.toString());
+        } else {
+            view.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
         }
     }
 

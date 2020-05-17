@@ -27,10 +27,6 @@ public class ActionFactory {
                 if (!(object instanceof List)) throw new IllegalArgumentException();
                 action = new SelectGodTurnAction((List<GodDescription>) object, nickname);
                 break;
-            case MESSAGE_NO_REPLY:
-                if (object != null) throw new IllegalArgumentException();
-                action = new NodGameAction(nickname);
-                break;
             case PLACE_WORKERS:
                 if (!(object instanceof Tile.IndexTile[])) throw new IllegalArgumentException();
                 action = new PlaceWorkerActions((Tile.IndexTile[]) object, nickname);

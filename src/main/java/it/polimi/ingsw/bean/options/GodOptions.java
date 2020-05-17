@@ -27,6 +27,8 @@ public class GodOptions extends Options {
     public void execute(View view) {
         if (view.getNickname().equals(this.nickname)) {
             view.showMessage(messageType + "\n" + godsList() + (godsToChoose.size() > 3 ? alertForChallenger : alert));
+        } else {
+            view.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
         }
     }
 

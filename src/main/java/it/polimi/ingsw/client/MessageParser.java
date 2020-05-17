@@ -33,9 +33,6 @@ public class MessageParser {
             case PLACE_WORKERS:
                 object = parseDoubleIndex(message);
                 break;
-            case MESSAGE_NO_REPLY:
-                object = null;
-                break;
             default:
                 throw new IllegalArgumentException();
         }
