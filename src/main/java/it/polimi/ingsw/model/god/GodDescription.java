@@ -12,7 +12,14 @@ public enum GodDescription {
     PAN("Pan", "You also win if your worker moves down two or more levels"),
     MINOTAUR("Minotaur", "Your Worker may  move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level."),
     PROMETHEUS("Prometheus", "If your Worker does not move up, it may build both before and after moving."),
-    HEPHAESTUS("Hephaestus", "Your Worker may build one additional block (not dome) on top of your first block.");
+    HEPHAESTUS("Hephaestus", "Your Worker may build one additional block (not dome) on top of your first block."),
+    //Advanced GOD
+    CHARON("Charon", "Before your Worker moves, you may force a neighboring opponent Worker to the space directly on the other side of your Worker, if that space is unoccupied."),
+    HESTIA("Hestia", ""),
+    MEDUSA("Medusa", ""),
+    POSEIDON("Poseidon", ""),
+    // perhaps Ares if poseidon is too difficult
+    ZEUS("Zeus", "");
 
     private final String name;
     private final String descriptionOfPower;
@@ -56,6 +63,8 @@ public enum GodDescription {
             return PROMETHEUS;
         } else if (godName.toUpperCase().equals(HEPHAESTUS.getName().toUpperCase())) {
             return HEPHAESTUS;
+        } else if (godName.toUpperCase().equals(CHARON.getName().toUpperCase())) {
+            return CHARON;
         } else {
             throw new IllegalArgumentException();
         }

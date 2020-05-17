@@ -44,7 +44,7 @@ public class Hephaestus extends God {
     /**
      * @return empty Operations'List both if player confirms to use Hephaestus' power, and he can perform his choice,
      * and if he rejects his chance;
-     * Operation.SEND_MESSAGE if player confirms to use Hephaestus' power but he can't perform his choice.
+     * Operation.MESSAGE_NO_REPLY if player confirms to use Hephaestus' power but he can't perform his choice.
      */
     @Override
     public Queue<Operation> getRemainingOperations() {

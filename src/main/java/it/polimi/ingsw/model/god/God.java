@@ -189,4 +189,5 @@ public abstract class God {
     public void applyChoice(boolean confirm) throws DomeAlreadyPresentException {
         this.confirmed = confirm;
     }
+
 }

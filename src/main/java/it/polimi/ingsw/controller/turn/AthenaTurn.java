@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.god.Athena;
+import it.polimi.ingsw.model.god.Charon;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.observer.Observer;
@@ -137,7 +138,11 @@ public class AthenaTurn extends BasicTurn {
                     return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, MessageType.SELECT_WORKER);
                 }
             case MESSAGE_NO_REPLY:
-                return new MessageOption(currentPlayer.getNickname(), currentGod.getChoiceNotAllowedMessage(), getCurrentOperation());
+                return new MessageOption(currentPlayer.getNickname(), currentGod.getChoiceNotAllowedMessage(), currentOperation);
+            case SELECT_OPPONENTS_WORKER:
+                if (!(currentGod instanceof Charon)) throw new IllegalArgumentException();
+                return new TileOptions(currentPlayer.getNickname(), ((Charon) currentGod).selectOpponentsWorker(), boardClone,
+                        currentOperation, MessageType.SELECT_OPPONENT_WORKER);
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }

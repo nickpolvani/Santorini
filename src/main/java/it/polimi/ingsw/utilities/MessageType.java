@@ -12,4 +12,5 @@ public class MessageType {
     public final static String CHOOSE_LOBBY_SIZE = "How many people do you want to play with?";
     public final static String NICKNAME_ALREADY_SET = "We are sorry but your nickname has been already chosen. Please insert another one.";
     public final static String NICKNAME_APPROVED = "Well done, your nickname is valid!";
+    public static final String SELECT_OPPONENT_WORKER = "Insert the tile of the worker";
 }

@@ -49,6 +49,9 @@ public class GodsFactory {
             case ATLAS:
                 g = new Atlas(gameState, player);
                 break;
+            case CHARON:
+                g = new Charon(gameState, player);
+                break;
             case DEMETER:
                 g = new Demeter(gameState, player);
                 break;

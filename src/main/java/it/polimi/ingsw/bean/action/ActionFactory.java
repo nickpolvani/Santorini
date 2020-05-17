@@ -39,6 +39,10 @@ public class ActionFactory {
                 if (!(object instanceof Tile.IndexTile)) throw new IllegalArgumentException();
                 action = new SelectWorkerGameAction((Tile.IndexTile) object, nickname);
                 break;
+            case SELECT_OPPONENTS_WORKER:
+                if (!(object instanceof Tile.IndexTile)) throw new IllegalArgumentException();
+                action = new SelectOpponentWorkerGameAction(nickname, (Tile.IndexTile) object);
+                break;
             case SELECT_NICKNAME:
                 action = new ChooseNicknameAction(nickname);
                 break;

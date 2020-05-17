@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.god.Charon;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
@@ -110,6 +111,9 @@ public class BasicTurn extends Observable<Options> implements Turn {
             switchTurn(); //this because after removing the looser whe have to notify the next player to play
         } else {
             notify(getOptions());
+            if (getCurrentOperation() == Operation.MESSAGE_NO_REPLY) {
+                endCurrentOperation();
+            }
         }
     }
 
@@ -141,8 +145,11 @@ public class BasicTurn extends Observable<Options> implements Turn {
                 }
                 return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, MessageType.SELECT_WORKER);
             case MESSAGE_NO_REPLY:
-                return new MessageOption(currentPlayer.getNickname(), currentGod.getChoiceNotAllowedMessage(), getCurrentOperation());
-
+                return new MessageOption(currentPlayer.getNickname(), currentGod.getChoiceNotAllowedMessage(), currentOperation);
+            case SELECT_OPPONENTS_WORKER:
+                if (!(currentGod instanceof Charon)) throw new IllegalArgumentException();
+                return new TileOptions(currentPlayer.getNickname(), ((Charon) currentGod).selectOpponentsWorker(), boardClone,
+                        currentOperation, MessageType.SELECT_OPPONENT_WORKER);
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }

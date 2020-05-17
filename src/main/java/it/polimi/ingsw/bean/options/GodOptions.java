@@ -21,20 +21,17 @@ public class GodOptions extends Options {
         alert = "Please insert one of the list.";
     }
 
-    public int getGodsListSize() {
-        return godsToChoose.size();
-    }
 
     @Override
     public void execute(View view) {
         if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(messageType + "\n" + godsList() + (godsToChoose.size() == 9 ? alertForChallenger : alert));
+            view.showMessage(messageType + "\n" + godsList() + (godsToChoose.size() > 3 ? alertForChallenger : alert));
         }
     }
 
     @Override
     public String isValid(String userInput) {
-        if (godsToChoose.size() == 9) {
+        if (godsToChoose.size() > 3) {
             String[] toCheck = userInput.replace(" ", "").toLowerCase().split(",");
             for (String s : toCheck) {
                 if (godsToChoose.stream().noneMatch(x -> x.getName().toLowerCase().equals(s))) {

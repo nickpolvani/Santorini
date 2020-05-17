@@ -4,6 +4,7 @@ public enum Operation {
     SELECT_NICKNAME,
     SELECT_LOBBY_SIZE,
     SELECT_WORKER,
+    SELECT_OPPONENTS_WORKER,
     MOVE,
     BUILD,
     CHOOSE,
