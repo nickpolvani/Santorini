@@ -148,7 +148,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
                 return new MessageOption(currentPlayer.getNickname(), currentGod.getChoiceNotAllowedMessage(), currentOperation);
             case SELECT_OPPONENTS_WORKER:
                 if (!(currentGod instanceof Charon)) throw new IllegalArgumentException();
-                return new TileOptions(currentPlayer.getNickname(), ((Charon) currentGod).selectOpponentsWorker(), boardClone,
+                return new TileOptions(currentPlayer.getNickname(), ((Charon) currentGod).opponentsWorkerTile(), boardClone,
                         currentOperation, MessageType.SELECT_OPPONENT_WORKER);
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());

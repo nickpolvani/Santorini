@@ -1,14 +1,11 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.model.GameState;
-
-public class TotalSetupTest {
+/*public class TotalSetupTest {
     GameState model;
     GameController controller;
     SetupTurn turn;
 
-   /* @Before
+    @Before
     public void setUp() {
         Set<String> players = new LinkedHashSet<>(Arrays.asList("juri", "fra", "nick"));
         model = new GameState(players);
@@ -113,6 +110,5 @@ public class TotalSetupTest {
             }
             if (i == 0) break;
         }
-    }*/
-
-}
+    }
+}*/

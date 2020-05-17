@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.god.GodDescription;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,7 +35,8 @@ public class GodOptions extends Options {
         if (godsToChoose.size() > 3) {
             String[] toCheck = userInput.replace(" ", "").toLowerCase().split(",");
             for (String s : toCheck) {
-                if (godsToChoose.stream().noneMatch(x -> x.getName().toLowerCase().equals(s))) {
+                if (godsToChoose.stream().noneMatch(x -> x.getName().toLowerCase().equals(s)) ||
+                        Arrays.stream(toCheck).filter(x -> x.toLowerCase().equals(s.toLowerCase())).count() > 1) {
                     return "Not valid input: " + alertForChallenger;
                 }
             }

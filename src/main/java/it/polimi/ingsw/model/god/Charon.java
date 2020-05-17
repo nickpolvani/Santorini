@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
  */
 public class Charon extends God {
 
-    private Tile.IndexTile opponentWorker;
 
     protected Charon(GameState gameState, Player player) {
         super(GodDescription.CHARON, player, gameState);
@@ -32,13 +31,11 @@ public class Charon extends God {
         Operation[] operationsArray;
         Collection<Tile.IndexTile> neighbouringTiles = board.indexOfNeighbouringTiles(worker.getIndexTile());
         if (confirmed) {
-            if (neighbouringTiles.stream().noneMatch(t -> board.getTile(t).getCurrentWorker() != null &&
-                    board.getTile(t).getCurrentWorker().getColor() != worker.getColor())) {
-                this.choiceNotAllowedMessage = "There's no neighbouring opponent Worker! Go on to the next Operation!";
+            if (opponentsWorkerTile().size() == 0) {
+                this.choiceNotAllowedMessage = "There's no neighbouring opponent Worker which can be moved! Go on to the next Operation!";
                 operationsArray = new Operation[]{Operation.MESSAGE_NO_REPLY, Operation.MOVE, Operation.BUILD};
             } else {
-                operationsArray = new Operation[]{Operation.SELECT_OPPONENTS_WORKER, Operation.MESSAGE_NO_REPLY,
-                        Operation.MOVE, Operation.BUILD};
+                operationsArray = new Operation[]{Operation.SELECT_OPPONENTS_WORKER, Operation.MOVE, Operation.BUILD};
             }
         } else {
             operationsArray = new Operation[]{Operation.MOVE, Operation.BUILD};
@@ -46,30 +43,25 @@ public class Charon extends God {
         return new LinkedList<>(Arrays.asList(operationsArray));
     }
 
-    public List<Tile.IndexTile> selectOpponentsWorker() {
+    public List<Tile.IndexTile> opponentsWorkerTile() {
         Collection<Tile.IndexTile> neighbouringTiles = board.indexOfNeighbouringTiles(worker.getIndexTile());
         return neighbouringTiles.stream()
                 .filter(t -> board.getTile(t).getCurrentWorker() != null &&
-                        board.getTile(t).getCurrentWorker().getColor() != worker.getColor())
+                        board.getTile(t).getCurrentWorker().getColor() != worker.getColor() &&
+                        findOppositeTile(t) != null)
                 .collect(Collectors.toList());
     }
 
     public void moveWorker(Tile.IndexTile opponentWorker) {
-        this.opponentWorker = opponentWorker;
-        Tile.IndexTile oppositeTile = checkOppositeTile();
-        if (oppositeTile == null) this.choiceNotAllowedMessage = "Sorry but you can't move the worker because the " +
-                "space directly on the other side of your worker is already occupied.\nGo on to the next Operation!";
-        else {
-            try {
-                board.changePosition(board.getCurrentWorker(opponentWorker), oppositeTile);
-                this.choiceNotAllowedMessage = "Done! Go on to the next Operation!";
-            } catch (AlreadyOccupiedException e) {
-                e.printStackTrace();
-            }
+        Tile.IndexTile oppositeTile = findOppositeTile(opponentWorker);
+        try {
+            board.changePosition(board.getCurrentWorker(opponentWorker), oppositeTile);
+        } catch (AlreadyOccupiedException e) {
+            e.printStackTrace();
         }
     }
 
-    private Tile.IndexTile checkOppositeTile() {
+    private Tile.IndexTile findOppositeTile(Tile.IndexTile opponentWorker) {
         int oppositeRow, oppositeCol;
         oppositeRow = (2 * worker.getIndexTile().getRow()) - opponentWorker.getRow();
         oppositeCol = (2 * worker.getIndexTile().getCol()) - opponentWorker.getCol();
@@ -79,9 +71,4 @@ public class Charon extends God {
             return (!board.getTile(oppositeRow, oppositeCol).isOccupied() ? new Tile.IndexTile(oppositeRow, oppositeCol) : null);
     }
 
-    @Override
-    public void resetGodState() {
-        super.resetGodState();
-        opponentWorker = null;
-    }
 }
