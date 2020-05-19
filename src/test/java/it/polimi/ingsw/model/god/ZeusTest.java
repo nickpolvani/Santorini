@@ -18,7 +18,8 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ZeusTest {
     GameState gameState;
@@ -74,22 +75,14 @@ public class ZeusTest {
         assertEquals(zeus.getRemainingOperations(), new LinkedList<>(Collections.singletonList(Operation.BUILD)));
     }
 
-    @Test
-    public void isChooseAvailable() throws Exception {
-        assertTrue(zeus.isChooseAvailable());
-        gameState.getIslandBoard().addBlock(zeus.worker.getIndexTile());
-        gameState.getIslandBoard().addBlock(zeus.worker.getIndexTile());
-        gameState.getIslandBoard().addBlock(zeus.worker.getIndexTile());
-        assertFalse(zeus.isChooseAvailable());
-
-    }
-
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void applyChoice() throws Exception {
         assertEquals(gameState.getIslandBoard().getBuildingLevel(zeus.worker.getIndexTile()), BlockLevel.GROUND.getLevelInt());
+        assertTrue(zeus.isChooseAvailable());
         zeus.applyChoice(true);
         assertEquals(gameState.getIslandBoard().getBuildingLevel(zeus.worker.getIndexTile()), BlockLevel.ONE.getLevelInt());
-
-
+        gameState.getIslandBoard().addBlock(zeus.worker.getIndexTile());
+        gameState.getIslandBoard().addBlock(zeus.worker.getIndexTile());
+        zeus.applyChoice(true);
     }
 }

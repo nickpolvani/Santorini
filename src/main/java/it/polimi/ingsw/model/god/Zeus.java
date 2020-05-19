@@ -38,13 +38,14 @@ public class Zeus extends God {
 
     @Override
     public boolean isChooseAvailable() {
-        return board.getTile(worker.getIndexTile()).getBuildingLevel() < 3;
+        return board.getBuildingLevel(worker.getIndexTile()) < 3;
     }
 
     @Override
     public void applyChoice(boolean confirm) throws DomeAlreadyPresentException {
         if (confirm) {
             this.confirmed = true;
+            if (board.getBuildingLevel(worker.getIndexTile()) == 3) throw new IllegalStateException();
             try {
                 board.getTile(worker.getIndexTile()).setCurrentWorker(null);
                 board.addBlock(worker.getIndexTile());
