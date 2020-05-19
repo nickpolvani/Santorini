@@ -41,7 +41,7 @@ public class AthenaTest {
         indexes[0] = new Tile.IndexTile(0, 1);
         indexes[1] = new Tile.IndexTile(1, 2);
         testPlayer.setWorkers(indexes);
-        testPlayer.getGod().selectWorker(testPlayer.getWorkers()[0]);
+        testPlayer.getGod().selectWorker(testPlayer.getWorkers().get(0));
     }
 
     @After

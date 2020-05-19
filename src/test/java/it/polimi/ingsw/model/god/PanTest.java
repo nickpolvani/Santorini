@@ -47,7 +47,7 @@ public class PanTest {
 
         gameController.setTurn(new SetupWorkersTurn(gameController, testPlayer, new ArrayList<>()));
         gameController.setTurn(new BasicTurn(gameController, testPlayer, new ArrayList<>()));
-        testPlayer.getGod().selectWorker(testPlayer.getWorkers()[0]);
+        testPlayer.getGod().selectWorker(testPlayer.getWorkers().get(0));
 
     }
 
@@ -69,7 +69,7 @@ public class PanTest {
             System.out.println(e.getMessage());
         }
 
-        assertEquals(testPlayer.getWorkers()[0].getIndexTile(), newIndex);
+        assertEquals(testPlayer.getWorkers().get(0).getIndexTile(), newIndex);
 
         newIndex = gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 2)).getIndex();
 

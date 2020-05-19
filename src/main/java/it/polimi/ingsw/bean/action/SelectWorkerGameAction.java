@@ -3,7 +3,6 @@ package it.polimi.ingsw.bean.action;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.Worker;
 
 public class SelectWorkerGameAction extends IndexTileGameAction {
 
@@ -13,8 +12,7 @@ public class SelectWorkerGameAction extends IndexTileGameAction {
 
     @Override
     void setPlayer(Player player) {
-        Worker[] workers = player.getWorkers();
-        if (!(indexTile.equals(workers[0].getIndexTile()) || indexTile.equals(workers[1].getIndexTile()))) {
+        if (player.getWorkers().stream().noneMatch(w -> w.getIndexTile().equals(indexTile))) {
             throw new IllegalArgumentException();
         }
         this.player = player;

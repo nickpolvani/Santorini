@@ -41,7 +41,7 @@ public class Apollo extends God {
                     board.getBuildingLevel(otherTile) - positionTile.getBuildingLevel() < 2) {
                 otherWorker = board.getCurrentWorker(otherTile);
                 if (otherWorker != null) {
-                    if (!Arrays.asList(player.getWorkers()).contains(otherWorker)) {
+                    if (!player.getWorkers().contains(otherWorker)) {
                         tileToMove.add(otherTile);
                     }
                 } else {

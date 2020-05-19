@@ -78,7 +78,7 @@ public class AtlasTest {
 
     @Test
     public void build() throws DomeAlreadyPresentException {
-        atlas.selectWorker(player1.getWorkers()[1]);
+        atlas.selectWorker(player1.getWorkers().get(1));
         atlas.applyChoice(true);
         atlas.build(new Tile.IndexTile(1, 2));
         assertTrue(gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 2)).getBuilding().getDome());

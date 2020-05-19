@@ -43,7 +43,7 @@ public class MinotaurTest {
         indexes[0] = new Tile.IndexTile(0, 1);
         indexes[1] = new Tile.IndexTile(1, 2);
         testPlayer.setWorkers(indexes);
-        testPlayer.getGod().selectWorker(testPlayer.getWorkers()[0]);
+        testPlayer.getGod().selectWorker(testPlayer.getWorkers().get(0));
 
         indexes[0] = new Tile.IndexTile(1, 1);
         indexes[1] = new Tile.IndexTile(3, 2);
@@ -113,7 +113,7 @@ public class MinotaurTest {
 
         assertTrue(minotaur.checkBackwardsTile(new Tile.IndexTile(0, 1), new Tile.IndexTile(1, 1)));
 
-        minotaur.selectWorker(testPlayer.getWorkers()[1]);
+        minotaur.selectWorker(testPlayer.getWorkers().get(1));
         minotaur.move(new Tile.IndexTile(1, 3));
         assertEquals(minotaur.worker.getIndexTile(), new Tile.IndexTile(1, 3));
 

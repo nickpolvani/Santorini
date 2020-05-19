@@ -146,8 +146,7 @@ public class AthenaTurn extends BasicTurn {
                         "\nDo you want to use your god's power? (Yes/No)");
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
-                Worker[] workers = currentPlayer.getWorkers();
-                for (Worker w : workers) {
+                for (Worker w : currentPlayer.getWorkers()) {
                     //with this check game does not pass as option a worker who can't move
                     if (athenaTileToMove(w).size() > 0) indexTiles.add(w.getIndexTile());
                 }

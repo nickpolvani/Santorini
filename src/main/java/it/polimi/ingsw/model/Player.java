@@ -6,7 +6,9 @@ import it.polimi.ingsw.model.god.God;
 import org.apache.log4j.Logger;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -25,7 +27,7 @@ public class Player implements Serializable {
     /**
      * The reference to the player's workers
      */
-    private Worker[] workers;
+    private List<Worker> workers;
     /**
      * it's provides the reference of the god selected by the player, who will use it for all the game
      */
@@ -59,7 +61,7 @@ public class Player implements Serializable {
     /**
      * @return this.worker
      */
-    public Worker[] getWorkers() {
+    public List<Worker> getWorkers() {
         return this.workers;
     }
 
@@ -68,11 +70,11 @@ public class Player implements Serializable {
      */
     public void setWorkers(Tile.IndexTile[] indexes) throws AlreadySetException {
         if (this.workers != null) throw new AlreadySetException("Team already set");
-        this.workers = new Worker[2];
-        for (int i = 0; i < workers.length; i++) {
-            workers[i] = new Worker(indexes[i], this.color);
+        this.workers = new ArrayList<>();
+        this.workers.addAll(Arrays.asList(new Worker(indexes[0], this.color), new Worker(indexes[1], this.color)));
+        for (int i = 0; i < workers.size(); i++) {
             try {
-                gameState.getIslandBoard().getTile(indexes[i]).setCurrentWorker(workers[i]);
+                gameState.getIslandBoard().getTile(indexes[i]).setCurrentWorker(workers.get(i));
             } catch (AlreadyOccupiedException e) {
                 e.printStackTrace();
             }
@@ -118,14 +120,7 @@ public class Player implements Serializable {
                 looser == player.looser &&
                 Objects.equals(nickname, player.nickname) &&
                 color == player.color &&
-                Arrays.equals(workers, player.workers) &&
+                workers.equals(player.workers) &&
                 Objects.equals(god.getGodDescription(), player.god.getGodDescription());
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(nickname, gameState, color, god, winner, looser);
-        result = 31 * result + Arrays.hashCode(workers);
-        return result;
     }
 }

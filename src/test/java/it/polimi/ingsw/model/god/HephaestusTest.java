@@ -78,7 +78,7 @@ public class HephaestusTest {
 
     @Test
     public void isChooseAvailableTest() {
-        hephaestus.selectWorker(player1.getWorkers()[1]);
+        hephaestus.selectWorker(player1.getWorkers().get(1));
         try {
             Tile.IndexTile index = new Tile.IndexTile(1, 2);
             hephaestus.build(index);

@@ -46,7 +46,7 @@ public class Minotaur extends God {
 
                 otherWorker = board.getTile(otherTile).getCurrentWorker();
                 if (otherWorker != null) {
-                    if (checkBackwardsTile(indexTile, otherTile) && !Arrays.asList(player.getWorkers()).contains(otherWorker)) {
+                    if (checkBackwardsTile(indexTile, otherTile) && !player.getWorkers().contains(otherWorker)) {
                         tileToMove.add(otherTile);
                     }
                 } else {

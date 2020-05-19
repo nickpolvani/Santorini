@@ -89,9 +89,9 @@ public class PrometheusTest {
 
     @Test
     public void tileToMove() {
-        prometheus.selectWorker(player1.getWorkers()[0]);
+        prometheus.selectWorker(player1.getWorkers().get(0));
         assertTrue(prometheus.tileToMove(prometheus.getWorker().getIndexTile()).size() == 0);
-        prometheus.selectWorker(player1.getWorkers()[1]);
+        prometheus.selectWorker(player1.getWorkers().get(1));
         Collection<Tile.IndexTile> tiles = prometheus.tileToMove(prometheus.getWorker().getIndexTile());
         assertTrue(tiles.size() == 4 && tiles.contains(new Tile.IndexTile(1, 2))
                 && tiles.contains(new Tile.IndexTile(0, 2)) && tiles.contains(new Tile.IndexTile(2, 2))
@@ -117,10 +117,10 @@ public class PrometheusTest {
 
     @Test
     public void move() {
-        prometheus.selectWorker(player1.getWorkers()[1]);
+        prometheus.selectWorker(player1.getWorkers().get(1));
         try {
             prometheus.move(new Tile.IndexTile(1, 2));
-            assertEquals(player1.getWorkers()[1].getIndexTile(), new Tile.IndexTile(1, 2));
+            assertEquals(player1.getWorkers().get(1).getIndexTile(), new Tile.IndexTile(1, 2));
         } catch (AlreadyOccupiedException e) {
             e.printStackTrace();
         }

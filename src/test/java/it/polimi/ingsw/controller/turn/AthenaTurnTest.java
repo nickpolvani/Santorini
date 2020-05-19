@@ -109,7 +109,7 @@ public class AthenaTurnTest {
     @Test
     public void athenaTileToMoveTest() throws Exception {
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().addBlock();
-        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers()[0].getIndexTile());
+        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers().get(0).getIndexTile());
 
         //move of the worker of the player with athena
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(0, 1));
@@ -119,13 +119,13 @@ public class AthenaTurnTest {
         a tile with lower level*/
         gameState.getIslandBoard().getTile(2, 2).setCurrentWorker(null);
         gameState.getIslandBoard().getTile(2, 2).getBuilding().addBlock();
-        gameState.getIslandBoard().getTile(2, 2).setCurrentWorker(player2.getWorkers()[0]);
+        gameState.getIslandBoard().getTile(2, 2).setCurrentWorker(player2.getWorkers().get(0));
         Tile.IndexTile tile1 = new Tile.IndexTile(1, 2);
         Tile.IndexTile tile2 = new Tile.IndexTile(1, 3);
         gameState.getIslandBoard().getTile(tile1).getBuilding().addBlock();
         gameState.getIslandBoard().getTile(tile1).getBuilding().addBlock();
         gameState.getIslandBoard().getTile(tile2).getBuilding().addBlock();
-        Collection<Tile.IndexTile> foundTiles = athenaTurn.athenaTileToMove(player2.getWorkers()[0]);
+        Collection<Tile.IndexTile> foundTiles = athenaTurn.athenaTileToMove(player2.getWorkers().get(0));
         assertTrue(!foundTiles.contains(tile1) && foundTiles.contains(tile2));
     }
 
@@ -136,7 +136,7 @@ public class AthenaTurnTest {
         athenaTurn.switchTurn(); //We want to play with Artemis to check some behaviors of AthenaTurn
         assertEquals(athenaTurn.currentPlayer, player2);
 
-        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorkers()[0].getIndexTile());
+        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorkers().get(0).getIndexTile());
         athenaTurn.endCurrentOperation();
         assertEquals(athenaTurn.getCurrentOperation(), Operation.MOVE);
         athenaTurn.endCurrentOperation();
@@ -151,13 +151,13 @@ public class AthenaTurnTest {
         assertEquals(athenaTurn.currentPlayer, player1);
         assertTrue(((Athena) player1.getGod()).getCanMoveUp());
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 1)).getBuilding().addBlock();
-        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers()[0].getIndexTile());
+        athenaTurn.getCurrentPlayer().getGod().selectWorker(athenaTurn.getCurrentPlayer().getWorkers().get(0).getIndexTile());
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(0, 1));
 
         athenaTurn.switchTurn();
         assertEquals(athenaTurn.currentPlayer, player2);
 
-        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorkers()[0].getIndexTile());
+        athenaTurn.currentPlayer.getGod().selectWorker(athenaTurn.currentPlayer.getWorkers().get(0).getIndexTile());
         athenaTurn.endCurrentOperation();
         assertEquals(athenaTurn.getCurrentOperation(), Operation.MOVE);
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(3, 2));
@@ -187,7 +187,7 @@ public class AthenaTurnTest {
         assertEquals(athenaTurn.currentPlayer, player1);
         assertEquals(athenaTurn.getCurrentOperation(), Operation.SELECT_WORKER);
 
-        Tile.IndexTile[] indexTiles = new Tile.IndexTile[]{player1.getWorkers()[0].getIndexTile(), player1.getWorkers()[1].getIndexTile()};
+        Tile.IndexTile[] indexTiles = new Tile.IndexTile[]{player1.getWorkers().get(0).getIndexTile(), player1.getWorkers().get(1).getIndexTile()};
         Options generatedOption = athenaTurn.getOptions();
         assertEquals(generatedOption.getNickname(), player1.getNickname());
         assertTrue(((TileOptions) generatedOption).getTilesToChoose().contains(indexTiles[0]) &&

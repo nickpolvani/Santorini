@@ -48,7 +48,7 @@ public class ZeusTest {
         Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
         try {
             player1.setWorkers(workerPositions1);
-            zeus.selectWorker(player1.getWorkers()[0]);
+            zeus.selectWorker(player1.getWorkers().get(0));
         } catch (AlreadySetException e) {
             System.out.println(e.getMessage());
         }

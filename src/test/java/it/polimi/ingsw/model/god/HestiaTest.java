@@ -38,7 +38,6 @@ public class HestiaTest {
         GodsFactory godsFactory = gameState.getGodsFactory();
         player1 = gameState.getPlayers().get(0);
         player1.setGod(godsFactory.getGod(GodDescription.HESTIA, player1));
-        ;
         hestia = player1.getGod();
 
         // Setup Worker
@@ -64,9 +63,9 @@ public class HestiaTest {
 
     @Test
     public void isChooseAvailableTest() {
-        hestia.selectWorker(player1.getWorkers()[0]);
+        hestia.selectWorker(player1.getWorkers().get(0));
         assertFalse(hestia.isChooseAvailable());
-        hestia.selectWorker(player1.getWorkers()[1]);
+        hestia.selectWorker(player1.getWorkers().get(1));
         assertTrue(hestia.isChooseAvailable());
     }
 }

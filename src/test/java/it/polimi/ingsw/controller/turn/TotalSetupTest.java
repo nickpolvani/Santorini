@@ -112,9 +112,9 @@ public class TotalSetupTest {
             assertEquals(model.getPlayers().get(i), turn.getCurrentPlayer());
             controller.update(new PlaceWorkerActions(new Tile.IndexTile[]{position1, position2},
                     turn.getCurrentPlayer().getNickname()));
-            assertEquals(model.getPlayers().get(i).getWorkers()[0],
+            assertEquals(model.getPlayers().get(i).getWorkers().get(0),
                     model.getIslandBoard().getTile(position1).getCurrentWorker());
-            assertEquals(model.getPlayers().get(i).getWorkers()[1],
+            assertEquals(model.getPlayers().get(i).getWorkers().get(1),
                     model.getIslandBoard().getTile(position2).getCurrentWorker());
             if (i == 1) {
                 position1 = new Tile.IndexTile(1, 2);

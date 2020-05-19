@@ -7,8 +7,8 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Queue;
 
 
@@ -45,13 +45,13 @@ public abstract class God {
      */
     public final void selectWorker(Tile.IndexTile workerPosition) {
         this.worker = board.getCurrentWorker(workerPosition);
-        if (worker == null || !Arrays.asList(player.getWorkers()).contains(worker)) {
+        if (worker == null || !player.getWorkers().contains(worker)) {
             throw new IllegalArgumentException();
         }
     }
 
     public final void selectWorker(Worker worker) {
-        if (worker == null || !Arrays.asList(player.getWorkers()).contains(worker)) {
+        if (worker == null || !player.getWorkers().contains(worker)) {
             throw new IllegalArgumentException();
         }
         this.worker = worker;
@@ -135,9 +135,8 @@ public abstract class God {
      * it checks if both the workers of the current player cannot move, so the player is declared looser
      */
     public boolean cannotMove() {
-        Worker[] workers = player.getWorkers();
-        return tileToMove(workers[0].getIndexTile()).size() == 0 &&
-                tileToMove(workers[1].getIndexTile()).size() == 0;
+        List<Worker> workers = player.getWorkers();
+        return workers.stream().allMatch(w -> tileToMove(w.getIndexTile()).size() == 0);
     }
 
     public boolean cannotBuild() throws NullPointerException {

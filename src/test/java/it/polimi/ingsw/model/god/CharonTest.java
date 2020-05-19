@@ -42,7 +42,7 @@ public class CharonTest {
         indexes[0] = new Tile.IndexTile(0, 1);
         indexes[1] = new Tile.IndexTile(1, 2);
         testPlayer.setWorkers(indexes);
-        testPlayer.getGod().selectWorker(testPlayer.getWorkers()[0]);
+        testPlayer.getGod().selectWorker(testPlayer.getWorkers().get(0));
 
         indexes[0] = new Tile.IndexTile(1, 1);
         indexes[1] = new Tile.IndexTile(3, 2);
@@ -74,7 +74,7 @@ public class CharonTest {
         assertFalse(charon.isChooseAvailable());
 
         charon.applyChoice(true);
-        charon.selectWorker(testPlayer.getWorkers()[1]); //worker in 1,2
+        charon.selectWorker(testPlayer.getWorkers().get(1)); //worker in 1,2
         assertTrue(charon.isChooseAvailable());
 
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 2)).getBuilding().buildDome();
@@ -87,7 +87,7 @@ public class CharonTest {
         expected.add(new Tile.IndexTile(1, 1));
         assertEquals(0, charon.opponentsWorkerTile().size());
 
-        charon.selectWorker(testPlayer.getWorkers()[1]);
+        charon.selectWorker(testPlayer.getWorkers().get(1));
         gameState.getIslandBoard().changePosition(charon.getWorker(), new Tile.IndexTile(2, 2));
         expected.add(new Tile.IndexTile(3, 2));
         assertEquals(charon.opponentsWorkerTile(), expected);
@@ -97,14 +97,14 @@ public class CharonTest {
     public void moveWorker() throws Exception {
 
 
-        Worker toMove = gameState.getPlayers().get(1).getWorkers()[0];//worker on tile 0,1
-        testPlayer.getGod().selectWorker(testPlayer.getWorkers()[1]);
+        Worker toMove = gameState.getPlayers().get(1).getWorkers().get(0);//worker on tile 0,1
+        testPlayer.getGod().selectWorker(testPlayer.getWorkers().get(1));
         charon.moveWorker(toMove.getIndexTile());
         assertEquals(gameState.getIslandBoard().getCurrentWorker(1, 3), toMove);
 
-        gameState.getIslandBoard().changePosition(testPlayer.getWorkers()[0], new Tile.IndexTile(2, 2));
-        charon.selectWorker(testPlayer.getWorkers()[0]);
-        toMove = gameState.getPlayers().get(1).getWorkers()[0]; //the worker that now is in 1,3
+        gameState.getIslandBoard().changePosition(testPlayer.getWorkers().get(0), new Tile.IndexTile(2, 2));
+        charon.selectWorker(testPlayer.getWorkers().get(0));
+        toMove = gameState.getPlayers().get(1).getWorkers().get(0); //the worker that now is in 1,3
         charon.moveWorker(toMove.getIndexTile());
         assertEquals(toMove, gameState.getIslandBoard().getCurrentWorker(3, 1));
     }

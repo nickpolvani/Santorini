@@ -75,7 +75,6 @@ public class IslandBoard implements Cloneable, Serializable {
         return indexTiles;
     }
 
-
     /**
      * @param worker
      * @param indexNewPosition
