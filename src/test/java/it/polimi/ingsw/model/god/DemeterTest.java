@@ -1,14 +1,19 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadySetException;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.LinkedHashSet;
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DemeterTest {
 
@@ -62,23 +67,26 @@ public class DemeterTest {
     }
 
     @Test
-    public void tileToBuild() {
-
+    public void tileToBuild() throws DomeAlreadyPresentException {
+        demeter.selectWorker(gameState.getIslandBoard().getCurrentWorker(1, 1));
+        Collection<Tile.IndexTile> indexTileCollection = demeter.tileToBuild(new Tile.IndexTile(1, 1));
+        assertTrue(indexTileCollection.size() == 4
+                && indexTileCollection.contains(new Tile.IndexTile(0, 2))
+                && indexTileCollection.contains(new Tile.IndexTile(1, 2))
+                && indexTileCollection.contains(new Tile.IndexTile(2, 2))
+                && indexTileCollection.contains(new Tile.IndexTile(2, 0)));
+        demeter.build(new Tile.IndexTile(0, 2));
+        indexTileCollection = demeter.tileToBuild(new Tile.IndexTile(1, 1));
+        assertTrue(indexTileCollection.size() == 3
+                && indexTileCollection.contains(new Tile.IndexTile(1, 2))
+                && indexTileCollection.contains(new Tile.IndexTile(2, 2))
+                && indexTileCollection.contains(new Tile.IndexTile(2, 0)));
     }
 
-    @Test
-    public void build() {
-    }
 
     @Test
     public void getTurnOperations() {
-    }
-
-    @Test
-    public void getRemainingOperations() {
-    }
-
-    @Test
-    public void resetGodState() {
+        Queue<Operation> queue = new LinkedList<>(Arrays.asList(Operation.SELECT_WORKER, Operation.MOVE, Operation.BUILD, Operation.CHOOSE));
+        assertEquals(queue, demeter.getTurnOperations());
     }
 }

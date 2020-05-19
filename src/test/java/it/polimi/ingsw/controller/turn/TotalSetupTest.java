@@ -1,6 +1,23 @@
 package it.polimi.ingsw.controller.turn;
 
-/*public class TotalSetupTest {
+import it.polimi.ingsw.bean.action.PlaceWorkerActions;
+import it.polimi.ingsw.bean.action.SelectGodTurnAction;
+import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.model.GameState;
+import it.polimi.ingsw.model.Tile;
+import it.polimi.ingsw.model.god.GodDescription;
+import it.polimi.ingsw.observer.Observer;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class TotalSetupTest {
     GameState model;
     GameController controller;
     SetupTurn turn;
@@ -18,26 +35,27 @@ package it.polimi.ingsw.controller.turn;
     @Test
     public void flowSetupWithoutAthena() {
 
-        GodDescription godChosen = GodDescription.APOLLO;
-        for (int i = 0; i < model.getPlayers().size(); i++) {
-            assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
-            assertEquals(model.getPlayers().get(0), turn.getCurrentPlayer());
-            controller.update(new SelectGodTurnAction(godChosen, turn.getCurrentPlayer().getNickname()));
-            if (i == 0) {
-                godChosen = GodDescription.ARTEMIS;
-            } else if (i == 1) {
-                godChosen = GodDescription.MINOTAUR;
-            }
-        }
+        List<GodDescription> godChosen = new ArrayList<>();
+        godChosen.add(GodDescription.APOLLO);
+        godChosen.add(GodDescription.ARTEMIS);
+        godChosen.add(GodDescription.MINOTAUR);
 
-        godChosen = GodDescription.APOLLO;
+        assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
+        assertEquals(model.getPlayers().get(0), turn.getCurrentPlayer());
+
+        controller.update(new SelectGodTurnAction(godChosen, turn.getCurrentPlayer().getNickname()));
+
+
+        godChosen.clear();
+        godChosen.add(GodDescription.APOLLO);
 
         for (int i = 1; i < model.getPlayers().size(); i++) {
             assertEquals(model.getPlayers().get(i), turn.getCurrentPlayer());
             controller.update(new SelectGodTurnAction(godChosen, turn.getCurrentPlayer().getNickname()));
-            assertEquals(godChosen, model.getPlayers().get(i).getGod().getGodDescription());
+            assertEquals(godChosen.get(0), model.getPlayers().get(i).getGod().getGodDescription());
             if (i == 1) {
-                godChosen = GodDescription.ARTEMIS;
+                godChosen.clear();
+                godChosen.add(GodDescription.ARTEMIS);
             }
         }
         if (model.getPlayers().size() == 3) {
@@ -55,33 +73,30 @@ package it.polimi.ingsw.controller.turn;
     @Test
     public void flowSetupWithAthena() {
 
-        GodDescription godChosen = GodDescription.ATHENA;
-        for (int i = 0; i < model.getPlayers().size(); i++) {
-            assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
-            assertEquals(model.getPlayers().get(0), turn.getCurrentPlayer());
-            controller.update(new SelectGodTurnAction(godChosen, turn.getCurrentPlayer().getNickname()));
-            if (i == 0) {
-                godChosen = GodDescription.ARTEMIS;
-            } else if (i == 1) {
-                godChosen = GodDescription.MINOTAUR;
-            }
-        }
+        List<GodDescription> godChosen = new ArrayList<>();
+        godChosen.add(GodDescription.ATHENA);
+        godChosen.add(GodDescription.ARTEMIS);
+        godChosen.add(GodDescription.MINOTAUR);
+        assertEquals(Operation.CHOOSE_GOD, turn.getCurrentOperation());
+        assertEquals(model.getPlayers().get(0), turn.getCurrentPlayer());
+        controller.update(new SelectGodTurnAction(godChosen, turn.getCurrentPlayer().getNickname()));
 
-        godChosen = GodDescription.ATHENA;
+
+        godChosen.clear();
+        godChosen.add(GodDescription.ATHENA);
 
         for (int i = 1; i < model.getPlayers().size(); i++) {
             assertEquals(model.getPlayers().get(i), turn.getCurrentPlayer());
             controller.update(new SelectGodTurnAction(godChosen, turn.getCurrentPlayer().getNickname()));
-            assertEquals(godChosen, model.getPlayers().get(i).getGod().getGodDescription());
+            assertEquals(godChosen.get(0), model.getPlayers().get(i).getGod().getGodDescription());
             if (i == 1) {
-                godChosen = GodDescription.ARTEMIS;
+                godChosen.clear();
+                godChosen.add(GodDescription.ARTEMIS);
             }
         }
-        if (model.getPlayers().size() == 3) {
-            assertEquals(GodDescription.MINOTAUR, model.getPlayers().get(0).getGod().getGodDescription());
-        } else {
-            assertEquals(GodDescription.ARTEMIS, model.getPlayers().get(0).getGod().getGodDescription());
-        }
+        assertEquals(GodDescription.MINOTAUR, model.getPlayers().get(0).getGod().getGodDescription());
+
+
         assertTrue(controller.getTurn() instanceof SetupWorkersTurn);
         turn = (SetupTurn) controller.getTurn();
 
@@ -111,4 +126,4 @@ package it.polimi.ingsw.controller.turn;
             if (i == 0) break;
         }
     }
-}*/
+}
