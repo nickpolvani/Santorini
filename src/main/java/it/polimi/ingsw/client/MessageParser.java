@@ -13,7 +13,7 @@ public class MessageParser {
         Object object;
         switch (currentOption.getCurrentOperation()) {
             case SELECT_NICKNAME:
-                object = message;
+                object = null;
                 break;
             case SELECT_LOBBY_SIZE:
                 object = Integer.parseInt(message);

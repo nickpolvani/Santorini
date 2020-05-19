@@ -68,9 +68,6 @@ public class Controller implements Observer<String> {
         String errorString = currentOption.isValid(message);
         if (errorString == null) {
             Object m = MessageParser.parseMessage(currentOption, message);
-            if (m == null) {
-                throw new IllegalStateException();
-            }
             Action action;
             if (nickname == null) {
                 //used when the user has to choose a nickname

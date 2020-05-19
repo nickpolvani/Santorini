@@ -112,6 +112,7 @@ public class CLI extends View {
 
     public void close() {
         active = false;
+
     }
 }
 
