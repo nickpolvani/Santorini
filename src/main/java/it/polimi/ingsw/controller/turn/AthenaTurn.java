@@ -17,7 +17,9 @@ import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.utilities.MessageType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -73,9 +75,7 @@ public class AthenaTurn extends BasicTurn {
         } else {
             return godTile;
         }
-
     }
-
 
     /**
      * Since Athena could limit Artemis'power, we decide to let AthenaTurn handle
@@ -87,21 +87,40 @@ public class AthenaTurn extends BasicTurn {
         if (getCurrentPlayer().isWinner()) {
             handleWinnerNotification();
         }
-
         if (getCurrentOperation().equals(Operation.CHOOSE)) {
-
-            if (currentPlayer.getGod().getGodDescription() == GodDescription.ARTEMIS
-                    && currentPlayer.getGod().isConfirmed()
-                    && athenaTileToMove(currentPlayer.getGod().getWorker()).size() == 0) {
-                turnOperations = new LinkedList<>(Arrays.asList(Operation.MESSAGE_NO_REPLY, Operation.BUILD));
-            } else {
-                this.turnOperations = getCurrentPlayer().getGod().getRemainingOperations();
-            }
-
+            this.turnOperations = getCurrentPlayer().getGod().getRemainingOperations();
         } else {
             turnOperations.poll();
         }
         handleRemainingOperations();
+    }
+
+    @Override
+    protected void handleRemainingOperations() {
+        if (turnOperations.isEmpty()) {
+            switchTurn();
+        } else if (getCurrentOperation() == Operation.BUILD && currentPlayer.getGod().cannotBuild()) {
+            handleLooserNotification();
+            switchTurn(); //this because after removing the looser whe have to notify the next player to play
+        } else {
+            if (getCurrentOperation() == Operation.CHOOSE) {
+                if (currentPlayer.getGod().getGodDescription() == GodDescription.ARTEMIS) {
+                    if (athenaTileToMove(currentPlayer.getGod().getWorker()).size() == 0) {
+                        notify(new MessageOption(currentPlayer.getNickname(), MessageType.GODS_POWER_NOT_AVAILABLE, Operation.MESSAGE_NO_REPLY));
+                        endCurrentOperation();
+                    } else {
+                        notify(getOptions());
+                    }
+                } else if (!currentPlayer.getGod().isChooseAvailable()) {
+                    notify(new MessageOption(currentPlayer.getNickname(), MessageType.GODS_POWER_NOT_AVAILABLE, Operation.MESSAGE_NO_REPLY));
+                    endCurrentOperation();
+                } else {
+                    notify(getOptions());
+                }
+            } else {
+                notify(getOptions());
+            }
+        }
     }
 
     /**
@@ -137,8 +156,6 @@ public class AthenaTurn extends BasicTurn {
                 } else {
                     return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, MessageType.SELECT_WORKER);
                 }
-            case MESSAGE_NO_REPLY:
-                return new MessageOption(currentPlayer.getNickname(), currentGod.getChoiceNotAllowedMessage(), currentOperation);
             case SELECT_OPPONENTS_WORKER:
                 if (!(currentGod instanceof Charon)) throw new IllegalArgumentException();
                 return new TileOptions(currentPlayer.getNickname(), ((Charon) currentGod).opponentsWorkerTile(), boardClone,

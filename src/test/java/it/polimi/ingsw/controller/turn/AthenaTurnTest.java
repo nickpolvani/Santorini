@@ -99,8 +99,10 @@ public class AthenaTurnTest {
         gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 3)).getBuilding().buildDome();
         gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 4)).getBuilding().buildDome();
 
-        athenaTurn.switchTurn(); //this row launch a nullPointerException because when the turn notifies the controller that a player lost, the controller tries to close the lobby but the lobby's reference is null
-        //TODO after implementing controller, we have to implement also assertEquals(gameController.hasLost)
+        athenaTurn.switchTurn();
+        //this row launch a nullPointerException because when the turn notifies the controller that a player lost,
+        // the controller tries to close the lobby but the lobby's reference is null
+
     }
 
 
@@ -113,13 +115,18 @@ public class AthenaTurnTest {
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(0, 1));
         assertFalse(((Athena) player1.getGod()).getCanMoveUp());
 
+        /*checking when in the tile neighbouring the current worker there are both a tile with higher level
+        a tile with lower level*/
+        gameState.getIslandBoard().getTile(2, 2).setCurrentWorker(null);
+        gameState.getIslandBoard().getTile(2, 2).getBuilding().addBlock();
+        gameState.getIslandBoard().getTile(2, 2).setCurrentWorker(player2.getWorkers()[0]);
         Tile.IndexTile tile1 = new Tile.IndexTile(1, 2);
         Tile.IndexTile tile2 = new Tile.IndexTile(1, 3);
         gameState.getIslandBoard().getTile(tile1).getBuilding().addBlock();
+        gameState.getIslandBoard().getTile(tile1).getBuilding().addBlock();
         gameState.getIslandBoard().getTile(tile2).getBuilding().addBlock();
         Collection<Tile.IndexTile> foundTiles = athenaTurn.athenaTileToMove(player2.getWorkers()[0]);
-        //TODO check the case in which a worker is on a level higher than the level of one of neighbouring tiles
-        assertTrue(!foundTiles.contains(tile1) && !foundTiles.contains(tile2));
+        assertTrue(!foundTiles.contains(tile1) && foundTiles.contains(tile2));
     }
 
     @Test
@@ -156,6 +163,7 @@ public class AthenaTurnTest {
         athenaTurn.currentPlayer.getGod().move(new Tile.IndexTile(3, 2));
         athenaTurn.endCurrentOperation();
 
+        //case in which current worker cannot perform his additional move, because of the board state
         gameState.getIslandBoard().getTile(new Tile.IndexTile(2, 2)).getBuilding().addBlock();
         gameState.getIslandBoard().getTile(new Tile.IndexTile(2, 3)).getBuilding().buildDome();
         gameState.getIslandBoard().getTile(new Tile.IndexTile(3, 1)).getBuilding().buildDome();
@@ -164,9 +172,8 @@ public class AthenaTurnTest {
         gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 3)).getBuilding().buildDome();
 
         assertEquals(athenaTurn.getCurrentOperation(), Operation.CHOOSE);
-        athenaTurn.currentPlayer.getGod().applyChoice(true);
         athenaTurn.endCurrentOperation();
-        assertEquals(athenaTurn.turnOperations, new LinkedList<>(Arrays.asList(Operation.MESSAGE_NO_REPLY, Operation.BUILD)));
+        assertEquals(athenaTurn.turnOperations, new LinkedList<>(Collections.singletonList(Operation.BUILD)));
     }
 
     /*
@@ -200,8 +207,5 @@ public class AthenaTurnTest {
 
         //CASE CHOOSE ALREADY TESTED IN EndCurrentOperationTest
 
-        athenaTurn.turnOperations = new LinkedList<>(Collections.singletonList(Operation.MESSAGE_NO_REPLY));
-        generatedOption = athenaTurn.getOptions();
-        assertEquals((generatedOption).getMessageType(), player1.getGod().getChoiceNotAllowedMessage());
     }
 }

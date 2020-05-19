@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import java.util.LinkedHashSet;
 
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 public class AtlasTest {
@@ -83,6 +84,6 @@ public class AtlasTest {
         assertTrue(gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 2)).getBuilding().getDome());
         atlas.resetGodState();
         atlas.build(new Tile.IndexTile(0, 2));
-        assertTrue(gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 2)).getBuilding().getLevel() == BlockLevel.ONE);
+        assertSame(gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 2)).getBuilding().getLevel(), BlockLevel.ONE);
     }
 }

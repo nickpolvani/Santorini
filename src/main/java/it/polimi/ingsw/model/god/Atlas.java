@@ -43,7 +43,6 @@ public class Atlas extends God {
         if (!tileToBuild(worker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to build is not allowed!");
         }
-
         if (confirmed) {
             board.getTile(indexTile).getBuilding().buildDome();
         } else {

@@ -84,9 +84,4 @@ public class PanTest {
 
 
     }
-
-    @Test
-    public void getTurnOperations() {
-
-    }
 }

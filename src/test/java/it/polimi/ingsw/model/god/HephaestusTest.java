@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.BlockLevel;
@@ -14,8 +13,7 @@ import org.junit.Test;
 
 import java.util.LinkedHashSet;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class HephaestusTest {
     GameState gameState;
@@ -79,26 +77,27 @@ public class HephaestusTest {
 
 
     @Test
-    public void applyChoice() {
+    public void isChooseAvailableTest() {
         hephaestus.selectWorker(player1.getWorkers()[1]);
         try {
             Tile.IndexTile index = new Tile.IndexTile(1, 2);
             hephaestus.build(index);
             Tile t = gameState.getIslandBoard().getTile(index);
             assertEquals(t.getBuilding().getLevel(), BlockLevel.ONE);
-            hephaestus.applyChoice(true);
-            assertEquals(BlockLevel.TWO, t.getBuilding().getLevel());
-            assertTrue(hephaestus.getRemainingOperations().size() == 0);
+            assertTrue(hephaestus.isChooseAvailable());
+
 
             hephaestus.resetGodState();
             hephaestus.build(index);
-            assertEquals(t.getBuilding().getLevel(), BlockLevel.THREE);
+            assertEquals(t.getBuilding().getLevel(), BlockLevel.TWO);
+            assertTrue(hephaestus.isChooseAvailable());
             hephaestus.applyChoice(true);
-            assertEquals(t.getBuilding().getLevel(), BlockLevel.THREE);
-            assertTrue(hephaestus.getRemainingOperations().size() == 1 &&
-                    hephaestus.getRemainingOperations().contains(Operation.MESSAGE_NO_REPLY));
+            assertFalse(hephaestus.isChooseAvailable());
+
         } catch (DomeAlreadyPresentException e) {
             e.printStackTrace();
         }
     }
+
+
 }

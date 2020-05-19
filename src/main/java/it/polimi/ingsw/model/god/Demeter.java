@@ -24,7 +24,6 @@ public class Demeter extends God {
     protected Demeter(GameState gameState, Player player) {
 
         super(GodDescription.DEMETER, player, gameState);
-        choiceNotAllowedMessage = "We checked your choice but you cannot build. Don't worry: it's an additional operation, so you won't loose!";
     }
 
     @Override
@@ -44,25 +43,28 @@ public class Demeter extends God {
 
     }
 
-
     @Override
     public Queue<Operation> getTurnOperations() {
         Operation[] operationsArray = {Operation.SELECT_WORKER, Operation.MOVE, Operation.BUILD, Operation.CHOOSE};
         return new LinkedList<>(Arrays.asList(operationsArray));
     }
 
-
     @Override
     public Queue<Operation> getRemainingOperations() {
         if (confirmed) {
-            if (tileToBuild(worker.getIndexTile()).size() == 0) {
-                return new LinkedList<>(Collections.singletonList(Operation.MESSAGE_NO_REPLY));
-            } else {
-                return new LinkedList<>(Collections.singletonList(Operation.BUILD));
-            }
+            return new LinkedList<>(Collections.singletonList(Operation.BUILD));
+
         } else {
             return new LinkedList<>();
         }
+    }
+
+    @Override
+    public boolean isChooseAvailable() {
+        confirmed = true;
+        boolean value = !(tileToBuild(worker.getIndexTile()).size() == 0);
+        confirmed = false;
+        return value;
     }
 
     @Override

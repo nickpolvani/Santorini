@@ -21,8 +21,6 @@ public class Prometheus extends God {
     protected Prometheus(GameState gameState, Player player) {
 
         super(GodDescription.PROMETHEUS, player, gameState);
-        this.choiceNotAllowedMessage = "The additional build in this case is not allowed because " +
-                "you would loose the game, your next operation is \"move\"";
     }
 
     /**
@@ -79,12 +77,7 @@ public class Prometheus extends God {
     public Queue<Operation> getRemainingOperations() {
         Operation[] operationsArray;
         if (confirmed) {
-            if (checkValidOptionalBuild()) {
-                operationsArray = new Operation[]{Operation.BUILD, Operation.MOVE, Operation.BUILD};
-            } else {
-                operationsArray = new Operation[]{Operation.MESSAGE_NO_REPLY, Operation.MOVE, Operation.BUILD};
-            }
-
+            operationsArray = new Operation[]{Operation.BUILD, Operation.MOVE, Operation.BUILD};
         } else {
             operationsArray = new Operation[]{Operation.MOVE, Operation.BUILD};
         }
@@ -92,4 +85,8 @@ public class Prometheus extends God {
         return new LinkedList<>(Arrays.asList(operationsArray));
     }
 
+    @Override
+    public boolean isChooseAvailable() {
+        return checkValidOptionalBuild();
+    }
 }

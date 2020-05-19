@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
@@ -11,10 +10,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ArtemisTest {
 
@@ -103,15 +103,9 @@ public class ArtemisTest {
     }
 
     @Test
-    public void getRemainingOperations() throws Exception {
+    public void isChooseAvailableTest() throws Exception {
 
-        LinkedList<Operation> expectedList = new LinkedList<>(Collections.singletonList(Operation.BUILD));
-
-        assertEquals(artemis.getRemainingOperations(), expectedList);
-
-        artemis.applyChoice(true);
-        expectedList.addFirst(Operation.MOVE); //now expectedList = {Operation.MOVE, Operation.BUILD}
-        assertEquals(artemis.getRemainingOperations(), expectedList);
+        assertTrue(artemis.isChooseAvailable());
 
         Tile.IndexTile tile1 = new Tile.IndexTile(0, 0);
         gameState.getIslandBoard().getTile(tile1).getBuilding().buildDome();
@@ -122,8 +116,7 @@ public class ArtemisTest {
         Tile.IndexTile tile4 = new Tile.IndexTile(0, 2);
         gameState.getIslandBoard().getTile(tile4).getBuilding().buildDome();
 
-        expectedList.set(0, Operation.MESSAGE_NO_REPLY); //now expectedList = {Operation.SEND_MESSAGE, Operation.BUILD}
-        assertEquals(artemis.getRemainingOperations(), expectedList);
+        assertFalse(artemis.isChooseAvailable());
     }
 
 }

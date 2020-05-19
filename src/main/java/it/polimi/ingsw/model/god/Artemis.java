@@ -17,13 +17,11 @@ public class Artemis extends God {
 
     private IndexTile tileFrom;
 
-
     /**
      * Default constructor
      */
     public Artemis(GameState gameState, Player player) {
         super(GodDescription.ARTEMIS, player, gameState);
-        choiceNotAllowedMessage = "You cannot make this choice, but you will not loose the game because the operation is optional.";
     }
 
 
@@ -65,11 +63,7 @@ public class Artemis extends God {
     @Override
     public Queue<Operation> getRemainingOperations() {
         if (confirmed) {
-            if (tileToMove(worker.getIndexTile()).size() == 0) {
-                return new LinkedList<>(Arrays.asList(Operation.MESSAGE_NO_REPLY, Operation.BUILD));
-            } else {
-                return new LinkedList<>(Arrays.asList(Operation.MOVE, Operation.BUILD));
-            }
+            return new LinkedList<>(Arrays.asList(Operation.MOVE, Operation.BUILD));
         } else {
             return new LinkedList<>(Collections.singletonList(Operation.BUILD));
         }
@@ -83,5 +77,10 @@ public class Artemis extends God {
     public void resetGodState() {
         tileFrom = null;
         confirmed = false;
+    }
+
+    @Override
+    public boolean isChooseAvailable() {
+        return !(tileToMove(worker.getIndexTile()).size() == 0);
     }
 }

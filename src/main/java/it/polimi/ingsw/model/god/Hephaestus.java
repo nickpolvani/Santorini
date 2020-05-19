@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -26,7 +25,6 @@ public class Hephaestus extends God {
      */
     protected Hephaestus(GameState gameState, Player player) {
         super(GodDescription.HEPHAESTUS, player, gameState);
-        choiceNotAllowedMessage = "You cannot build a dome in additional build operation.\nYou will not loose the game.";
     }
 
     @Override
@@ -56,15 +54,13 @@ public class Hephaestus extends God {
         confirmed = confirm;
         remainingOperations = new LinkedList<>();
         if (confirmed) {
-            // the player can build the additional block
-            if (board.getBuildingLevel(tileForAdditionalBlock) < 3) {
-                board.addBlock(tileForAdditionalBlock);
-
-            } else { // the player cannot build the additional block, so he has to be notified
-                remainingOperations = new LinkedList<>(Collections.singletonList(Operation.MESSAGE_NO_REPLY));
-            }
+            board.addBlock(tileForAdditionalBlock);
         }
+    }
 
+    @Override
+    public boolean isChooseAvailable() {
+        return (board.getBuildingLevel(tileForAdditionalBlock) < 3);
     }
 
     @Override

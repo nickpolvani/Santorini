@@ -24,9 +24,6 @@ public abstract class God {
 
     protected boolean confirmed;
 
-    protected String choiceNotAllowedMessage;
-
-
     /**
      * Default constructor, can be called only by GodsFactory
      */
@@ -105,7 +102,7 @@ public abstract class God {
     }
 
     /**
-     * @param indexTile index of tile where the worker stands
+     * @param indexTile indexTile: index of the tile where the worker stands
      * @return default collection of tiles where the worker can build
      * @see Tile
      */
@@ -135,9 +132,7 @@ public abstract class God {
     }
 
     /**
-     * it checks if both workers of the current player cannot move, so the player is declared looser
-     *
-     * @return
+     * it checks if both the workers of the current player cannot move, so the player is declared looser
      */
     public boolean cannotMove() {
         Worker[] workers = player.getWorkers();
@@ -148,10 +143,6 @@ public abstract class God {
     public boolean cannotBuild() throws NullPointerException {
         if (worker == null) throw new NullPointerException("Worker is not set yet");
         return tileToBuild(worker.getIndexTile()).size() == 0;
-    }
-
-    public String getChoiceNotAllowedMessage() {
-        return choiceNotAllowedMessage;
     }
 
     @Override
@@ -188,6 +179,10 @@ public abstract class God {
      */
     public void applyChoice(boolean confirm) throws DomeAlreadyPresentException {
         this.confirmed = confirm;
+    }
+
+    public boolean isChooseAvailable() {
+        return true;
     }
 
 }

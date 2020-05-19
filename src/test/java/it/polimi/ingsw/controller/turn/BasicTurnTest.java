@@ -99,5 +99,7 @@ public class BasicTurnTest {
         basicTurn.endCurrentOperation();
         assertEquals(basicTurn.getCurrentPlayer(), player2);
         assertEquals(basicTurn.getCurrentOperation(), Operation.SELECT_WORKER);
+
+        //testing endCurrentOperation handleRemainingOption is tested too
     }
 }

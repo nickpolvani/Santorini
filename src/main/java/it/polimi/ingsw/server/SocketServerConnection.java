@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.bean.action.ChooseNicknameAction;
 import it.polimi.ingsw.bean.action.GameAction;
+import it.polimi.ingsw.bean.action.SelectNicknameAction;
 import it.polimi.ingsw.bean.options.SetupOptions;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.observer.Observable;
@@ -83,8 +83,8 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             send(new SetupOptions(null, MessageType.CHOOSE_NAME, Operation.SELECT_NICKNAME));
             do {
                 read = in.readObject();
-                if (!(read instanceof ChooseNicknameAction)) throw new IllegalArgumentException();
-                String nickname = ((ChooseNicknameAction) read).getNickname();
+                if (!(read instanceof SelectNicknameAction)) throw new IllegalArgumentException();
+                String nickname = ((SelectNicknameAction) read).getNickname();
                 if (nickname.isEmpty() || server.getRegisteredUsers().containsKey(nickname)) {
                     send(new SetupOptions(nickname, MessageType.NICKNAME_ALREADY_SET, Operation.SELECT_NICKNAME));
                 } else {
@@ -93,7 +93,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
                 }
             } while (!nicknameApproved);
 
-            username = ((ChooseNicknameAction) read).getNickname();
+            username = ((SelectNicknameAction) read).getNickname();
             server.addRegisteredUsers(username, this);
             logger.debug("Player's username on socket with port=" + socket.getPort() + " is: " + username);
             server.insertIntoLobby(username, this, in);

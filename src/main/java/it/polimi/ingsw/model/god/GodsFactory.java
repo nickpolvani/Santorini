@@ -58,14 +58,26 @@ public class GodsFactory {
             case HEPHAESTUS:
                 g = new Hephaestus(gameState, player);
                 break;
+            case HESTIA:
+                g = new Hestia(gameState, player);
+                break;
+            case MEDUSA:
+                g = new Medusa(gameState, player);
+                break;
             case MINOTAUR:
                 g = new Minotaur(gameState, player);
                 break;
             case PAN:
                 g = new Pan(gameState, player);
                 break;
+            case POSEIDON:
+                g = new Poseidon(gameState, player);
+                break;
             case PROMETHEUS:
                 g = new Prometheus(gameState, player);
+                break;
+            case ZEUS:
+                g = new Zeus(gameState, player);
                 break;
             default:
                 throw new IllegalArgumentException();

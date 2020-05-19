@@ -86,7 +86,6 @@ public class BasicTurn extends Observable<Options> implements Turn {
         if (getCurrentPlayer().isWinner()) {
             handleWinnerNotification();
         }
-
         if (getCurrentOperation().equals(Operation.CHOOSE)) {
             this.turnOperations = getCurrentPlayer().getGod().getRemainingOperations();
         } else {
@@ -110,9 +109,11 @@ public class BasicTurn extends Observable<Options> implements Turn {
             handleLooserNotification();
             switchTurn(); //this because after removing the looser whe have to notify the next player to play
         } else {
-            notify(getOptions());
-            if (getCurrentOperation() == Operation.MESSAGE_NO_REPLY) {
+            if (getCurrentOperation() == Operation.CHOOSE && !currentPlayer.getGod().isChooseAvailable()) {
+                notify(new MessageOption(currentPlayer.getNickname(), MessageType.GODS_POWER_NOT_AVAILABLE, Operation.MESSAGE_NO_REPLY));
                 endCurrentOperation();
+            } else {
+                notify(getOptions());
             }
         }
     }
@@ -144,8 +145,6 @@ public class BasicTurn extends Observable<Options> implements Turn {
                     if (currentGod.tileToMove(w.getIndexTile()).size() > 0) indexTiles.add(w.getIndexTile());
                 }
                 return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, MessageType.SELECT_WORKER);
-            case MESSAGE_NO_REPLY:
-                return new MessageOption(currentPlayer.getNickname(), currentGod.getChoiceNotAllowedMessage(), currentOperation);
             case SELECT_OPPONENTS_WORKER:
                 if (!(currentGod instanceof Charon)) throw new IllegalArgumentException();
                 return new TileOptions(currentPlayer.getNickname(), ((Charon) currentGod).opponentsWorkerTile(), boardClone,

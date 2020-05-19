@@ -18,6 +18,7 @@ public class Charon extends God {
 
     protected Charon(GameState gameState, Player player) {
         super(GodDescription.CHARON, player, gameState);
+
     }
 
 
@@ -29,18 +30,17 @@ public class Charon extends God {
 
     public Queue<Operation> getRemainingOperations() {
         Operation[] operationsArray;
-        Collection<Tile.IndexTile> neighbouringTiles = board.indexOfNeighbouringTiles(worker.getIndexTile());
         if (confirmed) {
-            if (opponentsWorkerTile().size() == 0) {
-                this.choiceNotAllowedMessage = "There's no neighbouring opponent Worker which can be moved! Go on to the next Operation!";
-                operationsArray = new Operation[]{Operation.MESSAGE_NO_REPLY, Operation.MOVE, Operation.BUILD};
-            } else {
-                operationsArray = new Operation[]{Operation.SELECT_OPPONENTS_WORKER, Operation.MOVE, Operation.BUILD};
-            }
+            operationsArray = new Operation[]{Operation.SELECT_OPPONENTS_WORKER, Operation.MOVE, Operation.BUILD};
         } else {
             operationsArray = new Operation[]{Operation.MOVE, Operation.BUILD};
         }
         return new LinkedList<>(Arrays.asList(operationsArray));
+    }
+
+    @Override
+    public boolean isChooseAvailable() {
+        return !(opponentsWorkerTile().size() == 0);
     }
 
     public List<Tile.IndexTile> opponentsWorkerTile() {

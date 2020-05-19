@@ -73,9 +73,10 @@ public class Controller implements Observer<String> {
             }
             Action action;
             if (nickname == null) {
-                action = ActionFactory.createAction(currentOption, m, message); //used when the user has to choose a nickname
+                //used when the user has to choose a nickname
+                action = ActionFactory.createAction(currentOption.getCurrentOperation(), m, message);
             } else {
-                action = ActionFactory.createAction(currentOption, m, nickname);
+                action = ActionFactory.createAction(currentOption.getCurrentOperation(), m, nickname);
             }
             socketClientConnection.asyncWriteToSocket(action);
             waitingInput = false;

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
@@ -10,10 +9,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CharonTest {
 
@@ -62,38 +63,29 @@ public class CharonTest {
 
 
     @Test
-    public void getRemainingOperations() throws Exception {
-        charon.applyChoice(false);
-        Operation[] operationsArray = {Operation.MOVE, Operation.BUILD};
-        assertEquals(charon.getRemainingOperations(), new LinkedList<>(Arrays.asList(operationsArray)));
+    public void isChooseAvailableTest() throws Exception {
 
         //case there's an opponent worker in neighbouring tiles but it can not be moved
-        charon.applyChoice(true);
-        operationsArray = new Operation[]{Operation.MESSAGE_NO_REPLY, Operation.MOVE, Operation.BUILD};
-        assertEquals(charon.getRemainingOperations(), new LinkedList<>(Arrays.asList(operationsArray)));
+        assertFalse(charon.isChooseAvailable());
 
         //case no opponents workers in neighbouring tiles
         gameState.getIslandBoard().changePosition(gameState.getIslandBoard().getCurrentWorker(1, 1),
                 new Tile.IndexTile(2, 2));
-        charon.applyChoice(true);
-        operationsArray = new Operation[]{Operation.MESSAGE_NO_REPLY, Operation.MOVE, Operation.BUILD};
-        assertEquals(charon.getRemainingOperations(), new LinkedList<>(Arrays.asList(operationsArray)));
+        assertFalse(charon.isChooseAvailable());
 
         charon.applyChoice(true);
         charon.selectWorker(testPlayer.getWorkers()[1]); //worker in 1,2
-        operationsArray = new Operation[]{Operation.SELECT_OPPONENTS_WORKER, Operation.MOVE, Operation.BUILD};
-        assertEquals(charon.getRemainingOperations(), new LinkedList<>(Arrays.asList(operationsArray)));
+        assertTrue(charon.isChooseAvailable());
 
         gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 2)).getBuilding().buildDome();
-        operationsArray = new Operation[]{Operation.MESSAGE_NO_REPLY, Operation.MOVE, Operation.BUILD};
-        assertEquals(charon.getRemainingOperations(), new LinkedList<>(Arrays.asList(operationsArray)));
+        assertFalse(charon.isChooseAvailable());
     }
 
     @Test
     public void selectOpponentsWorker() throws Exception {
         List<Tile.IndexTile> expected = new ArrayList<>();
         expected.add(new Tile.IndexTile(1, 1));
-        assertTrue(charon.opponentsWorkerTile().size() == 0);
+        assertEquals(0, charon.opponentsWorkerTile().size());
 
         charon.selectWorker(testPlayer.getWorkers()[1]);
         gameState.getIslandBoard().changePosition(charon.getWorker(), new Tile.IndexTile(2, 2));
