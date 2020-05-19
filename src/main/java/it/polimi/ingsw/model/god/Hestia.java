@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -31,7 +32,7 @@ public class Hestia extends God {
     @Override
     public Queue<Operation> getRemainingOperations() {
         if (confirmed) {
-            return new LinkedList<>(Arrays.asList(Operation.BUILD));
+            return new LinkedList<>(Collections.singletonList(Operation.BUILD));
         } else {
             return new LinkedList<>();
         }

@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.controller.turn.SetupWorkersTurn;
 import it.polimi.ingsw.exception.AlreadySetException;
+import it.polimi.ingsw.model.BlockLevel;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
@@ -12,17 +14,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-public class HestiaTest {
+public class ZeusTest {
     GameState gameState;
     GameController gameController;
     Player player1;
     BasicTurn basicTurn;
-    God hestia;
+    God zeus;
 
 
     @Before
@@ -37,14 +40,14 @@ public class HestiaTest {
         //setup Gods
         GodsFactory godsFactory = gameState.getGodsFactory();
         player1 = gameState.getPlayers().get(0);
-        player1.setGod(godsFactory.getGod(GodDescription.HESTIA, player1));
-        ;
-        hestia = player1.getGod();
+        player1.setGod(godsFactory.getGod(GodDescription.ZEUS, player1));
+        zeus = player1.getGod();
 
         // Setup Worker
         Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
         try {
             player1.setWorkers(workerPositions1);
+            zeus.selectWorker(player1.getWorkers()[0]);
         } catch (AlreadySetException e) {
             System.out.println(e.getMessage());
         }
@@ -62,11 +65,31 @@ public class HestiaTest {
         basicTurn = null;
     }
 
+
     @Test
-    public void isChooseAvailableTest() {
-        hestia.selectWorker(player1.getWorkers()[0]);
-        assertFalse(hestia.isChooseAvailable());
-        hestia.selectWorker(player1.getWorkers()[1]);
-        assertTrue(hestia.isChooseAvailable());
+    public void getRemainingOperations() throws Exception {
+        zeus.applyChoice(true);
+        assertEquals(zeus.getRemainingOperations(), new LinkedList<>());
+        zeus.resetGodState();
+        assertEquals(zeus.getRemainingOperations(), new LinkedList<>(Collections.singletonList(Operation.BUILD)));
+    }
+
+    @Test
+    public void isChooseAvailable() throws Exception {
+        assertTrue(zeus.isChooseAvailable());
+        gameState.getIslandBoard().addBlock(zeus.worker.getIndexTile());
+        gameState.getIslandBoard().addBlock(zeus.worker.getIndexTile());
+        gameState.getIslandBoard().addBlock(zeus.worker.getIndexTile());
+        assertFalse(zeus.isChooseAvailable());
+
+    }
+
+    @Test
+    public void applyChoice() throws Exception {
+        assertEquals(gameState.getIslandBoard().getBuildingLevel(zeus.worker.getIndexTile()), BlockLevel.GROUND.getLevelInt());
+        zeus.applyChoice(true);
+        assertEquals(gameState.getIslandBoard().getBuildingLevel(zeus.worker.getIndexTile()), BlockLevel.ONE.getLevelInt());
+
+
     }
 }

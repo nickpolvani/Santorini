@@ -159,9 +159,6 @@ public abstract class God {
         return null;
     }
 
-    public boolean isConfirmed() {
-        return confirmed;
-    }
 
     /**
      * Every time a player starts his turn, his god is reset to his initial state

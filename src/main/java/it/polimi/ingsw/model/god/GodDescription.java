@@ -24,7 +24,8 @@ public enum GodDescription {
     POSEIDON("Poseidon", "If your unmoved Worker is on the ground level, it may build up to three times."),
     /* Implement Ares if poseidon is too difficult
     ARES("Ares", "You may remove an unoccupied block (not dome) neighboring your unmoved Worker."),*/
-    ZEUS("Zeus", "Your Worker may build a block under itself.");
+    ZEUS("Zeus", "Your Worker may build a block under itself. " +
+            "If you decide to build under your worker, you won't be able to perform a normal build operation");
 
     private final String name;
     private final String descriptionOfPower;

@@ -45,7 +45,7 @@ public class TileOptions extends Options {
             for (IndexTile i : tilesToChoose) {
                 stringBuilder.append(i.toString()).append(" ");
             }
-            stringBuilder.append(alert);
+            stringBuilder.append("\n").append(alert);
             view.showMessage(stringBuilder.toString());
         } else {
             view.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
