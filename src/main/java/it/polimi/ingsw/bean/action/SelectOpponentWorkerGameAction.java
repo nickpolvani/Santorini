@@ -4,21 +4,25 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.god.Charon;
 
-public class SelectOpponentWorkerGameAction extends GameAction {
-    private final Tile.IndexTile workerPosition;
+public class SelectOpponentWorkerGameAction extends IndexTileGameAction {
 
-    public SelectOpponentWorkerGameAction(String nickname, Tile.IndexTile workerPosition) {
-        super(nickname);
-        this.workerPosition = workerPosition;
+    public SelectOpponentWorkerGameAction(Tile.IndexTile workerPosition, String nickname) {
+        super(workerPosition, nickname);
     }
 
     @Override
     void execute() {
-        ((Charon) getPlayer().getGod()).moveWorker(workerPosition);
+        ((Charon) getPlayer().getGod()).moveWorker(indexTile);
     }
 
     @Override
     public Boolean isCompatible(Operation operation) {
         return operation == Operation.SELECT_OPPONENTS_WORKER;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof SelectOpponentWorkerGameAction)) return false;
+        return super.equals(obj);
     }
 }

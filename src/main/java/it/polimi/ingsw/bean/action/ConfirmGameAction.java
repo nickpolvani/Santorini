@@ -25,4 +25,6 @@ public class ConfirmGameAction extends GameAction {
     public Boolean isCompatible(Operation operation) {
         return operation == Operation.CHOOSE;
     }
+
+
 }

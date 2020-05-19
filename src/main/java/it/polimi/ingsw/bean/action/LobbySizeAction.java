@@ -6,7 +6,7 @@ public class LobbySizeAction extends Action {
 
     private final int lobbySize;
 
-    public LobbySizeAction(String nickname, int lobbySize) {
+    public LobbySizeAction(int lobbySize, String nickname) {
         super(nickname);
         this.lobbySize = lobbySize;
     }
@@ -18,5 +18,11 @@ public class LobbySizeAction extends Action {
     @Override
     public Boolean isCompatible(Operation operation) {
         return null;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof LobbySizeAction)) return false;
+        return super.equals(obj) && this.lobbySize == ((LobbySizeAction) obj).getLobbySize();
     }
 }

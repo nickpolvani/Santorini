@@ -21,4 +21,10 @@ public abstract class Action implements Serializable {
      * @return true if the operation is compatible with the action
      */
     public abstract Boolean isCompatible(Operation operation);
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Action)) return false;
+        return nickname.equals(((Action) obj).getNickname());
+    }
 }

@@ -4,6 +4,8 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.model.Tile;
 
+import java.util.Arrays;
+
 public class PlaceWorkerActions extends GameAction {
 
     private final Tile.IndexTile[] positions;
@@ -14,6 +16,10 @@ public class PlaceWorkerActions extends GameAction {
         this.positions = positions;
     }
 
+    public Tile.IndexTile[] getPositions() {
+        return positions;
+    }
+
     @Override
     void execute() throws AlreadySetException {
         getPlayer().setWorkers(positions);
@@ -22,5 +28,11 @@ public class PlaceWorkerActions extends GameAction {
     @Override
     public Boolean isCompatible(Operation operation) {
         return operation == Operation.PLACE_WORKERS;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof PlaceWorkerActions)) return false;
+        return super.equals(obj) && Arrays.equals(positions, ((PlaceWorkerActions) obj).getPositions());
     }
 }

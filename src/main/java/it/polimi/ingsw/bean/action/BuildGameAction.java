@@ -5,16 +5,10 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
-public class BuildGameAction extends GameAction {
-    private final IndexTile indexTile;
+public class BuildGameAction extends IndexTileGameAction {
 
     public BuildGameAction(IndexTile indexTile, String nickname) {
-        super(nickname);
-        this.indexTile = indexTile;
-    }
-
-    public IndexTile getIndexTile() {
-        return indexTile;
+        super(indexTile, nickname);
     }
 
     @Override
@@ -28,4 +22,9 @@ public class BuildGameAction extends GameAction {
         this.getPlayer().getGod().build(this.indexTile);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BuildGameAction)) return false;
+        return super.equals(obj);
+    }
 }

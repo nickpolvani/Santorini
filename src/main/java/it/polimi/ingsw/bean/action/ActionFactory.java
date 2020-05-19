@@ -1,6 +1,6 @@
 package it.polimi.ingsw.bean.action;
 
-import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.god.GodDescription;
 
@@ -8,9 +8,9 @@ import java.util.List;
 
 public class ActionFactory {
 
-    public static Action createAction(Options options, Object object, String nickname) {
+    public static Action createAction(Operation operation, Object object, String nickname) {
         Action action;
-        switch (options.getCurrentOperation()) {
+        switch (operation) {
             case MOVE:
                 if (!(object instanceof Tile.IndexTile)) throw new IllegalArgumentException();
                 action = new MoveGameAction((Tile.IndexTile) object, nickname);
@@ -37,13 +37,14 @@ public class ActionFactory {
                 break;
             case SELECT_OPPONENTS_WORKER:
                 if (!(object instanceof Tile.IndexTile)) throw new IllegalArgumentException();
-                action = new SelectOpponentWorkerGameAction(nickname, (Tile.IndexTile) object);
+                action = new SelectOpponentWorkerGameAction((Tile.IndexTile) object, nickname);
                 break;
             case SELECT_NICKNAME:
-                action = new ChooseNicknameAction(nickname);
+                if (object != null) throw new IllegalArgumentException();
+                action = new SelectNicknameAction(nickname);
                 break;
             case SELECT_LOBBY_SIZE:
-                action = new LobbySizeAction(nickname, (int) object);
+                action = new LobbySizeAction((int) object, nickname);
                 break;
             default:
                 throw new IllegalArgumentException();

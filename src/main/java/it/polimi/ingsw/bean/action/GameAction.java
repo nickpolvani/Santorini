@@ -22,4 +22,12 @@ public abstract class GameAction extends Action {
     }
 
     abstract void execute() throws AlreadyOccupiedException, DomeAlreadyPresentException, AlreadySetException;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof GameAction)) return false;
+        if (this.player != null && ((GameAction) obj).getPlayer() != null && !this.player.equals(((GameAction) obj).getPlayer()))
+            return false;
+        return super.equals(obj);
+    }
 }

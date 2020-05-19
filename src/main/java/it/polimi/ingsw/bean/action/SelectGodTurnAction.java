@@ -17,6 +17,9 @@ public class SelectGodTurnAction extends SetupTurnAction {
         godsChosen.addAll(gods);
     }
 
+    public List<GodDescription> getGodsChosen() {
+        return godsChosen;
+    }
 
     @Override
     void execute() {
@@ -26,5 +29,11 @@ public class SelectGodTurnAction extends SetupTurnAction {
     @Override
     public Boolean isCompatible(Operation operation) {
         return operation == Operation.CHOOSE_GOD;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof SelectGodTurnAction)) return false;
+        return super.equals(obj) && godsChosen.equals(((SelectGodTurnAction) obj).getGodsChosen());
     }
 }

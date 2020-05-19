@@ -5,18 +5,16 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
-public class SelectWorkerGameAction extends GameAction {
-    private final Tile.IndexTile workerPosition;
+public class SelectWorkerGameAction extends IndexTileGameAction {
 
     public SelectWorkerGameAction(Tile.IndexTile workerPosition, String nickname) throws IllegalArgumentException {
-        super(nickname);
-        this.workerPosition = workerPosition;
+        super(workerPosition, nickname);
     }
 
     @Override
     void setPlayer(Player player) {
         Worker[] workers = player.getWorkers();
-        if (!(workerPosition.equals(workers[0].getIndexTile()) || workerPosition.equals(workers[1].getIndexTile()))) {
+        if (!(indexTile.equals(workers[0].getIndexTile()) || indexTile.equals(workers[1].getIndexTile()))) {
             throw new IllegalArgumentException();
         }
         this.player = player;
@@ -29,6 +27,12 @@ public class SelectWorkerGameAction extends GameAction {
 
     @Override
     void execute() {
-        getPlayer().getGod().selectWorker(workerPosition);
+        getPlayer().getGod().selectWorker(indexTile);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof SelectWorkerGameAction)) return false;
+        return super.equals(obj);
     }
 }

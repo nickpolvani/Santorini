@@ -4,17 +4,14 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
-public class MoveGameAction extends GameAction {
-
-    private final IndexTile indexTile;
+public class MoveGameAction extends IndexTileGameAction {
 
     public IndexTile getIndexTile() {
         return indexTile;
     }
 
     public MoveGameAction(IndexTile indexTile, String nickname) {
-        super(nickname);
-        this.indexTile = indexTile;
+        super(indexTile, nickname);
     }
 
     @Override
@@ -25,5 +22,11 @@ public class MoveGameAction extends GameAction {
     @Override
     void execute() throws AlreadyOccupiedException {
         this.getPlayer().getGod().move(indexTile);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MoveGameAction)) return false;
+        return super.equals(obj);
     }
 }
