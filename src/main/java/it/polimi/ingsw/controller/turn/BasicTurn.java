@@ -1,9 +1,6 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.options.ChooseOptions;
-import it.polimi.ingsw.bean.options.MessageOption;
-import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.TileOptions;
+import it.polimi.ingsw.bean.options.*;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
@@ -12,6 +9,7 @@ import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.god.Charon;
 import it.polimi.ingsw.model.god.God;
+import it.polimi.ingsw.model.god.Poseidon;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.utilities.MessageType;
@@ -148,6 +146,10 @@ public class BasicTurn extends Observable<Options> implements Turn {
                 if (!(currentGod instanceof Charon)) throw new IllegalArgumentException();
                 return new TileOptions(currentPlayer.getNickname(), ((Charon) currentGod).opponentsWorkerTile(), boardClone,
                         currentOperation, MessageType.SELECT_OPPONENT_WORKER);
+            case POSEIDON_BUILD:
+                if (!(currentGod instanceof Poseidon)) throw new IllegalArgumentException();
+                return new PoseidonTileOptions(currentPlayer.getNickname(), ((Poseidon) currentGod).unmovedWorkerTileToBuild(), boardClone,
+                        currentOperation, MessageType.POSEIDON_BUILD);
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }

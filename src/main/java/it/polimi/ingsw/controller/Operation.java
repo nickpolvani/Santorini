@@ -5,6 +5,7 @@ public enum Operation {
     SELECT_LOBBY_SIZE,
     SELECT_WORKER,
     SELECT_OPPONENTS_WORKER,
+    POSEIDON_BUILD,
     MOVE,
     BUILD,
     CHOOSE,

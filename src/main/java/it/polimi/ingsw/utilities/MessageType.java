@@ -16,4 +16,6 @@ public class MessageType {
     public static final String SELECT_OPPONENT_WORKER = "Insert the tile of the worker";
     public static final String GODS_POWER_NOT_AVAILABLE = "\nYou can't use your god's power in this turn because " +
             "of board state!\nGo on with the next operation!\n";
+    public static final String POSEIDON_BUILD = "Choose how many level you want to build on the tile and the tile " +
+            "you want to build onto";
 }

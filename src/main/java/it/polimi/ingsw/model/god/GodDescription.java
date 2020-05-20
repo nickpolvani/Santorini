@@ -21,7 +21,8 @@ public enum GodDescription {
     HESTIA("Hestia", "Your Worker may build one additional time, but this cannot be on a perimeter space."),
     MEDUSA("Medusa", "If possible, your Workers build in lower neighboring spaces that are " +
             "occupied by opponent Workers, removing the opponent Workers from the game."),
-    POSEIDON("Poseidon", "If your unmoved Worker is on the ground level, it may build up to three times."),
+    POSEIDON("Poseidon", "If your unmoved Worker is on the ground level, " +
+            "it may build up to three times."),
     /* Implement Ares if poseidon is too difficult
     ARES("Ares", "You may remove an unoccupied block (not dome) neighboring your unmoved Worker."),*/
     ZEUS("Zeus", "Your Worker may build a block under itself. " +

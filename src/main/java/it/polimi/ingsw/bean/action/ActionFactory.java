@@ -31,6 +31,12 @@ public class ActionFactory {
                 if (!(object instanceof Tile.IndexTile[])) throw new IllegalArgumentException();
                 action = new PlaceWorkerActions((Tile.IndexTile[]) object, nickname);
                 break;
+            case POSEIDON_BUILD:
+                if (!(object instanceof List)) throw new IllegalArgumentException();
+                if (!(((List) object).get(0) instanceof Tile.IndexTile && ((List) object).get(1) instanceof Integer))
+                    throw new IllegalArgumentException();
+                action = new PoseidonBuildGameAction((Tile.IndexTile) ((List) object).get(0), (int) ((List) object).get(1), nickname);
+                break;
             case SELECT_WORKER:
                 if (!(object instanceof Tile.IndexTile)) throw new IllegalArgumentException();
                 action = new SelectWorkerGameAction((Tile.IndexTile) object, nickname);

@@ -33,6 +33,9 @@ public class MessageParser {
             case PLACE_WORKERS:
                 object = parseDoubleIndex(message);
                 break;
+            case POSEIDON_BUILD:
+                object = parsePoseidonInput(message);
+                break;
             default:
                 throw new IllegalArgumentException();
         }
@@ -64,5 +67,13 @@ public class MessageParser {
     private static Tile.IndexTile parseSingleIndex(String message) {
         String[] numbersOfIndex = message.split(",");
         return new Tile.IndexTile(Integer.parseInt(numbersOfIndex[0]), Integer.parseInt(numbersOfIndex[1]));
+    }
+
+    private static List parsePoseidonInput(String message) {
+        List args = new ArrayList();
+        String[] split = message.replace(" ", "").split("-");
+        args.add(parseSingleIndex(split[0]));
+        args.add(Integer.parseInt(split[1]));
+        return args;
     }
 }
