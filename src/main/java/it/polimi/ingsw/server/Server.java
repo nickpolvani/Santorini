@@ -32,19 +32,11 @@ public class Server {
         this.serverSocket = new ServerSocket(PORT);
     }
 
-    public Lobby getOpenLobby() {
-        synchronized (openLobby) {
-            return openLobby;
-        }
-    }
-
     boolean thereIsAOpenLobby() {
         return openLobby != null && !openLobby.isFull();
     }
 
-    void createNewLobby(ClientConnection clientConnection, String name, ObjectInputStream in) throws IOException, ClassNotFoundException {
-        //perhaps the asynchronous sending method can be a problem
-
+    synchronized void createNewLobby(ClientConnection clientConnection, String name, ObjectInputStream in) throws IOException, ClassNotFoundException {
         clientConnection.asyncSend(new SetupOptions(name, MessageType.CHOOSE_LOBBY_SIZE, Operation.SELECT_LOBBY_SIZE));
         boolean b;
         int numberPlayers;
@@ -59,15 +51,13 @@ public class Server {
                 b = false;
             }
         } while (b);
-        if (!thereIsAOpenLobby()) {
-            openLobby = new Lobby(numberPlayers, currentLobbyNum);
-            MessageOption mess = new MessageOption(name, "Lobby successfully created. Wait for other players", Operation.MESSAGE_NO_REPLY);
-            clientConnection.asyncSend(mess);
-            logger.info("Created a new openLobby ID=" + currentLobbyNum + " SIZE=" + numberPlayers);
-            currentLobbyNum += 1;
-        } else {
-            throw new IllegalStateException();
-        }
+        if (thereIsAOpenLobby()) throw new IllegalStateException();
+        openLobby = new Lobby(numberPlayers, currentLobbyNum);
+        MessageOption mess = new MessageOption(name, "Lobby successfully created. Wait for other players", Operation.MESSAGE_NO_REPLY);
+        clientConnection.asyncSend(mess);
+        logger.info("Created a new openLobby ID=" + currentLobbyNum + " SIZE=" + numberPlayers);
+        ++currentLobbyNum;
+
     }
 
     synchronized void insertIntoLobby(String name, ClientConnection clientConnection, ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -89,12 +79,16 @@ public class Server {
         return registeredUsers;
     }
 
-    void addRegisteredUsers(String name, ClientConnection clientConnection) {
+    synchronized boolean addRegisteredUsers(String name, ClientConnection clientConnection) {
+        if (this.registeredUsers.containsKey(name)) {
+            return false;
+        }
         logger.debug("Registered username " + name);
         registeredUsers.put(name, clientConnection);
+        return true;
     }
 
-    void removeRegisteredUsers(String username) {
+    synchronized void removeRegisteredUsers(String username) {
         if (!registeredUsers.containsKey(username))
             logger.warn("Tried to delete an unregistered username");
         registeredUsers.remove(username);
@@ -116,9 +110,14 @@ public class Server {
         Lobby tmp = findLobby(username);
         if (tmp != null && tmp.isStarted()) { //caso generico
             closeLobby(tmp);
-        } else if (openLobby != null) { //caso in cui la lobby stata creata ma non inizializzata
-            openLobby.removePlayer(username);
-            removeRegisteredUsers(username);
+        } else if (tmp != null && tmp.equals(openLobby)) { //caso in cui la lobby stata creata ma non inizializzata
+            if (openLobby.getConnectionMap().size() == 1) {
+                openLobby = null;
+                logger.debug("Temporary lobby closed because only player left");
+            } else {
+                openLobby.removePlayer(username);
+                removeRegisteredUsers(username);
+            }
         } else { //caso quando la connesione cade prima di definire la prima lobby
             removeRegisteredUsers(username);
         }
@@ -133,7 +132,6 @@ public class Server {
     }
 
     public void run() {
-        Logger logger = Logger.getLogger("Server");
         logger.info("Server started");
         while (true) {
             try {

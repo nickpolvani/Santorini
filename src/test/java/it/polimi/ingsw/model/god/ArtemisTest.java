@@ -63,20 +63,20 @@ public class ArtemisTest {
         Tile.IndexTile tile3 = new Tile.IndexTile(1, 1);
         Tile.IndexTile tile4 = new Tile.IndexTile(0, 2);
         Tile.IndexTile tile5 = new Tile.IndexTile(1, 2);//tile where there is the other worker, so i can't move there
-        Collection<Tile.IndexTile> foundTiles = artemis.tileToMove(artemis.worker.getIndexTile());
+        Collection<Tile.IndexTile> foundTiles = artemis.tileToMove(artemis.worker.getCurrentIndexTile());
 
         assertTrue(foundTiles.contains(tile1) && foundTiles.contains(tile2) && foundTiles.contains(tile3)
                 && foundTiles.contains(tile4) && foundTiles.size() == 4 && !foundTiles.contains(tile5)
-                && !foundTiles.contains(artemis.worker.getIndexTile()));
+                && !foundTiles.contains(artemis.worker.getCurrentIndexTile()));
 
-        Tile.IndexTile tileFromTest = artemis.worker.getIndexTile();
+        Tile.IndexTile tileFromTest = artemis.worker.getCurrentIndexTile();
         artemis.move(tile3);
-        assertEquals(artemis.worker.getIndexTile(), tile3);
+        assertEquals(artemis.worker.getCurrentIndexTile(), tile3);
         assertEquals(artemis.getTileFrom(), tileFromTest);
         artemis.applyChoice(true);
 
         gameState.getIslandBoard().getTile(tile2).getBuilding().addBlock();//now block level is 2
-        foundTiles = artemis.tileToMove(artemis.worker.getIndexTile());
+        foundTiles = artemis.tileToMove(artemis.worker.getCurrentIndexTile());
 
         Tile.IndexTile tile6 = new Tile.IndexTile(2, 1);
         Tile.IndexTile tile7 = new Tile.IndexTile(2, 2);
@@ -91,7 +91,7 @@ public class ArtemisTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void move() throws Exception {
-        Tile.IndexTile positionBeforeMove = artemis.worker.getIndexTile();
+        Tile.IndexTile positionBeforeMove = artemis.worker.getCurrentIndexTile();
 
         artemis.move(new Tile.IndexTile(1, 1));
 

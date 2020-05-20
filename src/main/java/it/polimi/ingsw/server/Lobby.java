@@ -54,6 +54,10 @@ public class Lobby {
         }
     }
 
+    boolean containsUser(String nickname) {
+        return this.getConnectionMap().containsKey(nickname);
+    }
+
     synchronized void start() {
         if (isStarted()) logger.error("Tried to initialize a started lobby", new IllegalAccessException());
         started = true;
@@ -88,7 +92,7 @@ public class Lobby {
             connectionMap.remove(username);
             logger.info("Removed " + username + " form not started lobby ID=" + id);
         } else {
-            logger.error("Trying to remove a player from a started lobby without close lobby");
+            logger.fatal("Trying to remove a player from a started lobby without close lobby", new IllegalAccessException());
         }
     }
 

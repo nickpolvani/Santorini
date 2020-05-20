@@ -60,7 +60,7 @@ public class PanTest {
 
     @Test
     public void move() {
-        assertEquals(testPlayer.getGod().worker.getIndexTile(), indexes[0]);
+        assertEquals(testPlayer.getGod().worker.getCurrentIndexTile(), indexes[0]);
 
         newIndex = gameState.getIslandBoard().getTile(new Tile.IndexTile(0, 2)).getIndex();
         try {
@@ -69,7 +69,7 @@ public class PanTest {
             System.out.println(e.getMessage());
         }
 
-        assertEquals(testPlayer.getWorkers().get(0).getIndexTile(), newIndex);
+        assertEquals(testPlayer.getWorkers().get(0).getCurrentIndexTile(), newIndex);
 
         newIndex = gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 2)).getIndex();
 
