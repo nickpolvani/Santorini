@@ -89,7 +89,7 @@ public class BasicTurnTest {
     public void endCurrentOperationTest() {
         assertEquals(basicTurn.getCurrentPlayer(), player1);
         assertEquals(basicTurn.getCurrentOperation(), Operation.SELECT_WORKER);
-        player1.getGod().selectWorker(player1.getWorkers().get(0).getCurrentIndexTile());
+        player1.getGod().selectWorker(player1.getWorkers().get(0).getIndexTile());
         basicTurn.endCurrentOperation();
         assertEquals(basicTurn.getCurrentPlayer(), player1);
         assertEquals(basicTurn.getCurrentOperation(), Operation.MOVE);

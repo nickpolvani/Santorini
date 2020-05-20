@@ -57,20 +57,20 @@ public class Apollo extends God {
     @Override
     public void move(IndexTile indexTile) throws AlreadyOccupiedException {
 
-        if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
+        if (!tileToMove(currentWorker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
         Worker otherWorker = board.getCurrentWorker(indexTile);
         if (otherWorker != null) {
-            IndexTile whereSwitch = worker.getIndexTile();
+            IndexTile whereSwitch = currentWorker.getIndexTile();
             //updating currentWorker's State
             board.getTile(indexTile).setCurrentWorker(null);
-            board.changePosition(worker, indexTile);
+            board.changePosition(currentWorker, indexTile);
             //updating otherWorker's State
             board.getTile(whereSwitch).setCurrentWorker(otherWorker);
             otherWorker.setIndexTile(whereSwitch);
         } else {
-            board.changePosition(worker, indexTile);
+            board.changePosition(currentWorker, indexTile);
         }
         handleWinningCondition();
     }

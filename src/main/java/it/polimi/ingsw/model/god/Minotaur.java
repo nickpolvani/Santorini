@@ -11,7 +11,6 @@ import it.polimi.ingsw.model.Worker;
 import java.util.*;
 
 /**
- * @author Polvani-Puoti-Sacchetta
  * Your Move: Your Worker may  move into an opponent Worker’s space, if their Worker can be
  * forced one space straight backwards to an unoccupied space at any level.
  */
@@ -61,20 +60,20 @@ public class Minotaur extends God {
     @Override
     public void move(IndexTile indexTile) throws AlreadyOccupiedException {
 
-        if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
+        if (!tileToMove(currentWorker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
 
         Worker opponentWorker = board.getTile(indexTile).getCurrentWorker();
 
         if (opponentWorker != null) {
-            IndexTile whereForce = new IndexTile((2 * opponentWorker.getIndexTile().getRow() - worker.getIndexTile().getRow()),
-                    (2 * opponentWorker.getIndexTile().getCol() - worker.getIndexTile().getCol()));
+            IndexTile whereForce = new IndexTile((2 * opponentWorker.getIndexTile().getRow() - currentWorker.getIndexTile().getRow()),
+                    (2 * opponentWorker.getIndexTile().getCol() - currentWorker.getIndexTile().getCol()));
 
             board.changePosition(opponentWorker, whereForce);
 
         }
-        board.changePosition(worker, indexTile);
+        board.changePosition(currentWorker, indexTile);
 
         handleWinningCondition();
     }

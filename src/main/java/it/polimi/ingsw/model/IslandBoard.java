@@ -12,7 +12,9 @@ import java.util.List;
 /**
  * IslandBoard models the game board. Above this are the workers' pawns and towers.
  *
- * @author Juri Sacchetta
+ * @see Tile
+ * @see Cloneable
+ * @see Serializable
  */
 public class IslandBoard implements Cloneable, Serializable {
 
@@ -43,6 +45,11 @@ public class IslandBoard implements Cloneable, Serializable {
         Logger.getLogger("Server").debug("IslandBoard created");
     }
 
+    /**
+     * This constructor is used only by the internal clone method
+     *
+     * @param board The tile matrix's instance that make up the IslandBoard.board
+     */
     private IslandBoard(Tile[][] board) {
         if (board.length != N_ROWS)
             throw new IllegalArgumentException("argument board has wrong size");
@@ -61,8 +68,11 @@ public class IslandBoard implements Cloneable, Serializable {
     }
 
     /**
-     * @param index index of the tile from which to look for nearby ones
-     * @return The return a Collection of tile's index close to the input index.
+     * Method used to discover tiles close to a specific tile.
+     * @param index The index of the tile from which to look for nearby ones
+     * @return Return a Collection of tile's index close to the input index.
+     * @see Tile.IndexTile
+     * @see Collection
      */
     public Collection<Tile.IndexTile> indexOfNeighbouringTiles(Tile.IndexTile index) {
         Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
@@ -76,9 +86,13 @@ public class IslandBoard implements Cloneable, Serializable {
     }
 
     /**
-     * @param worker
-     * @param indexNewPosition
-     * @throws AlreadyOccupiedException
+     * Method used to change worker's position. It's used in the move method of god.
+     *
+     * @param worker The worker's instance that must change position.
+     * @param indexNewPosition The indexTile of the new position on the board.
+     * @throws AlreadyOccupiedException Throws if the new position is already occupied
+     * @see Tile.IndexTile
+     * @see Worker
      */
     public void changePosition(Worker worker, Tile.IndexTile indexNewPosition) throws AlreadyOccupiedException {
         if (worker == null || indexNewPosition == null) throw new NullPointerException();
@@ -114,8 +128,8 @@ public class IslandBoard implements Cloneable, Serializable {
 
     @Override
     public String toString() {
-        int tileRows = board[0][0].getN_ROWS();
-        int tileCols = board[0][0].getN_COLS();
+        int tileRows = Tile.N_ROWS;
+        int tileCols = Tile.N_COLS;
         StringBuilder grid = new StringBuilder();
 
         //FIRST ROW
@@ -144,7 +158,7 @@ public class IslandBoard implements Cloneable, Serializable {
             for (int l = 0; l < lines.length; l++) {
                 lines[l] = new StringBuilder();
                 if (l == 1) {
-                    lines[l].append(" " + i + " ");
+                    lines[l].append(" ").append(i).append(" ");
                 } else {
                     lines[l].append("   ");
                 }
@@ -172,7 +186,7 @@ public class IslandBoard implements Cloneable, Serializable {
             }
 
             for (StringBuilder line : lines) {
-                grid.append(line + "\n");
+                grid.append(line).append("\n");
             }
 
         }

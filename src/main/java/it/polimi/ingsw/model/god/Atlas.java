@@ -40,7 +40,7 @@ public class Atlas extends God {
     @Override
     public void build(IndexTile indexTile) throws DomeAlreadyPresentException {
 
-        if (!tileToBuild(worker.getIndexTile()).contains(indexTile)) {
+        if (!tileToBuild(currentWorker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to build is not allowed!");
         }
         if (confirmed) {

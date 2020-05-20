@@ -114,19 +114,13 @@ public class GameController extends Observable<Options> implements Observer<Game
 
     @Override
     public synchronized void update(GameAction a) {
-        if (a.getNickname().equals(getTurn().getCurrentPlayer().getNickname())) {
-            if (a.isCompatible(turn.getCurrentOperation())) {
-                try {
-                    actionHandler.execute(a, findPlayer(a.getNickname()));
-                    turn.endCurrentOperation();
-                } catch (DomeAlreadyPresentException | AlreadyOccupiedException | AlreadySetException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                //TODO send error's notification to the SocketClientConnection
-            }
-        }/* else { TODO ipotesi di risposta
-            a.getPlayer().getView().send(new AnotherTurnException);
-        }*/
+        if (!(a.getNickname().equals(getTurn().getCurrentPlayer().getNickname()) &&
+                a.isCompatible(turn.getCurrentOperation()))) throw new IllegalArgumentException();
+        try {
+            actionHandler.execute(a, findPlayer(a.getNickname()));
+            turn.endCurrentOperation();
+        } catch (DomeAlreadyPresentException | AlreadyOccupiedException | AlreadySetException e) {
+            e.printStackTrace();
+        }
     }
 }

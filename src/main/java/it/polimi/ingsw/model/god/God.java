@@ -20,12 +20,14 @@ public abstract class God {
 
     protected final Player player;
 
-    protected Worker worker; // worker selected for the current turn
+    protected Worker currentWorker; // worker selected for the current turn
 
     protected boolean confirmed;
 
     /**
      * Default constructor, can be called only by GodsFactory
+     *
+     * @param godDescription The godDescription that corresponding
      */
     protected God(GodDescription godDescription, Player player, GameState gameState) {
         this.godDescription = godDescription;
@@ -44,8 +46,8 @@ public abstract class God {
      * @param workerPosition selects worker for the current player's turn
      */
     public final void selectWorker(Tile.IndexTile workerPosition) {
-        this.worker = board.getCurrentWorker(workerPosition);
-        if (worker == null || !player.getWorkers().contains(worker)) {
+        this.currentWorker = board.getCurrentWorker(workerPosition);
+        if (currentWorker == null || !player.getWorkers().contains(currentWorker)) {
             throw new IllegalArgumentException();
         }
     }
@@ -54,11 +56,11 @@ public abstract class God {
         if (worker == null || !player.getWorkers().contains(worker)) {
             throw new IllegalArgumentException();
         }
-        this.worker = worker;
+        this.currentWorker = worker;
     }
 
-    public Worker getWorker() {
-        return worker;
+    public Worker getCurrentWorker() {
+        return currentWorker;
     }
 
     /**
@@ -87,16 +89,16 @@ public abstract class God {
      */
     public void move(IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException {
 
-        if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
+        if (!tileToMove(currentWorker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
-        board.changePosition(worker, indexTile);
+        board.changePosition(currentWorker, indexTile);
 
         handleWinningCondition();
     }
 
     protected void handleWinningCondition() {
-        if (board.getBuildingLevel(worker.getIndexTile()) == 3) {
+        if (board.getBuildingLevel(currentWorker.getIndexTile()) == 3) {
             this.player.setWinner(true);
         }
     }
@@ -118,13 +120,11 @@ public abstract class God {
 
     /**
      * @param indexTile is the tile chosen by the player to let his worker build
-     * @throws IllegalArgumentException
      * @throws DomeAlreadyPresentException
-     * @throws IllegalStateException       thrown if current operation in turn is not BUILD
      */
-    public void build(IndexTile indexTile) throws IllegalArgumentException, DomeAlreadyPresentException {
+    public void build(IndexTile indexTile) throws DomeAlreadyPresentException {
 
-        if (!tileToBuild(worker.getIndexTile()).contains(indexTile)) {
+        if (!tileToBuild(currentWorker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to build is not allowed!");
         }
 
@@ -140,8 +140,8 @@ public abstract class God {
     }
 
     public boolean cannotBuild() throws NullPointerException {
-        if (worker == null) throw new NullPointerException("Worker is not set yet");
-        return tileToBuild(worker.getIndexTile()).size() == 0;
+        if (currentWorker == null) throw new NullPointerException("Worker is not set yet");
+        return tileToBuild(currentWorker.getIndexTile()).size() == 0;
     }
 
     @Override
@@ -179,6 +179,16 @@ public abstract class God {
 
     public boolean isChooseAvailable() {
         return true;
+    }
+
+    protected Worker findNotCurrentWorker() {
+        //we have to do this check because there is Medusa, thus the otherWorker may have been deleted from the game
+        for (Worker w : player.getWorkers()) {
+            if (!w.equals(currentWorker)) {
+                return w;
+            }
+        }
+        return null;
     }
 
 }

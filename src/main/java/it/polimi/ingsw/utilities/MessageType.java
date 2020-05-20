@@ -18,4 +18,5 @@ public class MessageType {
             "of board state!\nGo on with the next operation!\n";
     public static final String POSEIDON_BUILD = "Choose how many level you want to build on the tile and the tile " +
             "you want to build onto";
+    public static final String REMOVE_BLOCK = "Choose the tile where you want to remove a block.";
 }

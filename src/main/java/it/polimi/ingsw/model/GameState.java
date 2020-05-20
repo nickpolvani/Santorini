@@ -7,32 +7,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-
+/**
+ * The GameState is the core of the model, from this class you can reach every class of the model.
+ * There is a GameState's instance foreach different lobby. Every instances are independent by other one.
+ *
+ * @see IslandBoard
+ * @see Player
+ * @see GodsFactory
+ */
 public class GameState {
     /**
-     * The board where the game is about to be played
+     * The IslandBoard's instance of the current lobby.
+     *
+     * @see IslandBoard
      */
     private final IslandBoard islandBoard;
 
     /**
-     *
+     * The list of the current players in the lobby.
+     * @see Player
+     * @see List
      */
     private final List<Player> players;
+
     /**
-     *
+     * The GodsFactory instance of the current lobby. It is used early in the game to create instances of the gods.
+     * @see GodsFactory
      */
     private final GodsFactory godsFactory;
-    /**
-     *
-     */
-    private final Logger logger = Logger.getLogger("Server");
 
 
     /**
-     * Default constructor: the most important thing is that island board can be instanced one time per game. Therefore,
-     * there's no setter for islandBoard.
+     * Default constructor
      */
     public GameState(Set<String> nicknames) {
+        Logger logger = Logger.getLogger("Server");
         logger.debug("Start to initialize the model");
         if (nicknames.size() < 2 || nicknames.size() > 3) throw new IllegalArgumentException();
         this.islandBoard = new IslandBoard();
@@ -54,15 +63,14 @@ public class GameState {
     }
 
     /**
-     * getter of ArrayList players is useless because we have methods like  nextPlayer and getCurrentPlayer in BasicTurn object
-     * but we use it for testing.
+     * getter of ArrayList players is little used because we have methods like nextPlayer() and getCurrentPlayer() in BasicTurn.
      */
     public List<Player> getPlayers() {
         return players;
     }
 
     /**
-     * @return
+     * @return Return the instance of GodsFactory
      */
     public GodsFactory getGodsFactory() {
         return godsFactory;

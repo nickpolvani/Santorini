@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.god.Ares;
 import it.polimi.ingsw.model.god.Charon;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.model.god.Poseidon;
@@ -127,10 +128,10 @@ public class BasicTurn extends Observable<Options> implements Turn {
         IslandBoard boardClone = gameController.getGameState().getIslandBoard().clone();
         switch (currentOperation) {
             case MOVE:
-                return new TileOptions(currentPlayer.getNickname(), currentGod.tileToMove(currentGod.getWorker().getIndexTile()),
+                return new TileOptions(currentPlayer.getNickname(), currentGod.tileToMove(currentGod.getCurrentWorker().getIndexTile()),
                         boardClone, currentOperation, MessageType.MOVE);
             case BUILD:
-                return new TileOptions(currentPlayer.getNickname(), currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
+                return new TileOptions(currentPlayer.getNickname(), currentGod.tileToBuild(currentGod.getCurrentWorker().getIndexTile()),
                         boardClone, currentOperation, MessageType.BUILD);
             case CHOOSE:
                 return new ChooseOptions(currentPlayer.getNickname(), currentGod.getGodDescription().getDescriptionOfPower() +
@@ -150,6 +151,10 @@ public class BasicTurn extends Observable<Options> implements Turn {
                 if (!(currentGod instanceof Poseidon)) throw new IllegalArgumentException();
                 return new PoseidonTileOptions(currentPlayer.getNickname(), ((Poseidon) currentGod).unmovedWorkerTileToBuild(), boardClone,
                         currentOperation, MessageType.POSEIDON_BUILD);
+            case REMOVE_BLOCK:
+                if (!(currentGod instanceof Ares)) throw new IllegalArgumentException();
+                return new TileOptions(currentPlayer.getNickname(), ((Ares) currentGod).tileToRemoveBlock(), boardClone,
+                        currentOperation, MessageType.REMOVE_BLOCK);
             default:
                 throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
         }

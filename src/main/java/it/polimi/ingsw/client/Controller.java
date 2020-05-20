@@ -25,13 +25,14 @@ public class Controller implements Observer<String> {
     private SocketClientConnection socketClientConnection;
     private Options currentOption;
     private String nickname;
+
     /**
      * Flag used to check, when inputs from view arrive, if it's the turn of the player linked to this specific view
      */
     private boolean isMyTurn = true;
 
-
     private Timer timer;
+
     /**
      * Since we use a different thread to receive elements from socket and from view,
      * it may happen that controller is notified of an operation when it shouldn't
@@ -70,8 +71,7 @@ public class Controller implements Observer<String> {
             Object m = MessageParser.parseMessage(currentOption, message);
             Action action;
             if (nickname == null) {
-                //used when the user has to choose a nickname
-                action = ActionFactory.createAction(currentOption.getCurrentOperation(), m, message);
+                action = ActionFactory.createAction(currentOption.getCurrentOperation(), m, message); //used when the user has to choose a nickname
             } else {
                 action = ActionFactory.createAction(currentOption.getCurrentOperation(), m, nickname);
             }
@@ -164,12 +164,8 @@ public class Controller implements Observer<String> {
             public void run() {
                 if (waitingInput) {
                     clientView.showMessage("\nTime to answer is up, you loose");
-                    try {
-                        clientView.close();
-                        socketClientConnection.closeConnection();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    clientView.close();
+                    socketClientConnection.closeConnection();
                 }
             }
         };
@@ -186,5 +182,23 @@ public class Controller implements Observer<String> {
                 clientView.showMessage("\nHurry Up, only " + timeToAnswer / 2000 + " seconds remain to answer.");
             }
         };
+    }
+
+    void reset() {
+        timer.cancel();
+        clientView.close();
+        clientView.showMessage("Do you want to play again? (yes/no) or (y/n)");
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        input = scanner.nextLine().toLowerCase();
+        while (!(input.equals("yes") || input.equals("no") || input.equals("y") || input.equals("n"))) {
+            if (input.equals("")) continue;
+            clientView.showMessage("Incorrect input");
+            input = scanner.nextLine().toLowerCase();
+        }
+        if (input.equals("yes") || input.equals("y")) {
+            clientView = null;
+            setup();
+        }
     }
 }

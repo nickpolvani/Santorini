@@ -1,13 +1,17 @@
 package it.polimi.ingsw.controller.turn;
 
-import it.polimi.ingsw.bean.options.*;
+import it.polimi.ingsw.bean.options.MessageOption;
+import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.TileOptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.god.*;
+import it.polimi.ingsw.model.god.Athena;
+import it.polimi.ingsw.model.god.God;
+import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.utilities.MessageType;
 
@@ -73,22 +77,8 @@ public class AthenaTurn extends BasicTurn {
 
     /**
      * Since Athena could limit Artemis'power, we decide to let AthenaTurn handle
-     * this situation. So we decide override endCurrentOperation to handle ChooseOperation.
+     * this situation. So we decide override handleRemainingOperation to handle ChooseOperation.
      */
-    @Override
-    public void endCurrentOperation() {
-
-        if (getCurrentPlayer().isWinner()) {
-            handleWinnerNotification();
-        }
-        if (getCurrentOperation().equals(Operation.CHOOSE)) {
-            this.turnOperations = getCurrentPlayer().getGod().getRemainingOperations();
-        } else {
-            turnOperations.poll();
-        }
-        handleRemainingOperations();
-    }
-
     @Override
     protected void handleRemainingOperations() {
         if (turnOperations.isEmpty()) {
@@ -99,7 +89,7 @@ public class AthenaTurn extends BasicTurn {
         } else {
             if (getCurrentOperation() == Operation.CHOOSE) {
                 if (currentPlayer.getGod().getGodDescription() == GodDescription.ARTEMIS) {
-                    if (athenaTileToMove(currentPlayer.getGod().getWorker()).size() == 0) {
+                    if (athenaTileToMove(currentPlayer.getGod().getCurrentWorker()).size() == 0) {
                         notify(new MessageOption(currentPlayer.getNickname(), MessageType.GODS_POWER_NOT_AVAILABLE, Operation.MESSAGE_NO_REPLY));
                         endCurrentOperation();
                     } else {
@@ -126,19 +116,15 @@ public class AthenaTurn extends BasicTurn {
     public Options getOptions() {
         Operation currentOperation = getCurrentOperation();
         God currentGod = currentPlayer.getGod();
-        IslandBoard boardClone = gameController.getGameState().getIslandBoard().clone();
-
+        IslandBoard boardClone;
         switch (currentOperation) {
             case MOVE:
-                return new TileOptions(currentPlayer.getNickname(), athenaTileToMove(currentGod.getWorker()),
+                boardClone = gameController.getGameState().getIslandBoard().clone();
+
+                return new TileOptions(currentPlayer.getNickname(), athenaTileToMove(currentGod.getCurrentWorker()),
                         boardClone, currentOperation, MessageType.MOVE);
-            case BUILD:
-                return new TileOptions(currentPlayer.getNickname(), currentGod.tileToBuild(currentGod.getWorker().getIndexTile()),
-                        boardClone, currentOperation, MessageType.BUILD);
-            case CHOOSE:
-                return new ChooseOptions(currentPlayer.getNickname(), currentGod.getGodDescription().getDescriptionOfPower() +
-                        "\nDo you want to use your god's power? (Yes/No)");
             case SELECT_WORKER:
+                boardClone = gameController.getGameState().getIslandBoard().clone();
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
                 for (Worker w : currentPlayer.getWorkers()) {
                     //with this check game does not pass as option a worker who can't move
@@ -149,16 +135,9 @@ public class AthenaTurn extends BasicTurn {
                 } else {
                     return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, MessageType.SELECT_WORKER);
                 }
-            case SELECT_OPPONENTS_WORKER:
-                if (!(currentGod instanceof Charon)) throw new IllegalArgumentException();
-                return new TileOptions(currentPlayer.getNickname(), ((Charon) currentGod).opponentsWorkerTile(), boardClone,
-                        currentOperation, MessageType.SELECT_OPPONENT_WORKER);
-            case POSEIDON_BUILD:
-                if (!(currentGod instanceof Poseidon)) throw new IllegalArgumentException();
-                return new PoseidonTileOptions(currentPlayer.getNickname(), ((Poseidon) currentGod).unmovedWorkerTileToBuild(), boardClone,
-                        currentOperation, MessageType.POSEIDON_BUILD);
+
             default:
-                throw new IllegalStateException("Invalid current operation in Turn of " + currentPlayer.getNickname());
+                return super.getOptions();
         }
     }
 }

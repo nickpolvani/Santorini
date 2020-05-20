@@ -62,7 +62,7 @@ public class Demeter extends God {
     @Override
     public boolean isChooseAvailable() {
         confirmed = true;
-        boolean value = !(tileToBuild(worker.getIndexTile()).size() == 0);
+        boolean value = !(tileToBuild(currentWorker.getIndexTile()).size() == 0);
         confirmed = false;
         return value;
     }

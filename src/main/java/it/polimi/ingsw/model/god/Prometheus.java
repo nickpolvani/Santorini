@@ -55,12 +55,12 @@ public class Prometheus extends God {
      * @return true if the player can perform the optional build without loosing
      */
     private boolean checkValidOptionalBuild() {
-        int currentLevel = board.getBuildingLevel(this.worker.getIndexTile());
+        int currentLevel = board.getBuildingLevel(this.currentWorker.getIndexTile());
         // tiles on the same or lower level
-        List<IndexTile> validTileToMove = tileToMove(this.worker.getIndexTile()).stream()
+        List<IndexTile> validTileToMove = tileToMove(this.currentWorker.getIndexTile()).stream()
                 .filter(t -> board.getBuildingLevel(t) - currentLevel <= 0).collect(Collectors.toList());
 
-        long numberValidTilesToBuild = tileToBuild(this.worker.getIndexTile()).size();
+        long numberValidTilesToBuild = tileToBuild(this.currentWorker.getIndexTile()).size();
         // player can only build in the unique tile where he would be allowed to move
         // with this check we avoid the player defeat.
         // We know that tileToBuild includes tileToMove, so if both have size = 1, they contain the same element.

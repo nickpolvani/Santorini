@@ -1,8 +1,5 @@
 package it.polimi.ingsw.model;
 
-/**
- * @author Polvani-Puoti-Sacchetta
- */
 public enum Color {
     RED("RED", 0), BLUE("BLUE", 1), YELLOW("YELLOW", 2);
 

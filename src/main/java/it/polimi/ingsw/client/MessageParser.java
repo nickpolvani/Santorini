@@ -20,6 +20,7 @@ public class MessageParser {
                 break;
             case MOVE:
             case BUILD:
+            case REMOVE_BLOCK:
             case SELECT_WORKER:
             case SELECT_OPPONENTS_WORKER:
                 object = parseSingleIndex(message);

@@ -16,7 +16,7 @@ public class Observable<T> {
         synchronized (observerList) {
             synchronized (observers) {
                 /*TODO if (observerList.containsAll(observers)) throw  new IllegalArgumentException();*/
-                for (Observer o : observerList) {
+                for (Observer<T> o : observerList) {
                     addObserver(o);
                 }
             }

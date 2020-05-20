@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class Medusa extends God {
 
-    //TODO inserito per il metodo removeWorker
+    // Necessary for the method removePlayer()
     private final GameState gameState;
 
     /**
@@ -33,7 +33,7 @@ public class Medusa extends God {
 
     @Override
     public Collection<Tile.IndexTile> tileToBuild(Tile.IndexTile indexTile) {
-        int currentLevel = board.getBuildingLevel(worker.getIndexTile());
+        int currentLevel = board.getBuildingLevel(currentWorker.getIndexTile());
         return board.indexOfNeighbouringTiles(indexTile).stream()
                 .filter(x -> !board.getDome(x) && !(board.getTile(x).getCurrentWorker() != null && board.getTile(x).getBuildingLevel() >= currentLevel))
                 .collect(Collectors.toList());
@@ -41,7 +41,7 @@ public class Medusa extends God {
 
     @Override
     public void build(Tile.IndexTile indexTile) throws IllegalArgumentException, DomeAlreadyPresentException {
-        if (!tileToBuild(worker.getIndexTile()).contains(indexTile)) {
+        if (!tileToBuild(currentWorker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to build is not allowed!");
         }
         if (board.getTile(indexTile).getCurrentWorker() != null) {

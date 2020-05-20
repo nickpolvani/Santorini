@@ -77,12 +77,12 @@ public class ZeusTest {
 
     @Test(expected = IllegalStateException.class)
     public void applyChoice() throws Exception {
-        assertEquals(gameState.getIslandBoard().getBuildingLevel(zeus.worker.getCurrentIndexTile()), BlockLevel.GROUND.getLevelInt());
+        assertEquals(gameState.getIslandBoard().getBuildingLevel(zeus.currentWorker.getIndexTile()), BlockLevel.GROUND.getLevelInt());
         assertTrue(zeus.isChooseAvailable());
         zeus.applyChoice(true);
-        assertEquals(gameState.getIslandBoard().getBuildingLevel(zeus.worker.getCurrentIndexTile()), BlockLevel.ONE.getLevelInt());
-        gameState.getIslandBoard().addBlock(zeus.worker.getCurrentIndexTile());
-        gameState.getIslandBoard().addBlock(zeus.worker.getCurrentIndexTile());
+        assertEquals(gameState.getIslandBoard().getBuildingLevel(zeus.currentWorker.getIndexTile()), BlockLevel.ONE.getLevelInt());
+        gameState.getIslandBoard().addBlock(zeus.currentWorker.getIndexTile());
+        gameState.getIslandBoard().addBlock(zeus.currentWorker.getIndexTile());
         zeus.applyChoice(true);
     }
 }

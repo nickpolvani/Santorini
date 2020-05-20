@@ -21,6 +21,9 @@ public class Player implements Serializable {
      */
     private final String nickname;
 
+    /**
+     * The GameState's instance of the current lobby
+     */
     private transient final GameState gameState;
 
     public final Color color;

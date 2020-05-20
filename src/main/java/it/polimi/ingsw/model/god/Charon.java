@@ -44,10 +44,10 @@ public class Charon extends God {
     }
 
     public List<Tile.IndexTile> opponentsWorkerTile() {
-        Collection<Tile.IndexTile> neighbouringTiles = board.indexOfNeighbouringTiles(worker.getIndexTile());
+        Collection<Tile.IndexTile> neighbouringTiles = board.indexOfNeighbouringTiles(currentWorker.getIndexTile());
         return neighbouringTiles.stream()
                 .filter(t -> board.getTile(t).getCurrentWorker() != null &&
-                        board.getTile(t).getCurrentWorker().getColor() != worker.getColor() &&
+                        board.getTile(t).getCurrentWorker().getColor() != currentWorker.getColor() &&
                         findOppositeTile(t) != null)
                 .collect(Collectors.toList());
     }
@@ -63,8 +63,8 @@ public class Charon extends God {
 
     private Tile.IndexTile findOppositeTile(Tile.IndexTile opponentWorker) {
         int oppositeRow, oppositeCol;
-        oppositeRow = (2 * worker.getIndexTile().getRow()) - opponentWorker.getRow();
-        oppositeCol = (2 * worker.getIndexTile().getCol()) - opponentWorker.getCol();
+        oppositeRow = (2 * currentWorker.getIndexTile().getRow()) - opponentWorker.getRow();
+        oppositeCol = (2 * currentWorker.getIndexTile().getCol()) - opponentWorker.getCol();
 
         if (oppositeRow > 4 || oppositeRow < 0 || oppositeCol > 4 || oppositeCol < 0) return null;
         else

@@ -76,19 +76,19 @@ public class MinotaurTest {
         Tile.IndexTile tile3 = new Tile.IndexTile(1, 1);//tile with opponent worker
         Tile.IndexTile tile4 = new Tile.IndexTile(0, 2);//tile with dome
         Tile.IndexTile tile5 = new Tile.IndexTile(1, 2);//tile where there is the other worker of the same team
-        Collection<Tile.IndexTile> foundTiles = minotaur.tileToMove(minotaur.worker.getCurrentIndexTile());
+        Collection<Tile.IndexTile> foundTiles = minotaur.tileToMove(minotaur.currentWorker.getIndexTile());
 
         assertTrue(foundTiles.contains(tile1) && foundTiles.contains(tile2) && foundTiles.contains(tile3)
                 && !foundTiles.contains(tile4) && !foundTiles.contains(tile5)
-                && !foundTiles.contains(minotaur.worker.getCurrentIndexTile()));
+                && !foundTiles.contains(minotaur.currentWorker.getIndexTile()));
 
 
         gameState.getIslandBoard().getTile(new Tile.IndexTile(2, 1)).getBuilding().buildDome();
-        foundTiles = minotaur.tileToMove(minotaur.worker.getCurrentIndexTile());
+        foundTiles = minotaur.tileToMove(minotaur.currentWorker.getIndexTile());
 
         assertTrue(foundTiles.contains(tile1) && foundTiles.contains(tile2) && !foundTiles.contains(tile3)
                 && !foundTiles.contains(tile4) && !foundTiles.contains(tile5)
-                && !foundTiles.contains(minotaur.worker.getCurrentIndexTile()));
+                && !foundTiles.contains(minotaur.currentWorker.getIndexTile()));
 
     }
 
@@ -105,7 +105,7 @@ public class MinotaurTest {
         Worker opponentWorker = gameState.getIslandBoard().getTile(whereMove).getCurrentWorker();
         minotaur.move(whereMove);
         assertEquals(gameState.getIslandBoard().getTile(new Tile.IndexTile(2, 1)).getCurrentWorker(), opponentWorker);
-        assertEquals(gameState.getIslandBoard().getTile(whereMove).getCurrentWorker(), minotaur.worker);
+        assertEquals(gameState.getIslandBoard().getTile(whereMove).getCurrentWorker(), minotaur.currentWorker);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class MinotaurTest {
 
         minotaur.selectWorker(testPlayer.getWorkers().get(1));
         minotaur.move(new Tile.IndexTile(1, 3));
-        assertEquals(minotaur.worker.getCurrentIndexTile(), new Tile.IndexTile(1, 3));
+        assertEquals(minotaur.currentWorker.getIndexTile(), new Tile.IndexTile(1, 3));
 
         assertFalse(minotaur.checkBackwardsTile(new Tile.IndexTile(1, 3), new Tile.IndexTile(1, 4)));
 

@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * @author Polvani-Puoti-Sacchetta
  * Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.
  */
 public class Athena extends God {
@@ -27,18 +26,18 @@ public class Athena extends God {
     }
 
     /**
-     * @param indexTile is the tile chosen by the player to move the worker selected at the beginning of the turn.
-     * @throws IllegalArgumentException
-     * @throws IllegalStateException    thrown if current operation in turn is not MOVE
+     * @param indexTile The indexTile is the tile's index chosen by the player to move the worker selected at the beginning of the turn.
+     * @throws AlreadyOccupiedException Throws by changePosition() in IslandBord
+     * @see it.polimi.ingsw.model.IslandBoard
      */
     @Override
-    public void move(Tile.IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException, IllegalStateException {
-        if (!tileToMove(worker.getIndexTile()).contains(indexTile)) {
+    public void move(Tile.IndexTile indexTile) throws AlreadyOccupiedException {
+        if (!tileToMove(currentWorker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
         }
-        int levelDifference = (board.getBuildingLevel(indexTile) - board.getBuildingLevel(worker.getIndexTile()));
+        int levelDifference = (board.getBuildingLevel(indexTile) - board.getBuildingLevel(currentWorker.getIndexTile()));
 
-        board.changePosition(worker, indexTile);
+        board.changePosition(currentWorker, indexTile);
         if (levelDifference > 0) {
             canMoveUp = false;
         }

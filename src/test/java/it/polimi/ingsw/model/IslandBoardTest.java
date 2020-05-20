@@ -55,7 +55,7 @@ public class IslandBoardTest {
         islandBoard.changePosition(w, new Tile.IndexTile(1, 1));
         assertEquals(w, islandBoard.getTile(new Tile.IndexTile(1, 1)).getCurrentWorker());
         assertNull(islandBoard.getTile(new Tile.IndexTile(0, 0)).getCurrentWorker());
-        assertEquals(new Tile.IndexTile(1, 1), w.getCurrentIndexTile());
+        assertEquals(new Tile.IndexTile(1, 1), w.getIndexTile());
         try {
             Worker w1 = new Worker(new Tile.IndexTile(1, 1), Color.RED);
             islandBoard.getTile(new Tile.IndexTile(1, 1)).setCurrentWorker(w1);

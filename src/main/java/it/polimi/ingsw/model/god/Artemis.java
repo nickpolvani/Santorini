@@ -48,7 +48,7 @@ public class Artemis extends God {
     public void move(IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException {
 
         if (tileFrom == null) {
-            tileFrom = worker.getIndexTile();
+            tileFrom = currentWorker.getIndexTile();
         }
         super.move(indexTile);
 
@@ -81,6 +81,6 @@ public class Artemis extends God {
 
     @Override
     public boolean isChooseAvailable() {
-        return !(tileToMove(worker.getIndexTile()).size() == 0);
+        return !(tileToMove(currentWorker.getIndexTile()).size() == 0);
     }
 }

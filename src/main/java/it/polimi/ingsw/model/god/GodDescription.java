@@ -1,11 +1,12 @@
 package it.polimi.ingsw.model.god;
 
 /**
- * @author Polvani-Puoti-Sacchetta
+ *
  */
 public enum GodDescription {
     APOLLO("Apollo", "Your Worker may  move into an opponent Worker’s space by forcing their " +
             "Worker to the space just vacated."),
+    ARES("Ares", "You may remove an unoccupied block (not dome) neighboring your unmoved Worker."),
     ARTEMIS("Artemis", "Your Worker may move one additional time, but not back to its initial space."),
     ATHENA("Athena", "If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn."),
     ATLAS("Atlas", "Your Worker may build a dome at any level."),
@@ -23,8 +24,6 @@ public enum GodDescription {
             "occupied by opponent Workers, removing the opponent Workers from the game."),
     POSEIDON("Poseidon", "If your unmoved Worker is on the ground level, " +
             "it may build up to three times."),
-    /* Implement Ares if poseidon is too difficult
-    ARES("Ares", "You may remove an unoccupied block (not dome) neighboring your unmoved Worker."),*/
     ZEUS("Zeus", "Your Worker may build a block under itself. " +
             "If you decide to build under your worker, you won't be able to perform a normal build operation");
 
@@ -52,33 +51,36 @@ public enum GodDescription {
     }
 
     public static GodDescription parse(String godName) throws IllegalArgumentException {
-        if (godName.toUpperCase().equals(APOLLO.getName().toUpperCase())) {
+        godName = godName.toUpperCase();
+        if (godName.equals(APOLLO.getName().toUpperCase())) {
             return APOLLO;
-        } else if (godName.toUpperCase().equals(ARTEMIS.getName().toUpperCase())) {
+        } else if (godName.equals(ARTEMIS.getName().toUpperCase())) {
             return ARTEMIS;
-        } else if (godName.toUpperCase().equals(ATHENA.getName().toUpperCase())) {
+        } else if (godName.equals(ATHENA.getName().toUpperCase())) {
             return ATHENA;
-        } else if (godName.toUpperCase().equals(ATLAS.getName().toUpperCase())) {
+        } else if (godName.equals(ATLAS.getName().toUpperCase())) {
             return ATLAS;
-        } else if (godName.toUpperCase().equals(DEMETER.getName().toUpperCase())) {
+        } else if (godName.equals(DEMETER.getName().toUpperCase())) {
             return DEMETER;
-        } else if (godName.toUpperCase().equals(PAN.getName().toUpperCase())) {
+        } else if (godName.equals(PAN.getName().toUpperCase())) {
             return PAN;
-        } else if (godName.toUpperCase().equals(MINOTAUR.getName().toUpperCase())) {
+        } else if (godName.equals(MINOTAUR.getName().toUpperCase())) {
             return MINOTAUR;
-        } else if (godName.toUpperCase().equals(PROMETHEUS.getName().toUpperCase())) {
+        } else if (godName.equals(PROMETHEUS.getName().toUpperCase())) {
             return PROMETHEUS;
-        } else if (godName.toUpperCase().equals(HEPHAESTUS.getName().toUpperCase())) {
+        } else if (godName.equals(HEPHAESTUS.getName().toUpperCase())) {
             return HEPHAESTUS;
-        } else if (godName.toUpperCase().equals(CHARON.getName().toUpperCase())) {
+        } else if (godName.equals(CHARON.getName().toUpperCase())) {
             return CHARON;
-        } else if (godName.toUpperCase().equals(HESTIA.getName().toUpperCase())) {
+        } else if (godName.equals(HESTIA.getName().toUpperCase())) {
             return HESTIA;
-        } else if (godName.toUpperCase().equals(MEDUSA.getName().toUpperCase())) {
+        } else if (godName.equals(MEDUSA.getName().toUpperCase())) {
             return MEDUSA;
-        } else if (godName.toUpperCase().equals(POSEIDON.getName().toUpperCase())) {
+        } else if (godName.equals(POSEIDON.getName().toUpperCase())) {
             return POSEIDON;
-        } else if (godName.toUpperCase().equals(ZEUS.getName().toUpperCase())) {
+        } else if (godName.equals(ARES.getName().toUpperCase())) {
+            return ARES;
+        } else if (godName.equals(ZEUS.getName().toUpperCase())) {
             return ZEUS;
         } else {
             throw new IllegalArgumentException();

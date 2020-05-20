@@ -40,8 +40,8 @@ public class Hestia extends God {
 
     @Override
     public boolean isChooseAvailable() {
-        int col = worker.getIndexTile().getCol();
-        int row = worker.getIndexTile().getRow();
-        return (col != 0 && col != 4 && row != 0 && row != 4 && tileToBuild(worker.getIndexTile()).size() != 0);
+        int col = currentWorker.getIndexTile().getCol();
+        int row = currentWorker.getIndexTile().getRow();
+        return (col != 0 && col != 4 && row != 0 && row != 4 && tileToBuild(currentWorker.getIndexTile()).size() != 0);
     }
 }

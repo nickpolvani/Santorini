@@ -1,21 +1,32 @@
 package it.polimi.ingsw.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
- * @author Polvani-Puoti-Sacchetta
+ * The Worker class represent the checker of the game. A Worker can only be on the game's board, in any tile.
+ * A Worker always has a owner. The owner can have a maximum of 2 workers.
+ * The game start with 2 workers for everyone player, but during the game it's possible for a player to lose one of his workers.
+ * If a player loses both his workers lose.
+ * Each worker can move one cell and build one block for turn.
+ *
+ * @see Player
+ * @see it.polimi.ingsw.model.Tile.IndexTile
+ * @see Color
  */
 public class Worker implements Cloneable, Serializable {
 
     /**
-     * The color of worker's team, which is chosen by the SocketClientConnection, at the game's start, and it will be the same for the whole game.
+     * The color of worker's team, which is chosen by the GameState constructor,
+     * at the game's start, and it will be the same for the whole game.
+     * @see Color
      */
     private final Color color;
 
     /**
-     * every worker has a position on the island board, more specifically on a tile.
-     * positionTile represents the current position of the worker
+     * Every worker has a position on the island board, more specifically on a tile.
+     * CurrentIndexTile represents the current position of the worker.
+     * It cannot be null
+     * @see it.polimi.ingsw.model.Tile.IndexTile
      */
     private Tile.IndexTile indexTile;
 
@@ -28,7 +39,7 @@ public class Worker implements Cloneable, Serializable {
     }
 
     /**
-     * @return this.color
+     * @return The worker's color
      */
     public Color getColor() {
         return this.color;
@@ -45,6 +56,7 @@ public class Worker implements Cloneable, Serializable {
     /**
      * @param positionTile :the reference of the new tile where a player decides to move his worker
      */
+    //TODO forse fa inserito il check che positionTile non può essere null, però da fastidio medusa che lo setta a null nel caso si cancelli un worker.
     public void setIndexTile(Tile.IndexTile positionTile) {
         this.indexTile = positionTile;
     }
@@ -57,15 +69,9 @@ public class Worker implements Cloneable, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Worker)) return false;
         Worker worker = (Worker) o;
         return color == worker.color &&
-                Objects.equals(indexTile, worker.indexTile);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(color, indexTile);
+                indexTile.equals(worker.indexTile);
     }
 }

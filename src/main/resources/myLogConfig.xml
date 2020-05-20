@@ -17,9 +17,20 @@
             <param name="ConversionPattern" value="%d{HH:mm:ss} [%t] %p [%C:%L] - %m%n"/>
         </layout>
     </appender>
+    <appender name="APPENDER_FILE_LOBBY" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="Lobby.log"/>
+        <param name="append" value="false"/>
+        <param name="MaxFileSize" value="100KB"/>
+        <!-- Keep one backup file -->
+        <param name="MaxBackupIndex" value="1"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{HH:mm:ss} [%t] %p [%C:%L] - %m%n"/>
+        </layout>
+    </appender>
     <root>
         <level value="debug"/>
         <appender-ref ref="APPENDER_OUT"/>
         <appender-ref ref="APPENDER_FILE"/>
+        <appender-ref ref="APPENDER_FILE_LOBBY"/>
     </root>
 </log4j:configuration>

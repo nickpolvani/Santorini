@@ -3,10 +3,12 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.options.Options;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class SocketClientConnection {
     private final String IP = "127.0.0.1";
@@ -50,13 +52,13 @@ public class SocketClientConnection {
                         throw new IllegalArgumentException();
                     }
                 }
+            } catch (EOFException e) {
+                controller.getClientView().showMessage("Connection Server-side has been closed, you opponents are gone");
+            } catch (SocketException e) {
+                controller.getClientView().showMessage("Connection Server-side has been closed");
             } catch (Exception e) {
-                controller.getClientView().showMessage("Connection  Server-side has been closed, maybe because you opponents are gone");
-                try {
-                    closeConnection();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+                e.printStackTrace();
+                controller.getClientView().showMessage("Connection Server-side has been closed, maybe because you opponents are gone");
             }
         });
         t.start();
@@ -64,8 +66,7 @@ public class SocketClientConnection {
     }
 
     public void asyncWriteToSocket(final Action gameAction) {
-        Thread t = new Thread(() -> writeToSocket(gameAction));
-        t.start();
+        new Thread(() -> writeToSocket(gameAction)).start();
     }
 
     public synchronized void writeToSocket(final Object o) {
@@ -76,11 +77,11 @@ public class SocketClientConnection {
                 out.flush();
             }
         } catch (Exception e) {
-            setActive(false);
+            closeConnection();
         }
     }
 
-    public void run() throws IOException {
+    public void run() {
         try {
             Thread t0 = asyncReadFromSocket();
             t0.join();
@@ -91,11 +92,17 @@ public class SocketClientConnection {
         }
     }
 
-    public void closeConnection() throws IOException {
+    public void closeConnection() {
+        if (!active) return;
         active = false;
         controller.getClientView().close();
-        in.close();
-        out.close();
-        socket.close();
+        try {
+            in.close();
+            out.close();
+            socket.close();
+            controller.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

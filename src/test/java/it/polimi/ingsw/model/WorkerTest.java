@@ -34,7 +34,7 @@ public class WorkerTest {
         }
 
         for (int i = 0; i < workers.length; i++) {
-            assertEquals(workers[i].getCurrentIndexTile(), indexes[i]);
+            assertEquals(workers[i].getIndexTile(), indexes[i]);
             assertEquals(workers[i].getColor(), Color.RED);
         }
     }
@@ -45,9 +45,9 @@ public class WorkerTest {
         Worker testWorker = new Worker(indexes[0], Color.RED);
 
         indexes[0] = new Tile.IndexTile(3, 1);
-        testWorker.setCurrentIndexTile(indexes[0]);
+        testWorker.setIndexTile(indexes[0]);
 
-        assertEquals(testWorker.getCurrentIndexTile(), indexes[0]);
+        assertEquals(testWorker.getIndexTile(), indexes[0]);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class WorkerTest {
         Worker testWorker = new Worker(indexes[0], Color.RED);
         Worker testCloneWorker = testWorker.clone();
 
-        assertEquals(testCloneWorker.getCurrentIndexTile(), testWorker.getCurrentIndexTile());
+        assertEquals(testCloneWorker.getIndexTile(), testWorker.getIndexTile());
         assertEquals(testCloneWorker.getColor(), testWorker.getColor());
     }
 

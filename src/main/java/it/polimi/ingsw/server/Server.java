@@ -116,8 +116,8 @@ public class Server {
                 logger.debug("Temporary lobby closed because only player left");
             } else {
                 openLobby.removePlayer(username);
-                removeRegisteredUsers(username);
             }
+            removeRegisteredUsers(username);
         } else { //caso quando la connesione cade prima di definire la prima lobby
             removeRegisteredUsers(username);
         }

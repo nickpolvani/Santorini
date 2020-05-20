@@ -37,6 +37,10 @@ public class ActionFactory {
                     throw new IllegalArgumentException();
                 action = new PoseidonBuildGameAction((Tile.IndexTile) ((List) object).get(0), (int) ((List) object).get(1), nickname);
                 break;
+            case REMOVE_BLOCK:
+                if (!(object instanceof Tile.IndexTile)) throw new IllegalArgumentException();
+                action = new RemoveBlock((Tile.IndexTile) object, nickname);
+                break;
             case SELECT_WORKER:
                 if (!(object instanceof Tile.IndexTile)) throw new IllegalArgumentException();
                 action = new SelectWorkerGameAction((Tile.IndexTile) object, nickname);

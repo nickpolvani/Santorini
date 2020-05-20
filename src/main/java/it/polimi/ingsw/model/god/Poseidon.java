@@ -52,14 +52,8 @@ public class Poseidon extends God {
     @Override
     public boolean isChooseAvailable() {
         //we have to do this check because there is Medusa, thus the otherWorker may have been deleted from the game
-        if (player.getWorkers().size() == 1) return false;
-        for (Worker w : player.getWorkers()) {
-            if (!w.equals(worker)) {
-                unmovedWorker = w;
-                break;
-            }
-        }
-        assert unmovedWorker != null;
+        unmovedWorker = findNotCurrentWorker();
+        if (unmovedWorker == null) return false;
         return tileToBuild(unmovedWorker.getIndexTile()).size() > 0;
     }
 

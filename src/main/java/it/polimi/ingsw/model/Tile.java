@@ -9,26 +9,40 @@ import java.util.Objects;
 
 /**
  * The tile is the fundamental component of the IslandBoard.
- * It's these objects that keep the state of IslandBoard in memory.
+ * It's these objects that keep the state of the IslandBoard in memory.
  * On a tile it is allowed to build a tower and place a worker.
  * If there is a worker or a dome on the tile, it's occupied.
  *
- * @author Juri Sacchetta
+ * @see Cloneable
+ * @see Serializable
+ * @see IndexTile
+ * @see Building
+ * @see Worker
  */
 public class Tile implements Cloneable, Serializable {
 
-    private static final int N_ROWS = 4;
-    private static final int N_COLS = 7;
+    //TODO credo sia roba per la toString() chiedere a fra di fare la doc
+    public static final int N_ROWS = 4;
+    public static final int N_COLS = 7;
+
     /**
-     * The tile's index pair in the board
+     * The pair of indexes of the tile on the board, it's set by the IslandBoard's constructor.
+     *
+     * @see IndexTile
      */
     private final IndexTile index;
+
     /**
-     * MessageType used to define the height of the tower
+     * It represent the level of the tower on the tile.
+     *
+     * @see Building
      */
     private final Building building;
+
     /**
-     * Worker instance present on the tile
+     * The Worker instance present on the tile, null if there isn't one
+     *
+     * @see Worker
      */
     private Worker currentWorker;
 
@@ -49,12 +63,17 @@ public class Tile implements Cloneable, Serializable {
     }
 
     /**
-     * @return Return a IndexTile containing tile's index in the board
+     * @return Return a IndexTile containing tile's index in the board.
+     * @see IndexTile
      */
     public IndexTile getIndex() {
         return index;
     }
 
+    /**
+     * @return Return a int that represent the level of the build on the tile.
+     * @see Building
+     */
     public int getBuildingLevel() {
         return building.getLevel().getLevelInt();
     }
@@ -69,15 +88,18 @@ public class Tile implements Cloneable, Serializable {
     /**
      * Set the current worker on the tile, could change the return of isOccupied().
      *
-     * @param w Worker's instance to be placed on the tile or 'null' to free the tile.
+     * @param worker Worker's instance to be placed on the tile or 'null' to free the tile.
+     * @throws AlreadyOccupiedException Throws if the currentWorker and the parameter worker are not null.
+     * @see Worker
      */
-    public void setCurrentWorker(Worker w) throws AlreadyOccupiedException {
-        if (w != null && currentWorker != null) throw new AlreadyOccupiedException();
-        this.currentWorker = w;
+    public void setCurrentWorker(Worker worker) throws AlreadyOccupiedException {
+        if (worker != null && currentWorker != null) throw new AlreadyOccupiedException();
+        this.currentWorker = worker;
     }
 
     /**
-     * @return Returns the building's instance on the tile.
+     * @return Return a building that represent the tower on the tile.
+     * @see Building
      */
     public Building getBuilding() {
         return building;
@@ -87,7 +109,7 @@ public class Tile implements Cloneable, Serializable {
     /**
      * To know if the tile is free or occupied. A tile is occupied if it's present a worker or a dome on it.
      *
-     * @return Returns true if there is worker or dome on the tile.
+     * @return Returns true if there is worker or dome on the tile, false otherwise.
      */
     public boolean isOccupied() {
         return this.currentWorker != null || building.getDome();
@@ -115,14 +137,6 @@ public class Tile implements Cloneable, Serializable {
             }
         }
         return clone;
-    }
-
-    public int getN_ROWS() {
-        return N_ROWS;
-    }
-
-    public int getN_COLS() {
-        return N_COLS;
     }
 
     @Override
@@ -204,6 +218,11 @@ public class Tile implements Cloneable, Serializable {
             }
         }
 
+        public void removeBlock() throws DomeAlreadyPresentException {
+            if (this.dome) throw new DomeAlreadyPresentException();
+            this.level = this.level.previousLevel();
+        }
+
         /**
          * Used to know if there is a dome on the tower.
          *
@@ -265,24 +284,24 @@ public class Tile implements Cloneable, Serializable {
         }
 
         /**
-         * @return Returns the column inde of the tile.
+         * @return Returns the column index of the tile.
          */
         public int getCol() {
             return col;
         }
 
+        /*I've had to override this method because, otherwise, we could not check if two different instances
+        oh IndexTile with the same column and row are equals. In fact, default method of class object checks if
+        references are equal each other, not the properties of the instances.*/
+
         /**
-         * I've had to override this method because, otherwise, we could not check if two different instances
-         * oh IndexTile with the same column and row are equals. In fact, default method of class object checks if
-         * references are equal each other, not the properties of the instances.
-         *
-         * @param o
-         * @return boolean
+         * @param obj The object's instance to check if it's equals to this
+         * @return boolean Returns a boolean that it's TRUE if obj is equals to this, false otherwise
          */
         @Override
-        public boolean equals(Object o) {
-            if (!(o instanceof IndexTile)) return false;
-            IndexTile otherIndex = (IndexTile) o;
+        public boolean equals(Object obj) {
+            if (!(obj instanceof IndexTile)) return false;
+            IndexTile otherIndex = (IndexTile) obj;
             return this.col == otherIndex.getCol() && this.row == otherIndex.getRow();
         }
 

@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Polvani-Puoti-Sacchetta
+ * GodsFactory implement a singleton patter foreach God in game.
+ * This class is the only one that can instantiate gods.
+ *
+ * @see God
+ * @see GameState
  */
 public class GodsFactory {
 
@@ -39,6 +43,9 @@ public class GodsFactory {
         switch (name) {
             case APOLLO:
                 g = new Apollo(gameState, player);
+                break;
+            case ARES:
+                g = new Ares(gameState, player);
                 break;
             case ARTEMIS:
                 g = new Artemis(gameState, player);
