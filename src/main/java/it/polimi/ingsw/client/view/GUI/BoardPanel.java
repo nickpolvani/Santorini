@@ -1,9 +1,9 @@
-package it.polimi.ingsw.client.view;
+package it.polimi.ingsw.client.view.GUI;
 
 import javax.swing.*;
 import java.awt.*;
 
-class BoardPanel extends JPanel {
+public class BoardPanel extends JPanel {
     private Image img;
 
     public BoardPanel(String img) {

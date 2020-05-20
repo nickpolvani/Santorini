@@ -59,6 +59,7 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
     @Override
     public void switchTurn() {
         currentPlayer = controller.getNextPlayer(currentPlayer);
+
         if (currentPlayer == challenger) {
             //When the current player becomes the challenger again, only one god must remain in the selectedGods list.
             if (selectedGods.size() != 1) throw new IllegalStateException();

@@ -5,7 +5,7 @@ import it.polimi.ingsw.bean.action.ActionFactory;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.bean.options.SetupOptions;
 import it.polimi.ingsw.client.view.CLI;
-import it.polimi.ingsw.client.view.GUI;
+import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.observer.Observer;
