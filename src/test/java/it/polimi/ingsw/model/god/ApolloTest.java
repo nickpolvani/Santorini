@@ -99,7 +99,7 @@ public class ApolloTest {
         Tile.IndexTile i1 = new Tile.IndexTile(0, 1);
         Tile.IndexTile i2 = new Tile.IndexTile(1, 0);
 
-        Collection<Tile.IndexTile> tileToMove = apollo.tileToMove(apollo.worker.getIndexTile());
+        Collection<Tile.IndexTile> tileToMove = apollo.tileToMove(apollo.worker.getCurrentIndexTile());
         assertTrue(tileToMove.size() == 2 && tileToMove.contains(i1)
                 && tileToMove.contains(i2));
 
@@ -110,7 +110,7 @@ public class ApolloTest {
         }
 
         apollo.selectWorker(player1.getWorkers().get(1));
-        tileToMove = apollo.tileToMove(apollo.worker.getIndexTile());
+        tileToMove = apollo.tileToMove(apollo.worker.getCurrentIndexTile());
         assertTrue(tileToMove.size() == 6 && tileToMove.contains(new IndexTile(0, 1)) &&
                 tileToMove.contains(new IndexTile(1, 0))
                 && tileToMove.contains(new IndexTile(2, 1))
@@ -125,7 +125,7 @@ public class ApolloTest {
         List<IndexTile> positions = new ArrayList<>();
         positions.add(new IndexTile(0, 1));
         positions.add(new IndexTile(1, 0));
-        assertEquals(2, apollo.tileToMove(apollo.worker.getIndexTile()).size());
+        assertEquals(2, apollo.tileToMove(apollo.worker.getCurrentIndexTile()).size());
         for (IndexTile position : positions) {
             try {
                 gameState.getIslandBoard().getTile(position).getBuilding().addBlock();
@@ -134,7 +134,7 @@ public class ApolloTest {
                 e.printStackTrace();
             }
         }
-        assertEquals(0, apollo.tileToMove(apollo.worker.getIndexTile()).size());
+        assertEquals(0, apollo.tileToMove(apollo.worker.getCurrentIndexTile()).size());
     }
 
     @Test
@@ -186,7 +186,7 @@ public class ApolloTest {
     public void move() {
         apollo.selectWorker(player1.getWorkers().get(0));
         try {
-            IndexTile oldPosition = apollo.worker.getIndexTile();
+            IndexTile oldPosition = apollo.worker.getCurrentIndexTile();
             IndexTile newPosition = new IndexTile(0, 1);
             Worker otherWorker = gameState.getIslandBoard().getTile(newPosition).getCurrentWorker();
             assertNotNull(otherWorker);
@@ -201,7 +201,7 @@ public class ApolloTest {
     @Test
     public void move2() {
         apollo.selectWorker(player1.getWorkers().get(0));
-        IndexTile oldPosition = apollo.worker.getIndexTile();
+        IndexTile oldPosition = apollo.worker.getCurrentIndexTile();
         Tile oldTile = gameState.getIslandBoard().getTile(oldPosition);
         IndexTile newPosition = new IndexTile(0, 1);
         Tile newTile = gameState.getIslandBoard().getTile(newPosition);

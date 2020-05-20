@@ -15,7 +15,6 @@ import java.net.Socket;
 
 public class SocketServerConnection extends Observable<GameAction> implements ClientConnection, Runnable {
 
-    // Questa è la socket per comunicare al SocketClientConnection
     private final Socket socket;
     private final Server server;
     private ObjectInputStream in;
@@ -45,22 +44,20 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
     }
 
     @Override
-    public synchronized void closeConnection() { //Questo avvisa della chiusura il SocketClientConnection
-        if (isActive()) {
-            send("Connection closed!");
-        }
+    public synchronized void closeConnection() {
+        if (!isActive()) return;
         active = false;
         try {
             socket.close();
         } catch (IOException e) {
-            System.err.println("Error when closing socket!");
+            logger.error("Error when closing socket!");
         }
-        logger.debug("Closing SocketServerConnection of " + username + " PORT=" + socket.getPort());
+        logger.debug("Socket closed of " + username + " PORT=" + socket.getPort());
     }
 
     private void close() {
         if (isActive()) {
-            active = false;
+            closeConnection();
             if (username != null) {
                 server.removePlayer(username);
             }
@@ -85,7 +82,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
                 read = in.readObject();
                 if (!(read instanceof SelectNicknameAction)) throw new IllegalArgumentException();
                 String nickname = ((SelectNicknameAction) read).getNickname();
-                if (nickname.isEmpty() || server.getRegisteredUsers().containsKey(nickname)) {
+                if (nickname.isEmpty() || !server.addRegisteredUsers(nickname, this)) {
                     send(new SetupOptions(nickname, MessageType.NICKNAME_ALREADY_SET, Operation.SELECT_NICKNAME));
                 } else {
                     send(new SetupOptions(nickname, MessageType.NICKNAME_APPROVED, Operation.MESSAGE_NO_REPLY));
@@ -94,7 +91,6 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             } while (!nicknameApproved);
 
             username = ((SelectNicknameAction) read).getNickname();
-            server.addRegisteredUsers(username, this);
             logger.debug("Player's username on socket with port=" + socket.getPort() + " is: " + username);
             server.insertIntoLobby(username, this, in);
             while (isActive()) {

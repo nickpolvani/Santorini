@@ -99,13 +99,13 @@ public class CharonTest {
 
         Worker toMove = gameState.getPlayers().get(1).getWorkers().get(0);//worker on tile 0,1
         testPlayer.getGod().selectWorker(testPlayer.getWorkers().get(1));
-        charon.moveWorker(toMove.getIndexTile());
+        charon.moveWorker(toMove.getCurrentIndexTile());
         assertEquals(gameState.getIslandBoard().getCurrentWorker(1, 3), toMove);
 
         gameState.getIslandBoard().changePosition(testPlayer.getWorkers().get(0), new Tile.IndexTile(2, 2));
         charon.selectWorker(testPlayer.getWorkers().get(0));
         toMove = gameState.getPlayers().get(1).getWorkers().get(0); //the worker that now is in 1,3
-        charon.moveWorker(toMove.getIndexTile());
+        charon.moveWorker(toMove.getCurrentIndexTile());
         assertEquals(toMove, gameState.getIslandBoard().getCurrentWorker(3, 1));
     }
 }
