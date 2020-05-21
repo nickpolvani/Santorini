@@ -50,11 +50,15 @@ public class Hephaestus extends God {
     }
 
     @Override
-    public void applyChoice(boolean confirm) throws DomeAlreadyPresentException {
+    public void applyChoice(boolean confirm) {
         confirmed = confirm;
         remainingOperations = new LinkedList<>();
         if (confirmed) {
-            board.addBlock(tileForAdditionalBlock);
+            try {
+                board.addBlock(tileForAdditionalBlock);
+            } catch (DomeAlreadyPresentException e) {
+                e.printStackTrace();
+            }
         }
     }
 

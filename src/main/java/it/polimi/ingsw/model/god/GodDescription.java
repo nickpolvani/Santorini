@@ -6,7 +6,6 @@ package it.polimi.ingsw.model.god;
 public enum GodDescription {
     APOLLO("Apollo", "Your Worker may  move into an opponent Worker’s space by forcing their " +
             "Worker to the space just vacated."),
-    ARES("Ares", "You may remove an unoccupied block (not dome) neighboring your unmoved Worker."),
     ARTEMIS("Artemis", "Your Worker may move one additional time, but not back to its initial space."),
     ATHENA("Athena", "If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn."),
     ATLAS("Atlas", "Your Worker may build a dome at any level."),
@@ -17,6 +16,7 @@ public enum GodDescription {
     PROMETHEUS("Prometheus", "If your Worker does not move up, it may build both before and after moving."),
     HEPHAESTUS("Hephaestus", "Your Worker may build one additional block (not dome) on top of your first block."),
     //Advanced GOD
+    ARES("Ares", "You may remove an unoccupied block (not dome) neighboring your unmoved Worker."),
     CHARON("Charon", "Before your Worker moves, you may force a neighboring opponent Worker to " +
             "the space directly on the other side of your Worker, if that space is unoccupied."),
     HESTIA("Hestia", "Your Worker may build one additional time, but this cannot be on a perimeter space."),

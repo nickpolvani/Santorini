@@ -1,13 +1,27 @@
 package it.polimi.ingsw.bean.action;
 
-import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.server.Lobby;
 
+/**
+ * This is an setup action used when a user has to choose
+ * the size of the new lobby to which it will be added.
+ */
 public class LobbySizeAction extends Action {
 
+    /**
+     * The size of lobby, it can be 2 or 3.
+     */
     private final int lobbySize;
 
+    /**
+     * Default constructor
+     * @param lobbySize The size of the new lobby.
+     * @param nickname The player's nickname who generated the action.
+     * @see Lobby
+     */
     public LobbySizeAction(int lobbySize, String nickname) {
         super(nickname);
+        if (lobbySize != 2 && lobbySize != 3) throw new IllegalArgumentException();
         this.lobbySize = lobbySize;
     }
 
@@ -15,10 +29,6 @@ public class LobbySizeAction extends Action {
         return lobbySize;
     }
 
-    @Override
-    public Boolean isCompatible(Operation operation) {
-        return null;
-    }
 
     @Override
     public boolean equals(Object obj) {

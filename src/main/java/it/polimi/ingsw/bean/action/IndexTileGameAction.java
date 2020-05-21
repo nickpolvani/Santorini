@@ -1,10 +1,28 @@
 package it.polimi.ingsw.bean.action;
 
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 
+/**
+ * Many action are just the choice of a tile,
+ * therefore all these actions extend this abstract class
+ *
+ * @see GameAction
+ */
 public abstract class IndexTileGameAction extends GameAction {
+
+    /**
+     * The tile's index chosen
+     * @see Tile.IndexTile
+     */
     protected final Tile.IndexTile indexTile;
 
+    /**
+     * Default constructor
+     * @param indexTile The tile's index chosen
+     * @param nickname The player's nickname who generated the action
+     * @see Player
+     */
     public IndexTileGameAction(Tile.IndexTile indexTile, String nickname) {
         super(nickname);
         this.indexTile = indexTile;

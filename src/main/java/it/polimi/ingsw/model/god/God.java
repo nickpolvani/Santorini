@@ -173,7 +173,7 @@ public abstract class God {
      *
      * @param confirm: the choice of the player
      */
-    public void applyChoice(boolean confirm) throws DomeAlreadyPresentException {
+    public void applyChoice(boolean confirm) {
         this.confirmed = confirm;
     }
 

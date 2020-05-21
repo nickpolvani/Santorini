@@ -48,6 +48,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         if (!isActive()) return;
         active = false;
         try {
+            out.flush();
             socket.close();
         } catch (IOException e) {
             logger.error("Error when closing socket!");

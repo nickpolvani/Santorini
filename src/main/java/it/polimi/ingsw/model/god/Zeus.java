@@ -42,7 +42,7 @@ public class Zeus extends God {
     }
 
     @Override
-    public void applyChoice(boolean confirm) throws DomeAlreadyPresentException {
+    public void applyChoice(boolean confirm) {
         if (confirm) {
             this.confirmed = true;
             if (board.getBuildingLevel(currentWorker.getIndexTile()) == 3) throw new IllegalStateException();
@@ -50,7 +50,7 @@ public class Zeus extends God {
                 board.getTile(currentWorker.getIndexTile()).setCurrentWorker(null);
                 board.addBlock(currentWorker.getIndexTile());
                 board.getTile(currentWorker.getIndexTile()).setCurrentWorker(currentWorker);
-            } catch (AlreadyOccupiedException e) {
+            } catch (AlreadyOccupiedException | DomeAlreadyPresentException e) {
                 e.printStackTrace();
             }
         }

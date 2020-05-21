@@ -6,8 +6,23 @@ import it.polimi.ingsw.model.god.GodDescription;
 
 import java.util.List;
 
+/**
+ * Class used to create the correct action in response to a given operation
+ *
+ * @see Action
+ * @see Operation
+ */
 public class ActionFactory {
 
+    /**
+     * Create an instance of the correct type of action based on the parameters passed.
+     * The created action also contains the correct arguments.
+     * @param operation The current operation that came with the previous options.
+     * @param object Contains the arguments to put into the new action. It can be of various types.
+     * @param nickname The player's nickname who generated the action.
+     * @return The correct action that will be send to the server.
+     * @see Operation
+     */
     public static Action createAction(Operation operation, Object object, String nickname) {
         Action action;
         switch (operation) {

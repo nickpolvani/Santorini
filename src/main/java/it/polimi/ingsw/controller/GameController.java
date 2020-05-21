@@ -73,15 +73,18 @@ public class GameController extends Observable<Options> implements Observer<Game
 
     public void start() {
         this.turn.start();
+        logger.debug("The controller started");
     }
 
     public void hasWon(Player winner) {
+        logger.debug("The player " + winner + "has won!");
         String notifyMessage = (MessageType.WIN + winner.getNickname());
         notify(new MessageOption(winner.getNickname(), notifyMessage, Operation.MESSAGE_NO_REPLY));
         lobby.close();
     }
 
     public void hasLost(Player looser) {
+        logger.debug("The player " + looser + "has lost!");
         String notifyMessage = (MessageType.LOST + looser.getNickname());
         notify(new MessageOption(looser.getNickname(), notifyMessage, Operation.MESSAGE_NO_REPLY));
         gameState.getPlayers().remove(looser);
