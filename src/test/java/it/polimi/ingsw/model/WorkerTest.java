@@ -51,7 +51,7 @@ public class WorkerTest {
     }
 
     @Test
-    public void cloneTest() throws CloneNotSupportedException {
+    public void cloneTest() {
         Worker testWorker = new Worker(indexes[0], Color.RED);
         Worker testCloneWorker = testWorker.clone();
 

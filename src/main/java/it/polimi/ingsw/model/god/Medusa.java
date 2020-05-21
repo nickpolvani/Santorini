@@ -33,9 +33,12 @@ public class Medusa extends God {
 
     @Override
     public Collection<Tile.IndexTile> tileToBuild(Tile.IndexTile indexTile) {
-        int currentLevel = board.getBuildingLevel(currentWorker.getIndexTile());
+        int currentLevel = board.getBuildingLevel(indexTile);
         return board.indexOfNeighbouringTiles(indexTile).stream()
-                .filter(x -> !board.getDome(x) && !(board.getTile(x).getCurrentWorker() != null && board.getTile(x).getBuildingLevel() >= currentLevel))
+                .filter(x -> !board.getDome(x)
+                        && (board.getTile(x).getCurrentWorker() == null ||
+                        (currentLevel > board.getTile(x).getBuildingLevel() &&
+                                board.getCurrentWorker(x).getColor() != currentWorker.getColor())))
                 .collect(Collectors.toList());
     }
 
@@ -45,7 +48,6 @@ public class Medusa extends God {
             throw new IllegalArgumentException("Tile where you want to build is not allowed!");
         }
         if (board.getTile(indexTile).getCurrentWorker() != null) {
-            board.getTile(indexTile).getCurrentWorker().setIndexTile(null);
             removeWorker(indexTile);
         }
         board.addBlock(indexTile);
@@ -61,14 +63,15 @@ public class Medusa extends God {
      *
      */
     private void removeWorker(Tile.IndexTile index) {
+        Worker toRemove = board.getCurrentWorker(index);
         Player player = gameState.getPlayers().stream().filter(p -> {
             for (Worker w : p.getWorkers()) {
-                if (w.equals(board.getCurrentWorker(index))) return true;
+                if (w.equals(toRemove)) return true;
             }
             return false;
         }).findAny().orElse(null);
         if (player == null) throw new IllegalArgumentException();
-        player.getWorkers().remove(board.getCurrentWorker(index));
+        player.getWorkers().remove(toRemove);
         try {
             board.getTile(index).setCurrentWorker(null);
         } catch (AlreadyOccupiedException e) {

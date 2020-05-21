@@ -73,8 +73,10 @@ public class Player implements Serializable {
      */
     public void setWorkers(Tile.IndexTile[] indexes) throws AlreadySetException {
         if (this.workers != null) throw new AlreadySetException("Team already set");
-        this.workers = new ArrayList<>();
-        this.workers.addAll(Arrays.asList(new Worker(indexes[0], this.color), new Worker(indexes[1], this.color)));
+        this.workers = new ArrayList<>(Arrays.asList(
+                new Worker(indexes[0], this.color),
+                new Worker(indexes[1], this.color)
+        ));
         for (int i = 0; i < workers.size(); i++) {
             try {
                 gameState.getIslandBoard().getTile(indexes[i]).setCurrentWorker(workers.get(i));
