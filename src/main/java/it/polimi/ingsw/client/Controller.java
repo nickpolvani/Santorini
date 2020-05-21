@@ -20,7 +20,7 @@ import java.util.TimerTask;
 public class Controller implements Observer<String> {
 
     private View clientView;
-    private final long timeToAnswer = 60000; //milliseconds
+    private final long timeToAnswer = 120000; //milliseconds
 
     private SocketClientConnection socketClientConnection;
     private Options currentOption;
@@ -125,7 +125,7 @@ public class Controller implements Observer<String> {
             if (input.toUpperCase().equals("CLI")) {
                 clientView = new CLI();
             } else if (input.toUpperCase().equals("GUI")) {
-                clientView = new GUI();
+                clientView = new GUI(this);
             }
         }
         clientView.addObserver(this);
@@ -200,5 +200,9 @@ public class Controller implements Observer<String> {
             clientView = null;
             setup();
         }
+    }
+
+    public Options getCurrentOption() {
+        return currentOption;
     }
 }

@@ -63,4 +63,8 @@ public class GodOptions extends Options {
         }
         return list.toString();
     }
+
+    public List<GodDescription> getGodsToChoose() {
+        return godsToChoose;
+    }
 }

@@ -42,8 +42,7 @@ public class SetupPanel extends ActivePanel {
         c.gridy = 2;
         c.ipadx = 40;
         this.add(submitButton, c);
-
-
     }
+
 
 }
