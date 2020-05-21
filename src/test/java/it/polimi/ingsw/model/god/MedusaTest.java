@@ -47,13 +47,15 @@ public class MedusaTest {
 
         // Setup Worker
 
-        Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
-        Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(1, 0), new Tile.IndexTile(1, 3)};
-        Tile.IndexTile[] workerPositions3 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
         try {
+            Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
             gameState.getIslandBoard().addBlock(workerPositions1[0]); //Building a block under worker[0] of medusa in order to use Medusa Power
             player1.setWorkers(workerPositions1);
+
+            Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(1, 0), new Tile.IndexTile(1, 3)};
             player2.setWorkers(workerPositions2);
+
+            Tile.IndexTile[] workerPositions3 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
             player3.setWorkers(workerPositions3);
         } catch (Exception e) {
             System.out.println(e.getMessage());

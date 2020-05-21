@@ -18,7 +18,6 @@ import java.util.Queue;
 public class Hephaestus extends God {
 
     private Tile.IndexTile tileForAdditionalBlock;
-    private Queue<Operation> remainingOperations;
 
     /**
      * Default constructor
@@ -46,13 +45,12 @@ public class Hephaestus extends God {
      */
     @Override
     public Queue<Operation> getRemainingOperations() {
-        return remainingOperations;
+        return new LinkedList<>();
     }
 
     @Override
     public void applyChoice(boolean confirm) {
         confirmed = confirm;
-        remainingOperations = new LinkedList<>();
         if (confirmed) {
             try {
                 board.addBlock(tileForAdditionalBlock);

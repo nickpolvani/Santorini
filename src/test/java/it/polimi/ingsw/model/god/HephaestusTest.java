@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.exception.AlreadySetException;
-import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.BlockLevel;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
@@ -45,24 +44,17 @@ public class HephaestusTest {
         hephaestus = player1.getGod();
 
         // Setup Worker
-        Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
         try {
+            Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
             player1.setWorkers(workerPositions1);
-        } catch (AlreadySetException e) {
-            System.out.println(e.getMessage());
-        }
-        Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(1, 0), new Tile.IndexTile(0, 1)};
-        try {
+            Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(1, 0), new Tile.IndexTile(0, 1)};
             player2.setWorkers(workerPositions2);
-        } catch (AlreadySetException e) {
-            System.out.println(e.getMessage());
-        }
-        Tile.IndexTile[] workerPositions3 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
-        try {
+            Tile.IndexTile[] workerPositions3 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
             player3.setWorkers(workerPositions3);
         } catch (AlreadySetException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
+
 
     }
 
@@ -77,26 +69,36 @@ public class HephaestusTest {
 
 
     @Test
-    public void isChooseAvailableTest() {
+    public void isChooseAvailableTest() throws Exception {
         hephaestus.selectWorker(player1.getWorkers().get(1));
-        try {
-            Tile.IndexTile index = new Tile.IndexTile(1, 2);
-            hephaestus.build(index);
-            Tile t = gameState.getIslandBoard().getTile(index);
-            assertEquals(t.getBuilding().getLevel(), BlockLevel.ONE);
-            assertTrue(hephaestus.isChooseAvailable());
 
+        Tile.IndexTile index = new Tile.IndexTile(1, 2);
+        hephaestus.build(index);
+        Tile t = gameState.getIslandBoard().getTile(index);
+        assertEquals(t.getBuilding().getLevel(), BlockLevel.ONE);
+        assertTrue(hephaestus.isChooseAvailable());
 
-            hephaestus.resetGodState();
-            hephaestus.build(index);
-            assertEquals(t.getBuilding().getLevel(), BlockLevel.TWO);
-            assertTrue(hephaestus.isChooseAvailable());
-            hephaestus.applyChoice(true);
-            assertFalse(hephaestus.isChooseAvailable());
+        hephaestus.resetGodState();
+        hephaestus.build(index);
+        assertEquals(t.getBuilding().getLevel(), BlockLevel.TWO);
+        assertTrue(hephaestus.isChooseAvailable());
+        hephaestus.applyChoice(true);
+        assertFalse(hephaestus.isChooseAvailable());
 
-        } catch (DomeAlreadyPresentException e) {
-            e.printStackTrace();
-        }
+    }
+
+    @Test(expected = Exception.class)
+    public void applyChoice() throws Exception {
+        hephaestus.selectWorker(player1.getWorkers().get(1));
+        hephaestus.build(new Tile.IndexTile(0, 1));
+        assertTrue(hephaestus.isChooseAvailable());
+        hephaestus.applyChoice(true);
+        assertEquals(2, gameState.getIslandBoard().getBuildingLevel(0, 1));
+
+        hephaestus.resetGodState();
+        hephaestus.build(new Tile.IndexTile(0, 1));
+        assertFalse(hephaestus.isChooseAvailable());
+        hephaestus.applyChoice(true);
     }
 
 

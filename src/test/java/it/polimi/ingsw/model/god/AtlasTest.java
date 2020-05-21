@@ -46,24 +46,18 @@ public class AtlasTest {
         atlas = player1.getGod();
 
         // Setup Worker
-        Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
         try {
+            Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
             player1.setWorkers(workerPositions1);
-        } catch (AlreadySetException e) {
-            System.out.println(e.getMessage());
-        }
-        Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(1, 0), new Tile.IndexTile(0, 1)};
-        try {
+            Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(1, 0), new Tile.IndexTile(0, 1)};
             player2.setWorkers(workerPositions2);
-        } catch (AlreadySetException e) {
-            System.out.println(e.getMessage());
-        }
-        Tile.IndexTile[] workerPositions3 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
-        try {
+            Tile.IndexTile[] workerPositions3 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
             player3.setWorkers(workerPositions3);
+
         } catch (AlreadySetException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
+
 
     }
 

@@ -41,11 +41,11 @@ public class HestiaTest {
         hestia = player1.getGod();
 
         // Setup Worker
-        Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
         try {
+            Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
             player1.setWorkers(workerPositions1);
         } catch (AlreadySetException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         basicTurn = new BasicTurn(gameController, gameState.getPlayers().get(0), new ArrayList<>());

@@ -12,8 +12,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class DemeterTest {
 
@@ -71,16 +70,36 @@ public class DemeterTest {
         demeter.selectWorker(gameState.getIslandBoard().getCurrentWorker(1, 1));
         Collection<Tile.IndexTile> indexTileCollection = demeter.tileToBuild(new Tile.IndexTile(1, 1));
         assertTrue(indexTileCollection.size() == 4
-                && indexTileCollection.contains(new Tile.IndexTile(0, 2))
-                && indexTileCollection.contains(new Tile.IndexTile(1, 2))
-                && indexTileCollection.contains(new Tile.IndexTile(2, 2))
-                && indexTileCollection.contains(new Tile.IndexTile(2, 0)));
+                && indexTileCollection.containsAll(Arrays.asList(
+                new Tile.IndexTile(0, 2),
+                new Tile.IndexTile(1, 2),
+                new Tile.IndexTile(2, 2),
+                new Tile.IndexTile(2, 0))));
+
         demeter.build(new Tile.IndexTile(0, 2));
-        indexTileCollection = demeter.tileToBuild(new Tile.IndexTile(1, 1));
+        indexTileCollection = demeter.tileToBuild(demeter.currentWorker.getIndexTile());
         assertTrue(indexTileCollection.size() == 3
-                && indexTileCollection.contains(new Tile.IndexTile(1, 2))
-                && indexTileCollection.contains(new Tile.IndexTile(2, 2))
-                && indexTileCollection.contains(new Tile.IndexTile(2, 0)));
+                && indexTileCollection.containsAll(Arrays.asList(
+                new Tile.IndexTile(1, 2),
+                new Tile.IndexTile(2, 2),
+                new Tile.IndexTile(2, 0))));
+    }
+
+    @Test
+    public void isChooseAvailable() {
+        demeter.selectWorker(gameState.getIslandBoard().getCurrentWorker(1, 1));
+        Collection<Tile.IndexTile> indexTileCollection = demeter.tileToBuild(demeter.currentWorker.getIndexTile());
+        assertTrue(demeter.isChooseAvailable());
+
+        try {
+            demeter.build(new Tile.IndexTile(0, 2));
+            gameState.getIslandBoard().getTile(1, 2).getBuilding().buildDome();
+            gameState.getIslandBoard().getTile(2, 2).getBuilding().buildDome();
+            gameState.getIslandBoard().getTile(2, 0).getBuilding().buildDome();
+        } catch (DomeAlreadyPresentException e) {
+            e.printStackTrace();
+        }
+        assertFalse(demeter.isChooseAvailable());
     }
 
 

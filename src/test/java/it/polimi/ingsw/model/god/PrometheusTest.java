@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.controller.turn.SetupWorkersTurn;
-import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
@@ -17,8 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PrometheusTest {
 
@@ -51,28 +49,22 @@ public class PrometheusTest {
         prometheus = player1.getGod();
 
         // Setup Worker
-        Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
         try {
+            Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
             player1.setWorkers(workerPositions1);
-        } catch (AlreadySetException e) {
-            System.out.println(e.getMessage());
-        }
-        Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(1, 0), new Tile.IndexTile(0, 1)};
-        try {
+
+            Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(1, 0), new Tile.IndexTile(0, 1)};
             player2.setWorkers(workerPositions2);
-        } catch (AlreadySetException e) {
-            System.out.println(e.getMessage());
-        }
-        Tile.IndexTile[] workerPositions3 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
-        try {
+
+            Tile.IndexTile[] workerPositions3 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
             player3.setWorkers(workerPositions3);
+
         } catch (AlreadySetException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         basicTurn = new BasicTurn(gameController, gameState.getPlayers().get(0), new ArrayList<>());
         gameController.setTurn(new SetupWorkersTurn(gameController, player1, new ArrayList<>()));
-        gameController.setTurn(basicTurn);
         gameController.setTurn(basicTurn);
     }
 
@@ -90,7 +82,7 @@ public class PrometheusTest {
     @Test
     public void tileToMove() {
         prometheus.selectWorker(player1.getWorkers().get(0));
-        assertTrue(prometheus.tileToMove(prometheus.getCurrentWorker().getIndexTile()).size() == 0);
+        assertEquals(0, prometheus.tileToMove(prometheus.getCurrentWorker().getIndexTile()).size());
         prometheus.selectWorker(player1.getWorkers().get(1));
         Collection<Tile.IndexTile> tiles = prometheus.tileToMove(prometheus.getCurrentWorker().getIndexTile());
         assertTrue(tiles.size() == 4 && tiles.contains(new Tile.IndexTile(1, 2))
@@ -113,20 +105,34 @@ public class PrometheusTest {
         }
     }
 
-    @Test
-    public void move() {
+    @Test(expected = Exception.class)
+    public void move() throws Exception {
         prometheus.selectWorker(player1.getWorkers().get(1));
-        try {
-            prometheus.move(new Tile.IndexTile(1, 2));
-            assertEquals(player1.getWorkers().get(1).getIndexTile(), new Tile.IndexTile(1, 2));
-        } catch (AlreadyOccupiedException e) {
-            e.printStackTrace();
-        }
-        try {
-            prometheus.move(new Tile.IndexTile(0, 1));
-        } catch (Exception e) {
-            System.out.println("Test passed");
-        }
+
+        prometheus.move(new Tile.IndexTile(1, 2));
+        assertEquals(player1.getWorkers().get(1).getIndexTile(), new Tile.IndexTile(1, 2));
+
+        prometheus.move(new Tile.IndexTile(0, 1));
+    }
+
+    @Test
+    public void isChooseAvailable() throws Exception {
+        //with this method we are testing checkValidOptionalBuild()
+
+        prometheus.selectWorker(player1.getWorkers().get(0));
+        gameState.getIslandBoard().changePosition(player2.getWorkers().get(0), new Tile.IndexTile(2, 3));
+        gameState.getIslandBoard().changePosition(player2.getWorkers().get(1), new Tile.IndexTile(3, 4));
+        assertTrue(prometheus.isChooseAvailable());
+        gameState.getIslandBoard().getTile(0, 1).getBuilding().buildDome();
+
+        //case when worker has only one tile to both move and build but the current tile of the worker is higher than the other one.
+        gameState.getIslandBoard().getTile(prometheus.getCurrentWorker().getIndexTile()).setCurrentWorker(null);
+        gameState.getIslandBoard().addBlock(prometheus.getCurrentWorker().getIndexTile());
+        gameState.getIslandBoard().getTile(prometheus.getCurrentWorker().getIndexTile()).setCurrentWorker(prometheus.getCurrentWorker());
+        assertTrue(prometheus.isChooseAvailable());
+
+        gameState.getIslandBoard().addBlock(1, 0);
+        assertFalse(prometheus.isChooseAvailable());
     }
 
 }

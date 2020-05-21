@@ -53,7 +53,6 @@ public class Demeter extends God {
     public Queue<Operation> getRemainingOperations() {
         if (confirmed) {
             return new LinkedList<>(Collections.singletonList(Operation.BUILD));
-
         } else {
             return new LinkedList<>();
         }
@@ -61,10 +60,7 @@ public class Demeter extends God {
 
     @Override
     public boolean isChooseAvailable() {
-        confirmed = true;
-        boolean value = !(tileToBuild(currentWorker.getIndexTile()).size() == 0);
-        confirmed = false;
-        return value;
+        return !(tileToBuild(currentWorker.getIndexTile()).size() == 0);
     }
 
     @Override
