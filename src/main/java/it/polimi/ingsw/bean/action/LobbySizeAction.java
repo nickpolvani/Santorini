@@ -2,6 +2,8 @@ package it.polimi.ingsw.bean.action;
 
 import it.polimi.ingsw.server.Lobby;
 
+import java.util.Objects;
+
 /**
  * This is an setup action used when a user has to choose
  * the size of the new lobby to which it will be added.
@@ -32,7 +34,13 @@ public class LobbySizeAction extends Action {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) return true;
         if (!(obj instanceof LobbySizeAction)) return false;
         return super.equals(obj) && this.lobbySize == ((LobbySizeAction) obj).getLobbySize();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), lobbySize);
     }
 }

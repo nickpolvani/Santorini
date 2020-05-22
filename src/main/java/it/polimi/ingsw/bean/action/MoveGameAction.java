@@ -6,10 +6,6 @@ import it.polimi.ingsw.model.Tile.IndexTile;
 
 public class MoveGameAction extends IndexTileGameAction {
 
-    public IndexTile getIndexTile() {
-        return indexTile;
-    }
-
     public MoveGameAction(IndexTile indexTile, String nickname) {
         super(indexTile, nickname);
     }
@@ -26,6 +22,7 @@ public class MoveGameAction extends IndexTileGameAction {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) return true;
         if (!(obj instanceof MoveGameAction)) return false;
         return super.equals(obj);
     }

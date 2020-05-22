@@ -8,6 +8,7 @@ public class SelectNicknameAction extends Action {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) return true;
         if (!(obj instanceof SelectNicknameAction)) return false;
         return super.equals(obj);
     }

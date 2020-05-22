@@ -38,7 +38,7 @@ public class AthenaTurn extends BasicTurn {
             }
         }
 
-        if (athena == null) throw new RuntimeException("Athena is not set despite we are in AthenaTurn");
+        if (athena == null) throw new IllegalStateException("Athena is not set despite we are in AthenaTurn");
     }
 
 
@@ -89,7 +89,7 @@ public class AthenaTurn extends BasicTurn {
         } else {
             if (getCurrentOperation() == Operation.CHOOSE) {
                 if (currentPlayer.getGod().getGodDescription() == GodDescription.ARTEMIS) {
-                    if (athenaTileToMove(currentPlayer.getGod().getCurrentWorker()).size() == 0) {
+                    if (athenaTileToMove(currentPlayer.getGod().getCurrentWorker()).isEmpty()) {
                         notify(new MessageOption(currentPlayer.getNickname(), MessageType.GODS_POWER_NOT_AVAILABLE, Operation.MESSAGE_NO_REPLY));
                         endCurrentOperation();
                     } else {
@@ -128,9 +128,9 @@ public class AthenaTurn extends BasicTurn {
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
                 for (Worker w : currentPlayer.getWorkers()) {
                     //with this check game does not pass as option a worker who can't move
-                    if (athenaTileToMove(w).size() > 0) indexTiles.add(w.getIndexTile());
+                    if (!athenaTileToMove(w).isEmpty()) indexTiles.add(w.getIndexTile());
                 }
-                if (indexTiles.size() == 0) {
+                if (indexTiles.isEmpty()) {
                     return null;
                 } else {
                     return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, MessageType.SELECT_WORKER);

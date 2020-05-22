@@ -27,7 +27,7 @@ public class ChooseOptions extends Options {
     @Override
     public String isValid(String userInput) {
         String[] acceptedInput = {"yes", "no", "y", "n"};
-        if (Arrays.stream(acceptedInput).anyMatch(x -> x.equals(userInput.toLowerCase()))) {
+        if (Arrays.stream(acceptedInput).anyMatch(x -> x.equalsIgnoreCase(userInput))) {
             return null;
         } else return alert;
 

@@ -22,6 +22,7 @@ public class SelectOpponentWorkerGameAction extends IndexTileGameAction {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) return true;
         if (!(obj instanceof SelectOpponentWorkerGameAction)) return false;
         return super.equals(obj);
     }

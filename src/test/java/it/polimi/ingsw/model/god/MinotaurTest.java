@@ -65,6 +65,7 @@ public class MinotaurTest {
 
     @Test
     public void getTurnOperations() {
+    //TODO da implementare
     }
 
     @Test

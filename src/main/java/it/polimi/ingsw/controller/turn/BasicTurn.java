@@ -140,7 +140,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
                 for (Worker w : currentPlayer.getWorkers()) {
                     //with this check game does not pass as option a worker who can't move
-                    if (currentGod.tileToMove(w.getIndexTile()).size() > 0) indexTiles.add(w.getIndexTile());
+                    if (!currentGod.tileToMove(w.getIndexTile()).isEmpty()) indexTiles.add(w.getIndexTile());
                 }
                 return new TileOptions(currentPlayer.getNickname(), indexTiles, boardClone, currentOperation, MessageType.SELECT_WORKER);
             case SELECT_OPPONENTS_WORKER:
@@ -179,7 +179,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
     }
 
     public void start() {
-        if (isStarted()) throw new RuntimeException();
+        if (isStarted()) throw new IllegalStateException();
         started = true;
         notify(getOptions());
     }

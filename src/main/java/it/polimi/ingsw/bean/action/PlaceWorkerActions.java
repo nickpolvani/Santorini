@@ -32,6 +32,7 @@ public class PlaceWorkerActions extends GameAction {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) return true;
         if (!(obj instanceof PlaceWorkerActions)) return false;
         return super.equals(obj) && Arrays.equals(positions, ((PlaceWorkerActions) obj).getPositions());
     }

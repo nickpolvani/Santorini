@@ -20,4 +20,11 @@ public class RemoveBlock extends BuildGameAction {
     public Boolean isCompatible(Operation operation) {
         return operation == Operation.REMOVE_BLOCK;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof RemoveBlock)) return false;
+        return super.equals(obj);
+    }
 }

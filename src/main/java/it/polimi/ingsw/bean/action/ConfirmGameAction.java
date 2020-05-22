@@ -4,6 +4,8 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.controller.turn.AthenaTurn;
 import it.polimi.ingsw.controller.turn.BasicTurn;
 
+import java.util.Objects;
+
 /**
  * Used by classes God when the user has to answer a question that changes
  * the flow of the player's turn
@@ -47,5 +49,17 @@ public class ConfirmGameAction extends GameAction {
         return operation == Operation.CHOOSE;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ConfirmGameAction)) return false;
+        if (!super.equals(o)) return false;
+        ConfirmGameAction that = (ConfirmGameAction) o;
+        return confirm == that.confirm;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(confirm);
+    }
 }

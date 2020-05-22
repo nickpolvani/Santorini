@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.turn;
 
+import it.polimi.ingsw.bean.action.ActionHandler;
 import it.polimi.ingsw.bean.options.GodOptions;
 import it.polimi.ingsw.bean.options.MessageOption;
 import it.polimi.ingsw.bean.options.Options;
@@ -19,7 +20,7 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
     private final GameController controller;
     private final List<GodDescription> selectedGods = new ArrayList<>();
     private Player currentPlayer;
-    private Boolean challengerGodsChosen = false;
+    private boolean challengerGodsChosen = false;
     private final Logger logger = Logger.getLogger("Server");
     private boolean started = false;
 
@@ -70,6 +71,7 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
             }
             SetupWorkersTurn setupWorkersTurn = new SetupWorkersTurn(controller, controller.getNextPlayer(currentPlayer), observers);
             clearObserver();
+            controller.setActionHandler(new ActionHandler());
             controller.setTurn(setupWorkersTurn);
             setupWorkersTurn.start();
         } else {
@@ -119,7 +121,7 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
 
     @Override
     public void start() {
-        if (isStarted()) throw new RuntimeException();
+        if (isStarted()) throw new IllegalStateException();
         started = true;
         notifyOptions();
         logger.debug("First options has been notified");

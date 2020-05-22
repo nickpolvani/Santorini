@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * The Worker class represent the checker of the game. A Worker can only be on the game's board, in any tile.
@@ -62,16 +63,28 @@ public class Worker implements Cloneable, Serializable {
     }
 
     @Override
-    public Worker clone() {
-        return new Worker(this.indexTile.clone(), this.color);
+    public Worker clone() throws CloneNotSupportedException {
+        return (Worker) super.clone();
+        /*try {
+            return new Worker(this.indexTile.clone(), this.color);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;*/
     }
 
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (!(o instanceof Worker)) return false;
         Worker worker = (Worker) o;
         return color == worker.color &&
                 indexTile.equals(worker.indexTile);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, indexTile);
     }
 }

@@ -5,7 +5,6 @@ import it.polimi.ingsw.exception.AlreadySetException;
 import it.polimi.ingsw.model.god.God;
 import org.apache.log4j.Logger;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.Objects;
 /**
  * @author Francesco Puoti
  */
-public class Player implements Serializable {
+public class Player {
 
     /**
      * Name Inserted by the player during the game's initialization
@@ -24,7 +23,7 @@ public class Player implements Serializable {
     /**
      * The GameState's instance of the current lobby
      */
-    private transient final GameState gameState;
+    private final GameState gameState;
 
     public final Color color;
     /**
@@ -127,5 +126,10 @@ public class Player implements Serializable {
                 color == player.color &&
                 workers.equals(player.workers) &&
                 Objects.equals(god.getGodDescription(), player.god.getGodDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nickname, gameState, color, workers, god, winner, looser);
     }
 }

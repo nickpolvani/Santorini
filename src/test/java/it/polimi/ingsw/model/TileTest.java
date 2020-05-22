@@ -50,16 +50,15 @@ public class TileTest {
     }
 
     @Test
-    public void cloneTest() throws CloneNotSupportedException, AlreadyOccupiedException {
+    public void cloneTest() throws AlreadyOccupiedException {
         tile.setCurrentWorker(new Worker(tile.getIndex(), Color.RED));
         Tile clone = tile.clone();
+        assertNotSame(clone, tile);
+        assertEquals(tile, clone);
         assertEquals(tile.getCurrentWorker(), clone.getCurrentWorker());
-        assertFalse(tile.getCurrentWorker() == clone.getCurrentWorker());
+        assertNotSame(tile.getCurrentWorker(), clone.getCurrentWorker());
         assertEquals(tile.getIndex(), clone.getIndex());
-        assertFalse(tile.getIndex() == clone.getIndex());
         assertEquals(tile.getBuilding(), clone.getBuilding());
-        assertFalse(tile.getBuilding() == clone.getBuilding());
-        assertFalse(clone == tile);
     }
 
     @Test
@@ -73,5 +72,30 @@ public class TileTest {
         assertEquals(BlockLevel.THREE, tile.getBuilding().getLevel());
         tile.getBuilding().addBlock();
         assertTrue(tile.getBuilding().getDome());
+    }
+
+
+    @Test
+    public void IndexTileClone() throws CloneNotSupportedException {
+        Tile.IndexTile indexTile = new Tile.IndexTile(2, 2);
+        Tile.IndexTile clone = indexTile.clone();
+        assertEquals(indexTile, clone);
+        assertNotSame(indexTile, clone);
+    }
+
+    @Test
+    public void BuildingClone() throws DomeAlreadyPresentException {
+        Tile.Building building = new Tile.Building();
+        Tile.Building clone = building.clone();
+        assertEquals(building, clone);
+        assertNotSame(building, clone);
+        building.addBlock();
+        clone = building.clone();
+        assertEquals(building, clone);
+        assertNotSame(building, clone);
+        building.buildDome();
+        clone = building.clone();
+        assertEquals(building, clone);
+        assertNotSame(building, clone);
     }
 }

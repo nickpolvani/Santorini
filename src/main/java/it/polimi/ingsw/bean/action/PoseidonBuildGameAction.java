@@ -5,6 +5,8 @@ import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.god.Poseidon;
 
+import java.util.Objects;
+
 public class PoseidonBuildGameAction extends BuildGameAction {
     public final int level;
 
@@ -29,6 +31,10 @@ public class PoseidonBuildGameAction extends BuildGameAction {
     public boolean equals(Object obj) {
         if (!(obj instanceof PoseidonBuildGameAction)) return false;
         return super.equals(obj) && level == ((PoseidonBuildGameAction) obj).level;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), level);
     }
 }

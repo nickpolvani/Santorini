@@ -14,7 +14,7 @@ import java.util.List;
 public class GodOptions extends Options {
 
     private final List<GodDescription> godsToChoose;
-    private final String alertForChallenger = " Please insert gods of the list split by a comma.";
+    private static final String ALERT_FOR_CHALLENGER = " Please insert gods of the list split by a comma.";
 
     public GodOptions(String nickname, List<GodDescription> godsToChoose, String message) {
         super(nickname, message, Operation.CHOOSE_GOD);
@@ -26,7 +26,7 @@ public class GodOptions extends Options {
     @Override
     public void execute(View view) {
         if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(messageType + "\n" + godsList() + (godsToChoose.size() > 3 ? alertForChallenger : alert));
+            view.showMessage(messageType + "\n" + godsList() + (godsToChoose.size() > 3 ? ALERT_FOR_CHALLENGER : alert));
         } else {
             view.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
         }
@@ -37,15 +37,15 @@ public class GodOptions extends Options {
         if (godsToChoose.size() > 3) {
             String[] toCheck = userInput.replace(" ", "").toLowerCase().split(",");
             for (String s : toCheck) {
-                if (godsToChoose.stream().noneMatch(x -> x.getName().toLowerCase().equals(s)) ||
-                        Arrays.stream(toCheck).filter(x -> x.toLowerCase().equals(s.toLowerCase())).count() > 1) {
-                    return "Not valid input: " + alertForChallenger;
+                if (godsToChoose.stream().noneMatch(x -> x.getName().equalsIgnoreCase(s)) ||
+                        Arrays.stream(toCheck).filter(x -> x.toLowerCase().equalsIgnoreCase(s)).count() > 1) {
+                    return "Not valid input: " + ALERT_FOR_CHALLENGER;
                 }
             }
             return null;
         } else {
             if (godsToChoose.stream().
-                    anyMatch(x -> x.getName().toLowerCase().equals(userInput.toLowerCase()))) {
+                    anyMatch(x -> x.getName().toLowerCase().equalsIgnoreCase(userInput))) {
                 /*Mind that if the player tries to insert more than one gods, the inserted string does not match
                 with any of the gods in the list. Thus, the correct number of the god, which inserted by a player
                 who is not the challenger, is checked too.*/

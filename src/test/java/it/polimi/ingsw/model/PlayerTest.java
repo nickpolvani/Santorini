@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -79,7 +78,7 @@ public class PlayerTest {
         assertEquals(testPlayer.getGod(), gameState.getGodsFactory().getGod(GodDescription.PAN, testPlayer));
     }
 
-    @Test
+    /*@Test TODO ho tolto il test perchè i player non implemantatno più serializable
     public void serialize() throws IOException, ClassNotFoundException {
         Player player = gameState.getPlayers().get(0);
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -92,5 +91,5 @@ public class PlayerTest {
         Player pOut = (Player) in.readObject();
         assertEquals(player.getWorkers(), pOut.getWorkers());
         assertEquals(player.getNickname(), pOut.getNickname());
-    }
+    }*/
 }

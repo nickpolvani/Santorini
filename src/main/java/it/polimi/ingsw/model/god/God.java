@@ -87,7 +87,7 @@ public abstract class God {
      * @throws AlreadyOccupiedException if the tile chosen has a worker yet
      * @throws IllegalStateException    Thrown if current operation in turn is not MOVE
      */
-    public void move(IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException {
+    public void move(IndexTile indexTile) throws AlreadyOccupiedException {
 
         if (!tileToMove(currentWorker.getIndexTile()).contains(indexTile)) {
             throw new IllegalArgumentException("Tile where you want to move worker is not allowed");
@@ -136,12 +136,13 @@ public abstract class God {
      */
     public boolean cannotMove() {
         List<Worker> workers = player.getWorkers();
-        return workers.stream().allMatch(w -> tileToMove(w.getIndexTile()).size() == 0);
+        return workers.stream().allMatch(w -> tileToMove(w.getIndexTile()).isEmpty());
     }
 
-    public boolean cannotBuild() throws NullPointerException {
+    public boolean cannotBuild() {
+        //TODO il lancio di questa eccezione non serve sarebbe comunque lanciata dalla riga sottostante!!
         if (currentWorker == null) throw new NullPointerException("Worker is not set yet");
-        return tileToBuild(currentWorker.getIndexTile()).size() == 0;
+        return tileToBuild(currentWorker.getIndexTile()).isEmpty();
     }
 
     @Override
@@ -154,6 +155,7 @@ public abstract class God {
      */
     public abstract Queue<Operation> getTurnOperations();
 
+    //TODO serve questo metodo??
     public Queue<Operation> getRemainingOperations() {
         return null;
     }
@@ -162,6 +164,7 @@ public abstract class God {
     /**
      * Every time a player starts his turn, his god is reset to his initial state
      */
+    //TODO ma se lo fa questo perché è presente anche nelle sottoclassi
     public void resetGodState() {
         confirmed = false;
     }

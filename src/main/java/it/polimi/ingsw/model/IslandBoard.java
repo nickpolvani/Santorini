@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -69,6 +70,7 @@ public class IslandBoard implements Cloneable, Serializable {
 
     /**
      * Method used to discover tiles close to a specific tile.
+     *
      * @param index The index of the tile from which to look for nearby ones
      * @return Return a Collection of tile's index close to the input index.
      * @see Tile.IndexTile
@@ -88,7 +90,7 @@ public class IslandBoard implements Cloneable, Serializable {
     /**
      * Method used to change worker's position. It's used in the move method of god.
      *
-     * @param worker The worker's instance that must change position.
+     * @param worker           The worker's instance that must change position.
      * @param indexNewPosition The indexTile of the new position on the board.
      * @throws AlreadyOccupiedException Throws if the new position is already occupied
      * @see Tile.IndexTile
@@ -127,6 +129,11 @@ public class IslandBoard implements Cloneable, Serializable {
     }
 
     @Override
+    public int hashCode() {
+        return Arrays.hashCode(board);
+    }
+
+    @Override
     public String toString() {
         int tileRows = Tile.N_ROWS;
         int tileCols = Tile.N_COLS;
@@ -148,10 +155,8 @@ public class IslandBoard implements Cloneable, Serializable {
         //GRID ROWS
         for (int i = 0; i < N_ROWS; i++) {
 
-            /*
-            For all row of the board, I use a StringBuilderArray. The dimension of the array is equal to the number of Tiles' row;
-            Instead cols are not set at the start but, using string builder, we can add the row of the concerned tile in the string builder.
-             */
+            //For all row of the board, I use a StringBuilderArray. The dimension of the array is equal to the number of Tiles' row;
+            //Instead cols are not set at the start but, using string builder, we can add the row of the concerned tile in the string builder.
 
             StringBuilder[] lines = new StringBuilder[tileRows];
 

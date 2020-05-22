@@ -141,6 +141,7 @@ public class Server {
                 executor.submit(socketConnection);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
+                break;
             }
         }
     }

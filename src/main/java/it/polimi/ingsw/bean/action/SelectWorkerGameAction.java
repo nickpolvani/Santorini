@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.Tile;
 
 public class SelectWorkerGameAction extends IndexTileGameAction {
 
-    public SelectWorkerGameAction(Tile.IndexTile workerPosition, String nickname) throws IllegalArgumentException {
+    public SelectWorkerGameAction(Tile.IndexTile workerPosition, String nickname) {
         super(workerPosition, nickname);
     }
 
@@ -30,6 +30,7 @@ public class SelectWorkerGameAction extends IndexTileGameAction {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) return true;
         if (!(obj instanceof SelectWorkerGameAction)) return false;
         return super.equals(obj);
     }

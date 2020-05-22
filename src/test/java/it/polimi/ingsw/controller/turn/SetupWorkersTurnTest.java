@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.turn;
 
+import it.polimi.ingsw.bean.action.ActionHandler;
 import it.polimi.ingsw.bean.action.PlaceWorkerActions;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.controller.GameController;
@@ -25,25 +26,10 @@ public class SetupWorkersTurnTest {
         Set<String> players = new LinkedHashSet<>(Arrays.asList("juri", "fra", "nick"));
         model = new GameState(players);
         controller = new GameController(model, null);
+        controller.setActionHandler(new ActionHandler());
         List<Observer<Options>> observers = new ArrayList<>();
         turn = new SetupWorkersTurn(controller, model.getPlayers().get(0), observers);
         controller.setTurn(turn);
-    }
-
-    @Test
-    public void getCurrentPlayer() {
-    }
-
-    @Test
-    public void switchTurn() {
-    }
-
-    @Test
-    public void getCurrentOperation() {
-    }
-
-    @Test
-    public void endCurrentOperation() {
     }
 
     @Test(expected = NullPointerException.class)

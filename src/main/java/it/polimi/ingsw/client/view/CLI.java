@@ -90,13 +90,13 @@ public class CLI extends View {
                     default:
                         throw new IllegalArgumentException("Not Valid Worker Color");
                 }
-                i = i + 2;
+                i = i + 2; //TODO is it possible refactor the code in order to not increment i here
             } else if (rep[i] == '/') {
                 utility.append("@|magenta / \\|@");
-                i = i + 2;
+                i = i + 2; //TODO also here
             } else if (rep[i] == '\\') {
                 utility.append("@|magenta \\ /|@");
-                i = i + 2;
+                i = i + 2;//TODO also here
             } else {
                 utility.append(rep[i]);
             }

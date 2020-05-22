@@ -1,14 +1,15 @@
 package it.polimi.ingsw.model;
-/**
- * @author Francesco Puoti
- */
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
+/**
+ * @author Francesco Puoti
+ */
 public class WorkerTest {
 
     Worker[] workers;
@@ -51,11 +52,15 @@ public class WorkerTest {
     }
 
     @Test
-    public void cloneTest() {
+    public void cloneTest() throws CloneNotSupportedException {
         Worker testWorker = new Worker(indexes[0], Color.RED);
         Worker testCloneWorker = testWorker.clone();
 
+        assertEquals(testWorker, testCloneWorker);
+        assertNotSame(testWorker, testCloneWorker);
+
         assertEquals(testCloneWorker.getIndexTile(), testWorker.getIndexTile());
+
         assertEquals(testCloneWorker.getColor(), testWorker.getColor());
     }
 

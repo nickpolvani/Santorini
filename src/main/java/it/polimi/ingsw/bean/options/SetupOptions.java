@@ -8,14 +8,8 @@ import it.polimi.ingsw.controller.Operation;
  */
 public class SetupOptions extends Options {
 
-
-
     public SetupOptions(String nickname, String messageType, Operation operation) {
         super(nickname, messageType, operation);
-    }
-
-    public String getNickname() {
-        return nickname;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.bean.action;
 
-
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.Tile.IndexTile;
@@ -39,6 +38,7 @@ public class BuildGameAction extends IndexTileGameAction {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) return true;
         if (!(obj instanceof BuildGameAction)) return false;
         return super.equals(obj);
     }

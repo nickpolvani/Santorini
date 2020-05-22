@@ -15,12 +15,9 @@ import java.util.stream.Collectors;
  */
 public class Charon extends God {
 
-
     protected Charon(GameState gameState, Player player) {
         super(GodDescription.CHARON, player, gameState);
-
     }
-
 
     @Override
     public Queue<Operation> getTurnOperations() {
@@ -28,6 +25,7 @@ public class Charon extends God {
         return new LinkedList<>(Arrays.asList(operationsArray));
     }
 
+    @Override
     public Queue<Operation> getRemainingOperations() {
         Operation[] operationsArray;
         if (confirmed) {
@@ -40,7 +38,7 @@ public class Charon extends God {
 
     @Override
     public boolean isChooseAvailable() {
-        return !(opponentsWorkerTile().size() == 0);
+        return !opponentsWorkerTile().isEmpty();
     }
 
     public List<Tile.IndexTile> opponentsWorkerTile() {
@@ -62,7 +60,8 @@ public class Charon extends God {
     }
 
     private Tile.IndexTile findOppositeTile(Tile.IndexTile opponentWorker) {
-        int oppositeRow, oppositeCol;
+        int oppositeRow;
+        int oppositeCol;
         oppositeRow = (2 * currentWorker.getIndexTile().getRow()) - opponentWorker.getRow();
         oppositeCol = (2 * currentWorker.getIndexTile().getCol()) - opponentWorker.getCol();
 
@@ -70,5 +69,4 @@ public class Charon extends God {
         else
             return (!board.getTile(oppositeRow, oppositeCol).isOccupied() ? new Tile.IndexTile(oppositeRow, oppositeCol) : null);
     }
-
 }

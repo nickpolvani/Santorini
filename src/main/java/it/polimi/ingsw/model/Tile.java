@@ -56,12 +56,6 @@ public class Tile implements Cloneable, Serializable {
         index = new IndexTile(row, col);
     }
 
-    private Tile(IndexTile index, Building building) {
-        this.currentWorker = null;
-        this.building = building;
-        this.index = index;
-    }
-
     /**
      * @return Return a IndexTile containing tile's index in the board.
      * @see IndexTile
@@ -128,11 +122,18 @@ public class Tile implements Cloneable, Serializable {
 
     @Override
     public Tile clone() {
-        Tile clone = new Tile(this.index.clone(), this.building.clone());
+        Tile clone = null;
+        try {
+            clone = (Tile) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         if (this.currentWorker != null) {
             try {
+                assert clone != null;
+                clone.setCurrentWorker(null);
                 clone.setCurrentWorker(this.currentWorker.clone());
-            } catch (AlreadyOccupiedException e) {
+            } catch (AlreadyOccupiedException | CloneNotSupportedException e) {
                 e.printStackTrace();
             }
         }
@@ -175,7 +176,7 @@ public class Tile implements Cloneable, Serializable {
      * the height of the tower in memory the other to know if there is a dome.
      * The complete towers consist of three blocks and a dome.
      */
-    public static class Building implements Serializable {
+    public static class Building implements Serializable, Cloneable {
 
         /**
          * Used to set the of tower's height.
@@ -185,19 +186,14 @@ public class Tile implements Cloneable, Serializable {
         /**
          * Used to set if is present a dome.
          */
-        private Boolean dome;
+        private boolean dome;
 
         /**
          * Default constructor
          */
-        private Building() {
+        Building() {
             level = BlockLevel.GROUND;
             dome = false;
-        }
-
-        private Building(BlockLevel level, Boolean dome) {
-            this.level = level;
-            this.dome = dome;
         }
 
         /**
@@ -246,7 +242,7 @@ public class Tile implements Cloneable, Serializable {
             if (o == null || getClass() != o.getClass()) return false;
             Building building = (Building) o;
             return level == building.level &&
-                    dome.equals(building.dome);
+                    dome == building.dome;
         }
 
         @Override
@@ -256,17 +252,23 @@ public class Tile implements Cloneable, Serializable {
 
         @Override
         public Building clone() {
-            return new Building(this.level, this.dome);
+            Building building = null;
+            try {
+                building = (Building) super.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+            return building;
         }
-
     }
 
     /**
      * Class used to model the index integer pair.
      * There are two final variables one for row and one for column.
      */
-    public static class IndexTile implements Serializable {
-        final int row, col;
+    public static class IndexTile implements Serializable, Cloneable {
+        final int row;
+        final int col;
 
         /**
          * Default constructor
@@ -300,14 +302,20 @@ public class Tile implements Cloneable, Serializable {
          */
         @Override
         public boolean equals(Object obj) {
+            if (this == obj) return true;
             if (!(obj instanceof IndexTile)) return false;
             IndexTile otherIndex = (IndexTile) obj;
             return this.col == otherIndex.getCol() && this.row == otherIndex.getRow();
         }
 
         @Override
-        public IndexTile clone() {
-            return new IndexTile(this.row, this.col);
+        public int hashCode() {
+            return Objects.hash(row, col);
+        }
+
+        @Override
+        public IndexTile clone() throws CloneNotSupportedException {
+            return (IndexTile) super.clone();
         }
 
         @Override

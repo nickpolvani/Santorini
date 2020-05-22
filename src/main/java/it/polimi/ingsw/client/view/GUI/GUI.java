@@ -15,8 +15,7 @@ import java.awt.*;
 public class GUI extends View {
 
     JFrame frame = new JFrame("Santorini");
-    private IslandBoard board;
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private ActivePanel activePanel;
     private final Controller controller;
     private Options currentOptions;

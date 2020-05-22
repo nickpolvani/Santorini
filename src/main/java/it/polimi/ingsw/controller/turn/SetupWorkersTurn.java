@@ -10,7 +10,6 @@ import it.polimi.ingsw.model.god.GodDescription;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.utilities.MessageType;
-import it.polimi.ingsw.utilities.Start;
 
 import java.util.*;
 
@@ -42,14 +41,14 @@ public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
         if (currentPlayer == firstPlayer) {
             boolean thereIsAthena = controller.getGameState().getPlayers().stream()
                     .anyMatch(player -> player.getGod().getGodDescription().equals(GodDescription.ATHENA));
-            Start nextTurn;
+            Turn nextTurn;
             if (thereIsAthena) {
                 nextTurn = new AthenaTurn(controller, currentPlayer, observers);
             } else {
                 nextTurn = new BasicTurn(controller, currentPlayer, observers);
             }
             clearObserver();
-            controller.setTurn((Turn) nextTurn);
+            controller.setTurn(nextTurn);
             nextTurn.start();
         } else {
             notifyOptions();
@@ -79,7 +78,7 @@ public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
     }
 
     public void start() {
-        if (isStarted()) throw new RuntimeException();
+        if (isStarted()) throw new IllegalStateException();
         started = true;
         notifyOptions();
     }

@@ -11,8 +11,8 @@ import java.net.Socket;
 import java.net.SocketException;
 
 public class SocketClientConnection {
-    private final String IP = "127.0.0.1";
-    private final int PORT = 12345;
+    private static final String IP = "127.0.0.1";
+    private static final int PORT = 12345;
     private final ObjectInputStream in;
     private final ObjectOutputStream out;
     private final Socket socket;
@@ -22,7 +22,7 @@ public class SocketClientConnection {
     public SocketClientConnection(Controller controller) throws IOException {
         this.controller = controller;
         this.socket = new Socket(IP, PORT);
-        System.out.println("Connection established");
+        System.out.println("Connection established"); //TODO implements a method in the controller to print a string on ClientViews
         this.in = new ObjectInputStream(socket.getInputStream());
         this.out = new ObjectOutputStream(socket.getOutputStream());
     }

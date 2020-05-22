@@ -9,6 +9,9 @@ import java.util.List;
 
 public class MessageParser {
 
+    private MessageParser() {
+    }
+
     public static Object parseMessage(Options currentOption, String message) {
         Object object;
         switch (currentOption.getCurrentOperation()) {
@@ -62,7 +65,7 @@ public class MessageParser {
     }
 
     private static Boolean parseBoolean(String message) {
-        return message.toLowerCase().equals("yes") || message.toLowerCase().equals("y");
+        return message.equalsIgnoreCase("yes") || message.equalsIgnoreCase("y");
     }
 
     private static Tile.IndexTile parseSingleIndex(String message) {

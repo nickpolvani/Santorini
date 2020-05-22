@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.bean.action.ActionHandler;
 import it.polimi.ingsw.bean.action.GameAction;
+import it.polimi.ingsw.bean.action.SetupActionHandler;
 import it.polimi.ingsw.bean.options.MessageOption;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.controller.turn.BasicTurn;
@@ -26,7 +27,7 @@ public class GameController extends Observable<Options> implements Observer<Game
 
     private final GameState gameState;
 
-    private final ActionHandler actionHandler;
+    private ActionHandler actionHandler;
 
     private final Lobby lobby;
 
@@ -41,7 +42,11 @@ public class GameController extends Observable<Options> implements Observer<Game
         this.lobby = lobby;
         //TODO implement random choice of challenger
         this.turn = new SetupGodsTurn(gameState.getPlayers().get(0), this);
-        actionHandler = new ActionHandler((SetupGodsTurn) turn);
+        actionHandler = new SetupActionHandler((SetupGodsTurn) turn);
+    }
+
+    public void setActionHandler(ActionHandler actionHandler) {
+        this.actionHandler = actionHandler;
     }
 
     public GameState getGameState() {

@@ -20,7 +20,7 @@ import java.util.TimerTask;
 public class Controller implements Observer<String> {
 
     private View clientView;
-    private final long timeToAnswer = 120000; //milliseconds
+    private static final long TIME_TO_ANSWER = 120000; //milliseconds
 
     private SocketClientConnection socketClientConnection;
     private Options currentOption;
@@ -106,7 +106,7 @@ public class Controller implements Observer<String> {
         }
         clientView.setCurrentOption(options);
         options.execute(clientView);
-        if (isMyTurn && !(currentOption.getCurrentOperation() == Operation.MESSAGE_NO_REPLY)) {
+        if (isMyTurn && currentOption.getCurrentOperation() != Operation.MESSAGE_NO_REPLY) {
             waitingInput = true;
             startTimerToAnswer();
         }
@@ -122,9 +122,9 @@ public class Controller implements Observer<String> {
         while (clientView == null) {
             System.out.println("Choose whether you want to play with GUI or CLI. Enter [CLI/GUI]");
             input = scanner.nextLine();
-            if (input.toUpperCase().equals("CLI")) {
+            if (input.equalsIgnoreCase("cli")) {
                 clientView = new CLI();
-            } else if (input.toUpperCase().equals("GUI")) {
+            } else if (input.equalsIgnoreCase("gui")) {
                 clientView = new GUI(this);
             }
         }
@@ -150,8 +150,8 @@ public class Controller implements Observer<String> {
      */
     private void startTimerToAnswer() {
         timer = new Timer();
-        timer.schedule(checkTime(), timeToAnswer);
-        timer.schedule(printRemainingTime(), timeToAnswer / 2);
+        timer.schedule(checkTime(), TIME_TO_ANSWER);
+        timer.schedule(printRemainingTime(), TIME_TO_ANSWER / 2);
     }
 
     /**
@@ -179,7 +179,7 @@ public class Controller implements Observer<String> {
         return new TimerTask() {
             @Override
             public void run() {
-                clientView.showMessage("\nHurry Up, only " + timeToAnswer / 2000 + " seconds remain to answer.");
+                clientView.showMessage("\nHurry Up, only " + TIME_TO_ANSWER / 2000 + " seconds remain to answer.");
             }
         };
     }
@@ -201,7 +201,6 @@ public class Controller implements Observer<String> {
             setup();
         }
     }
-
     public Options getCurrentOption() {
         return currentOption;
     }
