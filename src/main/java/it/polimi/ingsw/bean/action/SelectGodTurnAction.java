@@ -43,7 +43,6 @@ public class SelectGodTurnAction extends GameAction {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof SelectGodTurnAction)) return false;
-        if (!super.equals(o)) return false;
         SelectGodTurnAction that = (SelectGodTurnAction) o;
         return super.equals(o) && Objects.equals(setupTurn, that.setupTurn) &&
                 Objects.equals(godsChosen, that.godsChosen);

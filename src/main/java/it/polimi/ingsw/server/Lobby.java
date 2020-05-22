@@ -13,13 +13,13 @@ public class Lobby {
     public final int size;
     private final List<RemoteView> remoteViews = new ArrayList<>();
     private final Map<String, ClientConnection> connectionMap = new LinkedHashMap<>();
-    private boolean full = false;
     public final int id;
     private final Logger logger = Logger.getLogger("Server");
     private GameState gameState;
     private GameController gameController;
+    //TODO sistemare la storia dei flag
     private boolean started = false;
-    private boolean active = false;
+    private boolean full = false;
 
     public Lobby(int size, int id) {
         if (size != 2 && size != 3) throw new IllegalArgumentException();
@@ -45,12 +45,14 @@ public class Lobby {
     }
 
     synchronized void addClient(String username, ClientConnection clientConnection) {
+        if (this.isStarted() || this.isFull()) throw new IllegalStateException();
+        if (this.connectionMap.containsKey(username)) throw new IllegalArgumentException();
         this.connectionMap.put(username, clientConnection);
         logger.info("Registered username " + username + " in the lobby ID=" + id);
         if (connectionMap.size() == size) {
             full = true;
             logger.debug("Lobby ID=" + id + " is full");
-            new Thread(this::start).start();
+            this.start();
         }
     }
 
@@ -92,16 +94,8 @@ public class Lobby {
             connectionMap.remove(username);
             logger.info("Removed " + username + " form not started lobby ID=" + id);
         } else {
-            logger.fatal("Trying to remove a player from a started lobby without close lobby", new IllegalAccessException());
+            logger.fatal("Trying to remove a player from a started lobby without close lobby");
+            throw new IllegalStateException();
         }
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-        notifyAll();
     }
 }

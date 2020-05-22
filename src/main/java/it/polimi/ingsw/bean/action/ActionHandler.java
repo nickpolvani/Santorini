@@ -16,15 +16,6 @@ import it.polimi.ingsw.model.Player;
  * @see GameController
  */
 public class ActionHandler {
-    /**
-     * Default constructor
-     */
-    public ActionHandler() {
-    }
-
-    //TODO bisogna cambiare questo metodo.
-    // Non è possibile che ogni action del gioco venga controllata come instanza di SetupTurnAction
-    // Bisogna cambiare action handle a runtime quando cambia il turno da tipo di setup a tipo di gioco.
     public void execute(GameAction a, Player player) throws AlreadyOccupiedException, DomeAlreadyPresentException, AlreadySetException {
         a.setPlayer(player);
         a.execute();
