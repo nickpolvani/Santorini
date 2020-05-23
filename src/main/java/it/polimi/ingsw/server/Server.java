@@ -18,8 +18,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server {
-    private static final int PORT = 12345;
+public class Server implements Runnable {
+    public static final int PORT = 12345;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
     private final Map<String, ClientConnection> registeredUsers = new LinkedHashMap<>();
@@ -131,6 +131,7 @@ public class Server {
         lobbiesInProgress.remove(lobby);
     }
 
+    @Override
     public void run() {
         logger.info("Server started");
         while (true) {

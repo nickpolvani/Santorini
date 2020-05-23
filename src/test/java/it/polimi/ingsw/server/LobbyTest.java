@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.net.Socket;
 
 import static org.junit.Assert.*;
@@ -16,6 +17,7 @@ public class LobbyTest {
     @BeforeClass
     public static void setUp() throws Exception {
         server = new Server();
+        new Thread(server);
     }
 
     @After
@@ -28,16 +30,19 @@ public class LobbyTest {
     }
 
     @Test
-    public void removePlayer() {
+    public void removePlayer() throws IOException {
         lobby = new Lobby(3, 1);
-        lobby.addClient("juri", new SocketServerConnection(new Socket(), server));
+        SocketServerConnection juri = new SocketServerConnection(new Socket("127.0.0.1", Server.PORT), server);
+        lobby.addClient("juri", juri);
         assertTrue(lobby.containsUser("juri"));
-        lobby.addClient("nick", new SocketServerConnection(new Socket(), server));
+        SocketServerConnection nick = new SocketServerConnection(new Socket("127.0.0.1", Server.PORT), server);
+        lobby.addClient("nick", nick);
         assertTrue(lobby.containsUser("nick"));
         lobby.removePlayer("nick");
         assertFalse(lobby.containsUser("nick"));
-        lobby.addClient("nick", new SocketServerConnection(new Socket(), server));
-        lobby.addClient("fra", new SocketServerConnection(new Socket(), server));
+        lobby.addClient("nick", new SocketServerConnection(new Socket("127.0.0.1", Server.PORT), server));
+        SocketServerConnection fra = new SocketServerConnection(new Socket("127.0.0.1", Server.PORT), server);
+        lobby.addClient("fra", fra);
         assertTrue(lobby.isFull());
         assertTrue(lobby.isStarted());
         try {

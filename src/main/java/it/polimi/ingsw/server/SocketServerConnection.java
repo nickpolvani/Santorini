@@ -22,7 +22,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
     private final Logger logger = Logger.getLogger("Server");
     private String username;
 
-    private boolean active = true;
+    private boolean active = false;
 
     public SocketServerConnection(Socket socket, Server server) {
         this.socket = socket;
@@ -68,11 +68,13 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
 
     @Override
     public void asyncSend(final Object message) {
+        if (!isActive()) return;
         new Thread(() -> send(message)).start();
     }
 
     @Override
     public void run() {
+        active = true;
         Object read;
         boolean nicknameApproved = false;
         try {
