@@ -1,6 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.client.MessageParser;
+import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.IslandBoard;
@@ -26,15 +27,26 @@ public class PlaceWorkersOptions extends TileOptions {
         Pattern checkTile = Pattern.compile("[01234],[01234]-[01234],[01234]");
         if (checkTile.matcher(toCheck).matches()) {
             Tile.IndexTile[] tilesChosen = (Tile.IndexTile[]) MessageParser.parseDoubleIndex(userInput);
-            if (!tilesChosen[0].equals(tilesChosen[1]) && tilesToChoose.contains(tilesChosen[0]) &&
-                    tilesToChoose.contains(tilesChosen[1])) {
+            if (tilesChosen[0].equals(tilesChosen[1])) return "You must chose two different tiles";
+            if (tilesToChoose.contains(tilesChosen[0]) && tilesToChoose.contains(tilesChosen[1])) {
                 return null;
-            }
+            } else return "Tiles chosen are not allowed";
         }
         return alert;
     }
 
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    protected void guiExecute(GUI gui) {
+        gui.printBoard(boardClone);
+        if (gui.getNickname().equals(nickname))
+            gui.placeWorkers(tilesToChoose, color);
+        else {
+            gui.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
+        }
+
     }
 }

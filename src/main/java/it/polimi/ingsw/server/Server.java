@@ -67,7 +67,7 @@ public class Server implements Runnable {
         if (openLobby.isFull())
             logger.error("Insertion into a full lobby", new IllegalAccessException("Cannot call this method if the lobby is full"));
         openLobby.addClient(name, clientConnection);
-        clientConnection.asyncSend(new SetupOptions(name, ("Successfully added to a lobby." +
+        clientConnection.asyncSend(new MessageOption(name, ("Successfully added to a lobby." +
                 " It has " + openLobby.size + " players." + " Wait until the lobby starts.."), Operation.MESSAGE_NO_REPLY));
         if (openLobby.isStarted() || openLobby.isFull()) {
             lobbiesInProgress.add(openLobby);

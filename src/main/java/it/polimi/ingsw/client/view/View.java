@@ -49,10 +49,6 @@ public abstract class View extends Observable<String> {
 
     protected abstract void updateBoard(IslandBoard board);
 
-    /**
-     * the process who read inputs of the players
-     */
-    public abstract void readInput();
 
     /**
      * Method used to start the view

@@ -1,8 +1,5 @@
 package it.polimi.ingsw.client.view.GUI;
 
-import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.controller.Operation;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -55,14 +52,12 @@ public class SelectLobbySizePanel extends ActivePanel {
     }
 
     @Override
-    public void setCurrentOptions(Options currentOptions) {
-        this.currentOptions = currentOptions;
-        if (this.currentOptions.getCurrentOperation() == Operation.MESSAGE_NO_REPLY) {
-            this.b1.setVisible(false);
-            this.b2.setVisible(false);
-            this.remove(this.b1);
-            this.remove(this.b2);
-        }
+    public void noReply() {
+        this.b1.setVisible(false);
+        this.b2.setVisible(false);
+        this.remove(this.b1);
+        this.remove(this.b2);
+
     }
 
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
-import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.client.view.CLI;
+import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.god.GodDescription;
 
@@ -24,11 +25,19 @@ public class GodOptions extends Options {
 
 
     @Override
-    public void execute(View view) {
+    public void cliExecute(CLI view) {
         if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(messageType + "\n" + godsList() + (godsToChoose.size() > 3 ? ALERT_FOR_CHALLENGER : alert));
+            view.showMessage(message + "\n" + godsList() + (godsToChoose.size() > 3 ? ALERT_FOR_CHALLENGER : alert));
         } else {
             view.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
+        }
+    }
+
+    @Override
+    protected void guiExecute(GUI gui) {
+        if (gui.getNickname().equals(nickname)) {
+            gui.chooseGod(godsToChoose);
+            gui.showMessage(message);
         }
     }
 

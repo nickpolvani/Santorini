@@ -1,14 +1,12 @@
 package it.polimi.ingsw.client.view.GUI;
 
-import it.polimi.ingsw.bean.options.ChooseOptions;
-import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.PlaceWorkersOptions;
-import it.polimi.ingsw.bean.options.TileOptions;
+import it.polimi.ingsw.model.Tile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 
 public class GamePanel extends ActivePanel {
 
@@ -18,7 +16,7 @@ public class GamePanel extends ActivePanel {
     private JButton noButton;
     private Color playerColor;
 
-    public GamePanel(GUI gui, Options currentOptions) {
+    public GamePanel(GUI gui) {
         super();
 
         textPanel = new JPanel();
@@ -30,6 +28,8 @@ public class GamePanel extends ActivePanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gui.notify("yes");
+                yesButton.setVisible(false);
+                noButton.setVisible(false);
             }
         });
 
@@ -37,12 +37,12 @@ public class GamePanel extends ActivePanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gui.notify("no");
+                yesButton.setVisible(false);
+                noButton.setVisible(false);
             }
         });
         textPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         textPanel.setLayout(new BorderLayout());
-
-
         textPanel.add(textLabel, BorderLayout.NORTH);
 
         textPanel.add(yesButton, BorderLayout.WEST);
@@ -51,9 +51,11 @@ public class GamePanel extends ActivePanel {
 
 
         this.boardPanel = new BoardPanel(gui, this);
+
+
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c = new GridBagConstraints();
+
         c.gridy = 0;
         c.gridx = 0;
         c.anchor = GridBagConstraints.PAGE_START;
@@ -62,42 +64,12 @@ public class GamePanel extends ActivePanel {
         c.gridy = 1;
         c.anchor = GridBagConstraints.CENTER;
         this.add(boardPanel, c);
-        setCurrentOptions(currentOptions);
+        yesButton.setVisible(false);
+        noButton.setVisible(false);
+
 
     }
 
-    @Override
-    public void setCurrentOptions(Options currentOptions) {
-        this.currentOptions = currentOptions;
-        if (currentOptions instanceof PlaceWorkersOptions) {
-            switch (((PlaceWorkersOptions) currentOptions).getColor()) {
-                case RED:
-                    this.playerColor = Color.RED;
-                    break;
-                case BLUE:
-                    this.playerColor = Color.BLUE;
-                    break;
-                case YELLOW:
-                    this.playerColor = Color.YELLOW;
-                    break;
-            }
-            boardPanel.setDoubleSelection(true);
-        } else {
-            boardPanel.setDoubleSelection(false);
-        }
-        if (currentOptions instanceof ChooseOptions) {
-            yesButton.setVisible(true);
-            noButton.setVisible(true);
-        } else {
-            yesButton.setVisible(false);
-            noButton.setVisible(false);
-        }
-        if (currentOptions instanceof TileOptions) {
-            boardPanel.highlight(playerColor, ((TileOptions) currentOptions).getTilesToChoose());
-        } else {
-            boardPanel.removeHighlight();
-        }
-    }
 
     public Color getPlayerColor() {
         return playerColor;
@@ -107,5 +79,22 @@ public class GamePanel extends ActivePanel {
         return boardPanel;
     }
 
+    @Override
+    protected void showMessage(String message) {
+        this.textLabel.setText(message.split("\n")[0]);
+    }
 
+
+    public void highlight(Collection<Tile.IndexTile> tilesToChoose) {
+        boardPanel.highlight(playerColor, tilesToChoose);
+    }
+
+    public void setPlayerColor(Color color) {
+        this.playerColor = color;
+    }
+
+    public void showChoiceButtons(boolean value) {
+        yesButton.setVisible(value);
+        noButton.setVisible(value);
+    }
 }

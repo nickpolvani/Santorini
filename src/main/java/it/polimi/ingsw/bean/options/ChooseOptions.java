@@ -1,6 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
-import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.client.view.CLI;
+import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
 
@@ -22,10 +23,21 @@ public class ChooseOptions extends Options {
     }
 
     @Override
-    public void execute(View view) {
+    public void cliExecute(CLI view) {
         view.printBoard(board);
         if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(messageType + "\n" + alert);
+            view.showMessage(message + "\n" + alert);
+        }
+    }
+
+    @Override
+    protected void guiExecute(GUI gui) {
+        gui.printBoard(board);
+        if (gui.getNickname().equals(nickname)) {
+            gui.showMessage(message);
+            gui.choose();
+        } else {
+            gui.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
         }
     }
 

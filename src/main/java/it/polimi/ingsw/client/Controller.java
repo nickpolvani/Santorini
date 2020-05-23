@@ -95,7 +95,7 @@ public class Controller implements Observer<String> {
             wait();
         }
         currentOption = options;
-        if (options.getMessageType().equals(MessageType.NICKNAME_APPROVED)) {
+        if (options.getMessage().equals(MessageType.NICKNAME_APPROVED)) {
             this.nickname = options.getNickname();
             clientView.setNickname(options.getNickname());
         }
@@ -184,6 +184,7 @@ public class Controller implements Observer<String> {
         };
     }
 
+    /*
     void reset() {
         timer.cancel();
         clientView.close();
@@ -201,7 +202,7 @@ public class Controller implements Observer<String> {
             setup();
         }
     }
-
+\*/
     public Options getCurrentOption() {
         return currentOption;
     }

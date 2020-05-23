@@ -1,5 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
+import it.polimi.ingsw.client.view.CLI;
+import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 
@@ -7,14 +9,14 @@ import java.io.Serializable;
 
 public abstract class Options implements Serializable {
 
-    protected final String messageType;
+    protected final String message;
     protected Operation currentOperation;
     protected String alert;
     protected String nickname;
 
 
     protected Options(String nickname, String messageType, Operation operation) {
-        this.messageType = messageType;
+        this.message = messageType;
         this.currentOperation = operation;
         this.nickname = nickname;
     }
@@ -24,11 +26,22 @@ public abstract class Options implements Serializable {
         return currentOperation;
     }
 
-    public String getMessageType() {
-        return messageType;
+    public String getMessage() {
+        return message;
     }
 
-    public abstract void execute(View view);
+    public final void execute(View view) {
+        if (view instanceof CLI) {
+            cliExecute((CLI) view);
+        } else {
+            guiExecute((GUI) view);
+        }
+    }
+
+    protected abstract void guiExecute(GUI view);
+
+
+    protected abstract void cliExecute(CLI view);
 
     public abstract String isValid(String userInput);
 

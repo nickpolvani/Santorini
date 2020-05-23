@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.view.GUI;
 
-import it.polimi.ingsw.bean.options.GodOptions;
 import it.polimi.ingsw.model.god.GodDescription;
 
 import javax.swing.*;
@@ -10,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChooseGodPanel extends ActivePanel {
@@ -17,13 +17,13 @@ public class ChooseGodPanel extends ActivePanel {
     GUI gui;
     Map<GodDescription, ImageIcon> imageMap = new HashMap<>();
 
-    public ChooseGodPanel(GUI gui, GodOptions currentOptions) {
+    public ChooseGodPanel(GUI gui, List<GodDescription> godsToChoose) {
         super();
         this.gui = gui;
 
         DefaultListModel<GodDescription> listModel = new DefaultListModel<>();
 
-        for (GodDescription godDescription : currentOptions.getGodsToChoose()) {
+        for (GodDescription godDescription : godsToChoose) {
             listModel.addElement(godDescription);
             String imagePath = null;
             try {
@@ -68,6 +68,7 @@ public class ChooseGodPanel extends ActivePanel {
     protected void showMessage(String message) {
         textLabel.setText(message.split(">")[0]);
     }
+
 
     private class GodChoiceRenderer extends JLabel implements ListCellRenderer<GodDescription> {
         public GodChoiceRenderer() {

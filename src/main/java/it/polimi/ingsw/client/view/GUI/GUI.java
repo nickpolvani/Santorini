@@ -1,16 +1,18 @@
 package it.polimi.ingsw.client.view.GUI;
 
-import it.polimi.ingsw.bean.options.GodOptions;
 import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.bean.options.PlaceWorkersOptions;
-import it.polimi.ingsw.bean.options.SetupOptions;
 import it.polimi.ingsw.client.Controller;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.IslandBoard;
-import it.polimi.ingsw.utilities.MessageType;
+import it.polimi.ingsw.model.Tile;
+import it.polimi.ingsw.model.god.GodDescription;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collection;
+import java.util.List;
 
 
 public class GUI extends View {
@@ -32,52 +34,33 @@ public class GUI extends View {
     public void setCurrentOption(Options currentOption) {
         this.currentOptions = currentOption;
         boolean isMyTurn = controller.isMyTurn();
-        if (!gameStarted) {
-            if (currentOption instanceof SetupOptions && currentOption.getMessageType().equals(MessageType.CHOOSE_LOBBY_SIZE)) {
-                setActivePanel(new SelectLobbySizePanel(this));
-            } else if (currentOptions instanceof GodOptions && isMyTurn) {
-                setActivePanel(new ChooseGodPanel(this, (GodOptions) currentOptions));
-            } else if (currentOptions instanceof PlaceWorkersOptions && isMyTurn) {
-                gameStarted = true;
-                setActivePanel(new GamePanel(this, currentOptions));
-            }
-        } else {
-            if (isMyTurn) {
-                activePanel.setCurrentOptions(currentOptions);
-            } else {
-                ((GamePanel) activePanel).getBoardPanel().removeHighlight();
-            }
+        if (gameStarted && activePanel instanceof GamePanel) {
+            ((GamePanel) activePanel).getBoardPanel().removeHighlight();
+            ((GamePanel) activePanel).getBoardPanel().setDoubleSelection(false);
+            ((GamePanel) activePanel).showChoiceButtons(false);
         }
     }
 
+
     @Override
     public void showMessage(String message) {
-
-
         activePanel.showMessage(message);
     }
 
     @Override
     public void updateBoard(IslandBoard board) {
-        if (gameStarted) {
-            if (!(activePanel instanceof GamePanel)) {
-                throw new IllegalStateException();
-            } else {
-                ((GamePanel) activePanel).getBoardPanel().updateBoard(board);
-            }
+        this.board = board;
+        if (!gameStarted) {
+            gameStarted = true;
+            setActivePanel(new GamePanel(this));
         }
-    }
-
-    @Override
-    public void readInput() {
-
+        ((GamePanel) activePanel).getBoardPanel().updateBoard(board);
     }
 
 
     @Override
     public void start() {
-
-        ActivePanel activePanel = new SetupPanel(this);
+        ActivePanel activePanel = new ChooseNicknamePanel(this);
         this.activePanel = activePanel;
         frame.setSize(screenSize);
         frame.setResizable(false);
@@ -88,7 +71,7 @@ public class GUI extends View {
 
     @Override
     public void close() {
-
+        //
     }
 
     private void setActivePanel(ActivePanel activePanel) {
@@ -97,9 +80,64 @@ public class GUI extends View {
         frame.add(activePanel);
     }
 
-    public Options getCurrentOptions() {
-        return currentOptions;
+    public void notifyWinner(String nickname) {
+        setActivePanel(new WinnerPanel(nickname, this));
     }
 
+    public void notifyLooser(String nickname) {
+        if (nickname.equals(this.getNickname())) {
+            setActivePanel(new LooserPanel());
+        } else {
+            showMessage(nickname + " has lost");
+        }
+    }
 
+    public void noReply() {
+        activePanel.noReply();
+    }
+
+    public void setup(Operation currentOperation) {
+        if (currentOperation == Operation.SELECT_LOBBY_SIZE) {
+            setActivePanel(new SelectLobbySizePanel(this));
+        }
+    }
+
+    public void showAvailableTiles(Operation currentOperation, Collection<Tile.IndexTile> tilesToChoose) {
+        if (!gameStarted) throw new IllegalStateException();
+        GamePanel gamePanel = (GamePanel) activePanel;
+        showMessage("The tiles in which you can " + currentOperation + " are highlighted");
+        gamePanel.highlight(tilesToChoose);
+        gamePanel.getBoardPanel().setDoubleSelection(false);
+    }
+
+    public void placeWorkers(Collection<Tile.IndexTile> tilesToChoose, Color color) {
+        if (!gameStarted) throw new IllegalStateException();
+        GamePanel gamePanel = (GamePanel) activePanel;
+        switch (color) {
+            case RED:
+                gamePanel.setPlayerColor(java.awt.Color.RED);
+                break;
+            case BLUE:
+                gamePanel.setPlayerColor(java.awt.Color.BLUE);
+                break;
+            case YELLOW:
+                gamePanel.setPlayerColor(java.awt.Color.YELLOW);
+                break;
+        }
+        gamePanel.getBoardPanel().setDoubleSelection(true);
+        gamePanel.showMessage("Choose two tiles to place your workers");
+        gamePanel.highlight(tilesToChoose);
+    }
+
+    public void poseidonBuild(Collection<Tile.IndexTile> tilesToChoose) {
+    }
+
+    public void chooseGod(List<GodDescription> godsToChoose) {
+        setActivePanel(new ChooseGodPanel(this, godsToChoose));
+    }
+
+    public void choose() {
+        GamePanel gamePanel = (GamePanel) activePanel;
+        gamePanel.showChoiceButtons(true);
+    }
 }

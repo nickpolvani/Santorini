@@ -1,20 +1,17 @@
 package it.polimi.ingsw.client.view.GUI;
 
-import it.polimi.ingsw.bean.options.Options;
-import it.polimi.ingsw.controller.Operation;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SetupPanel extends ActivePanel {
+public class ChooseNicknamePanel extends ActivePanel {
 
     private final GUI gui;
     private JTextField textField = new JTextField();
     private JButton submitButton = new JButton("submit");
 
-    public SetupPanel(GUI gui) {
+    public ChooseNicknamePanel(GUI gui) {
         super();
 
         this.setLayout(new GridBagLayout());
@@ -48,14 +45,12 @@ public class SetupPanel extends ActivePanel {
     }
 
     @Override
-    public void setCurrentOptions(Options currentOptions) {
-        this.currentOptions = currentOptions;
-        if (currentOptions.getCurrentOperation() == Operation.MESSAGE_NO_REPLY) {
-            textField.setVisible(false);
-            submitButton.setVisible(false);
-            this.remove(textField);
-            this.remove(submitButton);
-        }
-
+    public void noReply() {
+        textField.setVisible(false);
+        submitButton.setVisible(false);
+        this.remove(textField);
+        this.remove(submitButton);
     }
+
+
 }

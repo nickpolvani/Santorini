@@ -1,6 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.client.MessageParser;
+import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Tile;
@@ -29,5 +30,15 @@ public class PoseidonTileOptions extends TileOptions {
                 return null;
             else return alert;
         } else return alert;
+    }
+
+    @Override
+    protected void guiExecute(GUI gui) {
+        gui.printBoard(boardClone);
+        if (gui.getNickname().equals(nickname)) {
+            gui.poseidonBuild(tilesToChoose);
+        } else {
+            gui.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
+        }
     }
 }

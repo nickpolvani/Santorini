@@ -100,7 +100,8 @@ public class SocketClientConnection {
             in.close();
             out.close();
             socket.close();
-            controller.reset();
+            //TODO
+            //controller.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }

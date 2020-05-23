@@ -1,6 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
-import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.client.view.CLI;
+import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.controller.Operation;
 
 /**
@@ -12,9 +13,17 @@ public class SetupOptions extends Options {
         super(nickname, messageType, operation);
     }
 
+
     @Override
-    public void execute(View view) {
-        view.showMessage(messageType);
+    protected void guiExecute(GUI gui) {
+
+        gui.setup(currentOperation);
+        gui.showMessage(message);
+    }
+
+    @Override
+    protected void cliExecute(CLI view) {
+        view.showMessage(message);
     }
 
     @Override
