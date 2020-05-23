@@ -22,7 +22,7 @@ public class PoseidonTileOptions extends TileOptions {
         String toCheck = userInput.replace(" ", "").replace("(", "").replace(")", "");
         Pattern checkTile = Pattern.compile("[01234],[01234]-[123]");
         if (checkTile.matcher(toCheck).matches()) {
-            List args = ((List) MessageParser.parseMessage(this, userInput));
+            List<Object> args = (List<Object>) MessageParser.parseMessage(this, userInput);
             Tile.IndexTile indexTile = (Tile.IndexTile) args.get(0);
             int admittedLevel = (int) args.get(1) + getBoardClone().getBuildingLevel(indexTile);
             if (tilesToChoose.contains(indexTile)

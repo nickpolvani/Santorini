@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.options.Options;
+import org.apache.log4j.Logger;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+
 
 public class SocketClientConnection {
     private static final String IP = "127.0.0.1";
@@ -18,6 +20,7 @@ public class SocketClientConnection {
     private final Socket socket;
     private final Controller controller;
     private boolean active = true;
+    private final Logger logger = Logger.getLogger("ClientController");
 
     public SocketClientConnection(Controller controller) throws IOException {
         this.controller = controller;
@@ -45,7 +48,8 @@ public class SocketClientConnection {
                             try {
                                 controller.handleOption((Options) inputObject);
                             } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                logger.warn("Interrupted", e);
+                                Thread.currentThread().interrupt();
                             }
                         }).start();
                     } else {
@@ -86,7 +90,8 @@ public class SocketClientConnection {
             Thread t0 = asyncReadFromSocket();
             t0.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.warn("Interrupted", e);
+            Thread.currentThread().interrupt();
         } finally {
             closeConnection();
         }

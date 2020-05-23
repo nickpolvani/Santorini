@@ -74,8 +74,8 @@ public class MessageParser {
         return new Tile.IndexTile(Integer.parseInt(numbersOfIndex[0]), Integer.parseInt(numbersOfIndex[1]));
     }
 
-    private static List parsePoseidonInput(String message) {
-        List args = new ArrayList();
+    private static List<Object> parsePoseidonInput(String message) {
+        List<Object> args = new ArrayList<>();
         String[] split = message.replace(" ", "").split("-");
         args.add(parseSingleIndex(split[0]));
         args.add(Integer.parseInt(split[1]));

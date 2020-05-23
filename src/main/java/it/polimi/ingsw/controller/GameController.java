@@ -3,8 +3,8 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.bean.action.ActionHandler;
 import it.polimi.ingsw.bean.action.GameAction;
 import it.polimi.ingsw.bean.action.SetupActionHandler;
-import it.polimi.ingsw.bean.options.MessageOption;
 import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.options.WinLooseOption;
 import it.polimi.ingsw.controller.turn.BasicTurn;
 import it.polimi.ingsw.controller.turn.SetupGodsTurn;
 import it.polimi.ingsw.controller.turn.SetupWorkersTurn;
@@ -84,14 +84,14 @@ public class GameController extends Observable<Options> implements Observer<Game
     public void hasWon(Player winner) {
         logger.debug("The player " + winner + "has won!");
         String notifyMessage = (MessageType.WIN + winner.getNickname());
-        notify(new MessageOption(winner.getNickname(), notifyMessage, Operation.MESSAGE_NO_REPLY));
+        notify(new WinLooseOption(winner.getNickname(), notifyMessage, Operation.MESSAGE_NO_REPLY, gameState.getIslandBoard().clone()));
         lobby.close();
     }
 
     public void hasLost(Player looser) {
         logger.debug("The player " + looser + "has lost!");
         String notifyMessage = (MessageType.LOST + looser.getNickname());
-        notify(new MessageOption(looser.getNickname(), notifyMessage, Operation.MESSAGE_NO_REPLY));
+        notify(new WinLooseOption(looser.getNickname(), notifyMessage, Operation.MESSAGE_NO_REPLY, gameState.getIslandBoard().clone()));
         gameState.getPlayers().remove(looser);
         if (lobby.size == 2) {
             Player winner = null;

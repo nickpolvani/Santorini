@@ -74,8 +74,8 @@ public class CLI extends View {
 
 
         char[] rep = board.toString().toCharArray();
-
-        for (int i = 0; i < rep.length; i++) {
+        int i = 0;
+        while (i < rep.length) {
             if (rep[i] == 'w') {
                 switch (rep[i + 2]) {
                     case '0':
@@ -90,15 +90,16 @@ public class CLI extends View {
                     default:
                         throw new IllegalArgumentException("Not Valid Worker Color");
                 }
-                i = i + 2; //TODO is it possible refactor the code in order to not increment i here
+                i += 3;
             } else if (rep[i] == '/') {
                 utility.append("@|magenta / \\|@");
-                i = i + 2; //TODO also here
+                i += 3;
             } else if (rep[i] == '\\') {
                 utility.append("@|magenta \\ /|@");
-                i = i + 2;//TODO also here
+                i += 3;
             } else {
                 utility.append(rep[i]);
+                i++;
             }
         }
 

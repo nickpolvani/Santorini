@@ -39,7 +39,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             out.writeObject(message);
             out.flush();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
@@ -105,7 +105,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         } catch (IOException e) {
             logger.warn(e.getMessage() + " of SocketServerConnection USERNAME=" + username + " PORT=" + socket.getPort());
         } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         } finally {
             close();
         }

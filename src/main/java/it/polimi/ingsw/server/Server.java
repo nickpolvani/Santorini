@@ -141,7 +141,7 @@ public class Server implements Runnable {
                 SocketServerConnection socketConnection = new SocketServerConnection(newSocket, this);
                 executor.submit(socketConnection);
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                logger.error(e.getMessage());
                 break;
             }
         }
