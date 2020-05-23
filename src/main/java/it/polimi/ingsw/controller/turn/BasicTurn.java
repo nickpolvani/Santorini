@@ -135,7 +135,7 @@ public class BasicTurn extends Observable<Options> implements Turn {
                         boardClone, currentOperation, MessageType.BUILD);
             case CHOOSE:
                 return new ChooseOptions(currentPlayer.getNickname(), currentGod.getGodDescription().getDescriptionOfPower() +
-                        "\nDo you want to use your god's power? (Yes/No)");
+                        "\nDo you want to use your god's power? (Yes/No)", boardClone);
             case SELECT_WORKER:
                 Collection<Tile.IndexTile> indexTiles = new ArrayList<>();
                 for (Worker w : currentPlayer.getWorkers()) {

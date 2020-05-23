@@ -201,7 +201,12 @@ public class Controller implements Observer<String> {
             setup();
         }
     }
+
     public Options getCurrentOption() {
         return currentOption;
+    }
+
+    public boolean isMyTurn() {
+        return isMyTurn;
     }
 }

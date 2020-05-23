@@ -42,6 +42,8 @@ public class ChooseGodPanel extends ActivePanel {
 
 
         JButton confirmButton = new JButton("confirm");
+        confirmButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
+        confirmButton.setBackground(Color.RED);
         confirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,6 +72,7 @@ public class ChooseGodPanel extends ActivePanel {
     private class GodChoiceRenderer extends JLabel implements ListCellRenderer<GodDescription> {
         public GodChoiceRenderer() {
             setOpaque(true);
+            setBorder(BorderFactory.createLineBorder(Color.BLACK));
         }
 
         @Override

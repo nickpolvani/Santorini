@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 public class ChooseOptionsTest {
 
-    private final ChooseOptions options = new ChooseOptions("juri", "");
+    private final ChooseOptions options = new ChooseOptions("juri", "", null);
 
     @Test
     public void isValid() {

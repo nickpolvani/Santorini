@@ -69,6 +69,7 @@ public class MessageParser {
     }
 
     private static Tile.IndexTile parseSingleIndex(String message) {
+        message = message.replace(" ", "").replace("(", "").replace(")", "");
         String[] numbersOfIndex = message.split(",");
         return new Tile.IndexTile(Integer.parseInt(numbersOfIndex[0]), Integer.parseInt(numbersOfIndex[1]));
     }

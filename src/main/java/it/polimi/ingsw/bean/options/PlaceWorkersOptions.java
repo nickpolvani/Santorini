@@ -2,6 +2,7 @@ package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.client.MessageParser;
 import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.model.Tile;
 
@@ -9,11 +10,14 @@ import java.util.Collection;
 import java.util.regex.Pattern;
 
 public class PlaceWorkersOptions extends TileOptions {
-    public PlaceWorkersOptions(String nickname, Collection<Tile.IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, String message) {
-        super(nickname, tilesToChoose, boardClone, operation, message);
+    private Color color;
+
+    public PlaceWorkersOptions(String nickname, Collection<Tile.IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, String message, Color color) {
+        super(nickname, tilesToChoose, boardClone, operation, message + color.getMessage());
         alert = "Please insert two couples of numbers:\n" +
                 ">> numbers in a specific couple has to be divided by a comma;\n" +
                 ">> different couples has to be divided by a dash (-)";
+        this.color = color;
     }
 
     @Override
@@ -30,4 +34,7 @@ public class PlaceWorkersOptions extends TileOptions {
         return alert;
     }
 
+    public Color getColor() {
+        return color;
+    }
 }

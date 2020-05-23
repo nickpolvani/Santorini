@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client.view.GUI;
 
+import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.controller.Operation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,5 +47,15 @@ public class SetupPanel extends ActivePanel {
         this.add(submitButton, c);
     }
 
+    @Override
+    public void setCurrentOptions(Options currentOptions) {
+        this.currentOptions = currentOptions;
+        if (currentOptions.getCurrentOperation() == Operation.MESSAGE_NO_REPLY) {
+            textField.setVisible(false);
+            submitButton.setVisible(false);
+            this.remove(textField);
+            this.remove(submitButton);
+        }
 
+    }
 }

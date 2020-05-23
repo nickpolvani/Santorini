@@ -2,6 +2,7 @@ package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.model.IslandBoard;
 
 import java.util.Arrays;
 
@@ -12,13 +13,17 @@ import java.util.Arrays;
  */
 public class ChooseOptions extends Options {
 
-    public ChooseOptions(String nickname, String message) {
+    private final IslandBoard board;
+
+    public ChooseOptions(String nickname, String message, IslandBoard board) {
         super(nickname, message, Operation.CHOOSE);
         alert = "Please insert [Yes/No] or [Y,N]";
+        this.board = board;
     }
 
     @Override
     public void execute(View view) {
+        view.printBoard(board);
         if (view.getNickname().equals(this.nickname)) {
             view.showMessage(messageType + "\n" + alert);
         }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.GUI;
 import it.polimi.ingsw.bean.options.GodOptions;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.bean.options.PlaceWorkersOptions;
+import it.polimi.ingsw.bean.options.SetupOptions;
 import it.polimi.ingsw.client.Controller;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.model.IslandBoard;
@@ -27,31 +28,44 @@ public class GUI extends View {
         this.controller = controller;
     }
 
-    public Dimension getScreenSize() {
-        return screenSize;
+    @Override
+    public void setCurrentOption(Options currentOption) {
+        this.currentOptions = currentOption;
+        boolean isMyTurn = controller.isMyTurn();
+        if (!gameStarted) {
+            if (currentOption instanceof SetupOptions && currentOption.getMessageType().equals(MessageType.CHOOSE_LOBBY_SIZE)) {
+                setActivePanel(new SelectLobbySizePanel(this));
+            } else if (currentOptions instanceof GodOptions && isMyTurn) {
+                setActivePanel(new ChooseGodPanel(this, (GodOptions) currentOptions));
+            } else if (currentOptions instanceof PlaceWorkersOptions && isMyTurn) {
+                gameStarted = true;
+                setActivePanel(new GamePanel(this, currentOptions));
+            }
+        } else {
+            if (isMyTurn) {
+                activePanel.setCurrentOptions(currentOptions);
+            } else {
+                ((GamePanel) activePanel).getBoardPanel().removeHighlight();
+            }
+        }
     }
 
     @Override
     public void showMessage(String message) {
-        this.currentOptions = controller.getCurrentOption();
 
-        if (!gameStarted) {
-            if (message.equals(MessageType.CHOOSE_LOBBY_SIZE)) {
-                setActivePanel(new SelectLobbySizePanel(this));
-            } else if (currentOptions instanceof GodOptions && currentOptions.getNickname().equals(controller.getNickname())) {
-                setActivePanel(new ChooseGodPanel(this, (GodOptions) currentOptions));
-            } else if (currentOptions instanceof PlaceWorkersOptions && currentOptions.getNickname().equals(controller.getNickname())) {
-                gameStarted = true;
-                setActivePanel(new GamePanel(this, currentOptions));
-            }
-        }
-        activePanel.setCurrentOptions(currentOptions);
+
         activePanel.showMessage(message);
     }
 
     @Override
     public void updateBoard(IslandBoard board) {
-
+        if (gameStarted) {
+            if (!(activePanel instanceof GamePanel)) {
+                throw new IllegalStateException();
+            } else {
+                ((GamePanel) activePanel).getBoardPanel().updateBoard(board);
+            }
+        }
     }
 
     @Override

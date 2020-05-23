@@ -40,7 +40,7 @@ public class SelectLobbySizePanel extends ActivePanel {
         c.ipady = 20;
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 2;
+        c.gridwidth = 3;
 
         this.add(textLabel, c);
 
@@ -49,7 +49,7 @@ public class SelectLobbySizePanel extends ActivePanel {
         c.gridy = 1;
         this.add(b1, c);
 
-        c.gridx = 1;
+        c.gridx = 2;
         c.gridy = 1;
         this.add(b2, c);
     }
@@ -58,6 +58,8 @@ public class SelectLobbySizePanel extends ActivePanel {
     public void setCurrentOptions(Options currentOptions) {
         this.currentOptions = currentOptions;
         if (this.currentOptions.getCurrentOperation() == Operation.MESSAGE_NO_REPLY) {
+            this.b1.setVisible(false);
+            this.b2.setVisible(false);
             this.remove(this.b1);
             this.remove(this.b2);
         }

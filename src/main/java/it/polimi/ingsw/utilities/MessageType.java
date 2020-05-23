@@ -5,7 +5,7 @@ public class MessageType {
     public final static String LOST = "The looser is: ";
     public final static String MOVE = "These are the Tiles where you can move";
     public final static String BUILD = "These are the Tiles where you can build";
-    public final static String PLACE_WORKERS = "Choose two tiles where you want to place your workers";
+    public final static String PLACE_WORKERS = "Choose two tiles where you want to place your workers, the color of your team is ";
     public final static String SELECT_WORKER = "Choose one of your workers";
     public final static String CHOOSE_GOD = "Choose a God. ";
     public final static String CHOOSE_NAME = "Choose your nickname";

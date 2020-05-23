@@ -1,6 +1,7 @@
 package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.client.MessageParser;
+import it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
@@ -42,10 +43,12 @@ public class TileOptions extends Options {
         if (view.getNickname().equals(this.nickname)) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(messageType).append(":\n");
-            for (IndexTile i : tilesToChoose) {
-                stringBuilder.append(i.toString()).append(" ");
+            if (view instanceof CLI) {
+                for (IndexTile i : tilesToChoose) {
+                    stringBuilder.append(i.toString()).append(" ");
+                }
+                stringBuilder.append("\n").append(alert);
             }
-            stringBuilder.append("\n").append(alert);
             view.showMessage(stringBuilder.toString());
         } else {
             view.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
