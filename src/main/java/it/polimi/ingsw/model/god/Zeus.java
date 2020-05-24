@@ -5,6 +5,7 @@ import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
+import org.apache.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -51,7 +52,7 @@ public class Zeus extends God {
                 board.addBlock(currentWorker.getIndexTile());
                 board.getTile(currentWorker.getIndexTile()).setCurrentWorker(currentWorker);
             } catch (AlreadyOccupiedException | DomeAlreadyPresentException e) {
-                e.printStackTrace();
+                Logger.getLogger("Server").fatal(e.getMessage(), e);
             }
         }
     }

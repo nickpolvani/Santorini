@@ -6,6 +6,7 @@ import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
+import org.apache.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -55,7 +56,7 @@ public class Hephaestus extends God {
             try {
                 board.addBlock(tileForAdditionalBlock);
             } catch (DomeAlreadyPresentException e) {
-                e.printStackTrace();
+                Logger.getLogger("Server").fatal(e.getMessage(), e);
             }
         }
     }

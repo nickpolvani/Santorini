@@ -5,12 +5,12 @@ import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author Polvani-Puoti-Sacchetta
  * Before your Worker moves, you may force a neighboring opponent Worker to the space directly on the other side of your Worker, if that space is unoccupied.
  */
 public class Charon extends God {
@@ -55,7 +55,7 @@ public class Charon extends God {
         try {
             board.changePosition(board.getCurrentWorker(opponentWorker), oppositeTile);
         } catch (AlreadyOccupiedException e) {
-            e.printStackTrace();
+            Logger.getLogger("Server").fatal(e.getMessage(), e);
         }
     }
 

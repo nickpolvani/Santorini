@@ -25,7 +25,7 @@ public class PoseidonTileOptions extends TileOptions {
             List<Object> args = (List<Object>) MessageParser.parseMessage(this, userInput);
             Tile.IndexTile indexTile = (Tile.IndexTile) args.get(0);
             int admittedLevel = (int) args.get(1) + getBoardClone().getBuildingLevel(indexTile);
-            if (tilesToChoose.contains(indexTile)
+            if (getTilesToChoose().contains(indexTile)
                     && admittedLevel <= 4)
                 return null;
             else return alert;
@@ -36,7 +36,7 @@ public class PoseidonTileOptions extends TileOptions {
     protected void guiExecute(GUI gui) {
         gui.printBoard(boardClone);
         if (gui.getNickname().equals(nickname)) {
-            gui.poseidonBuild(tilesToChoose);
+            gui.poseidonBuild(getTilesToChoose());
         } else {
             gui.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
         }

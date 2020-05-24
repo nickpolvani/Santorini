@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.regex.Pattern;
 
 public class PlaceWorkersOptions extends TileOptions {
-    private Color color;
+    private final Color color;
 
     public PlaceWorkersOptions(String nickname, Collection<Tile.IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, String message, Color color) {
         super(nickname, tilesToChoose, boardClone, operation, message + color.getMessage());
@@ -28,7 +28,7 @@ public class PlaceWorkersOptions extends TileOptions {
         if (checkTile.matcher(toCheck).matches()) {
             Tile.IndexTile[] tilesChosen = (Tile.IndexTile[]) MessageParser.parseDoubleIndex(userInput);
             if (tilesChosen[0].equals(tilesChosen[1])) return "You must chose two different tiles";
-            if (tilesToChoose.contains(tilesChosen[0]) && tilesToChoose.contains(tilesChosen[1])) {
+            if (getTilesToChoose().contains(tilesChosen[0]) && getTilesToChoose().contains(tilesChosen[1])) {
                 return null;
             } else return "Tiles chosen are not allowed";
         }
@@ -43,7 +43,7 @@ public class PlaceWorkersOptions extends TileOptions {
     protected void guiExecute(GUI gui) {
         gui.printBoard(boardClone);
         if (gui.getNickname().equals(nickname))
-            gui.placeWorkers(tilesToChoose, color);
+            gui.placeWorkers(getTilesToChoose(), color);
         else {
             gui.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
         }

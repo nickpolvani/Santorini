@@ -36,4 +36,11 @@ public class PlaceWorkerActions extends GameAction {
         if (!(obj instanceof PlaceWorkerActions)) return false;
         return super.equals(obj) && Arrays.equals(positions, ((PlaceWorkerActions) obj).getPositions());
     }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + Arrays.hashCode(positions);
+        return result;
+    }
 }

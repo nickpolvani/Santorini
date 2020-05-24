@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class SocketServerConnection extends Observable<GameAction> implements ClientConnection, Runnable {
 
@@ -21,6 +23,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
     private ObjectOutputStream out;
     private final Logger logger = Logger.getLogger("Server");
     private String username;
+    private final Queue<Object> toSend = new LinkedList<>();
 
     private boolean active = false;
 
@@ -69,7 +72,27 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
     @Override
     public void asyncSend(final Object message) {
         if (!isActive()) return;
-        new Thread(() -> send(message)).start();
+        synchronized (toSend) {
+            toSend.add(message);
+            toSend.notifyAll();
+        }
+    }
+
+    private void startAsyncSend() {
+        new Thread(() -> {
+            synchronized (toSend) {
+                while (isActive()) {
+                    while (toSend.isEmpty()) {
+                        try {
+                            toSend.wait();
+                        } catch (InterruptedException e) {
+                            logger.fatal(e.getMessage(), e);
+                        }
+                    }
+                    send(toSend.poll());
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -80,6 +103,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
+
             send(new SetupOptions(null, MessageType.CHOOSE_NAME, Operation.SELECT_NICKNAME));
             do {
                 read = in.readObject();
@@ -92,6 +116,8 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
                     nicknameApproved = true;
                 }
             } while (!nicknameApproved);
+
+            startAsyncSend();
 
             username = ((SelectNicknameAction) read).getNickname();
             logger.debug("Player's username on socket with port=" + socket.getPort() + " is: " + username);

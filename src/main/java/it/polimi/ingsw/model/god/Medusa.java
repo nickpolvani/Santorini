@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
+import org.apache.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -75,7 +76,7 @@ public class Medusa extends God {
         try {
             board.getTile(index).setCurrentWorker(null);
         } catch (AlreadyOccupiedException e) {
-            e.printStackTrace();
+            Logger.getLogger("Server").fatal(e.getMessage(), e);
         }
     }
 }
