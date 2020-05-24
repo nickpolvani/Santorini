@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 public class SocketClientConnection {
@@ -21,6 +23,8 @@ public class SocketClientConnection {
     private final Controller controller;
     private boolean active = true;
     private final Logger logger = Logger.getLogger("ClientController");
+
+    private final Queue<Options> toBeHandled = new LinkedList<>();
 
     public SocketClientConnection(Controller controller) throws IOException {
         this.controller = controller;
@@ -44,14 +48,10 @@ public class SocketClientConnection {
                 while (isActive()) {
                     Object inputObject = in.readObject();
                     if (inputObject instanceof Options) {
-                        new Thread(() -> {
-                            try {
-                                controller.handleOption((Options) inputObject);
-                            } catch (InterruptedException e) {
-                                logger.warn("Interrupted", e);
-                                Thread.currentThread().interrupt();
-                            }
-                        }).start();
+                        synchronized (toBeHandled) {
+                            toBeHandled.add((Options) inputObject);
+                            toBeHandled.notifyAll();
+                        }
                     } else {
                         throw new IllegalArgumentException();
                     }
@@ -67,6 +67,27 @@ public class SocketClientConnection {
         });
         t.start();
         return t;
+    }
+
+    public void asyncHandleOptions() {
+        new Thread(() -> {
+            synchronized (toBeHandled) {
+                while (isActive()) {
+                    while (toBeHandled.isEmpty()) {
+                        try {
+                            toBeHandled.wait();
+                        } catch (InterruptedException e) {
+                            logger.fatal(e.getMessage(), e);
+                        }
+                    }
+                    try {
+                        controller.handleOption(toBeHandled.poll());
+                    } catch (InterruptedException e) {
+                        logger.fatal(e.getMessage(), e);
+                    }
+                }
+            }
+        }).start();
     }
 
     public void asyncWriteToSocket(final Action gameAction) {
@@ -87,6 +108,7 @@ public class SocketClientConnection {
 
     public void run() {
         try {
+            asyncHandleOptions();
             Thread t0 = asyncReadFromSocket();
             t0.join();
         } catch (InterruptedException e) {
