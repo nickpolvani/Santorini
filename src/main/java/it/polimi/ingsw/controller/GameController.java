@@ -88,6 +88,7 @@ public class GameController extends Observable<Options> implements Observer<Game
         lobby.close();
     }
 
+
     public void hasLost(Player looser) {
         logger.debug("The player " + looser + "has lost!");
         String notifyMessage = (MessageType.LOST + looser.getNickname());

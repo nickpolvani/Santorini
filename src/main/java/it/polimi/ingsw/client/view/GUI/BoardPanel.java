@@ -19,11 +19,23 @@ public class BoardPanel extends JLayeredPane {
     private boolean doubleSelection;
     private GUI gui;
     private GamePanel gamePanel;
+    private int boardSide;
+    private int gridSide;
+
+    private Tile.IndexTile poseidonTile;
+
+    private JButton poseidonButtons[] = new JButton[3];
+    private Color playerColor;
 
     public BoardPanel(GUI gui, GamePanel gamePanel) {
         this.gui = gui;
         this.gamePanel = gamePanel;
         this.tileButtons = new TileButton[5][5];
+
+        boardSide = (int) (Math.min(gui.getScreenSize().getHeight(), gui.getScreenSize().getWidth()) * 0.75);
+        gridSide = (int) (boardSide * 595 / 800);
+
+
         String imagePath = null;
         try {
             imagePath = new File(".").getCanonicalPath() + "/src/main/resources/images/SantoriniBoard.png";
@@ -31,7 +43,7 @@ public class BoardPanel extends JLayeredPane {
             e.printStackTrace();
         }
         ImageIcon boardImage = new ImageIcon(imagePath);
-        boardImage = new ImageIcon(boardImage.getImage().getScaledInstance(800, 800, Image.SCALE_SMOOTH));
+        boardImage = new ImageIcon(boardImage.getImage().getScaledInstance(boardSide, boardSide, Image.SCALE_SMOOTH));
         JLabel boardLabel = new JLabel(boardImage);
 
         JPanel buttonPanel = new JPanel();
@@ -42,11 +54,11 @@ public class BoardPanel extends JLayeredPane {
                 buttonPanel.add(tileButtons[row][col]);
             }
         }
-        this.setPreferredSize(new Dimension(800, 800));
+        this.setPreferredSize(new Dimension(boardSide, boardSide));
         this.add(boardLabel, Integer.valueOf(0));
         this.add(buttonPanel, Integer.valueOf(1));
-        boardLabel.setBounds(0, 0, 800, 800);
-        buttonPanel.setBounds((800 - 595) / 2, (800 - 595) / 2, 595, 595);
+        boardLabel.setBounds(0, 0, boardSide, boardSide);
+        buttonPanel.setBounds((boardSide - gridSide) / 2, (boardSide - gridSide) / 2, gridSide, gridSide);
         this.repaint();
     }
 
@@ -86,6 +98,7 @@ public class BoardPanel extends JLayeredPane {
     }
 
     public void highlight(Color playerColor, Collection<Tile.IndexTile> tilesToChoose) {
+        this.playerColor = playerColor;
         for (Tile.IndexTile index : tilesToChoose) {
             tileButtons[index.getRow()][index.getCol()].setBorder(BorderFactory.createLineBorder(playerColor, 2));
         }
@@ -99,19 +112,76 @@ public class BoardPanel extends JLayeredPane {
         }
     }
 
+    public void disablePoseidonBuild(Collection<Tile.IndexTile> tilesToChoose) {
+        poseidonTile = null;
+        for (JButton poseidonButton : poseidonButtons) {
+            poseidonButton.setVisible(false);
+        }
+        for (Tile.IndexTile indexTile : tilesToChoose) {
+            TileButton tileButton = tileButtons[indexTile.getRow()][indexTile.getCol()];
+            tileButton.removeActionListener(tileButton.poseidonActionListener);
+            tileButton.addActionListener(tileButton.defaultActionListener);
+        }
+    }
+
+    public void enablePoseidonBuild(Collection<Tile.IndexTile> tilesToChoose) {
+        int i = 1;
+        for (int j = 0; j < poseidonButtons.length; j++) {
+            poseidonButtons[j] = new JButton(String.valueOf(i));
+            int finalI = i;
+            poseidonButtons[j].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    gui.notify(poseidonTile.toString() + "-" + finalI);
+                    disablePoseidonBuild(tilesToChoose);
+                }
+            });
+            i++;
+        }
+
+        for (Tile.IndexTile index : tilesToChoose) {
+            TileButton tileButton = tileButtons[index.getRow()][index.getCol()];
+            tileButton.removeActionListener(tileButton.defaultActionListener);
+            tileButton.addActionListener(tileButton.poseidonActionListener);
+        }
+        highlight(playerColor, tilesToChoose);
+
+    }
+
+    private void showPoseidonButtons(int levelsToBuild) {
+        for (JButton poseidonButton : poseidonButtons) {
+            poseidonButton.setVisible(false);
+        }
+        gamePanel.getTextPanel().add(poseidonButtons[0], BorderLayout.WEST);
+        gamePanel.getTextPanel().add(poseidonButtons[1], BorderLayout.CENTER);
+        gamePanel.getTextPanel().add(poseidonButtons[2], BorderLayout.EAST);
+        for (int j = 0; j < 3 && j < levelsToBuild; j++) {
+            poseidonButtons[j].setVisible(true);
+        }
+    }
+
 
     private class TileButton extends JButton {
         private Tile tile;
 
+        private ActionListener defaultActionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectTile(tile.getIndex());
+            }
+        };
+
+        private ActionListener poseidonActionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                poseidonTile = tile.getIndex();
+                showPoseidonButtons(4 - tile.getBuildingLevel());
+            }
+        };
 
         public TileButton() {
-            this.setSize(800 / 5, 800 / 5);
-            this.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    selectTile(tile.getIndex());
-                }
-            });
+            this.setSize(gridSide / 5, gridSide / 5);
+            this.addActionListener(defaultActionListener);
         }
 
         public void setTile(Tile tile) {
@@ -141,4 +211,6 @@ public class BoardPanel extends JLayeredPane {
             this.setIcon(tileImage);
         }
     }
+
+
 }

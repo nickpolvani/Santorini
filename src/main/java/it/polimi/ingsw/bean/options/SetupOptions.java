@@ -16,7 +16,6 @@ public class SetupOptions extends Options {
 
     @Override
     protected void guiExecute(GUI gui) {
-
         gui.setup(currentOperation);
         gui.showMessage(message);
     }

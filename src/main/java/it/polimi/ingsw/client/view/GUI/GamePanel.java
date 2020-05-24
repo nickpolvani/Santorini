@@ -16,6 +16,8 @@ public class GamePanel extends ActivePanel {
     private JButton noButton;
     private Color playerColor;
 
+    JTextArea textArea = new JTextArea(3, 58);
+
     public GamePanel(GUI gui) {
         super();
 
@@ -43,7 +45,11 @@ public class GamePanel extends ActivePanel {
         });
         textPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         textPanel.setLayout(new BorderLayout());
-        textPanel.add(textLabel, BorderLayout.NORTH);
+
+        textArea.setEditable(false);
+        textArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+
+        textPanel.add(textArea, BorderLayout.NORTH);
 
         textPanel.add(yesButton, BorderLayout.WEST);
 
@@ -70,6 +76,9 @@ public class GamePanel extends ActivePanel {
 
     }
 
+    protected JPanel getTextPanel() {
+        return textPanel;
+    }
 
     public Color getPlayerColor() {
         return playerColor;
@@ -77,11 +86,6 @@ public class GamePanel extends ActivePanel {
 
     public BoardPanel getBoardPanel() {
         return boardPanel;
-    }
-
-    @Override
-    protected void showMessage(String message) {
-        this.textLabel.setText(message.split("\n")[0]);
     }
 
 
@@ -94,7 +98,14 @@ public class GamePanel extends ActivePanel {
     }
 
     public void showChoiceButtons(boolean value) {
+        textPanel.add(yesButton, BorderLayout.WEST);
+        textPanel.add(noButton, BorderLayout.EAST);
         yesButton.setVisible(value);
         noButton.setVisible(value);
+    }
+
+    @Override
+    protected void showMessage(String message) {
+        this.textArea.setText(message);
     }
 }

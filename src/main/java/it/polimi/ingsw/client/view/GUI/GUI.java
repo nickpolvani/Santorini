@@ -130,6 +130,7 @@ public class GUI extends View {
     }
 
     public void poseidonBuild(Collection<Tile.IndexTile> tilesToChoose) {
+        ((GamePanel) activePanel).getBoardPanel().enablePoseidonBuild(tilesToChoose);
     }
 
     public void chooseGod(List<GodDescription> godsToChoose) {
@@ -139,5 +140,9 @@ public class GUI extends View {
     public void choose() {
         GamePanel gamePanel = (GamePanel) activePanel;
         gamePanel.showChoiceButtons(true);
+    }
+
+    public Dimension getScreenSize() {
+        return screenSize;
     }
 }
