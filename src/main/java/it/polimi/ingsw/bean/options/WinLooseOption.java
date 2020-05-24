@@ -9,8 +9,8 @@ import it.polimi.ingsw.utilities.MessageType;
 public class WinLooseOption extends Options {
     private final IslandBoard board;
 
-    public WinLooseOption(String nickname, String messageType, Operation operation, IslandBoard board) {
-        super(nickname, messageType, operation);
+    public WinLooseOption(String nickname, String message, IslandBoard board) {
+        super(nickname, message, Operation.MESSAGE_NO_REPLY);
         this.board = board;
     }
 

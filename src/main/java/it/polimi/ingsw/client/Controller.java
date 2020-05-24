@@ -184,25 +184,12 @@ public class Controller implements Observer<String> {
         };
     }
 
-    /*
+
     void reset() {
         timer.cancel();
         clientView.close();
-        clientView.showMessage("Do you want to play again? (yes/no) or (y/n)");
-        Scanner scanner = new Scanner(System.in);
-        String input;
-        input = scanner.nextLine().toLowerCase();
-        while (!(input.equals("yes") || input.equals("no") || input.equals("y") || input.equals("n"))) {
-            if (input.equals("")) continue;
-            clientView.showMessage("Incorrect input");
-            input = scanner.nextLine().toLowerCase();
-        }
-        if (input.equals("yes") || input.equals("y")) {
-            clientView = null;
-            setup();
-        }
     }
-\*/
+
     public Options getCurrentOption() {
         return currentOption;
     }

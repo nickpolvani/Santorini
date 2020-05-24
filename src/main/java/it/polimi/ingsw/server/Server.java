@@ -53,7 +53,7 @@ public class Server implements Runnable {
         } while (b);
         if (thereIsAOpenLobby()) throw new IllegalStateException();
         openLobby = new Lobby(numberPlayers, currentLobbyNum);
-        MessageOption mess = new MessageOption(name, "Lobby successfully created. Wait for other players", Operation.MESSAGE_NO_REPLY);
+        MessageOption mess = new MessageOption(name, "Lobby successfully created. Wait for other players");
         clientConnection.asyncSend(mess);
         logger.info("Created a new openLobby ID=" + currentLobbyNum + " SIZE=" + numberPlayers);
         ++currentLobbyNum;
@@ -67,7 +67,7 @@ public class Server implements Runnable {
         if (openLobby.isFull())
             logger.error("Insertion into a full lobby", new IllegalAccessException("Cannot call this method if the lobby is full"));
         clientConnection.asyncSend(new MessageOption(name, ("Successfully added to a lobby." +
-                " It has " + openLobby.size + " players." + " Wait until the lobby starts.."), Operation.MESSAGE_NO_REPLY));
+                " It has " + openLobby.size + " players." + " Wait until the lobby starts..")));
         openLobby.addClient(name, clientConnection);
         if (openLobby.isStarted() || openLobby.isFull()) {
             lobbiesInProgress.add(openLobby);

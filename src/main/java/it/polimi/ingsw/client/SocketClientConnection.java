@@ -122,13 +122,11 @@ public class SocketClientConnection {
     public void closeConnection() {
         if (!active) return;
         active = false;
-        controller.getClientView().close();
         try {
             in.close();
             out.close();
             socket.close();
-            //TODO
-            //controller.reset();
+            controller.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }

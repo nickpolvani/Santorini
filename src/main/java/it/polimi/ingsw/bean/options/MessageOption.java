@@ -7,8 +7,8 @@ import it.polimi.ingsw.controller.Operation;
 public class MessageOption extends Options {
 
 
-    public MessageOption(String nickname, String messageType, Operation operation) {
-        super(nickname, messageType, operation);
+    public MessageOption(String nickname, String messageType) {
+        super(nickname, messageType, Operation.MESSAGE_NO_REPLY);
     }
 
     @Override

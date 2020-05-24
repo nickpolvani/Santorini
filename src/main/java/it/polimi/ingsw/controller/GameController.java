@@ -21,6 +21,9 @@ import it.polimi.ingsw.server.Lobby;
 import it.polimi.ingsw.utilities.MessageType;
 import org.apache.log4j.Logger;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class GameController extends Observable<Options> implements Observer<GameAction> {
 
     private Turn turn;
@@ -83,25 +86,24 @@ public class GameController extends Observable<Options> implements Observer<Game
 
     public void hasWon(Player winner) {
         logger.debug("The player " + winner + "has won!");
-        String notifyMessage = (MessageType.WIN + winner.getNickname());
-        notify(new WinLooseOption(winner.getNickname(), notifyMessage, Operation.MESSAGE_NO_REPLY, gameState.getIslandBoard().clone()));
-        lobby.close();
+        String message = (MessageType.WIN + winner.getNickname());
+        notify(new WinLooseOption(winner.getNickname(), message, gameState.getIslandBoard().clone()));
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                lobby.close();
+            }
+        }, 30000);
     }
 
 
     public void hasLost(Player looser) {
-        logger.debug("The player " + looser + "has lost!");
-        String notifyMessage = (MessageType.LOST + looser.getNickname());
-        notify(new WinLooseOption(looser.getNickname(), notifyMessage, Operation.MESSAGE_NO_REPLY, gameState.getIslandBoard().clone()));
-        gameState.getPlayers().remove(looser);
+        logger.debug("The player " + looser.getNickname() + "has lost!");
+        String message = (MessageType.LOST + looser.getNickname());
         if (lobby.size == 2) {
-            Player winner = null;
-            for (Player p : getGameState().getPlayers()) {
-                if (!p.equals(looser)) winner = p;
-            }
-            assert winner != null;
-            hasWon(winner);
+            hasWon(gameState.getPlayers().get(0));
         } else {
+            notify(new WinLooseOption(looser.getNickname(), message, gameState.getIslandBoard().clone()));
             for (Worker w : looser.getWorkers()) {
                 try {
                     gameState.getIslandBoard().getTile(w.getIndexTile()).setCurrentWorker(null);
@@ -109,6 +111,8 @@ public class GameController extends Observable<Options> implements Observer<Game
                     e.printStackTrace();
                 }
             }
+            turn.switchTurn();
+            gameState.getPlayers().remove(looser);
         }
     }
 

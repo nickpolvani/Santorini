@@ -52,9 +52,8 @@ public class AthenaTurn extends BasicTurn {
         if (currentOption != null) {
             notify(currentOption);
         } else {
-            handleLooserNotification();
+            gameController.hasLost(currentPlayer);
         }
-
     }
 
     /**
@@ -84,19 +83,19 @@ public class AthenaTurn extends BasicTurn {
         if (turnOperations.isEmpty()) {
             switchTurn();
         } else if (getCurrentOperation() == Operation.BUILD && currentPlayer.getGod().cannotBuild()) {
-            handleLooserNotification();
+            gameController.hasLost(currentPlayer);
             switchTurn(); //this because after removing the looser whe have to notify the next player to play
         } else {
             if (getCurrentOperation() == Operation.CHOOSE) {
                 if (currentPlayer.getGod().getGodDescription() == GodDescription.ARTEMIS) {
                     if (athenaTileToMove(currentPlayer.getGod().getCurrentWorker()).isEmpty()) {
-                        notify(new MessageOption(currentPlayer.getNickname(), MessageType.GODS_POWER_NOT_AVAILABLE, Operation.MESSAGE_NO_REPLY));
+                        notify(new MessageOption(currentPlayer.getNickname(), MessageType.GODS_POWER_NOT_AVAILABLE));
                         endCurrentOperation();
                     } else {
                         notify(getOptions());
                     }
                 } else if (!currentPlayer.getGod().isChooseAvailable()) {
-                    notify(new MessageOption(currentPlayer.getNickname(), MessageType.GODS_POWER_NOT_AVAILABLE, Operation.MESSAGE_NO_REPLY));
+                    notify(new MessageOption(currentPlayer.getNickname(), MessageType.GODS_POWER_NOT_AVAILABLE));
                     endCurrentOperation();
                 } else {
                     notify(getOptions());

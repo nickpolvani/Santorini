@@ -67,7 +67,7 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
             challenger.setGod(controller.getGameState().getGodsFactory().getGod(selectedGods.get(0), challenger));
             for (Player p : controller.getGameState().getPlayers()) {
                 String message = "Your god for this game is: " + p.getGod().toString();
-                notify(new MessageOption(p.getNickname(), message, Operation.MESSAGE_NO_REPLY));
+                notify(new MessageOption(p.getNickname(), message));
             }
             SetupWorkersTurn setupWorkersTurn = new SetupWorkersTurn(controller, controller.getNextPlayer(currentPlayer), observers);
             clearObserver();
