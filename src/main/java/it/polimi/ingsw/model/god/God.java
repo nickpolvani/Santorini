@@ -147,7 +147,7 @@ public abstract class God {
 
     @Override
     public String toString() {
-        return "Your god is " + this.godDescription.getName() + ". His power is: " + godDescription.getDescriptionOfPower();
+        return this.godDescription.getName() + ". His power is: " + godDescription.getDescriptionOfPower();
     }
 
     /**
