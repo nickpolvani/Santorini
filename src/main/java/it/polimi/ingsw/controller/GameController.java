@@ -21,9 +21,6 @@ import it.polimi.ingsw.server.Lobby;
 import it.polimi.ingsw.utilities.MessageType;
 import org.apache.log4j.Logger;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class GameController extends Observable<Options> implements Observer<GameAction> {
 
     private Turn turn;
@@ -88,12 +85,11 @@ public class GameController extends Observable<Options> implements Observer<Game
         logger.debug("The player " + winner + "has won!");
         String message = (MessageType.WIN + winner.getNickname());
         notify(new WinLooseOption(winner.getNickname(), message, gameState.getIslandBoard().clone()));
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                lobby.close();
-            }
-        }, 30000);
+        /*
+        lobby.close();
+        TODO: gestire la chiusura della lobby in modo che la gui possa continuare a stare lì per un po' senza che si chiuda in maniera brusca
+         */
+
     }
 
 

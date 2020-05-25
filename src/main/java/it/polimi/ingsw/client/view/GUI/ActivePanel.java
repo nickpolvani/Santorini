@@ -13,7 +13,7 @@ public abstract class ActivePanel extends JPanel {
     }
 
     public ActivePanel() {
-        textLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
+        textLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 30));
     }
 
     public void noReply() {
