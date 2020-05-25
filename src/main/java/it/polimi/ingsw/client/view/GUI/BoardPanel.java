@@ -125,9 +125,16 @@ public class BoardPanel extends JLayeredPane {
     }
 
     public void enablePoseidonBuild(Collection<Tile.IndexTile> tilesToChoose) {
+        gui.showMessage("Select the tile where you want to build and how many levels you want to build");
         int i = 1;
         for (int j = 0; j < poseidonButtons.length; j++) {
-            poseidonButtons[j] = new JButton(String.valueOf(i));
+            poseidonButtons[j] = new JButton(String.valueOf(i)) {
+                @Override
+                public Dimension getPreferredSize() {
+                    return new Dimension(150, 35);
+                }
+            };
+            poseidonButtons[j].setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
             int finalI = i;
             poseidonButtons[j].addActionListener(new ActionListener() {
                 @Override

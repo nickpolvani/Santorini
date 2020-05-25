@@ -2,7 +2,7 @@ package it.polimi.ingsw.controller.turn;
 
 import it.polimi.ingsw.bean.action.ActionHandler;
 import it.polimi.ingsw.bean.options.GodOptions;
-import it.polimi.ingsw.bean.options.MessageOption;
+import it.polimi.ingsw.bean.options.NotifyPlayerGod;
 import it.polimi.ingsw.bean.options.Options;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.Operation;
@@ -67,7 +67,7 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
             challenger.setGod(controller.getGameState().getGodsFactory().getGod(selectedGods.get(0), challenger));
             for (Player p : controller.getGameState().getPlayers()) {
                 String message = "Your god for this game is: " + p.getGod().toString();
-                notify(new MessageOption(p.getNickname(), message));
+                notify(new NotifyPlayerGod(p.getNickname(), message, p.getGod().getGodDescription()));
             }
             SetupWorkersTurn setupWorkersTurn = new SetupWorkersTurn(controller, controller.getNextPlayer(currentPlayer), observers);
             clearObserver();

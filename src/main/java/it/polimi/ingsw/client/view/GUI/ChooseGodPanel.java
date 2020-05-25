@@ -78,7 +78,7 @@ public class ChooseGodPanel extends ActivePanel {
 
         @Override
         public Component getListCellRendererComponent(JList<? extends GodDescription> list, GodDescription godDescription, int index, boolean isSelected, boolean cellHasFocus) {
-            setText(godDescription.getDescriptionOfPower());
+            setText(godDescription.getName() + ": " + godDescription.getDescriptionOfPower());
             setIcon(imageMap.get(godDescription));
             if (isSelected) {
                 setBackground(list.getSelectionBackground());

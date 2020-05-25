@@ -1,11 +1,14 @@
 package it.polimi.ingsw.client.view.GUI;
 
 import it.polimi.ingsw.model.Tile;
+import it.polimi.ingsw.model.god.GodDescription;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 
 public class GamePanel extends ActivePanel {
@@ -16,14 +19,25 @@ public class GamePanel extends ActivePanel {
     private JButton noButton;
     private Color playerColor;
 
-    JTextArea textArea = new JTextArea(3, 58);
+    JTextArea textArea = new JTextArea(3, 60);
 
     public GamePanel(GUI gui) {
         super();
 
         textPanel = new JPanel();
-        yesButton = new JButton("Yes");
-        noButton = new JButton("No");
+        yesButton = new JButton("Yes") {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(150, 35);
+            }
+        };
+        noButton = new JButton("No") {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(150, 35);
+            }
+        };
+
         yesButton.setBackground(Color.GREEN);
         noButton.setBackground(Color.RED);
         yesButton.addActionListener(new ActionListener() {
@@ -34,6 +48,7 @@ public class GamePanel extends ActivePanel {
                 noButton.setVisible(false);
             }
         });
+        yesButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
 
         noButton.addActionListener(new ActionListener() {
             @Override
@@ -43,8 +58,11 @@ public class GamePanel extends ActivePanel {
                 noButton.setVisible(false);
             }
         });
+        noButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+
         textPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        textPanel.setLayout(new BorderLayout());
+        textPanel.setLayout(new BorderLayout(150, 0));
+
 
         textArea.setEditable(false);
         textArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
@@ -57,6 +75,7 @@ public class GamePanel extends ActivePanel {
 
 
         this.boardPanel = new BoardPanel(gui, this);
+        GodLabel godLabel = new GodLabel(gui.getPlayerGod());
 
 
         this.setLayout(new GridBagLayout());
@@ -68,8 +87,13 @@ public class GamePanel extends ActivePanel {
         this.add(textPanel, c);
         c.insets = new Insets(10, 0, 0, 0);
         c.gridy = 1;
+        c.gridx = 0;
         c.anchor = GridBagConstraints.CENTER;
         this.add(boardPanel, c);
+        c.gridx = 1;
+        this.add(godLabel, c);
+        this.setOpaque(true);
+        this.setBackground(Color.CYAN);
         yesButton.setVisible(false);
         noButton.setVisible(false);
 
@@ -107,5 +131,20 @@ public class GamePanel extends ActivePanel {
     @Override
     protected void showMessage(String message) {
         this.textArea.setText(message);
+    }
+
+    private class GodLabel extends JLabel {
+        GodLabel(GodDescription god) {
+            String imagePath = null;
+            try {
+                imagePath = new File(".").getCanonicalPath() + "/src/main/resources/images/god/" +
+                        god.getName() + ".png";
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ImageIcon godImage = new ImageIcon(imagePath);
+            godImage = new ImageIcon(godImage.getImage().getScaledInstance(300, 504, Image.SCALE_SMOOTH));
+            this.setIcon(godImage);
+        }
     }
 }

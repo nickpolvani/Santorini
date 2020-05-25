@@ -2,15 +2,14 @@ package it.polimi.ingsw.bean.options;
 
 import it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.GUI.GUI;
-import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.utilities.MessageType;
 
-public class WinLooseOption extends Options {
+public class WinLooseOption extends MessageOption {
     private final IslandBoard board;
 
     public WinLooseOption(String nickname, String message, IslandBoard board) {
-        super(nickname, message, Operation.MESSAGE_NO_REPLY);
+        super(nickname, message);
         this.board = board;
     }
 
@@ -37,10 +36,5 @@ public class WinLooseOption extends Options {
         } else {
             cli.showMessage(message);
         }
-    }
-
-    @Override
-    public String isValid(String userInput) {
-        return null;
     }
 }

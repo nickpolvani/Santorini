@@ -23,6 +23,7 @@ public class GUI extends View {
     private final Controller controller;
     private Options currentOptions;
     private boolean gameStarted;
+    private GodDescription playerGod;
 
 
     public GUI(Controller controller) {
@@ -82,7 +83,7 @@ public class GUI extends View {
 
     public void notifyWinner(String nickname) {
         setActivePanel(new GameOverPanel(nickname, this));
-        this.frame.validate();
+        frame.validate();
     }
 
     public void notifyLooser(String nickname) {
@@ -154,5 +155,13 @@ public class GUI extends View {
 
     public Dimension getScreenSize() {
         return screenSize;
+    }
+
+    GodDescription getPlayerGod() {
+        return this.playerGod;
+    }
+
+    public void setPlayerGod(GodDescription playerGod) {
+        this.playerGod = playerGod;
     }
 }
