@@ -67,6 +67,7 @@ public class ChooseGodPanel extends ActivePanel {
     @Override
     protected void showMessage(String message) {
         textLabel.setText(message.split(">")[0]);
+        textLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
     }
 
 
