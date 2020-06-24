@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  */
 public class Medusa extends God {
 
-    // Necessary for the method removePlayer()
+    // Necessary for the method removeWorker()
     private final GameState gameState;
 
     /**
@@ -61,7 +61,8 @@ public class Medusa extends God {
     }
 
     /**
-     *
+     * If the player decides to use the Medusa power, the opponent's worker standing on the tile where the
+     * players built has to be removed
      */
     private void removeWorker(Tile.IndexTile index) {
         Worker toRemove = board.getCurrentWorker(index);

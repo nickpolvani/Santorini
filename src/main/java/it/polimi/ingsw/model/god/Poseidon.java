@@ -14,6 +14,9 @@ import java.util.*;
  */
 public class Poseidon extends God {
 
+    /**
+     * The worker not selected to perform the turn
+     */
     Worker unmovedWorker = null;
 
     /**
@@ -29,6 +32,9 @@ public class Poseidon extends God {
         return new LinkedList<>(Arrays.asList(operationsArray));
     }
 
+    /**
+     * @return return the Tile where the unmoved worker can build
+     */
     public Collection<Tile.IndexTile> unmovedWorkerTileToBuild() {
         return tileToBuild(unmovedWorker.getIndexTile());
     }
@@ -42,6 +48,13 @@ public class Poseidon extends God {
         }
     }
 
+    /**
+     * The overload of the method build inherited from the super class.
+     *
+     * @param tileToBuild   tileToBuild: The tile where you want to build
+     * @param levelsToBuild levelsToBuild: The number of Blocks you want to build on the selected tile
+     * @throws DomeAlreadyPresentException
+     */
     public void build(Tile.IndexTile tileToBuild, int levelsToBuild) throws DomeAlreadyPresentException {
         if (board.getBuildingLevel(tileToBuild) + levelsToBuild > 4) throw new IllegalArgumentException();
         for (int i = 0; i < levelsToBuild; i++) {

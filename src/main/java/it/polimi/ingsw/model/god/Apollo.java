@@ -25,13 +25,12 @@ public class Apollo extends God {
     }
 
 
-    /**
-     * @param indexTile is the current position for the worker
-     * @return tiles where player can move his worker. We overridden this method because Apollo allows players to move his worker also
-     * in a tile where another worker is in, switching positions of workers.
-     */
     @Override
     public Collection<IndexTile> tileToMove(IndexTile indexTile) {
+        /*
+        We overridden this method because Apollo allows players to move his worker also
+        in a tile where another worker is in, switching positions of workers.
+         */
         Tile positionTile = board.getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
         Worker otherWorker;

@@ -52,6 +52,10 @@ public class Prometheus extends God {
 
 
     /**
+     * This method is used to check if the player can properly make his choice.
+     * If making choice would let the player loose the game, we avoid that situation notifying
+     * the player of the impossibility of making the optional build.
+     *
      * @return true if the player can perform the optional build without loosing
      */
     private boolean checkValidOptionalBuild() {

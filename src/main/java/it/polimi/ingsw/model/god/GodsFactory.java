@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * GodsFactory implement a singleton patter foreach God in game.
+ * GodsFactory implement a singleton pattern for each God in game.
  * This class is the only one that can instantiate gods.
  *
  * @see God
@@ -26,6 +26,9 @@ public class GodsFactory {
     }
 
     /**
+     * The god we want to implements is given by this method. In this way, we ensure there will not
+     * be any duplicate instance or reference and that only the player who has the god for the man
+     * is allow to get the instance of the god.
      * @param name   name of the god claimed
      * @param player player who claim the god
      * @return God's instance
