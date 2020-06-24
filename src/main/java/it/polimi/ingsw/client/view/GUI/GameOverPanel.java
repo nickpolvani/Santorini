@@ -26,8 +26,7 @@ public class GameOverPanel extends ActivePanel {
         }
 
         JLabel label = new JLabel(image);
-        JTextArea textArea = new JTextArea("Close the window and restart the application to begin a new game.\n" +
-                "Moreover you will be disconnected in 30seconds");
+        JTextArea textArea = new JTextArea("Close the window and restart the application to begin a new game.");
         textArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
         textArea.setBackground(Color.BLACK);
         textArea.setForeground(Color.RED);

@@ -34,7 +34,6 @@ public class GUI extends View {
     @Override
     public void setCurrentOption(Options currentOption) {
         this.currentOptions = currentOption;
-        boolean isMyTurn = controller.isMyTurn();
         if (gameStarted && activePanel instanceof GamePanel) {
             ((GamePanel) activePanel).getBoardPanel().removeHighlight();
             ((GamePanel) activePanel).getBoardPanel().setDoubleSelection(false);
@@ -72,7 +71,8 @@ public class GUI extends View {
 
     @Override
     public void close() {
-        //
+        setActivePanel(new ConnectionClosedPanel());
+        frame.validate();
     }
 
     private void setActivePanel(ActivePanel activePanel) {

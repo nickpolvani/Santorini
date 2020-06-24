@@ -85,11 +85,12 @@ public class GameController extends Observable<Options> implements Observer<Game
         logger.debug("The player " + winner + "has won!");
         String message = (MessageType.WIN + winner.getNickname());
         notify(new WinLooseOption(winner.getNickname(), message, gameState.getIslandBoard().clone()));
-        /*
-        lobby.close();
-        TODO: gestire la chiusura della lobby in modo che la gui possa continuare a stare lì per un po' senza che si chiuda in maniera brusca
-         */
-
+        try {
+            Thread.sleep(3000);
+            lobby.close();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -97,7 +98,12 @@ public class GameController extends Observable<Options> implements Observer<Game
         logger.debug("The player " + looser.getNickname() + "has lost!");
         String message = (MessageType.LOST + looser.getNickname());
         if (lobby.size == 2) {
-            hasWon(gameState.getPlayers().get(0));
+            for (Player p : gameState.getPlayers()) {
+                if (p != looser) {
+                    hasWon(p);
+                    break;
+                }
+            }
         } else {
             notify(new WinLooseOption(looser.getNickname(), message, gameState.getIslandBoard().clone()));
             for (Worker w : looser.getWorkers()) {
