@@ -15,6 +15,7 @@ public enum GodDescription {
             "be forced one space straight backwards to an unoccupied space at any level."),
     PROMETHEUS("Prometheus", "If your Worker does not move up, it may build both before and after moving."),
     HEPHAESTUS("Hephaestus", "Your Worker may build one additional block (not dome) on top of your first block."),
+
     //Advanced GOD
     ARES("Ares", "You may remove an unoccupied block (not dome) neighboring your unmoved Worker."),
     CHARON("Charon", "Before your Worker moves, you may force a neighboring opponent Worker to " +
@@ -51,36 +52,35 @@ public enum GodDescription {
     }
 
     public static GodDescription parse(String godName) {
-        godName = godName.toUpperCase();
-        if (godName.equals(APOLLO.getName().toUpperCase())) {
+        if (godName.equalsIgnoreCase(APOLLO.getName())) {
             return APOLLO;
-        } else if (godName.equals(ARTEMIS.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(ARTEMIS.getName())) {
             return ARTEMIS;
-        } else if (godName.equals(ATHENA.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(ATHENA.getName())) {
             return ATHENA;
-        } else if (godName.equals(ATLAS.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(ATLAS.getName())) {
             return ATLAS;
-        } else if (godName.equals(DEMETER.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(DEMETER.getName())) {
             return DEMETER;
-        } else if (godName.equals(PAN.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(PAN.getName())) {
             return PAN;
-        } else if (godName.equals(MINOTAUR.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(MINOTAUR.getName())) {
             return MINOTAUR;
-        } else if (godName.equals(PROMETHEUS.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(PROMETHEUS.getName())) {
             return PROMETHEUS;
-        } else if (godName.equals(HEPHAESTUS.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(HEPHAESTUS.getName())) {
             return HEPHAESTUS;
-        } else if (godName.equals(CHARON.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(CHARON.getName())) {
             return CHARON;
-        } else if (godName.equals(HESTIA.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(HESTIA.getName())) {
             return HESTIA;
-        } else if (godName.equals(MEDUSA.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(MEDUSA.getName())) {
             return MEDUSA;
-        } else if (godName.equals(POSEIDON.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(POSEIDON.getName())) {
             return POSEIDON;
-        } else if (godName.equals(ARES.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(ARES.getName())) {
             return ARES;
-        } else if (godName.equals(ZEUS.getName().toUpperCase())) {
+        } else if (godName.equalsIgnoreCase(ZEUS.getName())) {
             return ZEUS;
         } else {
             throw new IllegalArgumentException();

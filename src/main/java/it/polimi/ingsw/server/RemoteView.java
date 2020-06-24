@@ -34,4 +34,8 @@ public class RemoteView extends Observable<GameAction> implements Observer<Optio
             RemoteView.this.notify(gameAction);
         }
     }
+
+    public String getNickname() {
+        return nickname;
+    }
 }

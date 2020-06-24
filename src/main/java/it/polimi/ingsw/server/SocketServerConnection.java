@@ -49,6 +49,9 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
     @Override
     public synchronized void closeConnection() {
         if (!isActive()) return;
+        if (username != null) {
+            server.removePlayer(username);
+        }
         active = false;
         try {
             out.flush();
@@ -58,16 +61,6 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         }
         logger.debug("Socket closed of " + username + " PORT=" + socket.getPort());
     }
-
-    private void close() {
-        if (isActive()) {
-            closeConnection();
-            if (username != null) {
-                server.removePlayer(username);
-            }
-        }
-    }
-
 
     @Override
     public void asyncSend(final Object message) {
@@ -87,6 +80,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
                             toSend.wait();
                         } catch (InterruptedException e) {
                             logger.fatal(e.getMessage(), e);
+                            Thread.currentThread().interrupt();
                         }
                     }
                     send(toSend.poll());
@@ -124,16 +118,19 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             server.insertIntoLobby(username, this, in);
             while (isActive()) {
                 Object o = in.readObject();
-                if (!(o instanceof GameAction))
+                try {
+                    notify((GameAction) o);
+                } catch (ClassCastException ignored) {
                     logger.error("An object has arrived that is not a instance of action", new IllegalArgumentException());
-                notify((GameAction) o);
+                }
+
             }
         } catch (IOException e) {
             logger.warn(e.getMessage() + " of SocketServerConnection USERNAME=" + username + " PORT=" + socket.getPort());
         } catch (ClassNotFoundException e) {
             logger.error(e.getMessage());
         } finally {
-            close();
+            closeConnection();
         }
     }
 }

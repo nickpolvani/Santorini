@@ -35,9 +35,8 @@ public class Lobby {
         return full;
     }
 
-    //Method to close the lobby
-    //TODO write javadoc
     public void close() {
+        started = false;
         for (RemoteView w : remoteViews) {
             w.getClientConnection().closeConnection();
         }
