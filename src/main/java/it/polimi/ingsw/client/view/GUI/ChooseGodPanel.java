@@ -4,8 +4,6 @@ import it.polimi.ingsw.model.god.GodDescription;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -38,22 +36,29 @@ public class ChooseGodPanel extends ActivePanel {
         }
         JList<GodDescription> list = new JList<>(listModel);
         list.setCellRenderer(new GodChoiceRenderer());
+        list.setSelectionModel(new DefaultListSelectionModel() {
+            @Override
+            public void setSelectionInterval(int index0, int index1) {
+                if (super.isSelectedIndex(index0)) {
+                    super.removeSelectionInterval(index0, index1);
+                } else {
+                    super.addSelectionInterval(index0, index1);
+                }
+            }
+        });
         JScrollPane scrollPane = new JScrollPane(list);
 
 
         JButton confirmButton = new JButton("confirm");
         confirmButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
         confirmButton.setBackground(Color.RED);
-        confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                StringBuilder selectedGods = new StringBuilder();
-                for (GodDescription selectedGodDescription : list.getSelectedValuesList()) {
-                    selectedGods.append(selectedGodDescription.getName()).append(", ");
-                }
-                selectedGods.delete(selectedGods.length() - 2, selectedGods.length());  //remove ", " at the end
-                gui.notify(new String(selectedGods));
+        confirmButton.addActionListener(e -> {
+            StringBuilder selectedGods = new StringBuilder();
+            for (GodDescription selectedGodDescription : list.getSelectedValuesList()) {
+                selectedGods.append(selectedGodDescription.getName()).append(", ");
             }
+            selectedGods.delete(selectedGods.length() - 2, selectedGods.length());  //remove ", " at the end
+            gui.notify(new String(selectedGods));
         });
 
 
