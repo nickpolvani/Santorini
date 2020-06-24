@@ -133,6 +133,9 @@ public class IslandBoard implements Cloneable, Serializable {
         return Arrays.hashCode(board);
     }
 
+    /**
+     * @return String that represents the board, used in CLI
+     */
     @Override
     public String toString() {
         int tileRows = Tile.N_ROWS;
@@ -199,7 +202,7 @@ public class IslandBoard implements Cloneable, Serializable {
         return grid.toString();
     }
 
-    // UTILITY METHODS : Following methods has been implemented to be taken care of coding clarity
+    // UTILITY METHODS : Following methods have been implemented to improve code readability
 
     public boolean tilesAreFree(List<Tile.IndexTile> tiles) {
         return tiles.stream().noneMatch(indexTile -> getTile(indexTile).isOccupied());

@@ -65,12 +65,6 @@ public class Worker implements Cloneable, Serializable {
     @Override
     public Worker clone() throws CloneNotSupportedException {
         return (Worker) super.clone();
-        /*try {
-            return new Worker(this.indexTile.clone(), this.color);
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return null;*/
     }
 
 

@@ -20,8 +20,14 @@ public abstract class God {
 
     protected final Player player;
 
-    protected Worker currentWorker; // worker selected for the current turn
+    /**
+     * worker selected for the current turn
+     */
+    protected Worker currentWorker;
 
+    /**
+     * true if player wants to use god's power during the current turn
+     */
     protected boolean confirmed;
 
     /**
@@ -139,9 +145,10 @@ public abstract class God {
         return workers.stream().allMatch(w -> tileToMove(w.getIndexTile()).isEmpty());
     }
 
+    /**
+     * @return true if current worker cannot build
+     */
     public boolean cannotBuild() {
-        //TODO il lancio di questa eccezione non serve sarebbe comunque lanciata dalla riga sottostante!!
-        if (currentWorker == null) throw new NullPointerException("Worker is not set yet");
         return tileToBuild(currentWorker.getIndexTile()).isEmpty();
     }
 
@@ -155,7 +162,11 @@ public abstract class God {
      */
     public abstract Queue<Operation> getTurnOperations();
 
-    //TODO serve questo metodo??
+    /**
+     * used by gods that change the normal execution of a player's turn
+     *
+     * @return queue of operations remaining in the current turn
+     */
     public Queue<Operation> getRemainingOperations() {
         return null;
     }
@@ -164,7 +175,6 @@ public abstract class God {
     /**
      * Every time a player starts his turn, his god is reset to his initial state
      */
-    //TODO ma se lo fa questo perché è presente anche nelle sottoclassi
     public void resetGodState() {
         confirmed = false;
     }
@@ -172,7 +182,7 @@ public abstract class God {
     /**
      * Used when the user has to make a choice that changes his turn logic.
      * not all classes need to implement this method if their power does not involve
-     * any player's choice     *
+     * any player's choice
      *
      * @param confirm: the choice of the player
      */
@@ -184,6 +194,9 @@ public abstract class God {
         return true;
     }
 
+    /**
+     * @return the worker not selected for this turn
+     */
     protected Worker findNotCurrentWorker() {
         //we have to do this check because there is Medusa, thus the otherWorker may have been deleted from the game
         for (Worker w : player.getWorkers()) {
