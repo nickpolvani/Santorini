@@ -13,7 +13,6 @@ import it.polimi.ingsw.utilities.MessageType;
 
 import java.io.IOException;
 import java.net.ConnectException;
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -116,17 +115,11 @@ public class Controller implements Observer<String> {
      * Controller Setup method which calls constructor of either of CLI and GUI in line with players' choice and, in addition,
      * tries to open a new connection with the server using the SocketClientConnection instance.
      */
-    public void setup() {
-        Scanner scanner = new Scanner(System.in);
-        String input;
-        while (clientView == null) {
-            System.out.println("Choose whether you want to play with GUI or CLI. Enter [CLI/GUI]");
-            input = scanner.nextLine();
-            if (input.equalsIgnoreCase("cli")) {
-                clientView = new CLI();
-            } else if (input.equalsIgnoreCase("gui")) {
-                clientView = new GUI(this);
-            }
+    public void setup(boolean useGUI) {
+        if (useGUI) {
+            clientView = new GUI(this);
+        } else {
+            clientView = new CLI();
         }
         clientView.addObserver(this);
         try {

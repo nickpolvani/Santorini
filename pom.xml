@@ -117,7 +117,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        it.polimi.ingsw.ClientMain
+                                        it.polimi.ingsw.App
                                     </mainClass>
                                 </manifest>
                             </archive>

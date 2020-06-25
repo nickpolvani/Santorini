@@ -44,10 +44,6 @@ public class CLI extends View {
     public void printWelcome() {
 
 
-        // This Line is necessary only if you want to open client in Terminal of Intellij. Either powershell or cmd does not need this
-
-        System.setProperty("jansi.passthrough", "true");
-
         AnsiConsole.systemInstall();
 
         String welcome =
@@ -103,9 +99,6 @@ public class CLI extends View {
             }
         }
 
-
-        //This Line is necessary only if you want to open client in Terminal of Intellij. Either powershell or cmd does not need this
-        System.setProperty("jansi.passthrough", "true");
 
         AnsiConsole.systemInstall();
         AnsiConsole.out().println(ansi().eraseLine().render(utility.toString()));

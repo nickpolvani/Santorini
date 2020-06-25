@@ -24,6 +24,7 @@ public class GamePanel extends ActivePanel {
     public GamePanel(GUI gui) {
         super();
         gui.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        gui.frame.setResizable(false);
         textPanel = new JPanel();
         yesButton = new JButton("Yes") {
             @Override
