@@ -22,11 +22,7 @@ public class Pan extends God {
         super(GodDescription.PAN, player, gameState);
     }
 
-    /**
-     * @param indexTile is the tile chosen by the player to move the worker selected at the beginning of the turn.
-     * @throws IllegalArgumentException if you choose a tile where you cannot move
-     * @throws IllegalStateException    thrown if current operation in turn is not MOVE
-     */
+
     @Override
     public void move(Tile.IndexTile indexTile) throws IllegalArgumentException, AlreadyOccupiedException, IllegalStateException {
         if (!tileToMove(currentWorker.getIndexTile()).contains(indexTile)) {

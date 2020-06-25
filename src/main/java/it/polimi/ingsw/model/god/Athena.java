@@ -15,6 +15,9 @@ import java.util.Queue;
  */
 public class Athena extends God {
 
+    /**
+     * This boolean let us know if Athena, moving up to one level, prevents the opponents' worker from moving up.
+     */
     private boolean canMoveUp;
 
     /**
@@ -25,11 +28,7 @@ public class Athena extends God {
         canMoveUp = true;
     }
 
-    /**
-     * @param indexTile The indexTile is the tile's index chosen by the player to move the worker selected at the beginning of the turn.
-     * @throws AlreadyOccupiedException Throws by changePosition() in IslandBord
-     * @see it.polimi.ingsw.model.IslandBoard
-     */
+
     @Override
     public void move(Tile.IndexTile indexTile) throws AlreadyOccupiedException {
         if (!tileToMove(currentWorker.getIndexTile()).contains(indexTile)) {

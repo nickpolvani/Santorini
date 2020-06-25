@@ -50,6 +50,12 @@ public class Charon extends God {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * This method is the overload of the one inherited from the super class.
+     * It's used in order to move the opponent worker
+     *
+     * @param opponentWorker the worker witch has to be moved
+     */
     public void moveWorker(Tile.IndexTile opponentWorker) {
         Tile.IndexTile oppositeTile = findOppositeTile(opponentWorker);
         try {
@@ -59,6 +65,12 @@ public class Charon extends God {
         }
     }
 
+    /**
+     * this mmethod is used to check if the player can use the power
+     *
+     * @param opponentWorker The tile of the worker you want to move
+     * @return The index tile where the opponents worker can be moved. Null the tile is not available.
+     */
     private Tile.IndexTile findOppositeTile(Tile.IndexTile opponentWorker) {
         int oppositeRow;
         int oppositeCol;

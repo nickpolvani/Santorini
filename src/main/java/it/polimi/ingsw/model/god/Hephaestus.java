@@ -39,13 +39,14 @@ public class Hephaestus extends God {
         return new LinkedList<>(Arrays.asList(operationsArray));
     }
 
-    /**
-     * @return empty Operations'List both if player confirms to use Hephaestus' power, and he can perform his choice,
-     * and if he rejects his chance;
-     * Operation.MESSAGE_NO_REPLY if player confirms to use Hephaestus' power but he can't perform his choice.
-     */
+
     @Override
     public Queue<Operation> getRemainingOperations() {
+        /*
+        empty Operations'List both if player confirms to use Hephaestus' power, and he can perform his choice,
+        and if he rejects his chance; Operation.MESSAGE_NO_REPLY if player confirms to use Hephaestus' power
+        but he can't perform his choice.
+         */
         return new LinkedList<>();
     }
 
