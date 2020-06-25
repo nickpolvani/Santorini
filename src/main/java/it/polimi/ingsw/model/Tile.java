@@ -22,7 +22,10 @@ import java.util.Objects;
  */
 public class Tile implements Cloneable, Serializable {
 
-    //TODO credo sia roba per la toString() chiedere a fra di fare la doc
+    /**
+     * dimensions used for string representation of a Tile,
+     * used in CLI
+     */
     public static final int N_ROWS = 4;
     public static final int N_COLS = 7;
 

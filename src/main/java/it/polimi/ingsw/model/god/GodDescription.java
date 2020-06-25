@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 /**
- *
+ * Contains name and description of god classes
  */
 public enum GodDescription {
     APOLLO("Apollo", "Your Worker may  move into an opponent Worker’s space by forcing their " +

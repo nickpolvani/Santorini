@@ -79,13 +79,19 @@ public class Minotaur extends God {
     }
 
     /**
-     * @param myWorker       we need to pass as a parameter also the tile where i have the worker.
-     *                       In fact, during the Option.SELECT_WORKER is checked if the current player
-     *                       may not move any of his workers and the god does not have yet worker assigned (so NullPointerException).
-     * @param opponentWorker the tile where there's the opponent team's worker which could be forced to the tile straight backwards
+     * This method is used to check if the selected worker can push the neighbouring opponent's worker to his backwards tile.
+     *
+     * @param myWorker       myWorker : The tile where I've my worker positioned
+     * @param opponentWorker opponentWorker : The tile where there's the opponent team's worker which could
+     *                       be forced to the tile straight backwards
      * @return true if opponent worker can be forced; false otherwise.
      */
     protected boolean checkBackwardsTile(IndexTile myWorker, IndexTile opponentWorker) {
+        /*
+            We need to pass as a parameter also the tile where there's the worker we want to check.
+            In fact, during the Option.SELECT_WORKER is checked if the current player
+            may not move any of his workers and the god does not have yet currentWorker assigned (so NullPointerException).
+         */
         IndexTile backwardsTile = new IndexTile((2 * opponentWorker.getRow() - myWorker.getRow()),
                 (2 * opponentWorker.getCol() - myWorker.getCol()));
 

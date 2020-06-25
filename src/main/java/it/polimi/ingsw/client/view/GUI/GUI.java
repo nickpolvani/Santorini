@@ -65,7 +65,6 @@ public class GUI extends View {
         frame.setContentPane(activePanel);
         frame.setMinimumSize(new Dimension(750, 400));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /*frame.setExtendedState(JFrame.MAXIMIZED_BOTH);*/
         frame.setVisible(true);
     }
 

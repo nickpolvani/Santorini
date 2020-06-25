@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+/**
+ * color of the players' workers
+ */
 public enum Color {
     RED("RED", 0), BLUE("BLUE", 1), YELLOW("YELLOW", 2);
 

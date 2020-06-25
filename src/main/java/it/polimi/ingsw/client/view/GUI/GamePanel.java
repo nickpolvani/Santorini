@@ -14,16 +14,16 @@ import java.util.Collection;
 public class GamePanel extends ActivePanel {
 
     private final BoardPanel boardPanel;
-    private JPanel textPanel;
-    private JButton yesButton;
-    private JButton noButton;
+    private final JPanel textPanel;
+    private final JButton yesButton;
+    private final JButton noButton;
     private Color playerColor;
 
     JTextArea textArea = new JTextArea(3, 60);
 
     public GamePanel(GUI gui) {
         super();
-
+        gui.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         textPanel = new JPanel();
         yesButton = new JButton("Yes") {
             @Override
@@ -40,13 +40,10 @@ public class GamePanel extends ActivePanel {
 
         yesButton.setBackground(Color.GREEN);
         noButton.setBackground(Color.RED);
-        yesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gui.notify("yes");
-                yesButton.setVisible(false);
-                noButton.setVisible(false);
-            }
+        yesButton.addActionListener(e -> {
+            gui.notify("yes");
+            yesButton.setVisible(false);
+            noButton.setVisible(false);
         });
         yesButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
 

@@ -16,6 +16,7 @@ public class ChooseGodPanel extends ActivePanel {
 
     public ChooseGodPanel(GUI gui, List<GodDescription> godsToChoose) {
         super();
+        gui.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         DefaultListModel<GodDescription> listModel = new DefaultListModel<>();
         for (GodDescription godDescription : godsToChoose) {
             listModel.addElement(godDescription);

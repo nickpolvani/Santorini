@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * The GameState is the core of the model, from this class you can reach every class of the model.
- * There is a GameState's instance foreach different lobby. Every instances are independent by other one.
+ * There is a GameState's instance for each different lobby. Every instances are independent by other one.
  *
  * @see IslandBoard
  * @see Player
