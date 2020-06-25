@@ -40,7 +40,6 @@ public abstract class Options implements Serializable {
 
     protected abstract void guiExecute(GUI view);
 
-
     protected abstract void cliExecute(CLI view);
 
     public abstract String isValid(String userInput);

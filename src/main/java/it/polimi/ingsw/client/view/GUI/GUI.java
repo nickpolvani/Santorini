@@ -60,12 +60,12 @@ public class GUI extends View {
 
     @Override
     public void start() {
-        ActivePanel activePanel = new ChooseNicknamePanel(this);
+        ActivePanel activePanel = new WelcomePanel(this);
         this.activePanel = activePanel;
-        frame.setSize(screenSize);
-        frame.setResizable(false);
-        frame.add(activePanel);
+        frame.setContentPane(activePanel);
+        frame.setMinimumSize(new Dimension(750, 400));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        /*frame.setExtendedState(JFrame.MAXIMIZED_BOTH);*/
         frame.setVisible(true);
     }
 
@@ -76,15 +76,21 @@ public class GUI extends View {
     }
 
     private void setActivePanel(ActivePanel activePanel) {
-        frame.remove(this.activePanel);
         this.activePanel = activePanel;
-        frame.add(activePanel);
+        frame.setContentPane(activePanel);
     }
 
     public void notifyWinner(String nickname) {
         setActivePanel(new GameOverPanel(nickname, this));
         frame.validate();
     }
+
+    public void chooseLobbySize() {
+        if (activePanel instanceof WelcomePanel) {
+            ((WelcomePanel) activePanel).changePanel();
+        }
+    }
+
 
     public void notifyLooser(String nickname) {
         if (nickname.equals(this.getNickname())) {

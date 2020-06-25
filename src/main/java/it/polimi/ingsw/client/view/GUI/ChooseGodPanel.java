@@ -12,15 +12,11 @@ import java.util.Map;
 
 public class ChooseGodPanel extends ActivePanel {
 
-    GUI gui;
-    Map<GodDescription, ImageIcon> imageMap = new HashMap<>();
+    private final Map<GodDescription, ImageIcon> imageMap = new HashMap<>();
 
     public ChooseGodPanel(GUI gui, List<GodDescription> godsToChoose) {
         super();
-        this.gui = gui;
-
         DefaultListModel<GodDescription> listModel = new DefaultListModel<>();
-
         for (GodDescription godDescription : godsToChoose) {
             listModel.addElement(godDescription);
             String imagePath = null;
@@ -47,8 +43,6 @@ public class ChooseGodPanel extends ActivePanel {
             }
         });
         JScrollPane scrollPane = new JScrollPane(list);
-
-
         JButton confirmButton = new JButton("confirm");
         confirmButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
         confirmButton.setBackground(Color.RED);
@@ -60,7 +54,6 @@ public class ChooseGodPanel extends ActivePanel {
             selectedGods.delete(selectedGods.length() - 2, selectedGods.length());  //remove ", " at the end
             gui.notify(new String(selectedGods));
         });
-
 
         this.setLayout(new BorderLayout());
         this.add(textLabel, BorderLayout.NORTH);
@@ -74,7 +67,6 @@ public class ChooseGodPanel extends ActivePanel {
         textLabel.setText(message.split(">")[0]);
         textLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
     }
-
 
     private class GodChoiceRenderer extends JLabel implements ListCellRenderer<GodDescription> {
         public GodChoiceRenderer() {
@@ -93,9 +85,7 @@ public class ChooseGodPanel extends ActivePanel {
                 setBackground(list.getBackground());
                 setForeground(list.getForeground());
             }
-
             return this;
         }
-
     }
 }

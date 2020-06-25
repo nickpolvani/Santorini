@@ -16,7 +16,9 @@ public class SetupOptions extends Options {
 
     @Override
     protected void guiExecute(GUI gui) {
-        gui.setup(currentOperation);
+        if (this.currentOperation == Operation.SELECT_LOBBY_SIZE) {
+            gui.chooseLobbySize();
+        }
         gui.showMessage(message);
     }
 
