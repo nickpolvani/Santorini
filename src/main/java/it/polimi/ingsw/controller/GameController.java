@@ -23,15 +23,11 @@ import org.apache.log4j.Logger;
 
 public class GameController extends Observable<Options> implements Observer<GameAction> {
 
-    private Turn turn;
-
     private final GameState gameState;
-
-    private ActionHandler actionHandler;
-
     private final Lobby lobby;
-
     private final Logger logger = Logger.getLogger("Server");
+    private Turn turn;
+    private ActionHandler actionHandler;
 
     /**
      * Default constructor

@@ -11,9 +11,8 @@ import java.util.Objects;
 
 public class SelectGodTurnAction extends GameAction {
 
-    protected transient SetupTurn setupTurn;
-
     private final List<GodDescription> godsChosen;
+    protected transient SetupTurn setupTurn;
 
     public SelectGodTurnAction(List<GodDescription> gods, String nickname) {
         super(nickname);

@@ -19,6 +19,7 @@ public class Worker implements Cloneable, Serializable {
     /**
      * The color of worker's team, which is chosen by the GameState constructor,
      * at the game's start, and it will be the same for the whole game.
+     *
      * @see Color
      */
     private final Color color;
@@ -27,6 +28,7 @@ public class Worker implements Cloneable, Serializable {
      * Every worker has a position on the island board, more specifically on a tile.
      * CurrentIndexTile represents the current position of the worker.
      * It cannot be null
+     *
      * @see it.polimi.ingsw.model.Tile.IndexTile
      */
     private Tile.IndexTile indexTile;
@@ -63,8 +65,8 @@ public class Worker implements Cloneable, Serializable {
     }
 
     @Override
-    public Worker clone() throws CloneNotSupportedException {
-        return (Worker) super.clone();
+    public Worker clone() {
+        return new Worker(this.indexTile.clone(), this.color);
     }
 
 

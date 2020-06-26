@@ -6,7 +6,7 @@ import java.awt.*;
 public class WelcomePanel extends ActivePanel {
 
     private final GUI gui;
-    private ActivePanel activePanel;
+    private ActivePanel choosePanel;
 
     public WelcomePanel(GUI gui) {
         super();
@@ -26,30 +26,30 @@ public class WelcomePanel extends ActivePanel {
         c.weighty = 0.1;
         c.weightx = 1;
         c.anchor = GridBagConstraints.PAGE_END;
-        activePanel = new ChooseNicknamePanel(gui);
-        this.add(activePanel, c);
+        choosePanel = new ChooseNicknamePanel(gui);
+        this.add(choosePanel, c);
     }
 
     public void changePanel() {
-        this.remove(activePanel);
-        activePanel = new SelectLobbySizePanel(gui);
+        this.remove(choosePanel);
+        choosePanel = new SelectLobbySizePanel(gui);
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
         c.fill = GridBagConstraints.BOTH;
         c.anchor = GridBagConstraints.PAGE_START;
-        activePanel = new SelectLobbySizePanel(gui);
-        this.add(activePanel, c);
+        choosePanel = new SelectLobbySizePanel(gui);
+        this.add(choosePanel, c);
         SwingUtilities.updateComponentTreeUI(this);
     }
 
     @Override
     protected void showMessage(String message) {
-        activePanel.showMessage(message);
+        choosePanel.showMessage(message);
     }
 
     @Override
     public void noReply() {
-        activePanel.noReply();
+        choosePanel.noReply();
     }
 }

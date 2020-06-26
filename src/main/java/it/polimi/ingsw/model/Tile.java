@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
-import org.apache.log4j.Logger;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -58,6 +57,12 @@ public class Tile implements Cloneable, Serializable {
         currentWorker = null;
         building = new Building();
         index = new IndexTile(row, col);
+    }
+
+    private Tile(IndexTile indexTile, Building building, Worker worker) {
+        currentWorker = worker;
+        this.building = building;
+        this.index = indexTile;
     }
 
     /**
@@ -126,18 +131,7 @@ public class Tile implements Cloneable, Serializable {
 
     @Override
     public Tile clone() {
-        Tile clone = null;
-        try {
-            clone = (Tile) super.clone();
-            if (this.currentWorker != null) {
-                assert clone != null;
-                clone.setCurrentWorker(null);
-                clone.setCurrentWorker(this.currentWorker.clone());
-            }
-        } catch (AlreadyOccupiedException | CloneNotSupportedException e) {
-            Logger.getLogger("Server").fatal(e.getMessage(), e);
-        }
-        return clone;
+        return new Tile(this.index.clone(), this.building.clone(), this.currentWorker != null ? this.currentWorker.clone() : null);
     }
 
     @Override
@@ -196,6 +190,11 @@ public class Tile implements Cloneable, Serializable {
             dome = false;
         }
 
+        Building(BlockLevel blockLevel, boolean dome) {
+            this.level = blockLevel;
+            this.dome = dome;
+        }
+
         /**
          * @return Returns a BlockLevel that indicates the level of the tower.
          */
@@ -252,13 +251,7 @@ public class Tile implements Cloneable, Serializable {
 
         @Override
         public Building clone() {
-            Building building = null;
-            try {
-                building = (Building) super.clone();
-            } catch (CloneNotSupportedException e) {
-                Logger.getLogger("Server").fatal(e.getMessage(), e);
-            }
-            return building;
+            return new Building(this.level, this.dome);
         }
     }
 
@@ -314,8 +307,8 @@ public class Tile implements Cloneable, Serializable {
         }
 
         @Override
-        public IndexTile clone() throws CloneNotSupportedException {
-            return (IndexTile) super.clone();
+        public IndexTile clone() {
+            return new IndexTile(this.row, this.col);
         }
 
         @Override

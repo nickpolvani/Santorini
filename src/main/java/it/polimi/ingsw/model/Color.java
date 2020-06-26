@@ -14,10 +14,6 @@ public enum Color {
         this.num = num;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
     public static Color parseColor(int num) {
         switch (num) {
             case 0:
@@ -29,6 +25,10 @@ public enum Color {
             default:
                 throw new IllegalArgumentException();
         }
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public int getNum() {

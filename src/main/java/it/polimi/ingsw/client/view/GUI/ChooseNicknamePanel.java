@@ -13,6 +13,7 @@ public class ChooseNicknamePanel extends ActivePanel {
         this.setLayout(new GridBagLayout());
         textField.setSize(100, 20);
         submitButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+
         submitButton.addActionListener(e -> {
             System.out.println(textField.getText());
             gui.notify(textField.getText());

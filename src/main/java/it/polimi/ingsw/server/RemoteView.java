@@ -25,6 +25,10 @@ public class RemoteView extends Observable<GameAction> implements Observer<Optio
         return clientConnection;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
     private class ActionReceiver implements Observer<GameAction> {
         private final Logger logger = Logger.getLogger("Server");
 
@@ -33,9 +37,5 @@ public class RemoteView extends Observable<GameAction> implements Observer<Optio
             logger.debug("Received: " + gameAction);
             RemoteView.this.notify(gameAction);
         }
-    }
-
-    public String getNickname() {
-        return nickname;
     }
 }

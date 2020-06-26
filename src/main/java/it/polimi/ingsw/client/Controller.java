@@ -18,9 +18,8 @@ import java.util.TimerTask;
 
 public class Controller implements Observer<String> {
 
-    private View clientView;
     private static final long TIME_TO_ANSWER = 120000; //milliseconds
-
+    private View clientView;
     private SocketClientConnection socketClientConnection;
     private Options currentOption;
     private String nickname;

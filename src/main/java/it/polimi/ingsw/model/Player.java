@@ -15,17 +15,15 @@ import java.util.Objects;
  */
 public class Player {
 
+    public final Color color;
     /**
      * Name Inserted by the player during the game's initialization
      */
     private final String nickname;
-
     /**
      * The GameState's instance of the current lobby
      */
     private final GameState gameState;
-
-    public final Color color;
     /**
      * The reference to the player's workers
      */
@@ -86,17 +84,17 @@ public class Player {
     }
 
     /**
-     * @param selectedGod : this parameter comes form the controller, that claims the player's choice of the god
-     */
-    public void setGod(God selectedGod) {
-        this.god = selectedGod;
-    }
-
-    /**
      * @return this.god
      */
     public God getGod() {
         return this.god;
+    }
+
+    /**
+     * @param selectedGod : this parameter comes form the controller, that claims the player's choice of the god
+     */
+    public void setGod(God selectedGod) {
+        this.god = selectedGod;
     }
 
     public boolean isWinner() {

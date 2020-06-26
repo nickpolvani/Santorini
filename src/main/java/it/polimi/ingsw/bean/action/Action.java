@@ -20,6 +20,7 @@ public abstract class Action implements Serializable {
 
     /**
      * Default constructor
+     *
      * @param nickname The player's nickname who generate the action
      */
     public Action(String nickname) {

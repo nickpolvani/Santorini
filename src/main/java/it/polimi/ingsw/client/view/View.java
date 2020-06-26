@@ -7,9 +7,9 @@ import it.polimi.ingsw.observer.Observable;
 
 public abstract class View extends Observable<String> {
 
+    protected IslandBoard board;
     private String nickname;
     private Options currentOption;
-    protected IslandBoard board;
 
     /**
      * Used because GUI needs to know the currentOption for graphics

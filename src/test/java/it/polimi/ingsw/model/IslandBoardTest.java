@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
+import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,7 +45,6 @@ public class IslandBoardTest {
 
     @Test
     public void getTile() {
-        Tile t = islandBoard.getBoard()[0][0];
         assertEquals(islandBoard.getBoard()[0][0], islandBoard.getTile(new Tile.IndexTile(0, 0)));
     }
 
@@ -81,6 +81,18 @@ public class IslandBoardTest {
         islandBoard.getTile(1, 1).setCurrentWorker(new Worker(new Tile.IndexTile(1, 1), Color.BLUE));
         assertTrue(islandBoard.tilesAreFree(new ArrayList<>(Arrays.asList(new Tile.IndexTile(1, 2), new Tile.IndexTile(2, 2), new Tile.IndexTile(4, 2)))));
         assertFalse(islandBoard.tilesAreFree(new ArrayList<>(Arrays.asList(new Tile.IndexTile(1, 1), new Tile.IndexTile(2, 2), new Tile.IndexTile(4, 2)))));
+    }
 
+    @Test
+    public void equalsAndClone() throws DomeAlreadyPresentException, AlreadyOccupiedException {
+        IslandBoard clone = islandBoard.clone();
+        assertEquals(islandBoard, clone);
+
+        clone.addBlock(2, 2);
+        assertNotEquals(clone, islandBoard);
+
+        clone = new IslandBoard();
+        clone.setCurrentWorker(new Worker(new Tile.IndexTile(0, 0), Color.BLUE), new Tile.IndexTile(0, 0));
+        assertNotEquals(clone, islandBoard);
     }
 }

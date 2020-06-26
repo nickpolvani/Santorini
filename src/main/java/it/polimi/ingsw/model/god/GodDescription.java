@@ -37,20 +37,6 @@ public enum GodDescription {
         this.descriptionOfPower = description;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescriptionOfPower() {
-        return descriptionOfPower;
-    }
-
-
-    @Override
-    public String toString() {
-        return name + " " + descriptionOfPower;
-    }
-
     public static GodDescription parse(String godName) {
         if (godName.equalsIgnoreCase(APOLLO.getName())) {
             return APOLLO;
@@ -85,5 +71,18 @@ public enum GodDescription {
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescriptionOfPower() {
+        return descriptionOfPower;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + descriptionOfPower;
     }
 }

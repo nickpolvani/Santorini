@@ -15,14 +15,16 @@ public abstract class IndexTileGameAction extends GameAction {
 
     /**
      * The tile's index chosen
+     *
      * @see Tile.IndexTile
      */
     protected final Tile.IndexTile indexTile;
 
     /**
      * Default constructor
+     *
      * @param indexTile The tile's index chosen
-     * @param nickname The player's nickname who generated the action
+     * @param nickname  The player's nickname who generated the action
      * @see Player
      */
     public IndexTileGameAction(Tile.IndexTile indexTile, String nickname) {

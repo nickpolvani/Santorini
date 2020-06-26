@@ -14,12 +14,9 @@ import java.util.Queue;
 
 public abstract class God {
 
-    private final GodDescription godDescription;
-
     protected final IslandBoard board;
-
     protected final Player player;
-
+    private final GodDescription godDescription;
     /**
      * worker selected for the current turn
      */

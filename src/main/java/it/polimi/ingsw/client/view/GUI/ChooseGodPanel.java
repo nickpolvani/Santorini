@@ -33,6 +33,7 @@ public class ChooseGodPanel extends ActivePanel {
         }
         JList<GodDescription> list = new JList<>(listModel);
         list.setCellRenderer(new GodChoiceRenderer());
+
         list.setSelectionModel(new DefaultListSelectionModel() {
             @Override
             public void setSelectionInterval(int index0, int index1) {
@@ -43,6 +44,7 @@ public class ChooseGodPanel extends ActivePanel {
                 }
             }
         });
+
         JScrollPane scrollPane = new JScrollPane(list);
         JButton confirmButton = new JButton("confirm");
         confirmButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));

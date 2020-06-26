@@ -58,7 +58,9 @@ public class TileTest {
         assertEquals(tile.getCurrentWorker(), clone.getCurrentWorker());
         assertNotSame(tile.getCurrentWorker(), clone.getCurrentWorker());
         assertEquals(tile.getIndex(), clone.getIndex());
+        assertNotSame(tile.getIndex(), clone.getIndex());
         assertEquals(tile.getBuilding(), clone.getBuilding());
+        assertNotSame(tile.getBuilding(), clone.getBuilding());
     }
 
     @Test

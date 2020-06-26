@@ -56,19 +56,19 @@ public class ApolloTest {
         apollo = player1.getGod();
 
         // Setup Worker
-        Tile.IndexTile[] workerPositions1 = {new Tile.IndexTile(0, 0), new Tile.IndexTile(1, 1)};
+        Tile.IndexTile[] workerPositions1 = {new IndexTile(0, 0), new IndexTile(1, 1)};
         try {
             player1.setWorkers(workerPositions1);
         } catch (AlreadySetException e) {
             System.out.println(e.getMessage());
         }
-        Tile.IndexTile[] workerPositions2 = {new Tile.IndexTile(1, 0), new Tile.IndexTile(0, 1)};
+        Tile.IndexTile[] workerPositions2 = {new IndexTile(1, 0), new IndexTile(0, 1)};
         try {
             player2.setWorkers(workerPositions2);
         } catch (AlreadySetException e) {
             System.out.println(e.getMessage());
         }
-        Tile.IndexTile[] workerPositions3 = {new Tile.IndexTile(4, 4), new Tile.IndexTile(2, 1)};
+        Tile.IndexTile[] workerPositions3 = {new IndexTile(4, 4), new IndexTile(2, 1)};
         try {
             player3.setWorkers(workerPositions3);
         } catch (AlreadySetException e) {
@@ -96,15 +96,15 @@ public class ApolloTest {
     public void tileToMove() {
 
         player1.getGod().selectWorker(player1.getWorkers().get(0));
-        Tile.IndexTile i1 = new Tile.IndexTile(0, 1);
-        Tile.IndexTile i2 = new Tile.IndexTile(1, 0);
+        Tile.IndexTile i1 = new IndexTile(0, 1);
+        Tile.IndexTile i2 = new IndexTile(1, 0);
 
         Collection<Tile.IndexTile> tileToMove = apollo.tileToMove(apollo.currentWorker.getIndexTile());
         assertTrue(tileToMove.size() == 2 && tileToMove.contains(i1)
                 && tileToMove.contains(i2));
 
         try {
-            gameController.getGameState().getIslandBoard().getTile(new Tile.IndexTile(2, 0)).getBuilding().buildDome();
+            gameController.getGameState().getIslandBoard().getTile(new IndexTile(2, 0)).getBuilding().buildDome();
         } catch (DomeAlreadyPresentException e) {
             e.printStackTrace();
         }
@@ -140,15 +140,15 @@ public class ApolloTest {
     @Test
     public void tileToBuild() {
         try {
-            gameController.getGameState().getIslandBoard().getTile(new Tile.IndexTile(2, 0)).getBuilding().buildDome();
+            gameController.getGameState().getIslandBoard().getTile(new IndexTile(2, 0)).getBuilding().buildDome();
         } catch (DomeAlreadyPresentException e) {
             e.printStackTrace();
         }
 
-        Collection<Tile.IndexTile> tileToBuild = apollo.tileToBuild(new Tile.IndexTile(1, 0));
+        Collection<Tile.IndexTile> tileToBuild = apollo.tileToBuild(new IndexTile(1, 0));
         assertEquals(0, tileToBuild.size());
 
-        tileToBuild = apollo.tileToBuild(new Tile.IndexTile(1, 1));
+        tileToBuild = apollo.tileToBuild(new IndexTile(1, 1));
         assertTrue(tileToBuild.size() == 3 && tileToBuild.contains(new IndexTile(0, 2))
                 && tileToBuild.contains(new IndexTile(1, 2))
                 && tileToBuild.contains(new IndexTile(2, 2)));
@@ -162,10 +162,10 @@ public class ApolloTest {
             gameController.getGameState().getIslandBoard().changePosition(player2.getWorkers().get(0), new IndexTile(4, 0));
             gameController.getGameState().getIslandBoard().changePosition(player2.getWorkers().get(1), new IndexTile(4, 1));
             gameController.getGameState().getIslandBoard().changePosition(player1.getWorkers().get(1), new IndexTile(0, 1));
-            gameController.getGameState().getIslandBoard().getTile(new Tile.IndexTile(1, 0)).getBuilding().buildDome();
-            gameController.getGameState().getIslandBoard().getTile(new Tile.IndexTile(1, 1)).getBuilding().buildDome();
-            gameController.getGameState().getIslandBoard().getTile(new Tile.IndexTile(1, 2)).getBuilding().buildDome();
-            gameController.getGameState().getIslandBoard().getTile(new Tile.IndexTile(0, 2)).getBuilding().buildDome();
+            gameController.getGameState().getIslandBoard().getTile(new IndexTile(1, 0)).getBuilding().buildDome();
+            gameController.getGameState().getIslandBoard().getTile(new IndexTile(1, 1)).getBuilding().buildDome();
+            gameController.getGameState().getIslandBoard().getTile(new IndexTile(1, 2)).getBuilding().buildDome();
+            gameController.getGameState().getIslandBoard().getTile(new IndexTile(0, 2)).getBuilding().buildDome();
         } catch (DomeAlreadyPresentException | AlreadyOccupiedException e) {
             e.printStackTrace();
         }

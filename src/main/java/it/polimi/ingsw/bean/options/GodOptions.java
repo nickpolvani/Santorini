@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class GodOptions extends Options {
 
-    private final List<GodDescription> godsToChoose;
     private static final String ALERT_FOR_CHALLENGER = "Please insert gods of the list split by a comma.";
+    private final List<GodDescription> godsToChoose;
 
     public GodOptions(String nickname, List<GodDescription> godsToChoose, String message) {
         super(nickname, message, Operation.CHOOSE_GOD);

@@ -19,9 +19,9 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
     private final Queue<Operation> turnOperations;
     private final GameController controller;
     private final List<GodDescription> selectedGods = new ArrayList<>();
+    private final Logger logger = Logger.getLogger("Server");
     private Player currentPlayer;
     private boolean challengerGodsChosen = false;
-    private final Logger logger = Logger.getLogger("Server");
     private boolean started = false;
 
 

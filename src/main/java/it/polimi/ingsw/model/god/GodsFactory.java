@@ -29,6 +29,7 @@ public class GodsFactory {
      * The god we want to implements is given by this method. In this way, we ensure there will not
      * be any duplicate instance or reference and that only the player who has the god for the man
      * is allow to get the instance of the god.
+     *
      * @param name   name of the god claimed
      * @param player player who claim the god
      * @return God's instance

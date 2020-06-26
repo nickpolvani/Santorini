@@ -19,12 +19,11 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
 
     private final Socket socket;
     private final Server server;
+    private final Logger logger = Logger.getLogger("Server");
+    private final Queue<Object> toSend = new LinkedList<>();
     private ObjectInputStream in;
     private ObjectOutputStream out;
-    private final Logger logger = Logger.getLogger("Server");
     private String username;
-    private final Queue<Object> toSend = new LinkedList<>();
-
     private boolean active = false;
 
     public SocketServerConnection(Socket socket, Server server) {

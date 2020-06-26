@@ -17,10 +17,10 @@ import java.util.List;
 
 public class GUI extends View {
 
-    JFrame frame = new JFrame("Santorini");
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private ActivePanel activePanel;
     private final Controller controller;
+    JFrame frame = new JFrame("Santorini");
+    private ActivePanel activePanel;
     private Options currentOptions;
     private boolean gameStarted;
     private GodDescription playerGod;

@@ -15,10 +15,10 @@ import java.util.*;
 
 public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
 
-    private Player currentPlayer;
     private final GameController controller;
     private final Player firstPlayer;
     private final Queue<Operation> turnOperations = new LinkedList<>();
+    private Player currentPlayer;
     private boolean started = false;
 
     public SetupWorkersTurn(GameController controller, Player firstPlayer, List<Observer<Options>> observers) {

@@ -17,8 +17,9 @@ public class LobbySizeAction extends Action {
 
     /**
      * Default constructor
+     *
      * @param lobbySize The size of the new lobby.
-     * @param nickname The player's nickname who generated the action.
+     * @param nickname  The player's nickname who generated the action.
      * @see Lobby
      */
     public LobbySizeAction(int lobbySize, String nickname) {

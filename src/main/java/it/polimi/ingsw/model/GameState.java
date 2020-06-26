@@ -25,6 +25,7 @@ public class GameState {
 
     /**
      * The list of the current players in the lobby.
+     *
      * @see Player
      * @see List
      */
@@ -32,6 +33,7 @@ public class GameState {
 
     /**
      * The GodsFactory instance of the current lobby. It is used early in the game to create instances of the gods.
+     *
      * @see GodsFactory
      */
     private final GodsFactory godsFactory;
