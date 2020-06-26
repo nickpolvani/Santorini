@@ -33,7 +33,7 @@ public class Prometheus extends God {
         Tile positionTile = board.getTile(indexTile);
         Collection<IndexTile> tileToMove = new ArrayList<>();
         int maxLevelDifference = 2;
-        if (confirmed = true) maxLevelDifference = 1;
+        if (confirmed) maxLevelDifference = 1;
 
         for (IndexTile otherTile : board.indexOfNeighbouringTiles(indexTile)) {
             if (!(board.isOccupied(otherTile)) &&

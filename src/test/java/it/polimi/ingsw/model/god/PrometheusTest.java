@@ -100,6 +100,10 @@ public class PrometheusTest {
             gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 2)).getBuilding().addBlock();
             tiles = prometheus.tileToMove(prometheus.getCurrentWorker().getIndexTile());
             assertTrue(tiles.size() == 1 && tiles.contains(new Tile.IndexTile(2, 0)));
+            prometheus.applyChoice(false);
+            tiles = prometheus.tileToMove(prometheus.getCurrentWorker().getIndexTile());
+            assertTrue(tiles.size() == 2 && tiles.contains(new Tile.IndexTile(2, 0))
+                    && tiles.contains(new Tile.IndexTile(2, 2)));
         } catch (DomeAlreadyPresentException e) {
             e.printStackTrace();
         }
