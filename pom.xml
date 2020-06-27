@@ -110,7 +110,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>deploy</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
@@ -136,7 +136,6 @@
                 <executions>
                     <execution>
                         <id>sonar-coverage</id>
-                        <phase>verify</phase>
                         <goals>
                             <goal>sonar</goal>
                         </goals>
