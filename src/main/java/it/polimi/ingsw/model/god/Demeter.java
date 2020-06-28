@@ -10,7 +10,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author Polvani-Puoti-Sacchetta
  * Your Build: Your Worker may build one additional time, but not on the same space.
  */
 public class Demeter extends God {
@@ -18,9 +17,6 @@ public class Demeter extends God {
     private Tile.IndexTile tileAlreadyBuild;
 
 
-    /**
-     * Default constructor
-     */
     protected Demeter(GameState gameState, Player player) {
 
         super(GodDescription.DEMETER, player, gameState);

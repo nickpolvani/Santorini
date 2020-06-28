@@ -49,9 +49,9 @@ public class TileOptions extends Options {
     }
 
     @Override
-    protected void cliExecute(CLI view) {
-        view.printBoard(boardClone);
-        if (view.getNickname().equals(this.nickname)) {
+    protected void cliExecute(CLI cli) {
+        cli.printBoard(boardClone);
+        if (cli.getNickname().equals(this.nickname)) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(message).append(":\n");
             for (IndexTile i : tilesToChoose) {
@@ -59,9 +59,9 @@ public class TileOptions extends Options {
             }
             stringBuilder.append("\n").append(alert);
 
-            view.showMessage(stringBuilder.toString());
+            cli.showMessage(stringBuilder.toString());
         } else {
-            view.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
+            cli.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
         }
     }
 

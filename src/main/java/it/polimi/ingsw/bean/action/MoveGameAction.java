@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.AlreadyOccupiedException;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
+/**
+ * action used to perform a move operation
+ */
 public class MoveGameAction extends IndexTileGameAction {
 
     public MoveGameAction(IndexTile indexTile, String nickname) {

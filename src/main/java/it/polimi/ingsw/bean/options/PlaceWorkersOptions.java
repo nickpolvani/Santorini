@@ -10,6 +10,9 @@ import it.polimi.ingsw.model.Tile;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
+/**
+ * Options used in setup phase when users have to place their workers in the game board
+ */
 public class PlaceWorkersOptions extends TileOptions {
     private final Color color;
 

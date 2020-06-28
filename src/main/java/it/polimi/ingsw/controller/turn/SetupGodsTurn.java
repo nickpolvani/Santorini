@@ -14,6 +14,9 @@ import org.apache.log4j.Logger;
 
 import java.util.*;
 
+/**
+ * turn used when players have to choose their god card
+ */
 public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
     private final Player challenger;
     private final Queue<Operation> turnOperations;
@@ -57,6 +60,10 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
         }
     }
 
+    /**
+     * changes the current player, when all the players have chosen their god card, the turn's logic passes to
+     * SetupWorkersTurn
+     */
     @Override
     public void switchTurn() {
         currentPlayer = controller.getNextPlayer(currentPlayer);
@@ -84,6 +91,12 @@ public class SetupGodsTurn extends Observable<Options> implements SetupTurn {
         return challengerGodsChosen;
     }
 
+    /**
+     * selects gods for the game if the user is the challenger, assigns god to the user otherwise
+     *
+     * @param inputGods gods chosen by the user, size of inputGods has to be one if the user is not the challenger,
+     *                  otherwise it has to be equal to the number of players in this game
+     */
     public void handleGodChoice(List<GodDescription> inputGods) {
         if (!isChallengerGodsChosen()) {
             if (selectedGods.containsAll(inputGods)) {

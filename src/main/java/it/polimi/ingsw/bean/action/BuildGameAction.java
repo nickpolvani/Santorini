@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.Tile.IndexTile;
 
+/**
+ * action used to perform a build operation
+ */
 public class BuildGameAction extends IndexTileGameAction {
 
     /**

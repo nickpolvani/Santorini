@@ -26,23 +26,21 @@ import java.util.Queue;
  */
 
 public class BasicTurn extends Observable<Options> implements Turn {
-    /**
-     *
-     */
+
     protected GameController gameController;
-    /**
-     *
-     */
+
     protected Player currentPlayer;
-    /**
-     *
-     */
+
     protected Queue<Operation> turnOperations;
 
     private boolean started;
 
     /**
-     * Default constructor that set only which game the turn belongs to.
+     * Default constructor that set only which game the turn belongs to.ù
+     *
+     * @param firstPlayer    player that starts the game
+     * @param gameController instance of the game controller, unique for every game
+     * @param observerList   list of turn observers (the players remote views)
      */
     public BasicTurn(GameController gameController, Player firstPlayer, List<Observer<Options>> observerList) {
         this.currentPlayer = firstPlayer;

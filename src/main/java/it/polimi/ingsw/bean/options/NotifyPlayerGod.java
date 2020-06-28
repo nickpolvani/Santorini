@@ -3,6 +3,9 @@ package it.polimi.ingsw.bean.options;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.model.god.GodDescription;
 
+/**
+ * Option used to tell users their chosen god
+ */
 public class NotifyPlayerGod extends MessageOption {
     private final GodDescription playerGod;
 
@@ -12,9 +15,9 @@ public class NotifyPlayerGod extends MessageOption {
     }
 
     @Override
-    protected void guiExecute(GUI view) {
-        if (this.nickname.equals(view.getNickname())) {
-            view.setPlayerGod(playerGod);
+    protected void guiExecute(GUI gui) {
+        if (this.nickname.equals(gui.getNickname())) {
+            gui.setPlayerGod(playerGod);
         }
     }
 

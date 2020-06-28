@@ -41,6 +41,10 @@ public class Player {
      * Default constructor
      * When the game is initialized, every SocketClientConnection has to provide his nickname. In this way, when we create the player's instance,
      * we set also his nickname. Therefore, the setter of nickname is unnecessary and useless.
+     *
+     * @param color     color of player's workers
+     * @param gameState game in which the player participates
+     * @param nickname  player's nickname
      */
     public Player(String nickname, GameState gameState, Color color) {
         this.nickname = nickname;
@@ -67,6 +71,7 @@ public class Player {
 
     /**
      * @param indexes : is the TileIndexes' array selected by the player during the setup of the game
+     * @throws AlreadySetException if workers are already instantiated for this player
      */
     public void setWorkers(Tile.IndexTile[] indexes) throws AlreadySetException {
         if (this.workers != null) throw new AlreadySetException("Team already set");

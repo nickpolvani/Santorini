@@ -23,8 +23,8 @@ public class SetupOptions extends Options {
     }
 
     @Override
-    protected void cliExecute(CLI view) {
-        view.showMessage(message);
+    protected void cliExecute(CLI cli) {
+        cli.showMessage(message);
     }
 
     @Override

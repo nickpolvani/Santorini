@@ -30,7 +30,9 @@ public abstract class God {
     /**
      * Default constructor, can be called only by GodsFactory
      *
-     * @param godDescription The godDescription that corresponding
+     * @param godDescription The godDescription that corresponds to the selected god
+     * @param gameState      instance of the game
+     * @param player         player that chose this god
      */
     protected God(GodDescription godDescription, Player player, GameState gameState) {
         this.godDescription = godDescription;
@@ -123,7 +125,7 @@ public abstract class God {
 
     /**
      * @param indexTile is the tile chosen by the player to let his worker build
-     * @throws DomeAlreadyPresentException
+     * @throws DomeAlreadyPresentException if tile at position indexTile contains a dome
      */
     public void build(IndexTile indexTile) throws DomeAlreadyPresentException {
 
@@ -136,6 +138,8 @@ public abstract class God {
 
     /**
      * it checks if both the workers of the current player cannot move, so the player is declared looser
+     *
+     * @return true if player cannot move his workers
      */
     public boolean cannotMove() {
         List<Worker> workers = player.getWorkers();

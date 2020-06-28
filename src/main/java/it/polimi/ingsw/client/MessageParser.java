@@ -7,11 +7,20 @@ import it.polimi.ingsw.model.god.GodDescription;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class used to parse strings coming from user interaction and convert them to
+ * the corresponding object, that will be sent with an Action to the server
+ */
 public class MessageParser {
 
     private MessageParser() {
     }
 
+    /**
+     * @param currentOption options the player has currently
+     * @param message       contains string obtained by user
+     * @return object corresponding to currentOption created parsing message
+     */
     public static Object parseMessage(Options currentOption, String message) {
         Object object;
         switch (currentOption.getCurrentOperation()) {
@@ -46,6 +55,10 @@ public class MessageParser {
         return object;
     }
 
+    /**
+     * @param message string of user input
+     * @return object containing an array of two indexTiles
+     */
     public static Object parseDoubleIndex(String message) {
         String[] split = message.split("-");
         Tile.IndexTile[] index = new Tile.IndexTile[2];

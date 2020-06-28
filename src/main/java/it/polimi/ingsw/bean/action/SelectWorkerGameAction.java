@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 
+/**
+ * action used to let players choose their worker for the current turn
+ */
 public class SelectWorkerGameAction extends IndexTileGameAction {
 
     public SelectWorkerGameAction(Tile.IndexTile workerPosition, String nickname) {

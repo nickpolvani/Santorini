@@ -25,11 +25,11 @@ public class GodOptions extends Options {
 
 
     @Override
-    public void cliExecute(CLI view) {
-        if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(message + "\n" + godsList() + (godsToChoose.size() > 3 ? ALERT_FOR_CHALLENGER : alert));
+    public void cliExecute(CLI cli) {
+        if (cli.getNickname().equals(this.nickname)) {
+            cli.showMessage(message + "\n" + godsList() + (godsToChoose.size() > 3 ? ALERT_FOR_CHALLENGER : alert));
         } else {
-            view.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
+            cli.showMessage("Wait while " + this.nickname + " is playing operation: " + this.currentOperation.toString());
         }
     }
 

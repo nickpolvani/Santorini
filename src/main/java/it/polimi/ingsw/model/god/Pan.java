@@ -15,9 +15,6 @@ import java.util.Queue;
  */
 public class Pan extends God {
 
-    /**
-     * Default constructor
-     */
     protected Pan(GameState gameState, Player player) {
         super(GodDescription.PAN, player, gameState);
     }

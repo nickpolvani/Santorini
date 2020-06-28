@@ -14,6 +14,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 
+/**
+ * class used to handle connection with server
+ */
 public class SocketClientConnection {
     private static final String IP = "127.0.0.1";
     private static final int PORT = 12345;
@@ -29,7 +32,7 @@ public class SocketClientConnection {
     public SocketClientConnection(Controller controller) throws IOException {
         this.controller = controller;
         this.socket = new Socket(IP, PORT);
-        System.out.println("Connection established"); //TODO implements a method in the controller to print a string on ClientViews
+        System.out.println("Connection established");
         this.in = new ObjectInputStream(socket.getInputStream());
         this.out = new ObjectOutputStream(socket.getOutputStream());
     }
@@ -42,6 +45,9 @@ public class SocketClientConnection {
         this.active = active;
     }
 
+    /**
+     * @return an active Thread that reads from socket and passes Options to client-side controller
+     */
     public Thread asyncReadFromSocket() {
         Thread t = new Thread(() -> {
             try {
@@ -69,6 +75,9 @@ public class SocketClientConnection {
         return t;
     }
 
+    /**
+     * this method holds a thread that manages the queue of incoming Options from the socket connection
+     */
     public void asyncHandleOptions() {
         new Thread(() -> {
             synchronized (toBeHandled) {
@@ -90,6 +99,12 @@ public class SocketClientConnection {
         }).start();
     }
 
+
+    /**
+     * sends the gameAction to the server asynchronously
+     *
+     * @param gameAction action generated from user interaction
+     */
     public void asyncWriteToSocket(final Action gameAction) {
         new Thread(() -> writeToSocket(gameAction)).start();
     }
@@ -106,7 +121,8 @@ public class SocketClientConnection {
         }
     }
 
-    public void run() {
+
+    public void setup() {
         try {
             asyncHandleOptions();
             Thread t0 = asyncReadFromSocket();

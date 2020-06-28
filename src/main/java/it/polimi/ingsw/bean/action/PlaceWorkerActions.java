@@ -6,6 +6,10 @@ import it.polimi.ingsw.model.Tile;
 
 import java.util.Arrays;
 
+/**
+ * action used to place workers on the board during game setup
+ */
+
 public class PlaceWorkerActions extends GameAction {
 
     private final Tile.IndexTile[] positions;

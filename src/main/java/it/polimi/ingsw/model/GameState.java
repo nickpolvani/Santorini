@@ -41,6 +41,8 @@ public class GameState {
 
     /**
      * Default constructor
+     *
+     * @param nicknames players' nickname, can only be a set of size 2 or 3
      */
     public GameState(Set<String> nicknames) {
         Logger logger = Logger.getLogger("Server");
@@ -66,6 +68,8 @@ public class GameState {
 
     /**
      * getter of ArrayList players is little used because we have methods like nextPlayer() and getCurrentPlayer() in BasicTurn.
+     *
+     * @return list of players in this game
      */
     public List<Player> getPlayers() {
         return players;

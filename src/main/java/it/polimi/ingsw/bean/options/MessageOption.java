@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.view.CLI;
 import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.controller.Operation;
 
+/**
+ * Option used to notify user with a text message, this option does not expect any response from the user
+ */
 public class MessageOption extends Options {
 
 
@@ -12,9 +15,9 @@ public class MessageOption extends Options {
     }
 
     @Override
-    protected void cliExecute(CLI view) {
-        if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(message);
+    protected void cliExecute(CLI cli) {
+        if (cli.getNickname().equals(this.nickname)) {
+            cli.showMessage(message);
         }
     }
 
@@ -26,8 +29,12 @@ public class MessageOption extends Options {
         }
     }
 
+    /**
+     * @param userInput string given by user in CLI or generated automatically interacting with GUI
+     * @return null: a MessageOption does not expect any user input, so whatever the user may write is accepted
+     */
     @Override
     public String isValid(String userInput) {
-        return null; // a MessageOption does not expect any user input, so whatever the user may write is accepted
+        return null;
     }
 }

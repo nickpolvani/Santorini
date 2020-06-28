@@ -7,6 +7,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Panel containing welcome image
+ */
 public class WelcomeImg extends JPanel {
     private BufferedImage img;
 

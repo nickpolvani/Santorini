@@ -10,6 +10,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Options used when the user wants to perform a build operation using Poseidon's power
+ */
 public class PoseidonTileOptions extends TileOptions {
     public PoseidonTileOptions(String nickname, Collection<Tile.IndexTile> tilesToChoose, IslandBoard boardClone, Operation operation, String message) {
         super(nickname, tilesToChoose, boardClone, operation, message);

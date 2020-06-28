@@ -1,5 +1,8 @@
 package it.polimi.ingsw.controller;
 
+/**
+ * Operation that a player can perform during his turn
+ */
 public enum Operation {
     // Setup operations
     CHOOSE_GOD,

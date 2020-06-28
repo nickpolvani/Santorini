@@ -13,16 +13,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * @author Polvani-Puoti-Sacchetta.
  * Your Build: Your Worker may build one additional block (not dome) on top of your first block.
  */
 public class Hephaestus extends God {
 
     private Tile.IndexTile tileForAdditionalBlock;
 
-    /**
-     * Default constructor
-     */
     protected Hephaestus(GameState gameState, Player player) {
         super(GodDescription.HEPHAESTUS, player, gameState);
     }

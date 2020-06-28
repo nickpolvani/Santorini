@@ -1,5 +1,8 @@
 package it.polimi.ingsw.bean.action;
 
+/**
+ * action used before the game starts to let users select their nickname
+ */
 public class SelectNicknameAction extends Action {
 
     public SelectNicknameAction(String nickname) {

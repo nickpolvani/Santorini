@@ -3,6 +3,9 @@ package it.polimi.ingsw.client.view.GUI;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * panel displayed to the first user to enter a lobby. He has to decide with how many opponents he wants to play
+ */
 public class SelectLobbySizePanel extends ActivePanel {
 
     private final JButton b1;

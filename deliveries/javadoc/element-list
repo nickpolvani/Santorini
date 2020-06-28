@@ -1,0 +1,14 @@
+it.polimi.ingsw
+it.polimi.ingsw.bean.action
+it.polimi.ingsw.bean.options
+it.polimi.ingsw.client
+it.polimi.ingsw.client.view
+it.polimi.ingsw.client.view.GUI
+it.polimi.ingsw.controller
+it.polimi.ingsw.controller.turn
+it.polimi.ingsw.exception
+it.polimi.ingsw.model
+it.polimi.ingsw.model.god
+it.polimi.ingsw.observer
+it.polimi.ingsw.server
+it.polimi.ingsw.utilities

@@ -15,9 +15,7 @@ import java.util.Queue;
  */
 public class Hestia extends God {
 
-    /**
-     * Default constructor, can be called only by GodsFactory
-     */
+
     protected Hestia(GameState gameState, Player player) {
         super(GodDescription.HESTIA, player, gameState);
     }

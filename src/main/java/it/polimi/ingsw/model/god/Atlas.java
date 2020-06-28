@@ -12,14 +12,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * @author Polvani-Puoti-Sacchetta
  * Your Build: Your Worker may build a dome at any level.
  */
 public class Atlas extends God {
 
-    /**
-     * Default constructor
-     */
     protected Atlas(GameState gameState, Player player) {
 
         super(GodDescription.ATLAS, player, gameState);

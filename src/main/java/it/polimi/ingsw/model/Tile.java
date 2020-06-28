@@ -52,6 +52,9 @@ public class Tile implements Cloneable, Serializable {
 
     /**
      * Default constructor
+     *
+     * @param row tile row position in board
+     * @param col tile column position in board
      */
     public Tile(int row, int col) {
         currentWorker = null;
@@ -204,6 +207,8 @@ public class Tile implements Cloneable, Serializable {
 
         /**
          * Method used to build a new blockLevel
+         *
+         * @throws DomeAlreadyPresentException if this tile contains a Dome
          */
         public void addBlock() throws DomeAlreadyPresentException {
             if (this.level != BlockLevel.THREE) {
@@ -229,6 +234,8 @@ public class Tile implements Cloneable, Serializable {
 
         /**
          * Used to set if the dome is present, true if is present false otherwise.
+         *
+         * @throws DomeAlreadyPresentException if this tile contains a Dome
          */
         public void buildDome() throws DomeAlreadyPresentException {
             if (this.dome) throw new DomeAlreadyPresentException();
@@ -265,6 +272,8 @@ public class Tile implements Cloneable, Serializable {
 
         /**
          * Default constructor
+         * @param c column position in board
+         * @param r row position in board
          */
         public IndexTile(int r, int c) {
             row = r;

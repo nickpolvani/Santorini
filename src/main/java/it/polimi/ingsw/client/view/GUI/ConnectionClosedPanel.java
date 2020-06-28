@@ -5,6 +5,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Panel displayed when the connection with server is closed
+ */
 public class ConnectionClosedPanel extends ActivePanel {
 
     public ConnectionClosedPanel() {

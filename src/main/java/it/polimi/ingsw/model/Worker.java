@@ -35,6 +35,9 @@ public class Worker implements Cloneable, Serializable {
 
     /**
      * Default constructor
+     *
+     * @param color     the worker's color
+     * @param indexTile the worker's position in board
      */
     public Worker(Tile.IndexTile indexTile, Color color) {
         this.indexTile = indexTile;

@@ -13,6 +13,9 @@ import it.polimi.ingsw.utilities.MessageType;
 
 import java.util.*;
 
+/**
+ * turn used when players have to place their workers in the board
+ */
 public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
 
     private final GameController controller;
@@ -35,6 +38,10 @@ public class SetupWorkersTurn extends Observable<Options> implements SetupTurn {
         return currentPlayer;
     }
 
+    /**
+     * changes current player, when all the players have placed their workers the control of the turn logic
+     * passes to BasicTurn or AthenaTurn if a player has Athena.
+     */
     @Override
     public void switchTurn() {
         currentPlayer = controller.getNextPlayer(currentPlayer);

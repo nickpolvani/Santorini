@@ -5,6 +5,9 @@ import it.polimi.ingsw.client.view.GUI.GUI;
 import it.polimi.ingsw.model.IslandBoard;
 import it.polimi.ingsw.utilities.MessageType;
 
+/**
+ * Options used to tell users whether they lost or won the game
+ */
 public class WinLooseOption extends MessageOption {
     private final IslandBoard board;
 

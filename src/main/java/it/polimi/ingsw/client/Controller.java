@@ -16,6 +16,9 @@ import java.net.ConnectException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * client-side controller
+ */
 public class Controller implements Observer<String> {
 
     private static final long TIME_TO_ANSWER = 120000; //milliseconds
@@ -113,6 +116,8 @@ public class Controller implements Observer<String> {
     /**
      * Controller Setup method which calls constructor of either of CLI and GUI in line with players' choice and, in addition,
      * tries to open a new connection with the server using the SocketClientConnection instance.
+     *
+     * @param useGUI sets the user interface to graphical if true, command line otherwise.
      */
     public void setup(boolean useGUI) {
         if (useGUI) {
@@ -124,7 +129,7 @@ public class Controller implements Observer<String> {
         try {
             clientView.start();
             this.socketClientConnection = new SocketClientConnection(this);
-            this.socketClientConnection.run();
+            this.socketClientConnection.setup();
         } catch (ConnectException e) {
             clientView.showMessage(e.getMessage());
             clientView.showMessage("Connection refused. Cannot ping server");

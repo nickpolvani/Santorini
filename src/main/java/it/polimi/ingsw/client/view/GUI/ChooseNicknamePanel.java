@@ -3,6 +3,9 @@ package it.polimi.ingsw.client.view.GUI;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel used when the user connects to the server and has to enter his nickname
+ */
 public class ChooseNicknamePanel extends ActivePanel {
 
     private final JTextField textField = new JTextField();

@@ -19,9 +19,7 @@ public class Poseidon extends God {
      */
     Worker unmovedWorker = null;
 
-    /**
-     * Default constructor, can be called only by GodsFactory
-     */
+
     protected Poseidon(GameState gameState, Player player) {
         super(GodDescription.POSEIDON, player, gameState);
     }
@@ -53,7 +51,7 @@ public class Poseidon extends God {
      *
      * @param tileToBuild   tileToBuild: The tile where you want to build
      * @param levelsToBuild levelsToBuild: The number of Blocks you want to build on the selected tile
-     * @throws DomeAlreadyPresentException
+     * @throws DomeAlreadyPresentException if the tile at position tileToBuild contains a dome
      */
     public void build(Tile.IndexTile tileToBuild, int levelsToBuild) throws DomeAlreadyPresentException {
         if (board.getBuildingLevel(tileToBuild) + levelsToBuild > 4) throw new IllegalArgumentException();

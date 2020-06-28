@@ -23,10 +23,10 @@ public class ChooseOptions extends Options {
     }
 
     @Override
-    public void cliExecute(CLI view) {
-        view.printBoard(board);
-        if (view.getNickname().equals(this.nickname)) {
-            view.showMessage(message + "\n" + alert);
+    public void cliExecute(CLI cli) {
+        cli.printBoard(board);
+        if (cli.getNickname().equals(this.nickname)) {
+            cli.showMessage(message + "\n" + alert);
         }
     }
 

@@ -11,6 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Panel containing the board and its functionality
+ */
 public class BoardPanel extends JLayeredPane {
 
     private TileButton[][] tileButtons;
@@ -27,6 +30,12 @@ public class BoardPanel extends JLayeredPane {
     private JButton poseidonButtons[] = new JButton[3];
     private Color playerColor;
 
+    /**
+     * handles creation and rendering of the panel
+     *
+     * @param gui       instance of the user interface controller
+     * @param gamePanel gamePanel is the panel that contains this panel
+     */
     public BoardPanel(GUI gui, GamePanel gamePanel) {
         this.gui = gui;
         this.gamePanel = gamePanel;
@@ -62,6 +71,11 @@ public class BoardPanel extends JLayeredPane {
         this.repaint();
     }
 
+    /**
+     * changes images of tiles according to the parameter board
+     *
+     * @param board a copy of the game board
+     */
     public void updateBoard(IslandBoard board) {
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 5; col++) {
@@ -70,6 +84,9 @@ public class BoardPanel extends JLayeredPane {
         }
     }
 
+    /**
+     * @param doubleSelection true when user can select two tiles instead of one
+     */
     public void setDoubleSelection(boolean doubleSelection) {
         this.doubleSelection = doubleSelection;
     }
@@ -97,6 +114,10 @@ public class BoardPanel extends JLayeredPane {
         }
     }
 
+    /**
+     * @param playerColor   color of the player's workers
+     * @param tilesToChoose tiles that will be highlighted
+     */
     public void highlight(Color playerColor, Collection<Tile.IndexTile> tilesToChoose) {
         this.playerColor = playerColor;
         for (Tile.IndexTile index : tilesToChoose) {
@@ -112,6 +133,11 @@ public class BoardPanel extends JLayeredPane {
         }
     }
 
+    /**
+     * changes the behavior of tiles buttons back to default after the user performed a build operation with Poseidon
+     *
+     * @param tilesToChoose tiles that were valid when the user performed a build operation using Poseidon's power
+     */
     public void disablePoseidonBuild(Collection<Tile.IndexTile> tilesToChoose) {
         poseidonTile = null;
         for (JButton poseidonButton : poseidonButtons) {
@@ -124,6 +150,12 @@ public class BoardPanel extends JLayeredPane {
         }
     }
 
+    /**
+     * changes the behavior of valid tiles in order to perform a build operation with Poseidon
+     *
+     * @param tilesToChoose tiles the user can select to perform a build operation with Poseidon
+     * @see it.polimi.ingsw.model.god.Poseidon
+     */
     public void enablePoseidonBuild(Collection<Tile.IndexTile> tilesToChoose) {
         gui.showMessage("Select the tile where you want to build and how many levels you want to build");
         int i = 1;
@@ -168,6 +200,9 @@ public class BoardPanel extends JLayeredPane {
     }
 
 
+    /**
+     * button associated to a tile in board
+     */
     private class TileButton extends JButton {
         private Tile tile;
 
@@ -191,6 +226,11 @@ public class BoardPanel extends JLayeredPane {
             this.addActionListener(defaultActionListener);
         }
 
+        /**
+         * changes image of TileButton according to tile content
+         *
+         * @param tile tile corresponding to this tileButton
+         */
         public void setTile(Tile tile) {
             this.tile = tile;
 

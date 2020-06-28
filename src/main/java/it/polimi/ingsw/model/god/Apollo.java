@@ -11,15 +11,12 @@ import it.polimi.ingsw.model.Worker;
 import java.util.*;
 
 /**
- * @author Puoti
  * APOLLO: Your Worker may  move into an opponent Worker’s space by forcing their Worker to
  * the space just vacated.
  */
 public class Apollo extends God {
 
-    /**
-     * Default constructor
-     */
+
     public Apollo(GameState gameState, Player player) {
         super(GodDescription.APOLLO, player, gameState);
     }

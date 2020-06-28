@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * action used during game setup when players are choosing their god
+ */
 public class SelectGodTurnAction extends GameAction {
 
     private final List<GodDescription> godsChosen;

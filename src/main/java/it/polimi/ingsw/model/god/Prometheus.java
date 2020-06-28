@@ -10,14 +10,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author Polvani-Puoti-Sacchetta
  * Your Turn: If your Worker does not move up, it may build both before and after moving.
  */
 public class Prometheus extends God {
 
-    /**
-     * Default constructor
-     */
     protected Prometheus(GameState gameState, Player player) {
 
         super(GodDescription.PROMETHEUS, player, gameState);

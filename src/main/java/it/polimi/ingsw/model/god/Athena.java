@@ -20,9 +20,7 @@ public class Athena extends God {
      */
     private boolean canMoveUp;
 
-    /**
-     * Default constructor
-     */
+
     protected Athena(GameState gameState, Player player) {
         super(GodDescription.ATHENA, player, gameState);
         canMoveUp = true;

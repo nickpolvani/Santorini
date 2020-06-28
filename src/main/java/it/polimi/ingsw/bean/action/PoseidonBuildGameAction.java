@@ -7,8 +7,11 @@ import it.polimi.ingsw.model.god.Poseidon;
 
 import java.util.Objects;
 
+/**
+ * action used to perform a build operation when the player owns Poseidon
+ */
 public class PoseidonBuildGameAction extends BuildGameAction {
-    public final int level;
+    private final int level;
 
     public PoseidonBuildGameAction(Tile.IndexTile indexTile, int level, String nickname) {
         super(indexTile, nickname);

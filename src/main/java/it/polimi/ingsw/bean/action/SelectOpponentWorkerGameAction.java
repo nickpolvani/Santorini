@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.god.Charon;
 
+/**
+ * action used when player uses Charon power
+ */
 public class SelectOpponentWorkerGameAction extends IndexTileGameAction {
 
     public SelectOpponentWorkerGameAction(Tile.IndexTile workerPosition, String nickname) {

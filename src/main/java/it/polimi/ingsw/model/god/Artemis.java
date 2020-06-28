@@ -10,16 +10,12 @@ import it.polimi.ingsw.model.Tile.IndexTile;
 import java.util.*;
 
 /**
- * @author Polvani-Puoti-Sacchetta
  * Your Worker may move one additional time, but not back to its initial space.
  */
 public class Artemis extends God {
 
     private IndexTile tileFrom;
 
-    /**
-     * Default constructor
-     */
     public Artemis(GameState gameState, Player player) {
         super(GodDescription.ARTEMIS, player, gameState);
     }

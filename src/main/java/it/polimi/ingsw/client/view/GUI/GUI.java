@@ -14,12 +14,15 @@ import java.awt.*;
 import java.util.Collection;
 import java.util.List;
 
-
+/**
+ * graphical-user interface, this class controls all the panels shown to the user, and notifies
+ * client-side controller when the user performs some operation
+ */
 public class GUI extends View {
 
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final Controller controller;
-    JFrame frame = new JFrame("Santorini");
+    protected JFrame frame = new JFrame("Santorini");
     private ActivePanel activePanel;
     private Options currentOptions;
     private boolean gameStarted;
@@ -31,6 +34,11 @@ public class GUI extends View {
         this.controller = controller;
     }
 
+    /**
+     * if players have completed the game setup, the GamePanel is updated when a new Option is available
+     *
+     * @param currentOption current options the player has
+     */
     @Override
     public void setCurrentOption(Options currentOption) {
         this.currentOptions = currentOption;
@@ -79,18 +87,32 @@ public class GUI extends View {
         frame.setContentPane(activePanel);
     }
 
+    /**
+     * notifies user if he has lost or won the game
+     *
+     * @param nickname is the nickname of the winner
+     */
     public void notifyWinner(String nickname) {
         setActivePanel(new GameOverPanel(nickname, this));
         frame.validate();
     }
 
+    /**
+     * shows buttons to let the first user entering the lobby
+     * decide with how many opponents he wants to play
+     */
     public void chooseLobbySize() {
         if (activePanel instanceof WelcomePanel) {
             ((WelcomePanel) activePanel).changePanel();
         }
     }
 
-
+    /**
+     * this method is called only when there are three players and one of them looses while the other two continue
+     * playing. The user that lost the game remains connected in spectator mode
+     *
+     * @param nickname nickname of player that lost
+     */
     public void notifyLooser(String nickname) {
         if (nickname.equals(this.getNickname())) {
             TextArea textArea = new TextArea(3, 45);
@@ -108,6 +130,9 @@ public class GUI extends View {
         }
     }
 
+    /**
+     * used during game setup when the user has to wait
+     */
     public void noReply() {
         activePanel.noReply();
     }
@@ -118,6 +143,13 @@ public class GUI extends View {
         }
     }
 
+    /**
+     * Method called after setup phase
+     * the tiles available to the user are highlighted and a message is displayed
+     *
+     * @param currentOperation current operation the user has to do
+     * @param tilesToChoose    tiles available to perform the current operation
+     */
     public void showAvailableTiles(Operation currentOperation, Collection<Tile.IndexTile> tilesToChoose) {
         if (!gameStarted) throw new IllegalStateException();
         GamePanel gamePanel = (GamePanel) activePanel;
@@ -126,6 +158,12 @@ public class GUI extends View {
         gamePanel.getBoardPanel().setDoubleSelection(false);
     }
 
+    /**
+     * method called to let the player decide where he wants to place his workers in the board
+     *
+     * @param tilesToChoose tiles available for the user to place his workers
+     * @param color         the player's color
+     */
     public void placeWorkers(Collection<Tile.IndexTile> tilesToChoose, Color color) {
         if (!gameStarted) throw new IllegalStateException();
         GamePanel gamePanel = (GamePanel) activePanel;
@@ -145,10 +183,20 @@ public class GUI extends View {
         gamePanel.highlight(tilesToChoose);
     }
 
+    /**
+     * lets the player perform a build operation with Poseidon
+     *
+     * @param tilesToChoose tiles available to perform a build operation with Poseidon
+     */
     public void poseidonBuild(Collection<Tile.IndexTile> tilesToChoose) {
         ((GamePanel) activePanel).getBoardPanel().enablePoseidonBuild(tilesToChoose);
     }
 
+    /**
+     * shows list of gods to the user
+     *
+     * @param godsToChoose gods available to the user
+     */
     public void chooseGod(List<GodDescription> godsToChoose) {
         setActivePanel(new ChooseGodPanel(this, godsToChoose));
     }

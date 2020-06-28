@@ -13,16 +13,16 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
+/**
+ * End of Your Turn: You may remove an unoccupied block (not dome) neighboring your unmoved Worker
+ */
 public class Ares extends God {
 
+    /**
+     * worker not selected for this turn
+     */
     Worker unmovedWorker = null;
 
-    /**
-     * Default constructor, can be called only by GodsFactory
-     *
-     * @param player
-     * @param gameState
-     */
     protected Ares(GameState gameState, Player player) {
         super(GodDescription.ARES, player, gameState);
     }

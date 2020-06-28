@@ -9,6 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Panel shown to the user after god selection, it is used when the players place their workers and remains
+ * active until the game ends. It contains a BoardPanel
+ */
 public class GamePanel extends ActivePanel {
 
     private final BoardPanel boardPanel;
@@ -108,6 +112,11 @@ public class GamePanel extends ActivePanel {
         boardPanel.highlight(playerColor, tilesToChoose);
     }
 
+    /**
+     * displays buttons used to perform a choice
+     *
+     * @param value true makes the buttons visible
+     */
     public void showChoiceButtons(boolean value) {
         textPanel.add(yesButton, BorderLayout.WEST);
         textPanel.add(noButton, BorderLayout.EAST);

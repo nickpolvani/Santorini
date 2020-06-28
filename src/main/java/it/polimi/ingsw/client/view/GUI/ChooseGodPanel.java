@@ -10,10 +10,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * panel displayed when the user has to select one or more god cards from a list of available gods
+ */
 public class ChooseGodPanel extends ActivePanel {
 
     private final Map<GodDescription, ImageIcon> imageMap = new HashMap<>();
 
+    /**
+     * initiates panel content and handles its rendering
+     *
+     * @param gui          instance of user interface controller
+     * @param godsToChoose list of gods from which the user can choose
+     */
     public ChooseGodPanel(GUI gui, List<GodDescription> godsToChoose) {
         super();
         gui.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -71,6 +80,9 @@ public class ChooseGodPanel extends ActivePanel {
         textLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
     }
 
+    /**
+     * class used to change the default rendering of the list cells
+     */
     private class GodChoiceRenderer extends JLabel implements ListCellRenderer<GodDescription> {
         public GodChoiceRenderer() {
             setOpaque(true);

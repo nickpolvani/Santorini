@@ -5,6 +5,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * panel displayed when the game ends, notifies user if he has won or lost
+ */
 public class GameOverPanel extends ActivePanel {
 
     public GameOverPanel(String nickname, GUI gui) {

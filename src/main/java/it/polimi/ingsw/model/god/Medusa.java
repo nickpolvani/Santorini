@@ -24,9 +24,7 @@ public class Medusa extends God {
     // Necessary for the method removeWorker()
     private final GameState gameState;
 
-    /**
-     * Default constructor, can be called only by GodsFactory
-     */
+
     protected Medusa(GameState gameState, Player player) {
         super(GodDescription.MEDUSA, player, gameState);
         this.gameState = gameState;

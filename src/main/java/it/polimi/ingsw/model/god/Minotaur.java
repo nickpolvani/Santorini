@@ -16,9 +16,7 @@ import java.util.*;
  */
 public class Minotaur extends God {
 
-    /**
-     * Default constructor
-     */
+
     protected Minotaur(GameState gameState, Player player) {
         super(GodDescription.MINOTAUR, player, gameState);
 

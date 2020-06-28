@@ -8,6 +8,9 @@ import java.util.Scanner;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * command-line interface
+ */
 public class CLI extends View {
 
     private boolean active = true;
@@ -24,6 +27,9 @@ public class CLI extends View {
         ).start();
     }
 
+    /**
+     * method used to read user input from stdin and pass it to client-side Controller
+     */
     public void readInput() {
         while (isActive()) {
             String input = in.nextLine();
@@ -57,6 +63,11 @@ public class CLI extends View {
 
     }
 
+    /**
+     * prints board to stdout
+     *
+     * @param board copy of game board
+     */
     public void updateBoard(IslandBoard board) {
         this.board = board;
         StringBuilder utility = new StringBuilder();

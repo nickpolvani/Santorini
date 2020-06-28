@@ -5,6 +5,9 @@ import it.polimi.ingsw.exception.DomeAlreadyPresentException;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.god.Ares;
 
+/**
+ * action used when player uses power of Ares, that removes a block on the selected tile
+ */
 public class RemoveBlock extends BuildGameAction {
     public RemoveBlock(Tile.IndexTile indexTile, String nickname) {
         super(indexTile, nickname);

@@ -56,14 +56,13 @@ public abstract class GameAction extends Action {
     public abstract Boolean isCompatible(Operation operation);
 
     /**
-     * TODO date un occhio al mio inglese
      * It is the most important method of the gameAction,
      * it is overwritten in every sub-class to be able to execute the action in a dynamic way
      * without the controller knowing what type of action it is.
      *
-     * @throws AlreadyOccupiedException
-     * @throws DomeAlreadyPresentException
-     * @throws AlreadySetException
+     * @throws AlreadyOccupiedException    if the action is trying to perform an operation on an occupied Tile
+     * @throws DomeAlreadyPresentException if the action is trying to build on a tile with a dome on it
+     * @throws AlreadySetException         if the action is trying to assign workers to a player that already has them
      */
     abstract void execute() throws AlreadyOccupiedException, DomeAlreadyPresentException, AlreadySetException;
 
