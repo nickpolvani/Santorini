@@ -20,6 +20,7 @@ public class Lobby {
     //TODO sistemare la storia dei flag
     private boolean started = false;
     private boolean full = false;
+    private boolean close = false;
 
     public Lobby(int size, int id) {
         if (size != 2 && size != 3) throw new IllegalArgumentException();
@@ -35,8 +36,9 @@ public class Lobby {
         return full;
     }
 
-    public void close() {
+    public synchronized void close() {
         started = false;
+        close = true;
         for (RemoteView w : remoteViews) {
             w.getClientConnection().closeConnection();
         }
@@ -96,5 +98,9 @@ public class Lobby {
             logger.fatal("Trying to remove a player from a started lobby without close lobby");
             throw new IllegalStateException();
         }
+    }
+
+    public boolean isClose() {
+        return close;
     }
 }

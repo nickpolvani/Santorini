@@ -47,10 +47,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
 
     @Override
     public synchronized void closeConnection() {
-        if (!isActive()) return;
-        if (username != null) {
-            server.removePlayer(username);
-        }
+        if (socket.isClosed()) return;
         active = false;
         try {
             out.flush();
@@ -59,6 +56,10 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             logger.error("Error when closing socket!");
         }
         logger.debug("Socket closed of " + username + " PORT=" + socket.getPort());
+        if (username != null) {
+            // TODO se il nickname è null allora non mi sono mai registrato sul server e basta chiudere questa connessione
+            server.removePlayer(username);
+        }
     }
 
     @Override
@@ -102,7 +103,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
                 read = in.readObject();
                 if (!(read instanceof SelectNicknameAction)) throw new IllegalArgumentException();
                 String nickname = ((SelectNicknameAction) read).getNickname();
-                if (nickname.isEmpty() || !server.addRegisteredUsers(nickname, this)) {
+                if (nickname.isEmpty() || !server.addRegisteredUsers(nickname)) {
                     send(new SetupOptions(nickname, MessageType.NICKNAME_ALREADY_SET, Operation.SELECT_NICKNAME));
                 } else {
                     send(new SetupOptions(nickname, MessageType.NICKNAME_APPROVED, Operation.MESSAGE_NO_REPLY));
@@ -129,7 +130,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         } catch (ClassNotFoundException e) {
             logger.error(e.getMessage());
         } finally {
-            closeConnection();
+            if (!socket.isClosed()) closeConnection();
         }
     }
 }

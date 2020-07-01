@@ -218,6 +218,7 @@ public class Tile implements Cloneable, Serializable {
             }
         }
 
+        //TODO write the test
         public void removeBlock() throws DomeAlreadyPresentException {
             if (this.dome) throw new DomeAlreadyPresentException();
             this.level = this.level.previousLevel();

@@ -67,7 +67,7 @@ public class GameState {
     }
 
     /**
-     * getter of ArrayList players is little used because we have methods like nextPlayer() and getCurrentPlayer() in BasicTurn.
+     * getter of List players is little used because we have methods like nextPlayer() and getCurrentPlayer() in BasicTurn.
      *
      * @return list of players in this game
      */

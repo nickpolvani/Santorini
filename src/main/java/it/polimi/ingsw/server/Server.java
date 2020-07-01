@@ -13,16 +13,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ *
+ */
 public class Server implements Runnable {
     public static final int PORT = 12345;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
-    private final Map<String, ClientConnection> registeredUsers = new LinkedHashMap<>();
+    private final Set<String> registeredUsers = new TreeSet<>();
     private final Collection<Lobby> lobbiesInProgress = new ArrayList<>();
     private final Logger logger = Logger.getLogger("Server");
     private Lobby openLobby;
@@ -36,6 +39,17 @@ public class Server implements Runnable {
         return openLobby != null && !openLobby.isFull();
     }
 
+    /**
+     * Method used to create a new lobby on the server.
+     * Communicate directly with the client about the size of the lobby.
+     * The client that created the lobby is automatically inserted into the newly created lobby.
+     *
+     * @param clientConnection The clientConnection of the player that is used to communicate with the client
+     * @param name             The name of the player
+     * @param in               The objectInputStream of the player's socket
+     * @throws IOException            Thrown if there is a problem with the ObjectInputStream object
+     * @throws ClassNotFoundException Thrown if the object received on the inputStream is not recognized
+     */
     synchronized void createNewLobby(ClientConnection clientConnection, String name, ObjectInputStream in) throws IOException, ClassNotFoundException {
         clientConnection.asyncSend(new SetupOptions(name, MessageType.CHOOSE_LOBBY_SIZE, Operation.SELECT_LOBBY_SIZE));
         boolean b;
@@ -60,6 +74,15 @@ public class Server implements Runnable {
 
     }
 
+    /**
+     * Used to insert a new player just logged into an already open lobby.
+     *
+     * @param name             The name of the player
+     * @param clientConnection The clientConnection of the player that is used to communicate with the client
+     * @param in               The objectInputStream of the player's socket
+     * @throws IOException            Thrown if there is a problem with the ObjectInputStream object
+     * @throws ClassNotFoundException Thrown if the object received on the inputStream is not recognized
+     */
     synchronized void insertIntoLobby(String name, ClientConnection clientConnection, ObjectInputStream in) throws IOException, ClassNotFoundException {
         if (!thereIsAOpenLobby()) {
             createNewLobby(clientConnection, name, in);
@@ -75,26 +98,34 @@ public class Server implements Runnable {
         }
     }
 
-    Map<String, ClientConnection> getRegisteredUsers() {
-        return registeredUsers;
+    /**
+     * Used to register a new player on the server
+     *
+     * @param username The new username
+     * @return Returns true if the registration is successful otherwise false
+     */
+    synchronized boolean addRegisteredUsers(String username) {
+        boolean approved = registeredUsers.add(username);
+        if (approved) logger.debug("Registered username " + username);
+        return approved;
     }
 
-    synchronized boolean addRegisteredUsers(String name, ClientConnection clientConnection) {
-        if (this.registeredUsers.containsKey(name)) {
-            return false;
-        }
-        logger.debug("Registered username " + name);
-        registeredUsers.put(name, clientConnection);
-        return true;
-    }
-
-    synchronized void removeRegisteredUsers(String username) {
-        if (!registeredUsers.containsKey(username))
-            logger.warn("Tried to delete an unregistered username");
-        registeredUsers.remove(username);
+    /**
+     * Used to unregister a player
+     *
+     * @param username The player's username
+     */
+    synchronized void unregisteredUsername(String username) {
+        if (!registeredUsers.remove(username)) logger.warn("Tried to delete an unregistered username");
         logger.info("Deleted username " + username);
     }
 
+    /**
+     * Used to find a lobby based on a player's name.
+     *
+     * @param username The player's username.
+     * @return Returns the lobby instance containing the player or null if no match was found.
+     */
     Lobby findLobby(String username) {
         if (openLobby != null && openLobby.getConnectionMap().containsKey(username)) return openLobby;
         for (Lobby l : lobbiesInProgress) {
@@ -106,28 +137,42 @@ public class Server implements Runnable {
         return null;
     }
 
+    /**
+     * Method used to remove a player. If the player has been assigned to a lobby,
+     * it is closed and all players assigned to it are removed.
+     *
+     * @param username The player's username
+     */
     public void removePlayer(String username) {
-        Lobby tmp = findLobby(username);
-        if (tmp != null && tmp.isStarted()) { //caso generico
-            closeLobby(tmp);
-        } else if (tmp != null && tmp.equals(openLobby)) { //caso in cui la lobby stata creata ma non inizializzata
-            if (openLobby.getConnectionMap().size() == 1) {
-                openLobby = null;
-                logger.debug("Temporary lobby closed because only player left");
-            } else {
-                openLobby.removePlayer(username);
+        Lobby tmp = findLobby(username); //TODO rimuovi i commenti
+        if (tmp != null) {
+            if (tmp.isClose()) return;
+            if (tmp.isStarted()) { //caso generico
+                closeLobby(tmp);
+            } else if (tmp.equals(openLobby)) { //caso in cui la lobby stata creata ma non inizializzata
+                if (openLobby.getConnectionMap().size() == 1) {
+                    openLobby = null;
+                    logger.debug("Temporary lobby closed because only player left");
+                } else {
+                    openLobby.removePlayer(username);
+                }
+                unregisteredUsername(username);
             }
-            removeRegisteredUsers(username);
         } else { //caso quando la connesione cade prima di definire la prima lobby
-            removeRegisteredUsers(username);
+            unregisteredUsername(username);
         }
     }
 
+    /**
+     * Method used to close and remove a lobby from the server.
+     *
+     * @param lobby The instance of the lobby
+     */
     public void closeLobby(Lobby lobby) {
-        for (String n : lobby.getConnectionMap().keySet()) {
-            removeRegisteredUsers(n);
-        }
         lobby.close();
+        for (String n : lobby.getConnectionMap().keySet()) {
+            unregisteredUsername(n);
+        }
         lobbiesInProgress.remove(lobby);
     }
 
