@@ -18,8 +18,11 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server.Lobby;
+import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.utilities.MessageType;
 import org.apache.log4j.Logger;
+
+import java.util.stream.Collectors;
 
 /**
  * class that changes the game state
@@ -89,12 +92,12 @@ public class GameController extends Observable<Options> implements Observer<Game
      * @param winner nickname of the winner
      */
     public void hasWon(Player winner) {
-        logger.debug("The player " + winner + "has won!");
+        logger.debug("The player " + winner.getNickname() + " has won!");
         String message = (MessageType.WIN + winner.getNickname());
         notify(new WinLooseOption(winner.getNickname(), message, gameState.getIslandBoard().clone()));
         try {
             Thread.sleep(30000);
-            lobby.close();
+            Server.getInstance().closeLobby(lobby);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -110,12 +113,8 @@ public class GameController extends Observable<Options> implements Observer<Game
         logger.debug("The player " + looser.getNickname() + "has lost!");
         String message = (MessageType.LOST + looser.getNickname());
         if (lobby.size == 2) {
-            for (Player p : gameState.getPlayers()) {
-                if (p != looser) {
-                    hasWon(p);
-                    break;
-                }
-            }
+            Player winner = gameState.getPlayers().stream().filter(p -> !p.equals(looser)).collect(Collectors.toList()).get(0);
+            hasWon(winner);
         } else {
             notify(new WinLooseOption(looser.getNickname(), message, gameState.getIslandBoard().clone()));
             for (Worker w : looser.getWorkers()) {

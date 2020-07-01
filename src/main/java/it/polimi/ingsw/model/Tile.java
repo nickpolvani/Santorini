@@ -273,6 +273,7 @@ public class Tile implements Cloneable, Serializable {
 
         /**
          * Default constructor
+         *
          * @param c column position in board
          * @param r row position in board
          */

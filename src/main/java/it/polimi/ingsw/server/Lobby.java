@@ -10,7 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Lobby {
+    /**
+     * Indicates the number of participants, which can be either 2 or 3
+     */
     public final int size;
+    /**
+     * The unique id of the lobby
+     */
     public final int id;
     private final List<RemoteView> remoteViews = new ArrayList<>();
     private final Map<String, ClientConnection> connectionMap = new LinkedHashMap<>();
@@ -36,7 +42,10 @@ public class Lobby {
         return full;
     }
 
-    public synchronized void close() {
+    /**
+     * Method used to close the lobby.
+     */
+    synchronized void close() {
         started = false;
         close = true;
         for (RemoteView w : remoteViews) {

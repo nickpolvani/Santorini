@@ -55,7 +55,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         } catch (IOException e) {
             logger.error("Error when closing socket!");
         }
-        logger.debug("Socket closed of " + username + " PORT=" + socket.getPort());
+        logger.debug(username + "socket closure PORT=" + socket.getPort());
         if (username != null) {
             // TODO se il nickname è null allora non mi sono mai registrato sul server e basta chiudere questa connessione
             server.removePlayer(username);
