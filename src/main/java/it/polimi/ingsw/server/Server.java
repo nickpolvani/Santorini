@@ -212,15 +212,19 @@ public class Server implements Runnable {
     @Override
     public void run() {
         logger.info("Server started");
-        while (true) {
+        while (!serverSocket.isClosed()) {
             try {
                 Socket newSocket = serverSocket.accept();
                 logger.info("New connection is active on PORT=" + newSocket.getPort());
                 SocketServerConnection socketConnection = new SocketServerConnection(newSocket, this);
                 executor.submit(socketConnection);
             } catch (IOException e) {
-                logger.error(e.getMessage());
-                break;
+                logger.fatal(e.getMessage());
+                try {
+                    serverSocket.close();
+                    logger.fatal("Closed ServerSocket");
+                } catch (IOException ignored) {
+                }
             }
         }
     }

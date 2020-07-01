@@ -17,7 +17,6 @@ public class LobbyTest {
     @BeforeClass
     public static void setUp() throws Exception {
         server = new Server();
-        new Thread(server);
     }
 
     @After
@@ -26,7 +25,32 @@ public class LobbyTest {
     }
 
     @Test
-    public void start() {
+    public void start() throws IOException {
+        lobby = new Lobby(3, 1);
+        SocketServerConnection juri = new SocketServerConnection(new Socket("127.0.0.1", Server.PORT), server);
+        lobby.addClient("juri", juri);
+        assertTrue(lobby.containsUser("juri"));
+        try {
+            lobby.start();
+            fail();
+        } catch (IllegalStateException ignored) {
+        }
+        SocketServerConnection nick = new SocketServerConnection(new Socket("127.0.0.1", Server.PORT), server);
+        lobby.addClient("nick", nick);
+        assertTrue(lobby.containsUser("nick"));
+        try {
+            lobby.start();
+            fail();
+        } catch (IllegalStateException ignored) {
+        }
+        SocketServerConnection fra = new SocketServerConnection(new Socket("127.0.0.1", Server.PORT), server);
+        lobby.getConnectionMap().put("fra", fra);
+        lobby.start();
+        try {
+            lobby.start();
+            fail();
+        } catch (IllegalStateException ignored) {
+        }
     }
 
     @Test
@@ -69,13 +93,8 @@ public class LobbyTest {
     }
 
     @Test
-    public void close() {
-    }
-
-    @Test
     public void addClient() {
         lobby = new Lobby(2, 3);
-
         lobby.addClient("juri", new SocketServerConnection(new Socket(), server));
         assertTrue(lobby.containsUser("juri"));
         try {

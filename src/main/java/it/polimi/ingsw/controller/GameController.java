@@ -100,6 +100,7 @@ public class GameController extends Observable<Options> implements Observer<Game
             Server.getInstance().closeLobby(lobby);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 
