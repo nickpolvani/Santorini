@@ -69,6 +69,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             toSend.add(message);
             toSend.notifyAll();
         }
+        //TODO RENAME METHOD (this method is not async)
     }
 
     private void startAsyncSend() {
