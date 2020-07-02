@@ -75,7 +75,7 @@ public class AthenaTurnTest {
 
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void switchTurnTest() throws DomeAlreadyPresentException {
 
         assertEquals(athenaTurn.currentPlayer, player1);
