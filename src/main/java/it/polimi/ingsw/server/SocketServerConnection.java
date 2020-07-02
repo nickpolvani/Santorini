@@ -78,7 +78,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
     /**
      * Method used to send messages to the client asynchronously to the caller
      *
-     * @param message
+     * @param message object to be sent
      */
     @Override
     public void asyncSend(final Object message) {
@@ -155,6 +155,10 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         }
     }
 
+    /**
+     * @return A timerTask which will be scheduled by the server
+     * to close connection on the socket if it does not receive an ack message.
+     */
     private TimerTask timerTaskCloseConnection() {
         return new TimerTask() {
             @Override
@@ -165,6 +169,10 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         };
     }
 
+    /**
+     * @return A timerTask which will be scheduled by the server
+     * to send an ack message on socket.
+     */
     private TimerTask timerTaskSendAck() {
         return new TimerTask() {
             @Override
@@ -175,6 +183,9 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         };
     }
 
+    /**
+     * Method used to handle received ack message
+     */
     private void handlerAck() {
         logger.debug("Ack arrived on SocketServerConnection of " + username);
         timer.cancel();

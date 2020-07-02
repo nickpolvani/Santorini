@@ -78,7 +78,10 @@ public class SocketClientConnection {
         return t;
     }
 
-    private TimerTask newTimerResponse() {
+    /**
+     * @return Timer Task which is scheduled by the client to close the connection if it does not receive ack
+     */
+    private TimerTask timerTaskCloseConnection() {
         return new TimerTask() {
             @Override
             public void run() {
@@ -87,6 +90,10 @@ public class SocketClientConnection {
         };
     }
 
+
+    /**
+     * @return The thread which handles options received from the server
+     */
     public Thread asyncHandleOptions() {
         Thread optionsHandler = new Thread(() -> {
             synchronized (toBeHandled) {
@@ -114,6 +121,7 @@ public class SocketClientConnection {
         optionsHandler.start();
         return optionsHandler;
     }
+
 
     public void asyncWriteToSocket(final Action gameAction) {
         new Thread(() -> writeToSocket(gameAction)).start();
@@ -145,6 +153,9 @@ public class SocketClientConnection {
         }
     }
 
+    /**
+     * Used to close Connection if any exception is thrown
+     */
     public void closeConnection() {
         if (!active) return;
         active = false;
@@ -156,10 +167,13 @@ public class SocketClientConnection {
         }
     }
 
+    /**
+     * this method handles the ack message received from server
+     */
     private void handlerAck() {
         writeToSocket(new AckPacket());
         timerResponse.cancel();
         timerResponse = new Timer();
-        timerResponse.schedule(newTimerResponse(), 30000);
+        timerResponse.schedule(timerTaskCloseConnection(), 30000);
     }
 }
