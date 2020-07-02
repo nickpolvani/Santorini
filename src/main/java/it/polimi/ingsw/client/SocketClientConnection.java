@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.bean.action.Action;
 import it.polimi.ingsw.bean.options.Options;
+import it.polimi.ingsw.bean.ping.AckPacket;
 import org.apache.log4j.Logger;
 
 import java.io.EOFException;
@@ -12,6 +13,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -27,6 +30,7 @@ public class SocketClientConnection {
     private final Logger logger = Logger.getLogger("Client");
     private final Queue<Options> toBeHandled = new LinkedList<>();
     private boolean active = true;
+    private Timer timerResponse = new Timer();
 
     public SocketClientConnection(Controller controller) throws IOException {
         this.controller = controller;
@@ -49,7 +53,12 @@ public class SocketClientConnection {
             try {
                 while (isActive()) {
                     Object inputObject = in.readObject();
-                    if (inputObject instanceof Options) {
+                    if (inputObject instanceof AckPacket) {
+                        writeToSocket(new AckPacket());
+                        timerResponse.cancel();
+                        timerResponse = new Timer();
+                        timerResponse.schedule(newTimerResponse(), 30000);
+                    } else if (inputObject instanceof Options) {
                         synchronized (toBeHandled) {
                             toBeHandled.add((Options) inputObject);
                             toBeHandled.notifyAll();
@@ -70,6 +79,15 @@ public class SocketClientConnection {
         });
         t.start();
         return t;
+    }
+
+    private TimerTask newTimerResponse() {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                closeConnection();
+            }
+        };
     }
 
     public Thread asyncHandleOptions() {

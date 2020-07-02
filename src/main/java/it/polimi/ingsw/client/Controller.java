@@ -183,7 +183,7 @@ public class Controller implements Observer<String> {
 
 
     void reset() {
-        timer.cancel();
+        if (timer != null) timer.cancel();
         clientView.close();
     }
 

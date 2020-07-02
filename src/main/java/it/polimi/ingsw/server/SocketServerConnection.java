@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.bean.action.GameAction;
 import it.polimi.ingsw.bean.action.SelectNicknameAction;
 import it.polimi.ingsw.bean.options.SetupOptions;
+import it.polimi.ingsw.bean.ping.AckPacket;
 import it.polimi.ingsw.controller.Operation;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.utilities.MessageType;
@@ -14,6 +15,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SocketServerConnection extends Observable<GameAction> implements ClientConnection, Runnable {
 
@@ -24,6 +27,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
     private ObjectOutputStream out;
     private String username;
     private boolean active = false;
+    private Timer timer = new Timer();
 
     public SocketServerConnection(Socket socket, Server server) {
         this.socket = socket;
@@ -129,12 +133,20 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             username = ((SelectNicknameAction) read).getNickname();
             logger.debug("Player's username on socket with port=" + socket.getPort() + " is: " + username);
             server.insertIntoLobby(username, this, in);
+            send(new AckPacket());
             while (isActive()) {
                 Object o = in.readObject();
-                try {
-                    notify((GameAction) o);
-                } catch (ClassCastException ignored) {
-                    logger.error("An object has arrived that is not a instance of action", new IllegalArgumentException());
+                if (o instanceof AckPacket) {
+                    send(new AckPacket());
+                    timer.cancel();
+                    timer = new Timer();
+                    timer.schedule(newTimerResponse(), 30000);
+                } else {
+                    try {
+                        notify((GameAction) o);
+                    } catch (ClassCastException ignored) {
+                        logger.error("An object has arrived that is not a instance of action", new IllegalArgumentException());
+                    }
                 }
             }
         } catch (IOException e) {
@@ -144,5 +156,15 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         } finally {
             if (!socket.isClosed()) closeConnection();
         }
+    }
+
+    private TimerTask newTimerResponse() {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                logger.info("Timer response of " + username + " is expired");
+                closeConnection();
+            }
+        };
     }
 }
