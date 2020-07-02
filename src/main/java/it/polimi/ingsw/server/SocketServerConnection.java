@@ -21,7 +21,6 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
     private final Server server;
     private final Logger logger = Logger.getLogger("Server");
     private final Queue<Object> toSend = new LinkedList<>();
-    private ObjectInputStream in;
     private ObjectOutputStream out;
     private String username;
     private boolean active = false;
@@ -35,6 +34,11 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         return active;
     }
 
+    /**
+     * Method used to send objects to the client
+     *
+     * @param message Object to send
+     */
     private synchronized void send(Object message) {
         try {
             out.reset();
@@ -45,6 +49,11 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         }
     }
 
+    /**
+     * This method is used to close the connection and the server-side socket.
+     * It also starts the deregistration of the nickname
+     * and if necessary the closure of the lobby.
+     */
     @Override
     public synchronized void closeConnection() {
         if (socket.isClosed()) return;
@@ -62,6 +71,11 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         }
     }
 
+    /**
+     * Method used to send messages to the client asynchronously to the caller
+     *
+     * @param message
+     */
     @Override
     public void asyncSend(final Object message) {
         if (!isActive()) return;
@@ -96,8 +110,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         boolean nicknameApproved = false;
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
-            in = new ObjectInputStream(socket.getInputStream());
-
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             send(new SetupOptions(null, MessageType.CHOOSE_NAME, Operation.SELECT_NICKNAME));
             do {
                 read = in.readObject();
