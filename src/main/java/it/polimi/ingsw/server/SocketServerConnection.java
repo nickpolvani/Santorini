@@ -57,7 +57,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         }
         logger.debug(username + "socket closure PORT=" + socket.getPort());
         if (username != null) {
-            // TODO se il nickname è null allora non mi sono mai registrato sul server e basta chiudere questa connessione
+            //Null nickname means that user has never been registered on the server, Therefore, closing the connection is enough
             server.removePlayer(username);
         }
     }
@@ -69,7 +69,6 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             toSend.add(message);
             toSend.notifyAll();
         }
-        //TODO RENAME METHOD (this method is not async)
     }
 
     private void startAsyncSend() {

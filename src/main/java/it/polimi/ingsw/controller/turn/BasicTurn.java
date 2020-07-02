@@ -104,7 +104,6 @@ public class BasicTurn extends Observable<Options> implements Turn {
             switchTurn();
         } else if (getCurrentOperation() == Operation.BUILD && currentPlayer.getGod().cannotBuild()) {
             gameController.hasLost(currentPlayer);
-            switchTurn(); //this because after removing the looser whe have to notify the next player to play
         } else {
             if (getCurrentOperation() == Operation.CHOOSE && !currentPlayer.getGod().isChooseAvailable()) {
                 notify(new MessageOption(currentPlayer.getNickname(), MessageType.GODS_POWER_NOT_AVAILABLE));

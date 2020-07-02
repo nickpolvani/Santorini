@@ -86,7 +86,7 @@ public class AthenaTurnTest {
         athenaTurn.switchTurn();
         assertEquals(athenaTurn.currentPlayer, player1);
 
-        //testing the looser's check with player2
+        //testing the looser's check with player2 : surround player 2 with domes
         //building boundary domes
         gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 2)).getBuilding().buildDome();
         gameState.getIslandBoard().getTile(new Tile.IndexTile(1, 3)).getBuilding().buildDome();
@@ -100,8 +100,8 @@ public class AthenaTurnTest {
         gameState.getIslandBoard().getTile(new Tile.IndexTile(4, 4)).getBuilding().buildDome();
 
         athenaTurn.switchTurn();
-        //this row launch a nullPointerException because when the turn notifies the controller that a player lost,
-        // the controller tries to close the lobby but the lobby's reference is null
+        //player 2 has been deleted
+        assertEquals(athenaTurn.currentPlayer, player3);
 
     }
 

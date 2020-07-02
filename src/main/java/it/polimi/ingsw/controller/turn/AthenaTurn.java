@@ -84,7 +84,6 @@ public class AthenaTurn extends BasicTurn {
             switchTurn();
         } else if (getCurrentOperation() == Operation.BUILD && currentPlayer.getGod().cannotBuild()) {
             gameController.hasLost(currentPlayer);
-            switchTurn(); //this because after removing the looser whe have to notify the next player to play
         } else {
             if (getCurrentOperation() == Operation.CHOOSE) {
                 if (currentPlayer.getGod().getGodDescription() == GodDescription.ARTEMIS) {
