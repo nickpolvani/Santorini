@@ -137,10 +137,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             while (isActive()) {
                 Object o = in.readObject();
                 if (o instanceof AckPacket) {
-                    send(new AckPacket());
-                    timer.cancel();
-                    timer = new Timer();
-                    timer.schedule(newTimerResponse(), 30000);
+                    handlerAck();
                 } else {
                     try {
                         notify((GameAction) o);
@@ -158,7 +155,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         }
     }
 
-    private TimerTask newTimerResponse() {
+    private TimerTask timerTaskCloseConnection() {
         return new TimerTask() {
             @Override
             public void run() {
@@ -166,5 +163,22 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
                 closeConnection();
             }
         };
+    }
+
+    private TimerTask timerTaskSendAck() {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                send(new AckPacket());
+                timer.schedule(timerTaskCloseConnection(), 30000);
+            }
+        };
+    }
+
+    private void handlerAck() {
+        logger.debug("Ack arrived on SocketServerConnection of " + username);
+        timer.cancel();
+        timer = new Timer();
+        timer.schedule(timerTaskSendAck(), 10000);
     }
 }

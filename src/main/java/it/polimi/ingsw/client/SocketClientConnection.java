@@ -54,10 +54,7 @@ public class SocketClientConnection {
                 while (isActive()) {
                     Object inputObject = in.readObject();
                     if (inputObject instanceof AckPacket) {
-                        writeToSocket(new AckPacket());
-                        timerResponse.cancel();
-                        timerResponse = new Timer();
-                        timerResponse.schedule(newTimerResponse(), 30000);
+                        handlerAck();
                     } else if (inputObject instanceof Options) {
                         synchronized (toBeHandled) {
                             toBeHandled.add((Options) inputObject);
@@ -157,5 +154,12 @@ public class SocketClientConnection {
         } catch (IOException e) {
             logger.warn(e.getMessage());
         }
+    }
+
+    private void handlerAck() {
+        writeToSocket(new AckPacket());
+        timerResponse.cancel();
+        timerResponse = new Timer();
+        timerResponse.schedule(newTimerResponse(), 30000);
     }
 }
