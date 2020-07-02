@@ -117,7 +117,7 @@ public class GUI extends View {
         if (nickname.equals(this.getNickname())) {
             new WinLooseJFrame("Sorry, you lost the game.<br>You can keep watching the game.<br>Otherwise close the application!");
         } else {
-            new WinLooseJFrame(nickname + " has lost!!<br>You can still continue playing a one-on-one game<br>Good luck!!");
+            new WinLooseJFrame(nickname + " has lost!!<br>You can still continue playing a one to one game<br>Good luck!!");
         }
     }
 

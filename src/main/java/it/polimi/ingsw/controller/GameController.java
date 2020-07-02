@@ -97,7 +97,7 @@ public class GameController extends Observable<Options> implements Observer<Game
         String message = (MessageType.WIN + winner.getNickname());
         notify(new WinLooseOption(winner.getNickname(), message, gameState.getIslandBoard().clone()));
         try {
-            Thread.sleep(30000);
+            Thread.sleep(15000);
             Server.getInstance().closeLobby(lobby);
         } catch (InterruptedException e) {
             e.printStackTrace();
