@@ -124,7 +124,6 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
                 } catch (ClassCastException ignored) {
                     logger.error("An object has arrived that is not a instance of action", new IllegalArgumentException());
                 }
-
             }
         } catch (IOException e) {
             logger.warn(e.getMessage() + " of SocketServerConnection USERNAME=" + username + " PORT=" + socket.getPort());

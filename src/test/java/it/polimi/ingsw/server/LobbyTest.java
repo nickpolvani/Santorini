@@ -16,7 +16,7 @@ public class LobbyTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        server = new Server();
+        server = Server.getInstance();
     }
 
     @After

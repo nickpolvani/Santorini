@@ -4,6 +4,7 @@ import it.polimi.ingsw.bean.action.LobbySizeAction;
 import it.polimi.ingsw.bean.options.MessageOption;
 import it.polimi.ingsw.bean.options.SetupOptions;
 import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.utilities.MessageType;
 import org.apache.log4j.Logger;
 
@@ -11,12 +12,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 /**
  * The Server class manages the server-side network infrastructure, accepting new connections.
@@ -39,7 +38,7 @@ public class Server implements Runnable {
     private Lobby openLobby;
     private int currentLobbyNum = 0;
 
-    public Server() throws IOException {
+    private Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
         instance = this;
     }
@@ -180,7 +179,17 @@ public class Server implements Runnable {
         if (tmp != null) {
             if (tmp.isClose()) return;
             if (tmp.isStarted()) { //caso generico
-                closeLobby(tmp);
+                if (tmp.size == 3) {
+                    List<Player> players = tmp.getGameState().getPlayers();
+                    if (players.size() == 3) {
+                        Player looser = players.stream().filter(p -> p.getNickname().equals(username)).collect(Collectors.toList()).get(0);
+                        tmp.getGameController().hasLost(looser);
+                    } else if (players.stream().noneMatch(p -> p.getNickname().equals(username))) {
+                        unregisteredUsername(username); //caso in cui e un looser che sta guardando la pertita
+                    }
+                } else {
+                    closeLobby(tmp);
+                }
             } else if (tmp.equals(openLobby)) { //caso in cui la lobby stata creata ma non inizializzata
                 if (openLobby.getConnectionMap().size() == 1) {
                     openLobby = null;

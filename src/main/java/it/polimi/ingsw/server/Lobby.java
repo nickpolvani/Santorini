@@ -20,7 +20,7 @@ public class Lobby {
     public final int id;
     private final List<RemoteView> remoteViews = new ArrayList<>();
     private final Map<String, ClientConnection> connectionMap = new LinkedHashMap<>();
-    private final Logger logger = Logger.getLogger("Server");
+    private static final Logger logger = Logger.getLogger("Server");
     private GameState gameState;
     private GameController gameController;
     //TODO sistemare la storia dei flag
