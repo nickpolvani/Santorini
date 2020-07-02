@@ -20,7 +20,6 @@ The pdf with the rules of the game is available [HERE](https://github.com/niccol
 | Socket |[![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | CLI |[![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | GUI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
-| Advanced features
 | Multiple games | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#)|
 | Advance Gods | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Persistence | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
@@ -68,10 +67,6 @@ To launch the client cli:
  ```
  mvn test
  ```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
