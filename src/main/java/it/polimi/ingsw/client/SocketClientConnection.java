@@ -24,15 +24,14 @@ public class SocketClientConnection {
     private final ObjectOutputStream out;
     private final Socket socket;
     private final Controller controller;
-    private boolean active = true;
-    private final Logger logger = Logger.getLogger("ClientController");
-
+    private final Logger logger = Logger.getLogger("Client");
     private final Queue<Options> toBeHandled = new LinkedList<>();
+    private boolean active = true;
 
     public SocketClientConnection(Controller controller) throws IOException {
         this.controller = controller;
         this.socket = new Socket(IP, PORT);
-        System.out.println("Connection established");
+        controller.getClientView().showMessage("Connection established");
         this.in = new ObjectInputStream(socket.getInputStream());
         this.out = new ObjectOutputStream(socket.getOutputStream());
     }
@@ -45,9 +44,6 @@ public class SocketClientConnection {
         this.active = active;
     }
 
-    /**
-     * @return an active Thread that reads from socket and passes Options to client-side controller
-     */
     public Thread asyncReadFromSocket() {
         Thread t = new Thread(() -> {
             try {
@@ -63,48 +59,47 @@ public class SocketClientConnection {
                     }
                 }
             } catch (EOFException e) {
-                controller.getClientView().showMessage("Connection Server-side has been closed, you opponents are gone");
-            } catch (SocketException e) {
                 controller.getClientView().showMessage("Connection Server-side has been closed");
-            } catch (Exception e) {
+            } catch (SocketException e) {
+                controller.getClientView().showMessage("Connection closed");
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-                controller.getClientView().showMessage("Connection Server-side has been closed, maybe because you opponents are gone");
+            } finally {
+                controller.reset();
             }
         });
         t.start();
         return t;
     }
 
-    /**
-     * this method holds a thread that manages the queue of incoming Options from the socket connection
-     */
-    public void asyncHandleOptions() {
-        new Thread(() -> {
+    public Thread asyncHandleOptions() {
+        Thread optionsHandler = new Thread(() -> {
             synchronized (toBeHandled) {
                 while (isActive()) {
                     while (toBeHandled.isEmpty()) {
                         try {
                             toBeHandled.wait();
                         } catch (InterruptedException e) {
-                            logger.fatal(e.getMessage(), e);
+                            logger.fatal(e.getMessage());
+                            Thread.currentThread().interrupt();
+                            break;
                         }
                     }
-                    try {
-                        controller.handleOption(toBeHandled.poll());
-                    } catch (InterruptedException e) {
-                        logger.fatal(e.getMessage(), e);
+                    if (!toBeHandled.isEmpty()) {
+                        try {
+                            controller.handleOption(toBeHandled.poll());
+                        } catch (InterruptedException e) {
+                            logger.fatal(e.getMessage(), e);
+                            Thread.currentThread().interrupt();
+                        }
                     }
                 }
             }
-        }).start();
+        });
+        optionsHandler.start();
+        return optionsHandler;
     }
 
-
-    /**
-     * sends the gameAction to the server asynchronously
-     *
-     * @param gameAction action generated from user interaction
-     */
     public void asyncWriteToSocket(final Action gameAction) {
         new Thread(() -> writeToSocket(gameAction)).start();
     }
@@ -121,15 +116,15 @@ public class SocketClientConnection {
         }
     }
 
-
-    public void setup() {
+    public void run() {
+        Thread t0 = asyncReadFromSocket();
+        Thread t1 = asyncHandleOptions();
         try {
-            asyncHandleOptions();
-            Thread t0 = asyncReadFromSocket();
             t0.join();
+            t1.join();
         } catch (InterruptedException e) {
-            logger.warn("Interrupted", e);
-            Thread.currentThread().interrupt();
+            logger.warn("Interrupted");
+            t1.interrupt();
         } finally {
             closeConnection();
         }
@@ -139,12 +134,10 @@ public class SocketClientConnection {
         if (!active) return;
         active = false;
         try {
-            in.close();
-            out.close();
             socket.close();
             controller.reset();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     }
 }

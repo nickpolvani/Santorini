@@ -62,7 +62,6 @@ public class Worker implements Cloneable, Serializable {
     /**
      * @param positionTile :the reference of the new tile where a player decides to move his worker
      */
-    //TODO forse fa inserito il check che positionTile non può essere null, però da fastidio medusa che lo setta a null nel caso si cancelli un worker.
     public void setIndexTile(Tile.IndexTile positionTile) {
         this.indexTile = positionTile;
     }

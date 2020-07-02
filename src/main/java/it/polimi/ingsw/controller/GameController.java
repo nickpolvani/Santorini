@@ -22,6 +22,7 @@ import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.utilities.MessageType;
 import org.apache.log4j.Logger;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -111,12 +112,13 @@ public class GameController extends Observable<Options> implements Observer<Game
      * @param looser nickname of the looser
      */
     public void hasLost(Player looser) {
-        logger.debug("The player " + looser.getNickname() + "has lost!");
+        logger.debug("The player " + looser.getNickname() + " has lost!");
         String message = (MessageType.LOST + looser.getNickname());
-        if (lobby.size == 2) {
-            Player winner = gameState.getPlayers().stream().filter(p -> !p.equals(looser)).collect(Collectors.toList()).get(0);
+        List<Player> players = gameState.getPlayers();
+        if (players.size() == 2) {
+            Player winner = players.stream().filter(p -> !p.equals(looser)).collect(Collectors.toList()).get(0);
             hasWon(winner);
-        } else {
+        } else if (players.size() == 3) {
             notify(new WinLooseOption(looser.getNickname(), message, gameState.getIslandBoard().clone()));
             for (Worker w : looser.getWorkers()) {
                 try {
@@ -125,8 +127,10 @@ public class GameController extends Observable<Options> implements Observer<Game
                     e.printStackTrace();
                 }
             }
-            turn.switchTurn();
+            if (turn.getCurrentPlayer().equals(looser)) turn.switchTurn();
             gameState.getPlayers().remove(looser);
+        } else {
+            throw new IllegalStateException();
         }
     }
 

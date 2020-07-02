@@ -64,11 +64,6 @@ public class MinotaurTest {
     }
 
     @Test
-    public void getTurnOperations() {
-    //TODO da implementare
-    }
-
-    @Test
     public void tileToMove() throws DomeAlreadyPresentException {
 
         Tile.IndexTile tile1 = new Tile.IndexTile(0, 0);

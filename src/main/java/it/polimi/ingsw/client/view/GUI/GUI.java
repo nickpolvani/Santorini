@@ -126,6 +126,7 @@ public class GUI extends View {
             activePanel.add(textArea, c);
             frame.validate();
         } else {
+            //TODO fare il Jframe centrato
             showMessage(nickname + " has lost");
         }
     }

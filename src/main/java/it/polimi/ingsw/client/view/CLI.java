@@ -13,8 +13,8 @@ import static org.fusesource.jansi.Ansi.ansi;
  */
 public class CLI extends View {
 
-    private boolean active = true;
     private final Scanner in = new Scanner(System.in);
+    private boolean active = true;
 
     public CLI() {
         printWelcome();

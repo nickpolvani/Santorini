@@ -78,7 +78,8 @@ public class PlayerTest {
         assertEquals(testPlayer.getGod(), gameState.getGodsFactory().getGod(GodDescription.PAN, testPlayer));
     }
 
-    /*@Test TODO ho tolto il test perchè i player non implemantatno più serializable
+    // ho tolto il test perchè i player non implementano più serializable
+    /*@Test
     public void serialize() throws IOException, ClassNotFoundException {
         Player player = gameState.getPlayers().get(0);
         ByteArrayOutputStream os = new ByteArrayOutputStream();

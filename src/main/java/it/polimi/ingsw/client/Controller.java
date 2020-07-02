@@ -129,7 +129,7 @@ public class Controller implements Observer<String> {
         try {
             clientView.start();
             this.socketClientConnection = new SocketClientConnection(this);
-            this.socketClientConnection.setup();
+            this.socketClientConnection.run();
         } catch (ConnectException e) {
             clientView.showMessage(e.getMessage());
             clientView.showMessage("Connection refused. Cannot ping server");

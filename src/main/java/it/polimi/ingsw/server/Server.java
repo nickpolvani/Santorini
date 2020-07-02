@@ -4,6 +4,7 @@ import it.polimi.ingsw.bean.action.LobbySizeAction;
 import it.polimi.ingsw.bean.options.MessageOption;
 import it.polimi.ingsw.bean.options.SetupOptions;
 import it.polimi.ingsw.controller.Operation;
+import it.polimi.ingsw.controller.turn.SetupTurn;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.utilities.MessageType;
 import org.apache.log4j.Logger;
@@ -179,7 +180,7 @@ public class Server implements Runnable {
         if (tmp != null) {
             if (tmp.isClose()) return;
             if (tmp.isStarted()) { //caso generico
-                if (tmp.size == 3) {
+                if (tmp.size == 3 && !(tmp.getGameController().getTurn() instanceof SetupTurn)) {
                     List<Player> players = tmp.getGameState().getPlayers();
                     if (players.size() == 3) {
                         Player looser = players.stream().filter(p -> p.getNickname().equals(username)).collect(Collectors.toList()).get(0);
