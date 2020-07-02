@@ -37,7 +37,6 @@ public class ChooseNicknamePanel extends ActivePanel {
         c.ipadx = 300;
         c.ipady = 0;
         c.anchor = GridBagConstraints.CENTER;
-        c.fill = GridBagConstraints.BOTH;
         c.weighty = 0.3;
         textField.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
         this.add(textField, c);
@@ -45,7 +44,6 @@ public class ChooseNicknamePanel extends ActivePanel {
         c = new GridBagConstraints();
         c.insets = new Insets(0, 130, 20, 130);
         c.anchor = GridBagConstraints.PAGE_START;
-        c.fill = GridBagConstraints.BOTH;
         c.gridy = 2;
         c.ipadx = 40;
         c.weighty = 0.1;

@@ -23,8 +23,6 @@ public class WelcomePanel extends ActivePanel {
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
-        c.weighty = 0.1;
-        c.weightx = 1;
         c.anchor = GridBagConstraints.PAGE_END;
         choosePanel = new ChooseNicknamePanel(gui);
         this.add(choosePanel, c);
@@ -40,6 +38,7 @@ public class WelcomePanel extends ActivePanel {
         c.anchor = GridBagConstraints.PAGE_START;
         choosePanel = new SelectLobbySizePanel(gui);
         this.add(choosePanel, c);
+        this.validate();
         SwingUtilities.updateComponentTreeUI(this);
     }
 

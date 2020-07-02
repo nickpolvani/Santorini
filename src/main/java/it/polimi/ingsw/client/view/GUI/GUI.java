@@ -71,7 +71,7 @@ public class GUI extends View {
         ActivePanel activePanel = new WelcomePanel(this);
         this.activePanel = activePanel;
         frame.setContentPane(activePanel);
-        frame.setMinimumSize(new Dimension(750, 400));
+        frame.setMinimumSize(new Dimension(850, 500));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
