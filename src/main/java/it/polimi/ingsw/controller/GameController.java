@@ -23,6 +23,7 @@ import it.polimi.ingsw.utilities.MessageType;
 import org.apache.log4j.Logger;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -97,12 +98,11 @@ public class GameController extends Observable<Options> implements Observer<Game
         String message = (MessageType.WIN + winner.getNickname());
         notify(new WinLooseOption(winner.getNickname(), message, gameState.getIslandBoard().clone()));
         try {
-            Thread.sleep(15000);
-            Server.getInstance().closeLobby(lobby);
+            TimeUnit.SECONDS.sleep(15);
         } catch (InterruptedException e) {
             e.printStackTrace();
-            Thread.currentThread().interrupt();
         }
+        Server.getInstance().closeLobby(lobby);
     }
 
     /**
