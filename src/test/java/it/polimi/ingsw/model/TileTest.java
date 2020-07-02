@@ -11,10 +11,9 @@ import static org.junit.Assert.*;
 
 public class TileTest {
 
-    private Tile tile;
-
     int rowIndex = 0;
     int columnIndex = 0;
+    private Tile tile;
 
     @Before
     public void setUp() {

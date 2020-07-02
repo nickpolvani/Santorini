@@ -180,16 +180,16 @@ public class Server implements Runnable {
         if (tmp != null) {
             if (tmp.isClose()) return;
             if (tmp.isStarted()) { //caso generico
-                if (tmp.size == 3 && !(tmp.getGameController().getTurn() instanceof SetupTurn)) {
-                    List<Player> players = tmp.getGameState().getPlayers();
-                    if (players.size() == 3) {
-                        Player looser = players.stream().filter(p -> p.getNickname().equals(username)).collect(Collectors.toList()).get(0);
-                        tmp.getGameController().hasLost(looser);
-                    } else if (players.stream().noneMatch(p -> p.getNickname().equals(username))) {
-                        unregisteredUsername(username); //caso in cui e un looser che sta guardando la pertita
-                    }
-                } else {
+                if (tmp.getGameController().getTurn() instanceof SetupTurn) {
                     closeLobby(tmp);
+                    return;
+                }
+                List<Player> players = tmp.getGameState().getPlayers();
+                if (players.stream().noneMatch(p -> p.getNickname().equals(username))) {
+                    unregisteredUsername(username); //caso in cui e un looser che sta guardando la pertita
+                } else {
+                    Player looser = players.stream().filter(p -> p.getNickname().equals(username)).collect(Collectors.toList()).get(0);
+                    tmp.getGameController().hasLost(looser);
                 }
             } else if (tmp.equals(openLobby)) { //caso in cui la lobby stata creata ma non inizializzata
                 if (openLobby.getConnectionMap().size() == 1) {

@@ -115,19 +115,9 @@ public class GUI extends View {
      */
     public void notifyLooser(String nickname) {
         if (nickname.equals(this.getNickname())) {
-            TextArea textArea = new TextArea(3, 45);
-            textArea.setText("Sorry, you lost the game.\nYou can keep watching the game." +
-                    "\nOtherwise close the application!");
-            textArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-            textArea.setEditable(false);
-            GridBagConstraints c = new GridBagConstraints();
-            c.gridy = 1;
-            c.gridx = 1;
-            activePanel.add(textArea, c);
-            frame.validate();
+            new WinLooseJFrame("Sorry, you lost the game.<br>You can keep watching the game.<br>Otherwise close the application!");
         } else {
-            //TODO fare il Jframe centrato
-            showMessage(nickname + " has lost");
+            new WinLooseJFrame(nickname + " has lost!!<br>You can still continue playing a one-on-one game<br>Good luck!!");
         }
     }
 

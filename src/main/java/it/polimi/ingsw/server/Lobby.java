@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Lobby {
+    private static final Logger logger = Logger.getLogger("Server");
     /**
      * Indicates the number of participants, which can be either 2 or 3
      */
@@ -20,7 +21,6 @@ public class Lobby {
     public final int id;
     private final List<RemoteView> remoteViews = new ArrayList<>();
     private final Map<String, ClientConnection> connectionMap = new LinkedHashMap<>();
-    private static final Logger logger = Logger.getLogger("Server");
     private GameState gameState;
     private GameController gameController;
     //TODO sistemare la storia dei flag

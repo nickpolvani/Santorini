@@ -7,18 +7,15 @@ import it.polimi.ingsw.model.GameState;
 import it.polimi.ingsw.model.god.GodDescription;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import java.util.*;
 
 import static org.junit.Assert.*;
 
 public class SetupGodsTurnTest {
-
     SetupGodsTurn turn;
     GameController controller;
     GameState model;
-    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
