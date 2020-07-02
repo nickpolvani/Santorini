@@ -10,7 +10,7 @@
 The Politecnico di Milano committed the project as the final test of the course 
 Software Engineering year 2019/2020.<br>The project specifications require the development 
 of a software version of the already existing game table lamp by Cranio Creations.<br>
-The pdf with the rules of the game is available [HERE] (https://github.com/niccolopolvani/ing-sw-2020-Polvani-Puoti-Sacchetta/blob/master/deliveries/santorini_rules_en.pdf)
+The pdf with the rules of the game is available [HERE](https://github.com/niccolopolvani/ing-sw-2020-Polvani-Puoti-Sacchetta/blob/master/deliveries/santorini_rules_en.pdf)
 
 
 | Functionality | State |
@@ -20,7 +20,7 @@ The pdf with the rules of the game is available [HERE] (https://github.com/nicco
 | Socket |[![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | CLI |[![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | GUI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
-| Advanced features |
+| Advanced features
 | Multiple games | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#)|
 | Advance Gods | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Persistence | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
@@ -34,7 +34,7 @@ The pdf with the rules of the game is available [HERE] (https://github.com/nicco
 
 ### Prerequisites
 
-Install maven on your PC. You can download it from this [link] (https://maven.apache.org/download.cgi)
+Install maven on your PC. You can download it from this [link](https://maven.apache.org/download.cgi)
 
 ### Installing
 
