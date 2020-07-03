@@ -13,7 +13,6 @@ public class Observable<T> {
     }
 
     public void addObserverList(List<Observer<T>> observerList) {
-        //TODO non ci dovremmo sincronizzare su un parametro
         if (observerList == null || observerList.isEmpty()) return;
         synchronized (observerList) {
             synchronized (observers) {

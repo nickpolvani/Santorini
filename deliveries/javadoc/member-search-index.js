@@ -1,13 +1,13 @@
 memberSearchIndex = [{
+    "p": "it.polimi.ingsw.bean.ping",
+    "c": "AckPacket",
+    "l": "AckPacket()",
+    "url": "%3Cinit%3E()"
+}, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "Action",
     "l": "Action(String)",
     "url": "%3Cinit%3E(java.lang.String)"
-}, {
-    "p": "it.polimi.ingsw.bean.action",
-    "c": "ActionFactoryTest",
-    "l": "ActionFactoryTest()",
-    "url": "%3Cinit%3E()"
 }, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "ActionHandler",
@@ -20,10 +20,6 @@ memberSearchIndex = [{
     "url": "%3Cinit%3E()"
 }, {"p": "it.polimi.ingsw.model", "c": "Tile.Building", "l": "addBlock()"}, {
     "p": "it.polimi.ingsw.model",
-    "c": "TileTest",
-    "l": "addBlock()"
-}, {
-    "p": "it.polimi.ingsw.model",
     "c": "IslandBoard",
     "l": "addBlock(int, int)",
     "url": "addBlock(int,int)"
@@ -32,7 +28,7 @@ memberSearchIndex = [{
     "c": "IslandBoard",
     "l": "addBlock(Tile.IndexTile)",
     "url": "addBlock(it.polimi.ingsw.model.Tile.IndexTile)"
-}, {"p": "it.polimi.ingsw.server", "c": "LobbyTest", "l": "addClient()"}, {
+}, {
     "p": "it.polimi.ingsw.server",
     "c": "Lobby",
     "l": "addClient(String, ClientConnection)",
@@ -60,8 +56,8 @@ memberSearchIndex = [{
 }, {
     "p": "it.polimi.ingsw.server",
     "c": "Server",
-    "l": "addRegisteredUsers(String, ClientConnection)",
-    "url": "addRegisteredUsers(java.lang.String,it.polimi.ingsw.server.ClientConnection)"
+    "l": "addRegisteredUsers(String)",
+    "url": "addRegisteredUsers(java.lang.String)"
 }, {"p": "it.polimi.ingsw.bean.options", "c": "Options", "l": "alert"}, {
     "p": "it.polimi.ingsw.exception",
     "c": "AlreadyOccupiedException",
@@ -82,25 +78,12 @@ memberSearchIndex = [{
     "c": "AlreadySetException",
     "l": "AlreadySetException(String)",
     "url": "%3Cinit%3E(java.lang.String)"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ApolloTest", "l": "apollo"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodDescription",
-    "l": "APOLLO"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "APOLLO"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Apollo",
     "l": "Apollo(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ApolloTest",
-    "l": "ApolloTest()",
-    "url": "%3Cinit%3E()"
 }, {"p": "it.polimi.ingsw", "c": "App", "l": "App()", "url": "%3Cinit%3E()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HephaestusTest",
-    "l": "applyChoice()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ZeusTest", "l": "applyChoice()"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "God",
     "l": "applyChoice(boolean)"
@@ -117,20 +100,11 @@ memberSearchIndex = [{
     "c": "Ares",
     "l": "Ares(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ArtemisTest", "l": "artemis"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodDescription",
-    "l": "ARTEMIS"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "ARTEMIS"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Artemis",
     "l": "Artemis(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ArtemisTest",
-    "l": "ArtemisTest()",
-    "url": "%3Cinit%3E()"
 }, {
     "p": "it.polimi.ingsw.client",
     "c": "SocketClientConnection",
@@ -154,20 +128,11 @@ memberSearchIndex = [{
     "c": "SocketClientConnection",
     "l": "asyncWriteToSocket(Action)",
     "url": "asyncWriteToSocket(it.polimi.ingsw.bean.action.Action)"
-}, {"p": "it.polimi.ingsw.model.god", "c": "AthenaTest", "l": "athena"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodDescription",
-    "l": "ATHENA"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "ATHENA"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Athena",
     "l": "Athena(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "AthenaTest",
-    "l": "AthenaTest()",
-    "url": "%3Cinit%3E()"
 }, {
     "p": "it.polimi.ingsw.controller.turn",
     "c": "AthenaTurn",
@@ -175,54 +140,19 @@ memberSearchIndex = [{
     "url": "athenaTileToMove(it.polimi.ingsw.model.Worker)"
 }, {
     "p": "it.polimi.ingsw.controller.turn",
-    "c": "AthenaTurnTest",
-    "l": "athenaTileToMoveTest()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
     "c": "AthenaTurn",
     "l": "AthenaTurn(GameController, Player, List<Observer<Options>>)",
     "url": "%3Cinit%3E(it.polimi.ingsw.controller.GameController,it.polimi.ingsw.model.Player,java.util.List)"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "AthenaTurnTest",
-    "l": "AthenaTurnTest()",
-    "url": "%3Cinit%3E()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "AtlasTest", "l": "atlas"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodDescription",
-    "l": "ATLAS"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "ATLAS"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Atlas",
     "l": "Atlas(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
 }, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "AtlasTest",
-    "l": "AtlasTest()",
-    "url": "%3Cinit%3E()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ApolloTest", "l": "basicTurn"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HestiaTest",
-    "l": "basicTurn"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MedusaTest", "l": "basicTurn"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PoseidonTest",
-    "l": "basicTurn"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PrometheusTest", "l": "basicTurn"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ZeusTest",
-    "l": "basicTurn"
-}, {
     "p": "it.polimi.ingsw.controller.turn",
     "c": "BasicTurn",
     "l": "BasicTurn(GameController, Player, List<Observer<Options>>)",
     "url": "%3Cinit%3E(it.polimi.ingsw.controller.GameController,it.polimi.ingsw.model.Player,java.util.List)"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "BasicTurnTest",
-    "l": "BasicTurnTest()",
-    "url": "%3Cinit%3E()"
 }, {"p": "it.polimi.ingsw.model", "c": "Color", "l": "BLUE"}, {
     "p": "it.polimi.ingsw.client.view",
     "c": "View",
@@ -240,14 +170,6 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.utilities",
     "c": "MessageType",
     "l": "BUILD"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ApolloTest", "l": "build()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "AtlasTest",
-    "l": "build()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MedusaTest", "l": "build()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PoseidonTest",
-    "l": "build()"
 }, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Atlas",
@@ -293,38 +215,21 @@ memberSearchIndex = [{
     "c": "Tile.Building",
     "l": "Building(BlockLevel, boolean)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.BlockLevel,boolean)"
-}, {"p": "it.polimi.ingsw.model", "c": "TileTest", "l": "BuildingClone()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ApolloTest",
-    "l": "cannotBuild()"
 }, {"p": "it.polimi.ingsw.model.god", "c": "God", "l": "cannotBuild()"}, {
     "p": "it.polimi.ingsw.model.god",
-    "c": "ApolloTest",
+    "c": "God",
     "l": "cannotMove()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "God", "l": "cannotMove()"}, {
-    "p": "it.polimi.ingsw.client.view.GUI",
-    "c": "WelcomePanel",
-    "l": "changePanel()"
-}, {"p": "it.polimi.ingsw.model", "c": "IslandBoardTest", "l": "changePosition()"}, {
+}, {"p": "it.polimi.ingsw.client.view.GUI", "c": "WelcomePanel", "l": "changePanel()"}, {
     "p": "it.polimi.ingsw.model",
     "c": "IslandBoard",
     "l": "changePosition(Worker, Tile.IndexTile)",
     "url": "changePosition(it.polimi.ingsw.model.Worker,it.polimi.ingsw.model.Tile.IndexTile)"
-}, {"p": "it.polimi.ingsw.model.god", "c": "CharonTest", "l": "charon"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodDescription",
-    "l": "CHARON"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "CHARON"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Charon",
     "l": "Charon(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
 }, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "CharonTest",
-    "l": "CharonTest()",
-    "url": "%3Cinit%3E()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MinotaurTest", "l": "checkBackwards()"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Minotaur",
     "l": "checkBackwardsTile(Tile.IndexTile, Tile.IndexTile)",
@@ -365,11 +270,6 @@ memberSearchIndex = [{
     "c": "ChooseOptions",
     "l": "ChooseOptions(String, String, IslandBoard)",
     "url": "%3Cinit%3E(java.lang.String,java.lang.String,it.polimi.ingsw.model.IslandBoard)"
-}, {
-    "p": "it.polimi.ingsw.bean.options",
-    "c": "ChooseOptionsTest",
-    "l": "ChooseOptionsTest()",
-    "url": "%3Cinit%3E()"
 }, {"p": "it.polimi.ingsw.observer", "c": "Observable", "l": "clearObserver()"}, {
     "p": "it.polimi.ingsw.client.view",
     "c": "CLI",
@@ -419,22 +319,14 @@ memberSearchIndex = [{
     "c": "Tile.IndexTile",
     "l": "clone()"
 }, {"p": "it.polimi.ingsw.model", "c": "Worker", "l": "clone()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "IslandBoardTest",
-    "l": "cloneTest()"
-}, {"p": "it.polimi.ingsw.model", "c": "TileTest", "l": "cloneTest()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "WorkerTest",
-    "l": "cloneTest()"
-}, {"p": "it.polimi.ingsw.client.view", "c": "CLI", "l": "close()"}, {
     "p": "it.polimi.ingsw.client.view",
-    "c": "View",
+    "c": "CLI",
     "l": "close()"
-}, {"p": "it.polimi.ingsw.client.view.GUI", "c": "GUI", "l": "close()"}, {
-    "p": "it.polimi.ingsw.server",
-    "c": "Lobby",
+}, {"p": "it.polimi.ingsw.client.view", "c": "View", "l": "close()"}, {
+    "p": "it.polimi.ingsw.client.view.GUI",
+    "c": "GUI",
     "l": "close()"
-}, {"p": "it.polimi.ingsw.server", "c": "LobbyTest", "l": "close()"}, {
+}, {"p": "it.polimi.ingsw.server", "c": "Lobby", "l": "close()"}, {
     "p": "it.polimi.ingsw.client",
     "c": "SocketClientConnection",
     "l": "closeConnection()"
@@ -451,11 +343,7 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.model",
     "c": "Player",
     "l": "color"
-}, {"p": "it.polimi.ingsw.model", "c": "TileTest", "l": "columnIndex"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "God",
-    "l": "confirmed"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "God", "l": "confirmed"}, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "ConfirmGameAction",
     "l": "ConfirmGameAction(boolean, String)",
@@ -465,36 +353,16 @@ memberSearchIndex = [{
     "c": "ConnectionClosedPanel",
     "l": "ConnectionClosedPanel()",
     "url": "%3Cinit%3E()"
-}, {"p": "it.polimi.ingsw.server", "c": "LobbyTest", "l": "constructor()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "PlayerTest",
-    "l": "constructorTest()"
-}, {"p": "it.polimi.ingsw.model", "c": "WorkerTest", "l": "constructorTest()"}, {
+}, {
     "p": "it.polimi.ingsw.server",
     "c": "Lobby",
     "l": "containsUser(String)",
     "url": "containsUser(java.lang.String)"
 }, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupGodsTurnTest",
-    "l": "controller"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupWorkersTurnTest",
-    "l": "controller"
-}, {"p": "it.polimi.ingsw.controller.turn", "c": "TotalSetupTest", "l": "controller"}, {
     "p": "it.polimi.ingsw.client",
     "c": "Controller",
     "l": "Controller()",
     "url": "%3Cinit%3E()"
-}, {"p": "it.polimi.ingsw.model", "c": "IslandBoardTest", "l": "correctSetup()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "TileTest",
-    "l": "correctSetup()"
-}, {
-    "p": "it.polimi.ingsw.bean.action",
-    "c": "ActionFactoryTest",
-    "l": "createAction()"
 }, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "ActionFactory",
@@ -513,20 +381,11 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.model.god",
     "c": "God",
     "l": "currentWorker"
-}, {"p": "it.polimi.ingsw.model.god", "c": "DemeterTest", "l": "demeter"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodDescription",
-    "l": "DEMETER"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "DEMETER"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Demeter",
     "l": "Demeter(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "DemeterTest",
-    "l": "DemeterTest()",
-    "url": "%3Cinit%3E()"
 }, {
     "p": "it.polimi.ingsw.client.view.GUI",
     "c": "BoardPanel",
@@ -552,24 +411,12 @@ memberSearchIndex = [{
     "l": "endCurrentOperation()"
 }, {
     "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupGodsTurnTest",
-    "l": "endCurrentOperation()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
     "c": "SetupWorkersTurn",
     "l": "endCurrentOperation()"
 }, {
     "p": "it.polimi.ingsw.controller.turn",
     "c": "Turn",
     "l": "endCurrentOperation()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "AthenaTurnTest",
-    "l": "endCurrentOperationTest()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "BasicTurnTest",
-    "l": "endCurrentOperationTest()"
 }, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "Action",
@@ -670,11 +517,7 @@ memberSearchIndex = [{
     "c": "Worker",
     "l": "equals(Object)",
     "url": "equals(java.lang.Object)"
-}, {"p": "it.polimi.ingsw.model", "c": "IslandBoardTest", "l": "equalsAndClone()"}, {
-    "p": "it.polimi.ingsw.bean.action",
-    "c": "BuildGameAction",
-    "l": "execute()"
-}, {
+}, {"p": "it.polimi.ingsw.bean.action", "c": "BuildGameAction", "l": "execute()"}, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "ConfirmGameAction",
     "l": "execute()"
@@ -726,54 +569,14 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.model.god",
     "c": "God",
     "l": "findNotCurrentWorker()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "TotalSetupTest",
-    "l": "flowSetupWithAthena()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "TotalSetupTest",
-    "l": "flowSetupWithoutAthena()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupWorkersTurnTest",
-    "l": "flowTurn()"
 }, {"p": "it.polimi.ingsw.client.view.GUI", "c": "GUI", "l": "frame"}, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "GameAction",
     "l": "GameAction(String)",
     "url": "%3Cinit%3E(java.lang.String)"
-}, {"p": "it.polimi.ingsw.controller.turn", "c": "BasicTurn", "l": "gameController"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "PlayerTest",
-    "l": "gameController"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ApolloTest", "l": "gameController"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ArtemisTest",
-    "l": "gameController"
-}, {"p": "it.polimi.ingsw.model.god", "c": "AthenaTest", "l": "gameController"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "AtlasTest",
-    "l": "gameController"
-}, {"p": "it.polimi.ingsw.model.god", "c": "CharonTest", "l": "gameController"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "DemeterTest",
-    "l": "gameController"
-}, {"p": "it.polimi.ingsw.model.god", "c": "HephaestusTest", "l": "gameController"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HestiaTest",
-    "l": "gameController"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MedusaTest", "l": "gameController"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "MinotaurTest",
-    "l": "gameController"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PanTest", "l": "gameController"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PoseidonTest",
-    "l": "gameController"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PrometheusTest", "l": "gameController"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ZeusTest",
+}, {
+    "p": "it.polimi.ingsw.controller.turn",
+    "c": "BasicTurn",
     "l": "gameController"
 }, {
     "p": "it.polimi.ingsw.controller",
@@ -790,38 +593,6 @@ memberSearchIndex = [{
     "c": "GamePanel",
     "l": "GamePanel(GUI)",
     "url": "%3Cinit%3E(it.polimi.ingsw.client.view.GUI.GUI)"
-}, {"p": "it.polimi.ingsw.model", "c": "PlayerTest", "l": "gameState"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ApolloTest",
-    "l": "gameState"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ArtemisTest", "l": "gameState"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "AthenaTest",
-    "l": "gameState"
-}, {"p": "it.polimi.ingsw.model.god", "c": "AtlasTest", "l": "gameState"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "CharonTest",
-    "l": "gameState"
-}, {"p": "it.polimi.ingsw.model.god", "c": "DemeterTest", "l": "gameState"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodsFactoryTest",
-    "l": "gameState"
-}, {"p": "it.polimi.ingsw.model.god", "c": "HephaestusTest", "l": "gameState"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HestiaTest",
-    "l": "gameState"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MedusaTest", "l": "gameState"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "MinotaurTest",
-    "l": "gameState"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PanTest", "l": "gameState"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PoseidonTest",
-    "l": "gameState"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PrometheusTest", "l": "gameState"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ZeusTest",
-    "l": "gameState"
 }, {
     "p": "it.polimi.ingsw.model",
     "c": "GameState",
@@ -925,7 +696,7 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.model",
     "c": "Player",
     "l": "getGod()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "GodsFactoryTest", "l": "getGod()"}, {
+}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "GodsFactory",
     "l": "getGod(GodDescription, Player)",
@@ -943,14 +714,14 @@ memberSearchIndex = [{
     "c": "IndexTileGameAction",
     "l": "getIndexTile()"
 }, {"p": "it.polimi.ingsw.model", "c": "Worker", "l": "getIndexTile()"}, {
+    "p": "it.polimi.ingsw.server",
+    "c": "Server",
+    "l": "getInstance()"
+}, {"p": "it.polimi.ingsw.model", "c": "GameState", "l": "getIslandBoard()"}, {
     "p": "it.polimi.ingsw.model",
-    "c": "GameState",
-    "l": "getIslandBoard()"
-}, {"p": "it.polimi.ingsw.model", "c": "Tile.Building", "l": "getLevel()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "BlockLevel",
-    "l": "getLevelInt()"
-}, {
+    "c": "Tile.Building",
+    "l": "getLevel()"
+}, {"p": "it.polimi.ingsw.model", "c": "BlockLevel", "l": "getLevelInt()"}, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "LobbySizeAction",
     "l": "getLobbySize()"
@@ -972,22 +743,18 @@ memberSearchIndex = [{
     "c": "View",
     "l": "getNickname()"
 }, {"p": "it.polimi.ingsw.model", "c": "Player", "l": "getNickname()"}, {
-    "p": "it.polimi.ingsw.server",
-    "c": "RemoteView",
-    "l": "getNickname()"
-}, {"p": "it.polimi.ingsw.model", "c": "Color", "l": "getNum()"}, {
+    "p": "it.polimi.ingsw.model",
+    "c": "Color",
+    "l": "getNum()"
+}, {
     "p": "it.polimi.ingsw.controller.turn",
     "c": "AthenaTurn",
     "l": "getOptions()"
+}, {"p": "it.polimi.ingsw.controller.turn", "c": "BasicTurn", "l": "getOptions()"}, {
+    "p": "it.polimi.ingsw.bean.action",
+    "c": "GameAction",
+    "l": "getPlayer()"
 }, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "BasicTurn",
-    "l": "getOptions()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "AthenaTurnTest",
-    "l": "getOptionsTest()"
-}, {"p": "it.polimi.ingsw.bean.action", "c": "GameAction", "l": "getPlayer()"}, {
     "p": "it.polimi.ingsw.client.view.GUI",
     "c": "GamePanel",
     "l": "getPlayerColor()"
@@ -999,11 +766,7 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.bean.action",
     "c": "PlaceWorkerActions",
     "l": "getPositions()"
-}, {"p": "it.polimi.ingsw.server", "c": "Server", "l": "getRegisteredUsers()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "Ares",
-    "l": "getRemainingOperations()"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "Ares", "l": "getRemainingOperations()"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Artemis",
     "l": "getRemainingOperations()"
@@ -1032,18 +795,14 @@ memberSearchIndex = [{
     "c": "Prometheus",
     "l": "getRemainingOperations()"
 }, {"p": "it.polimi.ingsw.model.god", "c": "Zeus", "l": "getRemainingOperations()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ZeusTest",
-    "l": "getRemainingOperations()"
-}, {"p": "it.polimi.ingsw.model", "c": "Tile.IndexTile", "l": "getRow()"}, {
+    "p": "it.polimi.ingsw.model",
+    "c": "Tile.IndexTile",
+    "l": "getRow()"
+}, {
     "p": "it.polimi.ingsw.client.view.GUI",
     "c": "GUI",
     "l": "getScreenSize()"
 }, {"p": "it.polimi.ingsw.client.view.GUI", "c": "GamePanel", "l": "getTextPanel()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "IslandBoardTest",
-    "l": "getTile()"
-}, {
     "p": "it.polimi.ingsw.model",
     "c": "IslandBoard",
     "l": "getTile(int, int)",
@@ -1073,10 +832,6 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.model.god",
     "c": "Demeter",
     "l": "getTurnOperations()"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "DemeterTest",
-    "l": "getTurnOperations()"
 }, {"p": "it.polimi.ingsw.model.god", "c": "God", "l": "getTurnOperations()"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Hephaestus",
@@ -1087,16 +842,16 @@ memberSearchIndex = [{
     "l": "getTurnOperations()"
 }, {"p": "it.polimi.ingsw.model.god", "c": "Minotaur", "l": "getTurnOperations()"}, {
     "p": "it.polimi.ingsw.model.god",
-    "c": "MinotaurTest",
+    "c": "Pan",
     "l": "getTurnOperations()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "Pan", "l": "getTurnOperations()"}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "Poseidon", "l": "getTurnOperations()"}, {
     "p": "it.polimi.ingsw.model.god",
-    "c": "Poseidon",
+    "c": "Prometheus",
     "l": "getTurnOperations()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "Prometheus", "l": "getTurnOperations()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "Zeus",
-    "l": "getTurnOperations()"
+}, {"p": "it.polimi.ingsw.model.god", "c": "Zeus", "l": "getTurnOperations()"}, {
+    "p": "it.polimi.ingsw.server",
+    "c": "RemoteView",
+    "l": "getUsername()"
 }, {"p": "it.polimi.ingsw.model", "c": "Player", "l": "getWorkers()"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "God",
@@ -1104,18 +859,9 @@ memberSearchIndex = [{
     "url": "%3Cinit%3E(it.polimi.ingsw.model.god.GodDescription,it.polimi.ingsw.model.Player,it.polimi.ingsw.model.GameState)"
 }, {
     "p": "it.polimi.ingsw.bean.options",
-    "c": "GodOptionsTest",
-    "l": "godOptions"
-}, {
-    "p": "it.polimi.ingsw.bean.options",
     "c": "GodOptions",
     "l": "GodOptions(String, List<GodDescription>, String)",
     "url": "%3Cinit%3E(java.lang.String,java.util.List,java.lang.String)"
-}, {
-    "p": "it.polimi.ingsw.bean.options",
-    "c": "GodOptionsTest",
-    "l": "GodOptionsTest()",
-    "url": "%3Cinit%3E()"
 }, {
     "p": "it.polimi.ingsw.utilities",
     "c": "MessageType",
@@ -1125,16 +871,7 @@ memberSearchIndex = [{
     "c": "GodsFactory",
     "l": "GodsFactory(GameState)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState)"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodsFactoryTest",
-    "l": "GodsFactoryTest()",
-    "url": "%3Cinit%3E()"
-}, {"p": "it.polimi.ingsw.bean.options", "c": "GodOptionsTest", "l": "godsList"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "BlockLevel",
-    "l": "GROUND"
-}, {
+}, {"p": "it.polimi.ingsw.model", "c": "BlockLevel", "l": "GROUND"}, {
     "p": "it.polimi.ingsw.client.view.GUI",
     "c": "GUI",
     "l": "GUI(Controller)",
@@ -1249,34 +986,16 @@ memberSearchIndex = [{
     "c": "GameController",
     "l": "hasWon(Player)",
     "url": "hasWon(it.polimi.ingsw.model.Player)"
-}, {"p": "it.polimi.ingsw.model.god", "c": "HephaestusTest", "l": "hephaestus"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodDescription",
-    "l": "HEPHAESTUS"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "HEPHAESTUS"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Hephaestus",
     "l": "Hephaestus(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HephaestusTest",
-    "l": "HephaestusTest()",
-    "url": "%3Cinit%3E()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "HestiaTest", "l": "hestia"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodDescription",
-    "l": "HESTIA"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "HESTIA"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Hestia",
     "l": "Hestia(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HestiaTest",
-    "l": "HestiaTest()",
-    "url": "%3Cinit%3E()"
 }, {
     "p": "it.polimi.ingsw.client.view.GUI",
     "c": "GamePanel",
@@ -1289,22 +1008,6 @@ memberSearchIndex = [{
     "url": "highlight(java.awt.Color,java.util.Collection)"
 }, {"p": "it.polimi.ingsw.server", "c": "Lobby", "l": "id"}, {
     "p": "it.polimi.ingsw.model",
-    "c": "WorkerTest",
-    "l": "indexes"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ArtemisTest", "l": "indexes"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "AthenaTest",
-    "l": "indexes"
-}, {"p": "it.polimi.ingsw.model.god", "c": "CharonTest", "l": "indexes"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "MinotaurTest",
-    "l": "indexes"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PanTest", "l": "indexes"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "PlayerTest",
-    "l": "indexes0"
-}, {
-    "p": "it.polimi.ingsw.model",
     "c": "IslandBoard",
     "l": "indexOfNeighbouringTiles(Tile.IndexTile)",
     "url": "indexOfNeighbouringTiles(it.polimi.ingsw.model.Tile.IndexTile)"
@@ -1313,7 +1016,7 @@ memberSearchIndex = [{
     "c": "Tile.IndexTile",
     "l": "IndexTile(int, int)",
     "url": "%3Cinit%3E(int,int)"
-}, {"p": "it.polimi.ingsw.model", "c": "TileTest", "l": "IndexTileClone()"}, {
+}, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "IndexTileGameAction",
     "l": "IndexTileGameAction(Tile.IndexTile, String)",
@@ -1339,10 +1042,6 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.model.god",
     "c": "Demeter",
     "l": "isChooseAvailable()"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "DemeterTest",
-    "l": "isChooseAvailable()"
 }, {"p": "it.polimi.ingsw.model.god", "c": "God", "l": "isChooseAvailable()"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Hephaestus",
@@ -1351,31 +1050,11 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.model.god",
     "c": "Poseidon",
     "l": "isChooseAvailable()"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PoseidonTest",
-    "l": "isChooseAvailable()"
 }, {"p": "it.polimi.ingsw.model.god", "c": "Prometheus", "l": "isChooseAvailable()"}, {
     "p": "it.polimi.ingsw.model.god",
-    "c": "PrometheusTest",
+    "c": "Zeus",
     "l": "isChooseAvailable()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "Zeus", "l": "isChooseAvailable()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ArtemisTest",
-    "l": "isChooseAvailableTest()"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "CharonTest",
-    "l": "isChooseAvailableTest()"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HephaestusTest",
-    "l": "isChooseAvailableTest()"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HestiaTest",
-    "l": "isChooseAvailableTest()"
-}, {
+}, {"p": "it.polimi.ingsw.server", "c": "Lobby", "l": "isClose()"}, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "BuildGameAction",
     "l": "isCompatible(Operation)",
@@ -1427,27 +1106,14 @@ memberSearchIndex = [{
     "url": "isCompatible(it.polimi.ingsw.controller.Operation)"
 }, {"p": "it.polimi.ingsw.server", "c": "Lobby", "l": "isFull()"}, {
     "p": "it.polimi.ingsw.model",
-    "c": "IslandBoardTest",
-    "l": "islandBoard"
-}, {
-    "p": "it.polimi.ingsw.model",
     "c": "IslandBoard",
     "l": "IslandBoard()",
-    "url": "%3Cinit%3E()"
-}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "IslandBoardTest",
-    "l": "IslandBoardTest()",
     "url": "%3Cinit%3E()"
 }, {"p": "it.polimi.ingsw.model", "c": "Player", "l": "isLooser()"}, {
     "p": "it.polimi.ingsw.client",
     "c": "Controller",
     "l": "isMyTurn()"
 }, {"p": "it.polimi.ingsw.model", "c": "Tile", "l": "isOccupied()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "TileTest",
-    "l": "isOccupied()"
-}, {
     "p": "it.polimi.ingsw.model",
     "c": "IslandBoard",
     "l": "isOccupied(int, int)",
@@ -1478,14 +1144,6 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.utilities",
     "c": "Start",
     "l": "isStarted()"
-}, {
-    "p": "it.polimi.ingsw.bean.options",
-    "c": "ChooseOptionsTest",
-    "l": "isValid()"
-}, {"p": "it.polimi.ingsw.bean.options", "c": "GodOptionsTest", "l": "isValid()"}, {
-    "p": "it.polimi.ingsw.bean.options",
-    "c": "PlaceWorkersOptionsTest",
-    "l": "isValid()"
 }, {
     "p": "it.polimi.ingsw.bean.options",
     "c": "ChooseOptions",
@@ -1528,10 +1186,6 @@ memberSearchIndex = [{
     "url": "isValid(java.lang.String)"
 }, {"p": "it.polimi.ingsw.model", "c": "Player", "l": "isWinner()"}, {
     "p": "it.polimi.ingsw.server",
-    "c": "LobbyTest",
-    "l": "lobby"
-}, {
-    "p": "it.polimi.ingsw.server",
     "c": "Lobby",
     "l": "Lobby(int, int)",
     "url": "%3Cinit%3E(int,int)"
@@ -1540,30 +1194,16 @@ memberSearchIndex = [{
     "c": "LobbySizeAction",
     "l": "LobbySizeAction(int, String)",
     "url": "%3Cinit%3E(int,java.lang.String)"
-}, {
-    "p": "it.polimi.ingsw.server",
-    "c": "LobbyTest",
-    "l": "LobbyTest()",
-    "url": "%3Cinit%3E()"
 }, {"p": "it.polimi.ingsw.utilities", "c": "MessageType", "l": "LOST"}, {
     "p": "it.polimi.ingsw",
     "c": "App",
     "l": "main(String[])",
     "url": "main(java.lang.String[])"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MedusaTest", "l": "medusa"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodDescription",
-    "l": "MEDUSA"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "MEDUSA"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Medusa",
     "l": "Medusa(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "MedusaTest",
-    "l": "MedusaTest()",
-    "url": "%3Cinit%3E()"
 }, {"p": "it.polimi.ingsw.bean.options", "c": "Options", "l": "message"}, {
     "p": "it.polimi.ingsw.controller",
     "c": "Operation",
@@ -1578,45 +1218,16 @@ memberSearchIndex = [{
     "c": "MessageType",
     "l": "MessageType()",
     "url": "%3Cinit%3E()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MinotaurTest", "l": "minotaur"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodDescription",
-    "l": "MINOTAUR"
-}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "MINOTAUR"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Minotaur",
     "l": "Minotaur(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "MinotaurTest",
-    "l": "MinotaurTest()",
-    "url": "%3Cinit%3E()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupGodsTurnTest",
-    "l": "model"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupWorkersTurnTest",
-    "l": "model"
-}, {"p": "it.polimi.ingsw.controller.turn", "c": "TotalSetupTest", "l": "model"}, {
-    "p": "it.polimi.ingsw.controller",
-    "c": "Operation",
+}, {"p": "it.polimi.ingsw.controller", "c": "Operation", "l": "MOVE"}, {
+    "p": "it.polimi.ingsw.utilities",
+    "c": "MessageType",
     "l": "MOVE"
-}, {"p": "it.polimi.ingsw.utilities", "c": "MessageType", "l": "MOVE"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ApolloTest",
-    "l": "move()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ArtemisTest", "l": "move()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "AthenaTest",
-    "l": "move()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MinotaurTest", "l": "move()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PanTest",
-    "l": "move()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PrometheusTest", "l": "move()"}, {
+}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Apollo",
     "l": "move(Tile.IndexTile)",
@@ -1646,12 +1257,12 @@ memberSearchIndex = [{
     "c": "Pan",
     "l": "move(Tile.IndexTile)",
     "url": "move(it.polimi.ingsw.model.Tile.IndexTile)"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ApolloTest", "l": "move2()"}, {
+}, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "MoveGameAction",
     "l": "MoveGameAction(Tile.IndexTile, String)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.Tile.IndexTile,java.lang.String)"
-}, {"p": "it.polimi.ingsw.model.god", "c": "CharonTest", "l": "moveWorker()"}, {
+}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Charon",
     "l": "moveWorker(Tile.IndexTile)",
@@ -1664,19 +1275,11 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.model",
     "c": "Tile",
     "l": "N_ROWS"
-}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "IslandBoardTest",
-    "l": "neighbouringTiles()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PanTest", "l": "newIndex"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "BlockLevel",
-    "l": "nextLevel()"
-}, {"p": "it.polimi.ingsw.bean.action", "c": "Action", "l": "nickname"}, {
-    "p": "it.polimi.ingsw.bean.options",
-    "c": "Options",
+}, {"p": "it.polimi.ingsw.model", "c": "BlockLevel", "l": "nextLevel()"}, {
+    "p": "it.polimi.ingsw.bean.action",
+    "c": "Action",
     "l": "nickname"
-}, {
+}, {"p": "it.polimi.ingsw.bean.options", "c": "Options", "l": "nickname"}, {
     "p": "it.polimi.ingsw.utilities",
     "c": "MessageType",
     "l": "NICKNAME_ALREADY_SET"
@@ -1745,11 +1348,6 @@ memberSearchIndex = [{
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
 }, {
     "p": "it.polimi.ingsw.model.god",
-    "c": "PanTest",
-    "l": "PanTest()",
-    "url": "%3Cinit%3E()"
-}, {
-    "p": "it.polimi.ingsw.model.god",
     "c": "GodDescription",
     "l": "parse(String)",
     "url": "parse(java.lang.String)"
@@ -1779,18 +1377,9 @@ memberSearchIndex = [{
     "url": "placeWorkers(java.util.Collection,it.polimi.ingsw.model.Color)"
 }, {
     "p": "it.polimi.ingsw.bean.options",
-    "c": "PlaceWorkersOptionsTest",
-    "l": "placeWorkersOptions"
-}, {
-    "p": "it.polimi.ingsw.bean.options",
     "c": "PlaceWorkersOptions",
     "l": "PlaceWorkersOptions(String, Collection<Tile.IndexTile>, IslandBoard, Operation, String, Color)",
     "url": "%3Cinit%3E(java.lang.String,java.util.Collection,it.polimi.ingsw.model.IslandBoard,it.polimi.ingsw.controller.Operation,java.lang.String,it.polimi.ingsw.model.Color)"
-}, {
-    "p": "it.polimi.ingsw.bean.options",
-    "c": "PlaceWorkersOptionsTest",
-    "l": "PlaceWorkersOptionsTest()",
-    "url": "%3Cinit%3E()"
 }, {"p": "it.polimi.ingsw.bean.action", "c": "GameAction", "l": "player"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "God",
@@ -1800,84 +1389,15 @@ memberSearchIndex = [{
     "c": "Player",
     "l": "Player(String, GameState, Color)",
     "url": "%3Cinit%3E(java.lang.String,it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Color)"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "AthenaTurnTest",
-    "l": "player1"
-}, {"p": "it.polimi.ingsw.controller.turn", "c": "BasicTurnTest", "l": "player1"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ApolloTest",
-    "l": "player1"
-}, {"p": "it.polimi.ingsw.model.god", "c": "AtlasTest", "l": "player1"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "DemeterTest",
-    "l": "player1"
-}, {"p": "it.polimi.ingsw.model.god", "c": "GodsFactoryTest", "l": "player1"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HephaestusTest",
-    "l": "player1"
-}, {"p": "it.polimi.ingsw.model.god", "c": "HestiaTest", "l": "player1"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "MedusaTest",
-    "l": "player1"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PoseidonTest", "l": "player1"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PrometheusTest",
-    "l": "player1"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ZeusTest", "l": "player1"}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "AthenaTurnTest",
-    "l": "player2"
-}, {"p": "it.polimi.ingsw.controller.turn", "c": "BasicTurnTest", "l": "player2"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ApolloTest",
-    "l": "player2"
-}, {"p": "it.polimi.ingsw.model.god", "c": "AtlasTest", "l": "player2"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "DemeterTest",
-    "l": "player2"
-}, {"p": "it.polimi.ingsw.model.god", "c": "GodsFactoryTest", "l": "player2"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HephaestusTest",
-    "l": "player2"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MedusaTest", "l": "player2"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PoseidonTest",
-    "l": "player2"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PrometheusTest", "l": "player2"}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "AthenaTurnTest",
-    "l": "player3"
-}, {"p": "it.polimi.ingsw.controller.turn", "c": "BasicTurnTest", "l": "player3"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ApolloTest",
-    "l": "player3"
-}, {"p": "it.polimi.ingsw.model.god", "c": "AtlasTest", "l": "player3"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "DemeterTest",
-    "l": "player3"
-}, {"p": "it.polimi.ingsw.model.god", "c": "GodsFactoryTest", "l": "player3"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HephaestusTest",
-    "l": "player3"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MedusaTest", "l": "player3"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PoseidonTest",
-    "l": "player3"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PrometheusTest", "l": "player3"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "PlayerTest",
-    "l": "PlayerTest()",
-    "url": "%3Cinit%3E()"
 }, {"p": "it.polimi.ingsw.server", "c": "Server", "l": "PORT"}, {
     "p": "it.polimi.ingsw.model.god",
-    "c": "PoseidonTest",
-    "l": "poseidon"
-}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "POSEIDON"}, {
-    "p": "it.polimi.ingsw.controller",
-    "c": "Operation",
+    "c": "GodDescription",
+    "l": "POSEIDON"
+}, {"p": "it.polimi.ingsw.controller", "c": "Operation", "l": "POSEIDON_BUILD"}, {
+    "p": "it.polimi.ingsw.utilities",
+    "c": "MessageType",
     "l": "POSEIDON_BUILD"
-}, {"p": "it.polimi.ingsw.utilities", "c": "MessageType", "l": "POSEIDON_BUILD"}, {
+}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Poseidon",
     "l": "Poseidon(GameState, Player)",
@@ -1893,11 +1413,6 @@ memberSearchIndex = [{
     "l": "PoseidonBuildGameAction(Tile.IndexTile, int, String)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.Tile.IndexTile,int,java.lang.String)"
 }, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PoseidonTest",
-    "l": "PoseidonTest()",
-    "url": "%3Cinit%3E()"
-}, {
     "p": "it.polimi.ingsw.bean.options",
     "c": "PoseidonTileOptions",
     "l": "PoseidonTileOptions(String, Collection<Tile.IndexTile>, IslandBoard, Operation, String)",
@@ -1909,18 +1424,13 @@ memberSearchIndex = [{
     "url": "printBoard(it.polimi.ingsw.model.IslandBoard)"
 }, {"p": "it.polimi.ingsw.client.view", "c": "CLI", "l": "printWelcome()"}, {
     "p": "it.polimi.ingsw.model.god",
-    "c": "PrometheusTest",
-    "l": "prometheus"
-}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "PROMETHEUS"}, {
+    "c": "GodDescription",
+    "l": "PROMETHEUS"
+}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Prometheus",
     "l": "Prometheus(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
-}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PrometheusTest",
-    "l": "PrometheusTest()",
-    "url": "%3Cinit%3E()"
 }, {"p": "it.polimi.ingsw.client.view", "c": "CLI", "l": "readInput()"}, {
     "p": "it.polimi.ingsw.model",
     "c": "Color",
@@ -1948,7 +1458,7 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.client.view.GUI",
     "c": "BoardPanel",
     "l": "removeHighlight()"
-}, {"p": "it.polimi.ingsw.server", "c": "LobbyTest", "l": "removePlayer()"}, {
+}, {
     "p": "it.polimi.ingsw.server",
     "c": "Lobby",
     "l": "removePlayer(String)",
@@ -1958,11 +1468,6 @@ memberSearchIndex = [{
     "c": "Server",
     "l": "removePlayer(String)",
     "url": "removePlayer(java.lang.String)"
-}, {
-    "p": "it.polimi.ingsw.server",
-    "c": "Server",
-    "l": "removeRegisteredUsers(String)",
-    "url": "removeRegisteredUsers(java.lang.String)"
 }, {"p": "it.polimi.ingsw.client", "c": "Controller", "l": "reset()"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Ares",
@@ -1980,9 +1485,9 @@ memberSearchIndex = [{
     "c": "Poseidon",
     "l": "resetGodState()"
 }, {"p": "it.polimi.ingsw.model", "c": "Tile.IndexTile", "l": "row"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "TileTest",
-    "l": "rowIndex"
+    "p": "it.polimi.ingsw.client",
+    "c": "SocketClientConnection",
+    "l": "run()"
 }, {"p": "it.polimi.ingsw.server", "c": "Server", "l": "run()"}, {
     "p": "it.polimi.ingsw.server",
     "c": "SocketServerConnection",
@@ -2019,10 +1524,6 @@ memberSearchIndex = [{
     "l": "SelectNicknameAction(String)",
     "url": "%3Cinit%3E(java.lang.String)"
 }, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "CharonTest",
-    "l": "selectOpponentsWorker()"
-}, {
     "p": "it.polimi.ingsw.bean.action",
     "c": "SelectOpponentWorkerGameAction",
     "l": "SelectOpponentWorkerGameAction(Tile.IndexTile, String)",
@@ -2042,11 +1543,6 @@ memberSearchIndex = [{
     "c": "SelectWorkerGameAction",
     "l": "SelectWorkerGameAction(Tile.IndexTile, String)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.Tile.IndexTile,java.lang.String)"
-}, {"p": "it.polimi.ingsw.server", "c": "LobbyTest", "l": "server"}, {
-    "p": "it.polimi.ingsw.server",
-    "c": "Server",
-    "l": "Server()",
-    "url": "%3Cinit%3E()"
 }, {
     "p": "it.polimi.ingsw.controller",
     "c": "GameController",
@@ -2090,16 +1586,12 @@ memberSearchIndex = [{
     "c": "Player",
     "l": "setGod(God)",
     "url": "setGod(it.polimi.ingsw.model.god.God)"
-}, {"p": "it.polimi.ingsw.model", "c": "PlayerTest", "l": "setGodTest()"}, {
+}, {
     "p": "it.polimi.ingsw.model",
     "c": "Worker",
     "l": "setIndexTile(Tile.IndexTile)",
     "url": "setIndexTile(it.polimi.ingsw.model.Tile.IndexTile)"
-}, {"p": "it.polimi.ingsw.model", "c": "WorkerTest", "l": "setIndexTileTest()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "Player",
-    "l": "setLooser(boolean)"
-}, {
+}, {"p": "it.polimi.ingsw.model", "c": "Player", "l": "setLooser(boolean)"}, {
     "p": "it.polimi.ingsw.client.view",
     "c": "View",
     "l": "setNickname(String)",
@@ -2134,75 +1626,7 @@ memberSearchIndex = [{
     "c": "GameController",
     "l": "setTurn(Turn)",
     "url": "setTurn(it.polimi.ingsw.controller.turn.Turn)"
-}, {"p": "it.polimi.ingsw.client", "c": "SocketClientConnection", "l": "setup()"}, {
-    "p": "it.polimi.ingsw.bean.options",
-    "c": "GodOptionsTest",
-    "l": "setUp()"
-}, {
-    "p": "it.polimi.ingsw.bean.options",
-    "c": "PlaceWorkersOptionsTest",
-    "l": "setUp()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "AthenaTurnTest",
-    "l": "setUp()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "BasicTurnTest",
-    "l": "setUp()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupGodsTurnTest",
-    "l": "setUp()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupWorkersTurnTest",
-    "l": "setUp()"
-}, {"p": "it.polimi.ingsw.controller.turn", "c": "TotalSetupTest", "l": "setUp()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "IslandBoardTest",
-    "l": "setUp()"
-}, {"p": "it.polimi.ingsw.model", "c": "PlayerTest", "l": "setUp()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "TileTest",
-    "l": "setUp()"
-}, {"p": "it.polimi.ingsw.model", "c": "WorkerTest", "l": "setUp()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ApolloTest",
-    "l": "setUp()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ArtemisTest", "l": "setUp()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "AthenaTest",
-    "l": "setUp()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "AtlasTest", "l": "setUp()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "CharonTest",
-    "l": "setUp()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "DemeterTest", "l": "setUp()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodsFactoryTest",
-    "l": "setUp()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "HephaestusTest", "l": "setUp()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HestiaTest",
-    "l": "setUp()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MedusaTest", "l": "setUp()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "MinotaurTest",
-    "l": "setUp()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PanTest", "l": "setUp()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PoseidonTest",
-    "l": "setUp()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PrometheusTest", "l": "setUp()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ZeusTest",
-    "l": "setUp()"
-}, {"p": "it.polimi.ingsw.server", "c": "LobbyTest", "l": "setUp()"}, {
-    "p": "it.polimi.ingsw.client",
-    "c": "Controller",
-    "l": "setup(boolean)"
-}, {
+}, {"p": "it.polimi.ingsw.client", "c": "Controller", "l": "setup(boolean)"}, {
     "p": "it.polimi.ingsw.client.view.GUI",
     "c": "GUI",
     "l": "setup(Operation)",
@@ -2218,11 +1642,6 @@ memberSearchIndex = [{
     "l": "SetupGodsTurn(Player, GameController)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.Player,it.polimi.ingsw.controller.GameController)"
 }, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupGodsTurnTest",
-    "l": "SetupGodsTurnTest()",
-    "url": "%3Cinit%3E()"
-}, {
     "p": "it.polimi.ingsw.bean.options",
     "c": "SetupOptions",
     "l": "SetupOptions(String, String, Operation)",
@@ -2236,17 +1655,12 @@ memberSearchIndex = [{
     "c": "SetupWorkersTurn",
     "l": "SetupWorkersTurn(GameController, Player, List<Observer<Options>>)",
     "url": "%3Cinit%3E(it.polimi.ingsw.controller.GameController,it.polimi.ingsw.model.Player,java.util.List)"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupWorkersTurnTest",
-    "l": "SetupWorkersTurnTest()",
-    "url": "%3Cinit%3E()"
 }, {"p": "it.polimi.ingsw.model", "c": "Player", "l": "setWinner(boolean)"}, {
     "p": "it.polimi.ingsw.model",
     "c": "Player",
     "l": "setWorkers(Tile.IndexTile[])",
     "url": "setWorkers(it.polimi.ingsw.model.Tile.IndexTile[])"
-}, {"p": "it.polimi.ingsw.model", "c": "PlayerTest", "l": "setWorkerTest()"}, {
+}, {
     "p": "it.polimi.ingsw.client.view.GUI",
     "c": "GUI",
     "l": "showAvailableTiles(Operation, Collection<Tile.IndexTile>)",
@@ -2316,11 +1730,7 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.server",
     "c": "Lobby",
     "l": "start()"
-}, {"p": "it.polimi.ingsw.server", "c": "LobbyTest", "l": "start()"}, {
-    "p": "it.polimi.ingsw.utilities",
-    "c": "Start",
-    "l": "start()"
-}, {
+}, {"p": "it.polimi.ingsw.utilities", "c": "Start", "l": "start()"}, {
     "p": "it.polimi.ingsw.controller.turn",
     "c": "AthenaTurn",
     "l": "switchTurn()"
@@ -2334,88 +1744,16 @@ memberSearchIndex = [{
     "l": "switchTurn()"
 }, {
     "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupGodsTurnTest",
-    "l": "switchTurn()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
     "c": "SetupWorkersTurn",
     "l": "switchTurn()"
 }, {"p": "it.polimi.ingsw.controller.turn", "c": "Turn", "l": "switchTurn()"}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "AthenaTurnTest",
-    "l": "switchTurnTest()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "BasicTurnTest",
-    "l": "switchTurnTest()"
-}, {
-    "p": "it.polimi.ingsw.bean.options",
-    "c": "GodOptionsTest",
-    "l": "tearDown()"
-}, {
-    "p": "it.polimi.ingsw.bean.options",
-    "c": "PlaceWorkersOptionsTest",
-    "l": "tearDown()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "AthenaTurnTest",
-    "l": "tearDown()"
-}, {"p": "it.polimi.ingsw.controller.turn", "c": "BasicTurnTest", "l": "tearDown()"}, {
+    "p": "it.polimi.ingsw.client.view.GUI",
+    "c": "ActivePanel",
+    "l": "textLabel"
+}, {"p": "it.polimi.ingsw.server", "c": "Server", "l": "thereIsAOpenLobby()"}, {
     "p": "it.polimi.ingsw.model",
-    "c": "PlayerTest",
-    "l": "tearDown()"
-}, {"p": "it.polimi.ingsw.model", "c": "TileTest", "l": "tearDown()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "WorkerTest",
-    "l": "tearDown()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ApolloTest", "l": "tearDown()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ArtemisTest",
-    "l": "tearDown()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "AthenaTest", "l": "tearDown()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "AtlasTest",
-    "l": "tearDown()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "CharonTest", "l": "tearDown()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "GodsFactoryTest",
-    "l": "tearDown()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "HephaestusTest", "l": "tearDown()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "HestiaTest",
-    "l": "tearDown()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MedusaTest", "l": "tearDown()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "MinotaurTest",
-    "l": "tearDown()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PanTest", "l": "tearDown()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PoseidonTest",
-    "l": "tearDown()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "PrometheusTest", "l": "tearDown()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ZeusTest",
-    "l": "tearDown()"
-}, {"p": "it.polimi.ingsw.server", "c": "LobbyTest", "l": "tearDown()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ArtemisTest",
-    "l": "testPlayer"
-}, {"p": "it.polimi.ingsw.model.god", "c": "AthenaTest", "l": "testPlayer"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "CharonTest",
-    "l": "testPlayer"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MinotaurTest", "l": "testPlayer"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PanTest",
-    "l": "testPlayer"
-}, {"p": "it.polimi.ingsw.client.view.GUI", "c": "ActivePanel", "l": "textLabel"}, {
-    "p": "it.polimi.ingsw.server",
-    "c": "Server",
-    "l": "thereIsAOpenLobby()"
-}, {"p": "it.polimi.ingsw.model", "c": "BlockLevel", "l": "THREE"}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupGodsTurnTest",
-    "l": "thrown"
+    "c": "BlockLevel",
+    "l": "THREE"
 }, {
     "p": "it.polimi.ingsw.model",
     "c": "Tile",
@@ -2426,21 +1764,12 @@ memberSearchIndex = [{
     "c": "TileOptions",
     "l": "TileOptions(String, Collection<Tile.IndexTile>, IslandBoard, Operation, String)",
     "url": "%3Cinit%3E(java.lang.String,java.util.Collection,it.polimi.ingsw.model.IslandBoard,it.polimi.ingsw.controller.Operation,java.lang.String)"
-}, {"p": "it.polimi.ingsw.model", "c": "IslandBoardTest", "l": "tilesAreFree()"}, {
+}, {
     "p": "it.polimi.ingsw.model",
     "c": "IslandBoard",
     "l": "tilesAreFree(List<Tile.IndexTile>)",
     "url": "tilesAreFree(java.util.List)"
 }, {
-    "p": "it.polimi.ingsw.model",
-    "c": "TileTest",
-    "l": "TileTest()",
-    "url": "%3Cinit%3E()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ApolloTest", "l": "tileToBuild()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "DemeterTest",
-    "l": "tileToBuild()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MedusaTest", "l": "tileToBuild()"}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Demeter",
     "l": "tileToBuild(Tile.IndexTile)",
@@ -2455,14 +1784,6 @@ memberSearchIndex = [{
     "c": "Medusa",
     "l": "tileToBuild(Tile.IndexTile)",
     "url": "tileToBuild(it.polimi.ingsw.model.Tile.IndexTile)"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ApolloTest", "l": "tileToMove()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "ArtemisTest",
-    "l": "tileToMove()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "MinotaurTest", "l": "tileToMove()"}, {
-    "p": "it.polimi.ingsw.model.god",
-    "c": "PrometheusTest",
-    "l": "tileToMove()"
 }, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Apollo",
@@ -2488,43 +1809,22 @@ memberSearchIndex = [{
     "c": "Prometheus",
     "l": "tileToMove(Tile.IndexTile)",
     "url": "tileToMove(it.polimi.ingsw.model.Tile.IndexTile)"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ApolloTest", "l": "tileToMove2()"}, {
+}, {"p": "it.polimi.ingsw.model.god", "c": "Ares", "l": "tileToRemoveBlock()"}, {
+    "p": "it.polimi.ingsw.model",
+    "c": "BlockLevel",
+    "l": "toString()"
+}, {"p": "it.polimi.ingsw.model", "c": "IslandBoard", "l": "toString()"}, {
+    "p": "it.polimi.ingsw.model",
+    "c": "Tile",
+    "l": "toString()"
+}, {"p": "it.polimi.ingsw.model", "c": "Tile.IndexTile", "l": "toString()"}, {
     "p": "it.polimi.ingsw.model.god",
-    "c": "Ares",
-    "l": "tileToRemoveBlock()"
-}, {"p": "it.polimi.ingsw.model", "c": "BlockLevel", "l": "toString()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "IslandBoard",
+    "c": "God",
     "l": "toString()"
-}, {"p": "it.polimi.ingsw.model", "c": "Tile", "l": "toString()"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "Tile.IndexTile",
-    "l": "toString()"
-}, {"p": "it.polimi.ingsw.model.god", "c": "God", "l": "toString()"}, {
+}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "GodDescription",
     "l": "toString()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "TotalSetupTest",
-    "l": "TotalSetupTest()",
-    "url": "%3Cinit%3E()"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupGodsTurnTest",
-    "l": "turn"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupWorkersTurnTest",
-    "l": "turn"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "TotalSetupTest",
-    "l": "turn"
-}, {
-    "p": "it.polimi.ingsw.controller.turn",
-    "c": "SetupGodsTurnTest",
-    "l": "turnFlow()"
 }, {"p": "it.polimi.ingsw.controller.turn", "c": "BasicTurn", "l": "turnOperations"}, {
     "p": "it.polimi.ingsw.model",
     "c": "BlockLevel",
@@ -2537,6 +1837,11 @@ memberSearchIndex = [{
     "p": "it.polimi.ingsw.model.god",
     "c": "Poseidon",
     "l": "unmovedWorkerTileToBuild()"
+}, {
+    "p": "it.polimi.ingsw.server",
+    "c": "Server",
+    "l": "unregisteredUsername(String)",
+    "url": "unregisteredUsername(java.lang.String)"
 }, {
     "p": "it.polimi.ingsw.controller",
     "c": "GameController",
@@ -2616,6 +1921,11 @@ memberSearchIndex = [{
     "l": "WelcomePanel(GUI)",
     "url": "%3Cinit%3E(it.polimi.ingsw.client.view.GUI.GUI)"
 }, {"p": "it.polimi.ingsw.utilities", "c": "MessageType", "l": "WIN"}, {
+    "p": "it.polimi.ingsw.client.view.GUI",
+    "c": "WinLooseJFrame",
+    "l": "WinLooseJFrame(String)",
+    "url": "%3Cinit%3E(java.lang.String)"
+}, {
     "p": "it.polimi.ingsw.bean.options",
     "c": "WinLooseOption",
     "l": "WinLooseOption(String, String, IslandBoard)",
@@ -2625,11 +1935,6 @@ memberSearchIndex = [{
     "c": "Worker",
     "l": "Worker(Tile.IndexTile, Color)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.Tile.IndexTile,it.polimi.ingsw.model.Color)"
-}, {"p": "it.polimi.ingsw.model", "c": "WorkerTest", "l": "workers"}, {
-    "p": "it.polimi.ingsw.model",
-    "c": "WorkerTest",
-    "l": "WorkerTest()",
-    "url": "%3Cinit%3E()"
 }, {
     "p": "it.polimi.ingsw.client",
     "c": "SocketClientConnection",
@@ -2637,11 +1942,11 @@ memberSearchIndex = [{
     "url": "writeToSocket(java.lang.Object)"
 }, {"p": "it.polimi.ingsw.model", "c": "Color", "l": "YELLOW"}, {
     "p": "it.polimi.ingsw.model.god",
-    "c": "ZeusTest",
-    "l": "zeus"
-}, {"p": "it.polimi.ingsw.model.god", "c": "GodDescription", "l": "ZEUS"}, {
+    "c": "GodDescription",
+    "l": "ZEUS"
+}, {
     "p": "it.polimi.ingsw.model.god",
     "c": "Zeus",
     "l": "Zeus(GameState, Player)",
     "url": "%3Cinit%3E(it.polimi.ingsw.model.GameState,it.polimi.ingsw.model.Player)"
-}, {"p": "it.polimi.ingsw.model.god", "c": "ZeusTest", "l": "ZeusTest()", "url": "%3Cinit%3E()"}]
+}]

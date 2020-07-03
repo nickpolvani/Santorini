@@ -176,7 +176,7 @@ public class Server implements Runnable {
      * @see it.polimi.ingsw.model.Player
      */
     public void removePlayer(String username) {
-        Lobby tmp = findLobby(username); //TODO rimuovi i commenti
+        Lobby tmp = findLobby(username);
         if (tmp != null) {
             if (tmp.isClose()) return;
             if (tmp.isStarted()) { //caso generico

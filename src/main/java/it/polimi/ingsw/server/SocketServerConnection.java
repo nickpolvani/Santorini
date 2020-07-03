@@ -18,6 +18,9 @@ import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The SocketServerConnection manages communication via server-side sockets
+ */
 public class SocketServerConnection extends Observable<GameAction> implements ClientConnection, Runnable {
 
     private final Socket socket;
@@ -133,7 +136,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
             username = ((SelectNicknameAction) read).getNickname();
             logger.debug("Player's username on socket with port=" + socket.getPort() + " is: " + username);
             server.insertIntoLobby(username, this, in);
-            send(new AckPacket());
+            handlerAck();
             while (isActive()) {
                 Object o = in.readObject();
                 if (o instanceof AckPacket) {
@@ -188,7 +191,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
      */
     private void handlerAck() {
         logger.debug("Ack arrived on SocketServerConnection of " + username);
-        timer.cancel();
+        if (timer != null) timer.cancel();
         timer = new Timer();
         timer.schedule(timerTaskSendAck(), 10000);
     }

@@ -143,4 +143,4 @@ Dual licenced under the MIT license or GPLv3. See https://raw.github.com/Stuk/js
     }, {}, [1])
     (1)
 });
-;
+

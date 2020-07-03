@@ -1,6 +1,7 @@
 it.polimi.ingsw
 it.polimi.ingsw.bean.action
 it.polimi.ingsw.bean.options
+it.polimi.ingsw.bean.ping
 it.polimi.ingsw.client
 it.polimi.ingsw.client.view
 it.polimi.ingsw.client.view.GUI

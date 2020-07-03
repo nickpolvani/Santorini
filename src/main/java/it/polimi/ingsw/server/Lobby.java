@@ -9,6 +9,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The lobby contains the reference to all the objects needed to play a game.
+ * There are as many lobbies on the server as there are games in progress.
+ */
 public class Lobby {
     private static final Logger logger = Logger.getLogger("Server");
     /**
@@ -23,7 +27,6 @@ public class Lobby {
     private final Map<String, ClientConnection> connectionMap = new LinkedHashMap<>();
     private GameState gameState;
     private GameController gameController;
-    //TODO sistemare la storia dei flag
     private boolean started = false;
     private boolean full = false;
     private boolean close = false;
@@ -48,7 +51,7 @@ public class Lobby {
     /**
      * Method allows you to close the lobby and to interrupt the connections on the server-side with the clients
      */
-    synchronized void close() { //TODO write the test
+    synchronized void close() {
         started = false;
         close = true;
         for (RemoteView w : remoteViews) {
