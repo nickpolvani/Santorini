@@ -41,7 +41,6 @@ public class Server implements Runnable {
 
     private Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
-        instance = this;
     }
 
     /**
