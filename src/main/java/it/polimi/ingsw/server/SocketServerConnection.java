@@ -30,7 +30,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
     private ObjectOutputStream out;
     private String username;
     private boolean active = false;
-    private Timer timer = new Timer();
+    private Timer timer = null;
 
     public SocketServerConnection(Socket socket, Server server) {
         this.socket = socket;
