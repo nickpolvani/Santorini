@@ -64,6 +64,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
     @Override
     public synchronized void closeConnection() {
         if (socket.isClosed()) return;
+        if (timer != null) timer.cancel();
         active = false;
         try {
             out.flush();
@@ -71,7 +72,7 @@ public class SocketServerConnection extends Observable<GameAction> implements Cl
         } catch (IOException e) {
             logger.error("Error when closing socket!");
         }
-        logger.debug(username + "socket closure PORT=" + socket.getPort());
+        logger.debug((username != null ? username : "Unregistered user") + " socket closure PORT=" + socket.getPort());
         if (username != null) {
             //Null nickname means that user has never been registered on the server, Therefore, closing the connection is enough
             server.removePlayer(username);
