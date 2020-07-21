@@ -5,9 +5,9 @@ import it.polimi.ingsw.model.GameState;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * The lobby contains the reference to all the objects needed to play a game.
@@ -24,7 +24,6 @@ public class Lobby {
      */
     public final int id;
     private final List<RemoteView> remoteViews = new ArrayList<>();
-    private final Map<String, ClientConnection> connectionMap = new LinkedHashMap<>();
     private GameState gameState;
     private GameController gameController;
     private boolean started = false;
@@ -35,13 +34,6 @@ public class Lobby {
         if (size != 2 && size != 3) throw new IllegalArgumentException();
         this.size = size;
         this.id = id;
-    }
-
-    /**
-     * @return Returns the ConnectionMap, this map has the username ClientConnection pair in memory
-     */
-    Map<String, ClientConnection> getConnectionMap() {
-        return connectionMap;
     }
 
     boolean isFull() {
@@ -55,7 +47,7 @@ public class Lobby {
         started = false;
         close = true;
         for (RemoteView w : remoteViews) {
-            w.getClientConnection().closeConnection();
+            w.closeConnection();
         }
         logger.info("Closed lobby ID=" + id);
     }
@@ -66,12 +58,13 @@ public class Lobby {
      * @param username         The player's username
      * @param clientConnection The player's clientConnection
      */
-    synchronized void addClient(String username, ClientConnection clientConnection) {
+    synchronized void addClient(RemoteView remoteView) {
         if (this.isStarted() || this.isFull() || this.isClose()) throw new IllegalStateException();
-        if (this.connectionMap.containsKey(username)) throw new IllegalArgumentException();
-        this.connectionMap.put(username, clientConnection);
-        logger.info("Registered username " + username + " in the lobby ID=" + id);
-        if (connectionMap.size() == size) {
+        if (remoteView.getUsername() == null || remoteView.getUsername().isEmpty() || containsUser(remoteView.getUsername()))
+            throw new IllegalArgumentException();
+        this.remoteViews.add(remoteView);
+        logger.info("Registered username " + remoteView.getUsername() + " in the lobby ID=" + id);
+        if (remoteViews.size() == size) {
             full = true;
             logger.debug("Lobby ID=" + id + " is full");
             this.start();
@@ -85,24 +78,21 @@ public class Lobby {
      * @return Returns true if the player is contained in the lobby, otherwise false
      */
     boolean containsUser(String nickname) {
-        return this.getConnectionMap().containsKey(nickname);
+        return this.remoteViews.stream().anyMatch(w -> w.getUsername().equals(nickname));
     }
 
     /**
      * Create instances of remoteView, Controller and Model and launch the lobby game.
      */
     synchronized void start() {
-        if (connectionMap.size() != size || isStarted()) {
+        if (remoteViews.size() != size || isStarted()) {
             if (isStarted()) logger.error("Tried to initialize a started lobby");
             else logger.error("Tried to initialize a incomplete lobby");
             throw new IllegalStateException();
         }
         started = true;
-        gameState = new GameState(connectionMap.keySet());
+        gameState = new GameState(remoteViews.stream().map(RemoteView::getUsername).collect(Collectors.toSet()));
         gameController = new GameController(gameState, this);
-        for (String nickname : connectionMap.keySet()) {
-            remoteViews.add(new RemoteView(nickname, connectionMap.get(nickname)));
-        }
         for (RemoteView v : remoteViews) {
             gameController.addObserver(v);
             gameController.getTurn().addObserver(v);
@@ -138,11 +128,19 @@ public class Lobby {
             logger.fatal("Trying to remove a player from a started lobby without close lobby");
             throw new IllegalStateException();
         }
-        connectionMap.remove(username);
+        remoteViews.removeIf(w -> w.getUsername().equals(username));
         logger.info("Removed " + username + " form not started lobby ID=" + id);
     }
 
     public boolean isClose() {
         return close;
+    }
+
+    int getActualSize() {
+        return remoteViews.size();
+    }
+
+    Set<String> usernameSet() {
+        return remoteViews.stream().map(RemoteView::getUsername).collect(Collectors.toSet());
     }
 }

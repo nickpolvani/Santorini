@@ -72,15 +72,15 @@ public class Server implements Runnable {
      * @throws IOException            Thrown if there is a problem with the ObjectInputStream object
      * @throws ClassNotFoundException Thrown if the object received on the inputStream is not recognized
      */
-    synchronized void insertIntoLobby(String name, ClientConnection clientConnection, ObjectInputStream in) throws IOException, ClassNotFoundException {
+    synchronized void insertIntoLobby(RemoteView remoteView, ObjectInputStream in) throws IOException, ClassNotFoundException {
         if (!thereIsAOpenLobby()) {
-            createNewLobby(clientConnection, name, in);
+            createNewLobby(remoteView, in);
         }
         if (openLobby.isFull())
             logger.error("Insertion into a full lobby", new IllegalAccessException("Cannot call this method if the lobby is full"));
-        clientConnection.asyncSend(new MessageOption(name, ("Successfully added to a lobby." +
+        remoteView.asyncSend(new MessageOption(remoteView.getUsername(), ("Successfully added to a lobby." +
                 " It has " + openLobby.size + " players." + " Wait until the lobby starts..")));
-        openLobby.addClient(name, clientConnection);
+        openLobby.addClient(remoteView);
         if (openLobby.isStarted() || openLobby.isFull()) {
             lobbiesInProgress.add(openLobby);
             openLobby = null;
@@ -92,15 +92,14 @@ public class Server implements Runnable {
      * Communicate directly with the client about the size of the lobby.
      * The client that created the lobby is automatically inserted into the newly created lobby.
      *
-     * @param clientConnection The clientConnection of the player that is used to communicate with the client
-     * @param name             The name of the player
-     * @param in               The objectInputStream of the player's socket
+     * @param remoteView The remoteView of the player that is used to communicate with the client
+     * @param in         The objectInputStream of the player's socket
      * @throws IOException            Thrown if there is a problem with the ObjectInputStream object
      * @throws ClassNotFoundException Thrown if the object received on the inputStream is not recognized
      * @see Lobby
      */
-    synchronized void createNewLobby(ClientConnection clientConnection, String name, ObjectInputStream in) throws IOException, ClassNotFoundException {
-        clientConnection.asyncSend(new SetupOptions(name, MessageType.CHOOSE_LOBBY_SIZE, Operation.SELECT_LOBBY_SIZE));
+    synchronized void createNewLobby(RemoteView remoteView, ObjectInputStream in) throws IOException, ClassNotFoundException {
+        remoteView.asyncSend(new SetupOptions(remoteView.getUsername(), MessageType.CHOOSE_LOBBY_SIZE, Operation.SELECT_LOBBY_SIZE));
         boolean b;
         int numberPlayers;
         do {
@@ -109,15 +108,15 @@ public class Server implements Runnable {
             numberPlayers = ((LobbySizeAction) read).getLobbySize();
             if (numberPlayers != 2 && numberPlayers != 3) {
                 b = true;
-                clientConnection.asyncSend(new SetupOptions(name, ("Inserted Number is not allowed. Please reinsert it!"), Operation.SELECT_LOBBY_SIZE));
+                remoteView.asyncSend(new SetupOptions(remoteView.getUsername(), ("Inserted Number is not allowed. Please reinsert it!"), Operation.SELECT_LOBBY_SIZE));
             } else {
                 b = false;
             }
         } while (b);
         if (thereIsAOpenLobby()) throw new IllegalStateException();
         openLobby = new Lobby(numberPlayers, currentLobbyNum);
-        MessageOption mess = new MessageOption(name, "Lobby successfully created. Wait for other players");
-        clientConnection.asyncSend(mess);
+        MessageOption mess = new MessageOption(remoteView.getUsername(), "Lobby successfully created. Wait for other players");
+        remoteView.asyncSend(mess);
         logger.info("Created a new openLobby ID=" + currentLobbyNum + " SIZE=" + numberPlayers);
         ++currentLobbyNum;
 
@@ -156,9 +155,9 @@ public class Server implements Runnable {
      * @see it.polimi.ingsw.model.Player
      */
     Lobby findLobby(String username) {
-        if (openLobby != null && openLobby.getConnectionMap().containsKey(username)) return openLobby;
+        if (openLobby != null && openLobby.containsUser(username)) return openLobby;
         for (Lobby l : lobbiesInProgress) {
-            if (l.getConnectionMap().containsKey(username)) {
+            if (l.containsUser(username)) {
                 return l;
             }
         }
@@ -191,7 +190,7 @@ public class Server implements Runnable {
                     tmp.getGameController().hasLost(looser);
                 }
             } else if (tmp.equals(openLobby)) { //caso in cui la lobby stata creata ma non inizializzata
-                if (openLobby.getConnectionMap().size() == 1) {
+                if (openLobby.getActualSize() == 1) {
                     openLobby = null;
                     logger.debug("Temporary lobby closed because only player left");
                 } else {
@@ -212,7 +211,7 @@ public class Server implements Runnable {
      */
     public void closeLobby(Lobby lobby) {
         lobby.close();
-        for (String n : lobby.getConnectionMap().keySet()) {
+        for (String n : lobby.usernameSet()) {
             unregisteredUsername(n);
         }
         lobbiesInProgress.remove(lobby);
@@ -225,8 +224,8 @@ public class Server implements Runnable {
             try {
                 Socket newSocket = serverSocket.accept();
                 logger.info("New connection is active on PORT=" + newSocket.getPort());
-                SocketServerConnection socketConnection = new SocketServerConnection(newSocket, this);
-                executor.submit(socketConnection);
+                RemoteView rv = new RemoteView(newSocket);
+                executor.submit(rv);
             } catch (IOException e) {
                 logger.fatal(e.getMessage());
                 try {
