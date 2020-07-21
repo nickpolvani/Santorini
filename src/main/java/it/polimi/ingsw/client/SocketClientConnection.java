@@ -96,8 +96,9 @@ public class SocketClientConnection {
      */
     public Thread asyncHandleOptions() {
         Thread optionsHandler = new Thread(() -> {
-            synchronized (toBeHandled) {
-                while (isActive()) {
+            Options tmpOptions;
+            while (isActive()) {
+                synchronized (toBeHandled) {
                     while (toBeHandled.isEmpty()) {
                         try {
                             toBeHandled.wait();
@@ -107,14 +108,13 @@ public class SocketClientConnection {
                             break;
                         }
                     }
-                    if (!toBeHandled.isEmpty()) {
-                        try {
-                            controller.handleOption(toBeHandled.poll());
-                        } catch (InterruptedException e) {
-                            logger.fatal(e.getMessage(), e);
-                            Thread.currentThread().interrupt();
-                        }
-                    }
+                    tmpOptions = toBeHandled.poll();
+                }
+                try {
+                    if (tmpOptions != null) controller.handleOption(tmpOptions);
+                } catch (InterruptedException e) {
+                    logger.fatal(e.getMessage(), e);
+                    Thread.currentThread().interrupt();
                 }
             }
         });
