@@ -5,7 +5,7 @@
 The Politecnico di Milano committed the project as the final test of the course 
 Software Engineering year 2019/2020.<br>The project specifications require the development 
 of a software version of the already existing game table lamp by Cranio Creations.<br>
-The pdf with the rules of the game is available [HERE](https://github.com/niccolopolvani/ing-sw-2020-Polvani-Puoti-Sacchetta/blob/master/deliveries/santorini_rules_en.pdf)
+The pdf with the rules of the game is available [HERE](https://github.com/nickpolvani/Santorini/blob/master/santorini_rules_en.pdf)
 
 
 | Functionality | State |
