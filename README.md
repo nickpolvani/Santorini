@@ -1,9 +1,4 @@
-# Prova Finale Ingegneria del Software 2020
-## Gruppo GC11
-
-- ###   10618641    Niccolò Polvani ([@niccolopolvani](https://github.com/niccolopolvani))<br>niccolo.polvani@mail.polimi.it
-- ###   10595640    Francesco Puoti ([@FPuoti255](https://github.com/FPuoti255))<br>francesco.puoti@mail.polimi.it
-- ###   10611820    Juri Sacchetta ([@juriSacchetta](https://github.com/juriSacchetta))<br>juri.sacchetta@mail.polimi.it
+# Software Engineering 2020
 
 ## Getting Started
 
